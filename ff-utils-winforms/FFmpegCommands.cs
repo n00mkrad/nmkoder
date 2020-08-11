@@ -91,7 +91,7 @@ namespace ff_utils_winforms
 
         public static void EncodeMux (string inputFile, string vcodec, string acodec, int crf, int audioKbps, bool delSrc)
         {
-            string args = " -i \"INPATH\" -c:v VCODEC -crf CRF -c:a ACODEC -b:a ABITRATE";
+            string args = " -i \"INPATH\" -c:v VCODEC -crf CRF -c:a ACODEC -b:a ABITRATE OUTPATH";
             if (string.IsNullOrWhiteSpace(acodec))
                 args = args.Replace("-c:a", "-an");
             args = args.Replace("INPATH", inputFile);
@@ -99,6 +99,8 @@ namespace ff_utils_winforms
             args = args.Replace("ACODEC", acodec);
             args = args.Replace("CRF", crf.ToString());
             args = args.Replace("ABITRATE", audioKbps.ToString());
+            string filenameNoExt = Path.ChangeExtension(inputFile, null);
+            args = args.Replace("OUTPATH", filenameNoExt + "-convert.mp4");
             FFmpeg.Run(args);
             if (delSrc)
                 DeleteSource(inputFile);

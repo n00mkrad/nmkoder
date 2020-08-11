@@ -30,7 +30,7 @@ namespace ff_utils_winforms
             InitCombox(loopCrf, 1);
             InitCombox(encVidCodec, 0);
             InitCombox(encVidCrf, 1);
-            InitCombox(encAudCodec, 0);
+            InitCombox(encAudCodec, 1);
             InitCombox(encAudBitrate, 4);
         }
 
@@ -113,7 +113,7 @@ namespace ff_utils_winforms
                 int times = int.Parse(loopEncTimes.Text.Trim());
                 bool h265 = loopEnc.SelectedIndex == 1;
                 int crf = int.Parse(loopCrf.Text.Trim());
-                foreach (string file in files)
+                foreach(string file in files)
                     FFmpegCommands.LoopVideoEnc(file, times, h265, crf, loopEncDelSrc.Checked);
             }
         }
@@ -126,6 +126,8 @@ namespace ff_utils_winforms
         private void encodeDropPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach(string file in files)
+                EncodeTabHelper.Run(file, encVidCodec, encAudCodec, encVidCrf, encAudBitrate, encDelSrc);
         }
     }
 }

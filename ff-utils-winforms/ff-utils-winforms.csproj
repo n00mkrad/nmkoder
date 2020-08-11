@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EncodeTabHelper.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="FFmpeg.cs" />
     <Compile Include="FFmpegCommands.cs" />
     <Compile Include="FFmpegStrings.cs" />

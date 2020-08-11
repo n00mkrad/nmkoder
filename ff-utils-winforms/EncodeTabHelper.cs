@@ -9,7 +9,7 @@ namespace ff_utils_winforms
 {
     class EncodeTabHelper
     {
-        public static void Run (string file, ComboBox vcodecCombox, ComboBox acodecCombox, TextBox vQualTbox, TextBox aQualTbox, CheckBox delSrc)
+        public static void Run (string file, ComboBox vcodecCombox, ComboBox acodecCombox, ComboBox vQualTbox, ComboBox aQualTbox, CheckBox delSrc)
         {
             string vcodec = "copy";
             string acodec = "";

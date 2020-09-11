@@ -136,6 +136,37 @@
             this.label35 = new System.Windows.Forms.Label();
             this.encodeDropPanel = new System.Windows.Forms.Panel();
             this.logTbox = new System.Windows.Forms.TextBox();
+            this.speedTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.changeSpeedCombox = new System.Windows.Forms.ComboBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.changeSpeedDelSrc = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.speedDropPanel = new System.Windows.Forms.Panel();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.compDropPanel = new System.Windows.Forms.Panel();
+            this.compTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.comparisonDelSrc = new System.Windows.Forms.CheckBox();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.comparisonCrf = new System.Windows.Forms.ComboBox();
+            this.label56 = new System.Windows.Forms.Label();
+            this.comparisonEnc = new System.Windows.Forms.ComboBox();
+            this.label61 = new System.Windows.Forms.Label();
+            this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.comp2crf = new System.Windows.Forms.ComboBox();
+            this.label62 = new System.Windows.Forms.Label();
+            this.comp2enc = new System.Windows.Forms.ComboBox();
+            this.label63 = new System.Windows.Forms.Label();
+            this.comp2delSrc = new System.Windows.Forms.CheckBox();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -150,10 +181,17 @@
             this.loopTabControl.SuspendLayout();
             this.tabPage11.SuspendLayout();
             this.tabPage10.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.tabPage12.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage13.SuspendLayout();
             this.tabPage14.SuspendLayout();
+            this.speedTabControl.SuspendLayout();
+            this.tabPage15.SuspendLayout();
+            this.tabPage16.SuspendLayout();
+            this.compTabControl.SuspendLayout();
+            this.tabPage17.SuspendLayout();
+            this.tabPage18.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -162,6 +200,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage16);
             this.tabControl1.Controls.Add(this.tabPage12);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -1012,6 +1051,10 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.label59);
+            this.tabPage9.Controls.Add(this.label60);
+            this.tabPage9.Controls.Add(this.speedDropPanel);
+            this.tabPage9.Controls.Add(this.speedTabControl);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
@@ -1354,6 +1397,353 @@
             this.logTbox.TabIndex = 8;
             this.logTbox.Text = "Ready...";
             // 
+            // speedTabControl
+            // 
+            this.speedTabControl.Controls.Add(this.tabPage15);
+            this.speedTabControl.Location = new System.Drawing.Point(7, 105);
+            this.speedTabControl.Name = "speedTabControl";
+            this.speedTabControl.SelectedIndex = 0;
+            this.speedTabControl.Size = new System.Drawing.Size(481, 221);
+            this.speedTabControl.TabIndex = 14;
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.Controls.Add(this.changeSpeedCombox);
+            this.tabPage15.Controls.Add(this.label46);
+            this.tabPage15.Controls.Add(this.changeSpeedDelSrc);
+            this.tabPage15.Controls.Add(this.label52);
+            this.tabPage15.Controls.Add(this.label53);
+            this.tabPage15.Location = new System.Drawing.Point(4, 22);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(473, 195);
+            this.tabPage15.TabIndex = 1;
+            this.tabPage15.Text = "Change Speed Losslessly";
+            this.tabPage15.UseVisualStyleBackColor = true;
+            // 
+            // changeSpeedCombox
+            // 
+            this.changeSpeedCombox.FormattingEnabled = true;
+            this.changeSpeedCombox.Items.AddRange(new object[] {
+            "25%",
+            "50%",
+            "75%",
+            "125%",
+            "150%",
+            "200%"});
+            this.changeSpeedCombox.Location = new System.Drawing.Point(298, 57);
+            this.changeSpeedCombox.Name = "changeSpeedCombox";
+            this.changeSpeedCombox.Size = new System.Drawing.Size(146, 21);
+            this.changeSpeedCombox.TabIndex = 15;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(7, 60);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(93, 13);
+            this.label46.TabIndex = 14;
+            this.label46.Text = "New Video Speed";
+            // 
+            // changeSpeedDelSrc
+            // 
+            this.changeSpeedDelSrc.AutoSize = true;
+            this.changeSpeedDelSrc.Location = new System.Drawing.Point(298, 34);
+            this.changeSpeedDelSrc.Name = "changeSpeedDelSrc";
+            this.changeSpeedDelSrc.Size = new System.Drawing.Size(15, 14);
+            this.changeSpeedDelSrc.TabIndex = 10;
+            this.changeSpeedDelSrc.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label52.Location = new System.Drawing.Point(6, 5);
+            this.label52.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(64, 18);
+            this.label52.TabIndex = 9;
+            this.label52.Text = "Options:";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(7, 35);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(174, 13);
+            this.label53.TabIndex = 8;
+            this.label53.Text = "Delete Source File After Processing";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.label59.Location = new System.Drawing.Point(3, 6);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(164, 18);
+            this.label59.TabIndex = 17;
+            this.label59.Text = "Change Video Speed";
+            // 
+            // label60
+            // 
+            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label60.Location = new System.Drawing.Point(497, 3);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(200, 120);
+            this.label60.TabIndex = 16;
+            this.label60.Text = "Drop One Or Multiple Video Files Here:";
+            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // speedDropPanel
+            // 
+            this.speedDropPanel.AllowDrop = true;
+            this.speedDropPanel.BackColor = System.Drawing.Color.White;
+            this.speedDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.speedDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.speedDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.speedDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.speedDropPanel.Name = "speedDropPanel";
+            this.speedDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.speedDropPanel.TabIndex = 15;
+            this.speedDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.speedDropPanel_DragDrop);
+            this.speedDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.speedDropPanel_DragEnter);
+            // 
+            // tabPage16
+            // 
+            this.tabPage16.Controls.Add(this.label54);
+            this.tabPage16.Controls.Add(this.label55);
+            this.tabPage16.Controls.Add(this.compDropPanel);
+            this.tabPage16.Controls.Add(this.compTabControl);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage16.Size = new System.Drawing.Size(700, 332);
+            this.tabPage16.TabIndex = 5;
+            this.tabPage16.Text = "Create Comparison";
+            this.tabPage16.UseVisualStyleBackColor = true;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.label54.Location = new System.Drawing.Point(3, 6);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(155, 18);
+            this.label54.TabIndex = 21;
+            this.label54.Text = "Create Comparison";
+            // 
+            // label55
+            // 
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label55.Location = new System.Drawing.Point(497, 3);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(200, 120);
+            this.label55.TabIndex = 20;
+            this.label55.Text = "Drop Two Videos Of The Same Size To Compare Here:";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // compDropPanel
+            // 
+            this.compDropPanel.AllowDrop = true;
+            this.compDropPanel.BackColor = System.Drawing.Color.White;
+            this.compDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.compDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.compDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.compDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.compDropPanel.Name = "compDropPanel";
+            this.compDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.compDropPanel.TabIndex = 19;
+            this.compDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.compDropPanel_DragDrop);
+            this.compDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.compDropPanel_DragEnter);
+            // 
+            // compTabControl
+            // 
+            this.compTabControl.Controls.Add(this.tabPage17);
+            this.compTabControl.Controls.Add(this.tabPage18);
+            this.compTabControl.Location = new System.Drawing.Point(7, 105);
+            this.compTabControl.Name = "compTabControl";
+            this.compTabControl.SelectedIndex = 0;
+            this.compTabControl.Size = new System.Drawing.Size(481, 221);
+            this.compTabControl.TabIndex = 18;
+            // 
+            // tabPage17
+            // 
+            this.tabPage17.Controls.Add(this.comparisonCrf);
+            this.tabPage17.Controls.Add(this.label56);
+            this.tabPage17.Controls.Add(this.comparisonEnc);
+            this.tabPage17.Controls.Add(this.label61);
+            this.tabPage17.Controls.Add(this.comparisonDelSrc);
+            this.tabPage17.Controls.Add(this.label57);
+            this.tabPage17.Controls.Add(this.label58);
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage17.Size = new System.Drawing.Size(473, 195);
+            this.tabPage17.TabIndex = 1;
+            this.tabPage17.Text = "Side-By-Side Comparison";
+            this.tabPage17.UseVisualStyleBackColor = true;
+            // 
+            // comparisonDelSrc
+            // 
+            this.comparisonDelSrc.AutoSize = true;
+            this.comparisonDelSrc.Location = new System.Drawing.Point(298, 34);
+            this.comparisonDelSrc.Name = "comparisonDelSrc";
+            this.comparisonDelSrc.Size = new System.Drawing.Size(15, 14);
+            this.comparisonDelSrc.TabIndex = 10;
+            this.comparisonDelSrc.UseVisualStyleBackColor = true;
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label57.Location = new System.Drawing.Point(6, 5);
+            this.label57.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(64, 18);
+            this.label57.TabIndex = 9;
+            this.label57.Text = "Options:";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(7, 35);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(179, 13);
+            this.label58.TabIndex = 8;
+            this.label58.Text = "Delete Source Files After Processing";
+            // 
+            // comparisonCrf
+            // 
+            this.comparisonCrf.FormattingEnabled = true;
+            this.comparisonCrf.Items.AddRange(new object[] {
+            "16",
+            "20",
+            "24",
+            "28"});
+            this.comparisonCrf.Location = new System.Drawing.Point(298, 82);
+            this.comparisonCrf.Name = "comparisonCrf";
+            this.comparisonCrf.Size = new System.Drawing.Size(146, 21);
+            this.comparisonCrf.TabIndex = 15;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(7, 85);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(179, 13);
+            this.label56.TabIndex = 14;
+            this.label56.Text = "Quality (CRF Value) - Lower Is Better";
+            // 
+            // comparisonEnc
+            // 
+            this.comparisonEnc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comparisonEnc.FormattingEnabled = true;
+            this.comparisonEnc.Items.AddRange(new object[] {
+            "MP4 (h264)",
+            "MP4 (h265)"});
+            this.comparisonEnc.Location = new System.Drawing.Point(298, 57);
+            this.comparisonEnc.Name = "comparisonEnc";
+            this.comparisonEnc.Size = new System.Drawing.Size(146, 21);
+            this.comparisonEnc.TabIndex = 13;
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Location = new System.Drawing.Point(7, 60);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(114, 13);
+            this.label61.TabIndex = 12;
+            this.label61.Text = "Video Format/Encoder";
+            // 
+            // tabPage18
+            // 
+            this.tabPage18.Controls.Add(this.comp2crf);
+            this.tabPage18.Controls.Add(this.label62);
+            this.tabPage18.Controls.Add(this.comp2enc);
+            this.tabPage18.Controls.Add(this.label63);
+            this.tabPage18.Controls.Add(this.comp2delSrc);
+            this.tabPage18.Controls.Add(this.label64);
+            this.tabPage18.Controls.Add(this.label65);
+            this.tabPage18.Location = new System.Drawing.Point(4, 22);
+            this.tabPage18.Name = "tabPage18";
+            this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage18.Size = new System.Drawing.Size(473, 195);
+            this.tabPage18.TabIndex = 2;
+            this.tabPage18.Text = "Over-Under Comparison";
+            this.tabPage18.UseVisualStyleBackColor = true;
+            // 
+            // comp2crf
+            // 
+            this.comp2crf.FormattingEnabled = true;
+            this.comp2crf.Items.AddRange(new object[] {
+            "16",
+            "20",
+            "24",
+            "28"});
+            this.comp2crf.Location = new System.Drawing.Point(298, 82);
+            this.comp2crf.Name = "comp2crf";
+            this.comp2crf.Size = new System.Drawing.Size(146, 21);
+            this.comp2crf.TabIndex = 22;
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(7, 85);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(179, 13);
+            this.label62.TabIndex = 21;
+            this.label62.Text = "Quality (CRF Value) - Lower Is Better";
+            // 
+            // comp2enc
+            // 
+            this.comp2enc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comp2enc.FormattingEnabled = true;
+            this.comp2enc.Items.AddRange(new object[] {
+            "MP4 (h264)",
+            "MP4 (h265)"});
+            this.comp2enc.Location = new System.Drawing.Point(298, 57);
+            this.comp2enc.Name = "comp2enc";
+            this.comp2enc.Size = new System.Drawing.Size(146, 21);
+            this.comp2enc.TabIndex = 20;
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Location = new System.Drawing.Point(7, 60);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(114, 13);
+            this.label63.TabIndex = 19;
+            this.label63.Text = "Video Format/Encoder";
+            // 
+            // comp2delSrc
+            // 
+            this.comp2delSrc.AutoSize = true;
+            this.comp2delSrc.Location = new System.Drawing.Point(298, 34);
+            this.comp2delSrc.Name = "comp2delSrc";
+            this.comp2delSrc.Size = new System.Drawing.Size(15, 14);
+            this.comp2delSrc.TabIndex = 18;
+            this.comp2delSrc.UseVisualStyleBackColor = true;
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label64.Location = new System.Drawing.Point(6, 5);
+            this.label64.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(64, 18);
+            this.label64.TabIndex = 17;
+            this.label64.Text = "Options:";
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Location = new System.Drawing.Point(7, 35);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(179, 13);
+            this.label65.TabIndex = 16;
+            this.label65.Text = "Delete Source Files After Processing";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1389,6 +1779,8 @@
             this.tabPage11.PerformLayout();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
             this.tabPage12.ResumeLayout(false);
             this.tabPage12.PerformLayout();
             this.tabControl2.ResumeLayout(false);
@@ -1396,6 +1788,16 @@
             this.tabPage13.PerformLayout();
             this.tabPage14.ResumeLayout(false);
             this.tabPage14.PerformLayout();
+            this.speedTabControl.ResumeLayout(false);
+            this.tabPage15.ResumeLayout(false);
+            this.tabPage15.PerformLayout();
+            this.tabPage16.ResumeLayout(false);
+            this.tabPage16.PerformLayout();
+            this.compTabControl.ResumeLayout(false);
+            this.tabPage17.ResumeLayout(false);
+            this.tabPage17.PerformLayout();
+            this.tabPage18.ResumeLayout(false);
+            this.tabPage18.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1510,6 +1912,37 @@
         private System.Windows.Forms.Label label51;
         private System.Windows.Forms.CheckBox encDelSrc;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Panel speedDropPanel;
+        private System.Windows.Forms.TabControl speedTabControl;
+        private System.Windows.Forms.TabPage tabPage15;
+        private System.Windows.Forms.ComboBox changeSpeedCombox;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.CheckBox changeSpeedDelSrc;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TabPage tabPage16;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Panel compDropPanel;
+        private System.Windows.Forms.TabControl compTabControl;
+        private System.Windows.Forms.TabPage tabPage17;
+        private System.Windows.Forms.CheckBox comparisonDelSrc;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.ComboBox comparisonCrf;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.ComboBox comparisonEnc;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TabPage tabPage18;
+        private System.Windows.Forms.ComboBox comp2crf;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.ComboBox comp2enc;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.CheckBox comp2delSrc;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.Label label65;
     }
 }
 

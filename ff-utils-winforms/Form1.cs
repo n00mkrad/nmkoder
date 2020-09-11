@@ -32,6 +32,9 @@ namespace ff_utils_winforms
             InitCombox(encVidCrf, 1);
             InitCombox(encAudCodec, 1);
             InitCombox(encAudBitrate, 4);
+            InitCombox(changeSpeedCombox, 0);
+            InitCombox(comparisonEnc, 0);
+            InitCombox(comparisonCrf, 1);
         }
 
         void InitCombox(ComboBox cbox, int index)
@@ -40,10 +43,7 @@ namespace ff_utils_winforms
             cbox.Text = cbox.Items[index].ToString();
         }
 
-        private void extractFramesDropPanel_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
+        private void extractFramesDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
 
         private void extractFramesDropPanel_DragDrop(object sender, DragEventArgs e)
         {
@@ -61,10 +61,7 @@ namespace ff_utils_winforms
             }
         }
 
-        private void createVidDropPanel_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
+        private void createVidDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
 
         private void createVidDropPanel_DragDrop(object sender, DragEventArgs e)
         {
@@ -93,10 +90,7 @@ namespace ff_utils_winforms
             }
         }
 
-        private void loopDropPanel_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
+        private void loopDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
 
         private void loopDropPanel_DragDrop(object sender, DragEventArgs e)
         {
@@ -118,16 +112,52 @@ namespace ff_utils_winforms
             }
         }
 
-        private void encodeDropPanel_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
+        private void encodeDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
 
         private void encodeDropPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach(string file in files)
                 EncodeTabHelper.Run(file, encVidCodec, encAudCodec, encVidCrf, encAudBitrate, encDelSrc);
+        }
+
+        private void speedDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
+
+        private void speedDropPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (speedTabControl.SelectedIndex == 0) // Lossless
+            {
+                int times = changeSpeedCombox.GetInt();
+                foreach (string file in files)
+                    FFmpegCommands.ChangeSpeed(file, times, loopEncDelSrc.Checked);
+            }
+        }
+
+        private void compDropPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
+
+        private void compDropPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            string vcodec = "libx264";
+            
+
+            if (compTabControl.SelectedIndex == 0) // Side By Side
+            {
+                if (comparisonEnc.SelectedIndex == 1)
+                    vcodec = "libx265";
+                FFmpegCommands.CreateComparison(files[0], files[1], false, vcodec, comparisonCrf.GetInt(), comparisonDelSrc.Checked);
+            }
+                
+
+            if (compTabControl.SelectedIndex == 1) // Over-Under
+            {
+                if (comp2enc.SelectedIndex == 1)
+                    vcodec = "libx265";
+                FFmpegCommands.CreateComparison(files[0], files[1], true, vcodec, comp2crf.GetInt(), comp2delSrc.Checked);
+            }
         }
     }
 }

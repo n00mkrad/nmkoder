@@ -103,7 +103,7 @@ namespace ff_utils_winforms
 
         public static void EncodeMux (string inputFile, string vcodec, string acodec, int crf, int audioKbps, bool delSrc)
         {
-            string args = " -i \"INPATH\" -c:v VCODEC -crf CRF -pix_fmt yuv420p -movflags +faststart -c:a ACODEC -b:a ABITRATE OUTPATH";
+            string args = " -i \"INPATH\" -c:v VCODEC -crf CRF -pix_fmt yuv420p -movflags +faststart -c:a ACODEC -b:a ABITRATE \"OUTPATH\"";
             if (string.IsNullOrWhiteSpace(acodec))
                 args = args.Replace("-c:a", "-an");
             args = args.Replace("VCODEC", vcodec);
@@ -120,7 +120,7 @@ namespace ff_utils_winforms
 
         public static void CreateComparison(string input1, string input2, bool vertical, string vcodec, int crf, bool delSrc)
         {
-            string args = " -i \"INPATH1\" -i \"INPATH2\" -filter_complex \"hstack,format = yuv420p\" -vsync vfr -c:v VCODEC -crf CRF -movflags +faststart -an OUTPATH";
+            string args = " -i \"INPATH1\" -i \"INPATH2\" -filter_complex \"hstack,format = yuv420p\" -vsync vfr -c:v VCODEC -crf CRF -movflags +faststart -an \"OUTPATH\"";
             if(vertical)
                 args = args.Replace("hstack", "vstack");
             args = args.Replace("VCODEC", vcodec);

@@ -35,6 +35,8 @@ namespace ff_utils_winforms
             InitCombox(changeSpeedCombox, 0);
             InitCombox(comparisonEnc, 0);
             InitCombox(comparisonCrf, 1);
+            InitCombox(comp2enc, 0);
+            InitCombox(comp2crf, 1);
         }
 
         void InitCombox(ComboBox cbox, int index)

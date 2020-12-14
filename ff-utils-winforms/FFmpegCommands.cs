@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ff_utils_winforms
 {
@@ -35,7 +36,13 @@ namespace ff_utils_winforms
 
         public static void FramesToMp4 (string inputDir, bool useH265, int crf, int fps, string prefix, bool delSrc)
         {
-            int nums = IOUtils.GetFilenameCounterLength(Directory.GetFiles(inputDir, "*.png")[0], prefix);
+            string[] pngFrames = Directory.GetFiles(inputDir, "*.png");
+            if(pngFrames.Length < 1)
+            {
+                MessageBox.Show("Can't find any PNG frames in this folder!", "Message");
+                return;
+            }
+            int nums = IOUtils.GetFilenameCounterLength(pngFrames[0], prefix);
             string enc = "libx264";
             if (useH265) enc = "libx265";
             string args = "-framerate " + fps + " -i \"" + inputDir + "\\" + prefix + "%0" + nums + "d.png\" -c:v " + enc
@@ -71,7 +78,7 @@ namespace ff_utils_winforms
         {
             string pathNoExt = Path.ChangeExtension(inputFile, null);
             string ext = Path.GetExtension(inputFile);
-            string args = " -stream_loop " + times + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
+            string args = "-stream_loop " + times + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
             FFmpeg.Run(args);
             if (delSrc)
                 DeleteSource(inputFile);
@@ -83,7 +90,7 @@ namespace ff_utils_winforms
             string ext = Path.GetExtension(inputFile);
             string enc = "libx264";
             if (useH265) enc = "libx265";
-            string args = " -stream_loop " + times + " -i \"" + inputFile +  "\"  -c:v " + enc + " -crf " + crf + " -pix_fmt yuv420p -movflags +faststart -c:a copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
+            string args = "-stream_loop " + times + " -i \"" + inputFile +  "\"  -c:v " + enc + " -crf " + crf + " -pix_fmt yuv420p -movflags +faststart -c:a copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
             FFmpeg.Run(args);
             if (delSrc)
                 DeleteSource(inputFile);
@@ -95,7 +102,7 @@ namespace ff_utils_winforms
             string ext = Path.GetExtension(inputFile);
             float val = newSpeedPercent / 100f;
             string speedVal = (1f / val).ToString("0.0000").Replace(",", ".");
-            string args = " -itsscale " + speedVal + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + newSpeedPercent + "pcSpeed" + ext + "\"";
+            string args = "-itsscale " + speedVal + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + newSpeedPercent + "pcSpeed" + ext + "\"";
             FFmpeg.Run(args);
             if (delSrc)
                 DeleteSource(inputFile);
@@ -103,7 +110,7 @@ namespace ff_utils_winforms
 
         public static void EncodeMux (string inputFile, string vcodec, string acodec, int crf, int audioKbps, bool delSrc)
         {
-            string args = " -i \"INPATH\" -c:v VCODEC -crf CRF -pix_fmt yuv420p -movflags +faststart -c:a ACODEC -b:a ABITRATE \"OUTPATH\"";
+            string args = "-i \"INPATH\" -c:v VCODEC -crf CRF -pix_fmt yuv420p -movflags +faststart -c:a ACODEC -b:a ABITRATE \"OUTPATH\"";
             if (string.IsNullOrWhiteSpace(acodec))
                 args = args.Replace("-c:a", "-an");
             args = args.Replace("VCODEC", vcodec);
@@ -120,7 +127,7 @@ namespace ff_utils_winforms
 
         public static void CreateComparison(string input1, string input2, bool vertical, string vcodec, int crf, bool delSrc)
         {
-            string args = " -i \"INPATH1\" -i \"INPATH2\" -filter_complex \"hstack,format = yuv420p\" -vsync vfr -c:v VCODEC -crf CRF -movflags +faststart -an \"OUTPATH\"";
+            string args = "-i \"INPATH1\" -i \"INPATH2\" -filter_complex \"hstack,format = yuv420p\" -vsync vfr -c:v VCODEC -crf CRF \"OUTPATH\"";
             if(vertical)
                 args = args.Replace("hstack", "vstack");
             args = args.Replace("VCODEC", vcodec);
@@ -139,6 +146,21 @@ namespace ff_utils_winforms
                 DeleteSource(input1);
                 DeleteSource(input2);
             }
+        }
+
+        public enum Track { Audio, Video }
+        public static void Delay (string input, Track track, float delay, bool delSrc)
+        {
+            string suffix = (track == Track.Audio) ? "adelay" : "vdelay";
+            string outPath = Path.ChangeExtension(input, null) + $"-{suffix}" + Path.GetExtension(input);
+            string args = $"-i {input.Wrap()} ";
+            if(track == Track.Audio)
+                args += $"-itsoffset {delay.ToString().Replace(",", ".")} -i {input.Wrap()} -map 0:v -map 1:a -c copy {outPath.Wrap()}";
+            if (track == Track.Video)
+                args += $"-itsoffset {delay.ToString().Replace(",",".")} -i {input.Wrap()} -map 1:v -map 0:a -c copy {outPath.Wrap()}";
+            FFmpeg.Run(args);
+            if (delSrc)
+                DeleteSource(input);
         }
 
         static void DeleteSource (string path)

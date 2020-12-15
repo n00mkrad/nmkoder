@@ -1063,6 +1063,8 @@
             this.loopDropPanel.Name = "loopDropPanel";
             this.loopDropPanel.Size = new System.Drawing.Size(200, 200);
             this.loopDropPanel.TabIndex = 10;
+            this.loopDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.loopDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // speedPage
             // 
@@ -1109,6 +1111,8 @@
             this.speedDropPanel.Name = "speedDropPanel";
             this.speedDropPanel.Size = new System.Drawing.Size(200, 200);
             this.speedDropPanel.TabIndex = 15;
+            this.speedDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.speedDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // speedTabControl
             // 
@@ -1232,6 +1236,8 @@
             this.compDropPanel.Name = "compDropPanel";
             this.compDropPanel.Size = new System.Drawing.Size(200, 200);
             this.compDropPanel.TabIndex = 19;
+            this.compDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.compDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // compTabControl
             // 
@@ -1740,6 +1746,8 @@
             this.encodeDropPanel.Name = "encodeDropPanel";
             this.encodeDropPanel.Size = new System.Drawing.Size(200, 200);
             this.encodeDropPanel.TabIndex = 4;
+            this.encodeDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
+            this.encodeDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // delayPage
             // 

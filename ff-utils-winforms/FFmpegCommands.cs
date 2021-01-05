@@ -10,6 +10,9 @@ namespace ff_utils_winforms
 {
     class FFmpegCommands
     {
+        static string yuv420p = "-pix_fmt yuv420p";
+        static string faststart = "-movflags +faststart";
+
         public static void VideoToFrames (string inputFile, bool hdr, bool delSrc)
         {
             string frameFolderPath = Path.ChangeExtension(inputFile, null) + "-frames";
@@ -19,8 +22,7 @@ namespace ff_utils_winforms
             if (hdr) hdrStr = FFmpegStrings.hdrFilter;
             string args = "-i \"" + inputFile + "\" " + hdrStr + " \"" + frameFolderPath + "/%04d.png\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
         public static void ExtractSingleFrame(string inputFile, int frameNum, bool hdr, bool delSrc)
@@ -30,11 +32,10 @@ namespace ff_utils_winforms
             string args = "-i \"" + inputFile + "\" " + hdrStr
                 + " -vf \"select=eq(n\\," + frameNum + ")\" -vframes 1  \"" + inputFile + "-frame" + frameNum + ".png\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
-        public static void FramesToMp4 (string inputDir, bool useH265, int crf, int fps, string prefix, bool delSrc)
+        public static void FramesToMp4 (string inputDir, bool useH265, int crf, float fps, string prefix, bool delSrc)
         {
             string[] pngFrames = Directory.GetFiles(inputDir, "*.png");
             if(pngFrames.Length < 1)
@@ -43,35 +44,31 @@ namespace ff_utils_winforms
                 return;
             }
             int nums = IOUtils.GetFilenameCounterLength(pngFrames[0], prefix);
-            string enc = "libx264";
-            if (useH265) enc = "libx265";
-            string args = "-framerate " + fps + " -i \"" + inputDir + "\\" + prefix + "%0" + nums + "d.png\" -c:v " + enc
-                + " -crf " + crf + " -pix_fmt yuv420p -movflags +faststart -c:a copy \"" + inputDir + ".mp4\"";
+            string enc = useH265 ? "libx265" : "libx264";
+            string fpsStr = fps.ToString().Replace(",", ".");
+            string args = $"-r {fpsStr} -i \"{inputDir}\\{prefix}%{nums}d.png\" -c:v {enc} -crf {crf} {yuv420p} {faststart} -c:a copy \"{inputDir}.mp4\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputDir); // CHANGE CODE TO BE ABLE TO DELETE DIRECTORIES!!
+            DeleteSource(inputDir, delSrc);
         }
 
-        public static void FramesToApng (string inputDir, bool opti, int fps, string prefix, bool delSrc)
+        public static void FramesToApng (string inputDir, bool opti, float fps, string prefix, bool delSrc)
         {
             int nums = IOUtils.GetFilenameCounterLength(Directory.GetFiles(inputDir, "*.png")[0], prefix);
-            string filter = "";
-            if(opti) filter = "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
-            string args = "-framerate " + fps + " -i \"" + inputDir + "\\" + prefix + "%0" + nums + "d.png\" -f apng -plays 0 " + filter + " \"" + inputDir + "-anim.png\"";
+            string filter = opti ? "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
+            string fpsStr = fps.ToString().Replace(",", ".");
+            string args = $"-r {fpsStr} -i \"{inputDir}\\{prefix}%{nums}d.png\" -f apng -plays 0 {filter} \"{inputDir}.png\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputDir); // CHANGE CODE TO BE ABLE TO DELETE DIRECTORIES!!
+            DeleteSource(inputDir, delSrc);
         }
 
-        public static void FramesToGif (string inputDir, bool opti, int fps, string prefix, bool delSrc)
+        public static void FramesToGif (string inputDir, bool opti, float fps, string prefix, bool delSrc)
         {
             int nums = IOUtils.GetFilenameCounterLength(Directory.GetFiles(inputDir, "*.png")[0], prefix);
-            string filter = "";
-            if (opti) filter = "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"";
-            string args = "-framerate " + fps + " -i \"" + inputDir + "\\" + prefix + "%0" + nums + "d.png\" -f gif " + filter + " \"" + inputDir + ".gif\"";
+            string filter = opti ? "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
+            string fpsStr = fps.ToString().Replace(",", ".");
+            string args = $"-r {fpsStr} -i \"{inputDir}\\{prefix}%{nums}d.png\" -f gif {filter} \"{inputDir}.gif\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputDir); // CHANGE CODE TO BE ABLE TO DELETE DIRECTORIES!!
+            DeleteSource(inputDir, delSrc);
         }
 
         public static void LoopVideo (string inputFile, int times, bool delSrc)
@@ -80,8 +77,7 @@ namespace ff_utils_winforms
             string ext = Path.GetExtension(inputFile);
             string args = "-stream_loop " + times + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
         public static void LoopVideoEnc (string inputFile, int times, bool useH265, int crf, bool delSrc)
@@ -92,8 +88,7 @@ namespace ff_utils_winforms
             if (useH265) enc = "libx265";
             string args = "-stream_loop " + times + " -i \"" + inputFile +  "\"  -c:v " + enc + " -crf " + crf + " -pix_fmt yuv420p -movflags +faststart -c:a copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
         public static void ChangeSpeed(string inputFile, int newSpeedPercent, bool delSrc)
@@ -104,32 +99,23 @@ namespace ff_utils_winforms
             string speedVal = (1f / val).ToString("0.0000").Replace(",", ".");
             string args = "-itsscale " + speedVal + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + newSpeedPercent + "pcSpeed" + ext + "\"";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
         public static void EncodeMux (string inputFile, string vcodec, string acodec, int crf, int audioKbps, bool delSrc)
         {
-            string args = "-i \"INPATH\" -c:v VCODEC -crf CRF -pix_fmt yuv420p -movflags +faststart -c:a ACODEC -b:a ABITRATE \"OUTPATH\"";
-            if (string.IsNullOrWhiteSpace(acodec))
-                args = args.Replace("-c:a", "-an");
-            args = args.Replace("VCODEC", vcodec);
-            args = args.Replace("ACODEC", acodec);
-            args = args.Replace("CRF", crf.ToString());
-            args = args.Replace("ABITRATE", audioKbps.ToString());
-            args = args.Replace("INPATH", inputFile);
             string filenameNoExt = Path.ChangeExtension(inputFile, null);
-            args = args.Replace("OUTPATH", filenameNoExt + "-convert.mp4");
+            string outPath = filenameNoExt + "-convert.mp4";
+            string audioArg = string.IsNullOrWhiteSpace(acodec) ? "-an" : $"-c:a {acodec} -b:a {audioKbps}";
+            string args = $"-i {inputFile.Wrap()} -c:v {vcodec} -crf {crf} -pix_fmt yuv420p -movflags +faststart {audioArg} {outPath.Wrap()}";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(inputFile);
+            DeleteSource(inputFile, delSrc);
         }
 
         public static void CreateComparison(string input1, string input2, bool vertical, string vcodec, int crf, bool delSrc)
         {
-            string args = "-i \"INPATH1\" -i \"INPATH2\" -filter_complex \"hstack,format = yuv420p\" -vsync vfr -c:v VCODEC -crf CRF \"OUTPATH\"";
-            if(vertical)
-                args = args.Replace("hstack", "vstack");
+            string stackStr = vertical ? "\"vstack,format = yuv420p\"" : "\"hstack,format = yuv420p\"";
+            string args = $"-i \"INPATH1\" -i \"INPATH2\" -filter_complex {stackStr} -vsync vfr -c:v VCODEC -crf CRF \"OUTPATH\"";
             args = args.Replace("VCODEC", vcodec);
             args = args.Replace("CRF", crf.ToString());
             string fname1 = Path.ChangeExtension(input1, null);
@@ -141,11 +127,8 @@ namespace ff_utils_winforms
             else
                 args = args.Replace("OUTPATH", fname1 + "-" + fname2 + "-vcomparison.mp4");
             FFmpeg.Run(args);
-            if (delSrc)
-            {
-                DeleteSource(input1);
-                DeleteSource(input2);
-            }
+            DeleteSource(input1, delSrc);
+            DeleteSource(input2, delSrc);
         }
 
         public enum Track { Audio, Video }
@@ -159,15 +142,14 @@ namespace ff_utils_winforms
             if (track == Track.Video)
                 args += $"-itsoffset {delay.ToString().Replace(",",".")} -i {input.Wrap()} -map 1:v -map 0:a -c copy {outPath.Wrap()}";
             FFmpeg.Run(args);
-            if (delSrc)
-                DeleteSource(input);
+            DeleteSource(input, delSrc);
         }
 
-        static void DeleteSource (string path)
+        static void DeleteSource (string path, bool doDelete = true)
         {
+            if (!doDelete) return;
             Program.Print("Deleting input file: " + path);
-            if (File.Exists(path))
-                File.Delete(path);
+            IOUtils.TryDeleteIfExists(path);
         }
     }
 }

@@ -40,6 +40,16 @@ namespace ff_utils_winforms
             return value;
         }
 
+        public static float GetFloat(this TextBox textbox)
+        {
+            return textbox.Text.GetFloat();
+        }
+
+        public static float GetFloat(this ComboBox combobox)
+        {
+            return combobox.Text.GetFloat();
+        }
+
         public static string Wrap(this string path, bool addSpaceFront = false, bool addSpaceEnd = false)
         {
             string s = "\"" + path + "\"";

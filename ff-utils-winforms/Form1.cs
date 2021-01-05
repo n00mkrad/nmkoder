@@ -55,7 +55,7 @@ namespace ff_utils_winforms
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             if (mainTabControl.SelectedTab == extractFramesPage) ExtractFrames(files);
-            if (mainTabControl.SelectedTab == extractFramesPage) FramesToVideo(files);
+            if (mainTabControl.SelectedTab == framesToVideoPage) FramesToVideo(files);
             if (mainTabControl.SelectedTab == loopPage) Loop(files);
             if (mainTabControl.SelectedTab == speedPage) ChangeSpeed(files);
             if (mainTabControl.SelectedTab == comparisonPage) CreateComparison(files);
@@ -84,21 +84,21 @@ namespace ff_utils_winforms
             {
                 bool h265 = createMp4Enc.SelectedIndex == 1;
                 int crf = createMp4Crf.GetInt();
-                int fps = createMp4Fps.GetInt();
+                float fps = createMp4Fps.GetFloat();
                 foreach (string dir in dirs)
                     FFmpegCommands.FramesToMp4(dir, h265, crf, fps, createMp4Prefix.Text.Trim(), framesToMp4DelSrc.Checked);
             }
             if (createVidTabControl.SelectedIndex == 1) // Create APNG
             {
                 bool optimize = createApngOpti.Checked;
-                int fps = createApngFps.GetInt();
+                float fps = createApngFps.GetFloat();
                 foreach (string dir in dirs)
                     FFmpegCommands.FramesToApng(dir, optimize, fps, createApngPrefix.Text.Trim(), createApngDelSrc.Checked);
             }
             if (createVidTabControl.SelectedIndex == 2) // Create GIF
             {
                 bool optimize = createGifOpti.Checked;
-                int fps = createGifFps.GetInt();
+                float fps = createGifFps.GetFloat();
                 foreach (string dir in dirs)
                     FFmpegCommands.FramesToGif(dir, optimize, fps, createGifPrefix.Text.Trim(), createGifDelSrc.Checked);
             }

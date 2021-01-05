@@ -10,7 +10,7 @@ namespace ff_utils_winforms
 {
     class FFmpeg
     {
-        public static void Run (string args)
+        public static void Run (string args, string workingDir = "")
         {
             string ffmpegPath = IOUtils.GetFfmpegExePath();
             string ffmpegDir = Path.GetDirectoryName(ffmpegPath);

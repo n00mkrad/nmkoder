@@ -51,6 +51,16 @@ namespace ff_utils_winforms
             DeleteSource(inputDir, delSrc);
         }
 
+        public static void FramesToMp4Concat(string concatFile, string outPath, bool useH265, int crf, float fps)
+        {
+            string vfrFilename = Path.GetFileName(concatFile);
+            string enc = useH265 ? "libx265" : "libx264";
+            string rate = fps.ToString().Replace(",", ".");
+            string args = $"-loglevel error -vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -c:v {enc} -crf {crf} {yuv420p} {faststart} -c:a copy {outPath.Wrap()}";
+            //string args = $"-r {fpsStr} -i \"{inputDir}\\{prefix}%{nums}d.png\" -c:v {enc} -crf {crf} {yuv420p} {faststart} -c:a copy \"{inputDir}.mp4\"";
+            FFmpeg.Run(args);
+        }
+
         public static void FramesToApng (string inputDir, bool opti, float fps, string prefix, bool delSrc)
         {
             int nums = IOUtils.GetFilenameCounterLength(Directory.GetFiles(inputDir, "*.png")[0], prefix);

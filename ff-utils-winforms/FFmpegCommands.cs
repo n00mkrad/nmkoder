@@ -117,7 +117,7 @@ namespace ff_utils_winforms
         public static async Task EncodeMux (string inputFile, string outPath, string vCodec, float fps, string aCodec, int aCh, int crf, int audioKbps, bool delSrc)
         {
             string videoArg = string.IsNullOrWhiteSpace(vCodec) ? "-vn" : $"-c:v {vCodec}";
-            string fpsArg = (fps > 0) ? $"fps=fps={fps}" : "";
+            string fpsArg = (fps > 0) ? $"\"fps=fps={fps.ToStringDot()}\"" : "";
             string filters = FormatUtils.ConcatStrings(new string[] { divBy2, fpsArg });
             if (vCodec.Length > 1 && vCodec != "copy") videoArg += $" -crf {crf} -vf {filters} -pix_fmt yuv420p -movflags +faststart";
 

@@ -65,5 +65,13 @@ namespace ff_utils_winforms
         {
             return Directory.GetParent(path).FullName;
         }
+
+        public static string ToStringDot(this float f, string format = "")
+        {
+            if (string.IsNullOrWhiteSpace(format))
+                return f.ToString().Replace(",", ".");
+            else
+                return f.ToString(format).Replace(",", ".");
+        }
     }
 }

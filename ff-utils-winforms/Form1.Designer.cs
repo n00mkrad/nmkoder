@@ -142,6 +142,10 @@
             this.encPage = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.encAudioCh = new System.Windows.Forms.ComboBox();
+            this.label73 = new System.Windows.Forms.Label();
+            this.encContainer = new System.Windows.Forms.ComboBox();
+            this.label72 = new System.Windows.Forms.Label();
             this.encDelSrc = new System.Windows.Forms.CheckBox();
             this.label39 = new System.Windows.Forms.Label();
             this.encAudBitrate = new System.Windows.Forms.ComboBox();
@@ -180,6 +184,9 @@
             this.label69 = new System.Windows.Forms.Label();
             this.label70 = new System.Windows.Forms.Label();
             this.logTbox = new System.Windows.Forms.TextBox();
+            this.label74 = new System.Windows.Forms.Label();
+            this.encFpsBox = new System.Windows.Forms.TextBox();
+            this.label75 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -1453,6 +1460,13 @@
             // 
             // tabPage13
             // 
+            this.tabPage13.Controls.Add(this.label75);
+            this.tabPage13.Controls.Add(this.encFpsBox);
+            this.tabPage13.Controls.Add(this.label74);
+            this.tabPage13.Controls.Add(this.encAudioCh);
+            this.tabPage13.Controls.Add(this.label73);
+            this.tabPage13.Controls.Add(this.encContainer);
+            this.tabPage13.Controls.Add(this.label72);
             this.tabPage13.Controls.Add(this.encDelSrc);
             this.tabPage13.Controls.Add(this.label39);
             this.tabPage13.Controls.Add(this.encAudBitrate);
@@ -1472,10 +1486,60 @@
             this.tabPage13.Text = "Convert";
             this.tabPage13.UseVisualStyleBackColor = true;
             // 
+            // encAudioCh
+            // 
+            this.encAudioCh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encAudioCh.FormattingEnabled = true;
+            this.encAudioCh.Items.AddRange(new object[] {
+            "Same As Input",
+            "Mono",
+            "Stereo",
+            "5.1",
+            "6.1"});
+            this.encAudioCh.Location = new System.Drawing.Point(160, 132);
+            this.encAudioCh.Name = "encAudioCh";
+            this.encAudioCh.Size = new System.Drawing.Size(125, 21);
+            this.encAudioCh.TabIndex = 31;
+            // 
+            // label73
+            // 
+            this.label73.AutoSize = true;
+            this.label73.Location = new System.Drawing.Point(6, 160);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(128, 13);
+            this.label73.TabIndex = 30;
+            this.label73.Text = "Delete Source Afterwards";
+            // 
+            // encContainer
+            // 
+            this.encContainer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encContainer.FormattingEnabled = true;
+            this.encContainer.Items.AddRange(new object[] {
+            "Same As Input",
+            "MP4",
+            "MKV",
+            "WEBM",
+            "OGG (Audio Only)",
+            "M4A (Audio Only)",
+            "MP3 (Audio Only)"});
+            this.encContainer.Location = new System.Drawing.Point(160, 32);
+            this.encContainer.Name = "encContainer";
+            this.encContainer.Size = new System.Drawing.Size(125, 21);
+            this.encContainer.TabIndex = 29;
+            // 
+            // label72
+            // 
+            this.label72.AutoSize = true;
+            this.label72.Location = new System.Drawing.Point(7, 60);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(105, 13);
+            this.label72.TabIndex = 28;
+            this.label72.Text = "Video Format/Codec";
+            // 
             // encDelSrc
             // 
             this.encDelSrc.AutoSize = true;
-            this.encDelSrc.Location = new System.Drawing.Point(160, 85);
+            this.encDelSrc.Location = new System.Drawing.Point(160, 160);
             this.encDelSrc.Name = "encDelSrc";
             this.encDelSrc.Size = new System.Drawing.Size(15, 14);
             this.encDelSrc.TabIndex = 27;
@@ -1484,11 +1548,11 @@
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(7, 85);
+            this.label39.Location = new System.Drawing.Point(7, 135);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(128, 13);
+            this.label39.Size = new System.Drawing.Size(81, 13);
             this.label39.TabIndex = 26;
-            this.label39.Text = "Delete Source Afterwards";
+            this.label39.Text = "Audio Channels";
             // 
             // encAudBitrate
             // 
@@ -1504,7 +1568,7 @@
             "384",
             "512",
             "768"});
-            this.encAudBitrate.Location = new System.Drawing.Point(392, 57);
+            this.encAudBitrate.Location = new System.Drawing.Point(392, 107);
             this.encAudBitrate.Name = "encAudBitrate";
             this.encAudBitrate.Size = new System.Drawing.Size(75, 21);
             this.encAudBitrate.TabIndex = 25;
@@ -1512,7 +1576,7 @@
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(314, 60);
+            this.label42.Location = new System.Drawing.Point(314, 110);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(72, 13);
             this.label42.TabIndex = 24;
@@ -1523,14 +1587,15 @@
             this.encAudCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encAudCodec.FormattingEnabled = true;
             this.encAudCodec.Items.AddRange(new object[] {
-            "Remove",
+            "No Audio",
             "Source (Copy)",
             "AAC",
             "AC3",
             "MP3",
+            "Vorbis",
             "Opus",
             "FLAC"});
-            this.encAudCodec.Location = new System.Drawing.Point(160, 57);
+            this.encAudCodec.Location = new System.Drawing.Point(160, 107);
             this.encAudCodec.Name = "encAudCodec";
             this.encAudCodec.Size = new System.Drawing.Size(125, 21);
             this.encAudCodec.TabIndex = 23;
@@ -1538,7 +1603,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(7, 60);
+            this.label41.Location = new System.Drawing.Point(7, 110);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(105, 13);
             this.label41.TabIndex = 22;
@@ -1552,7 +1617,7 @@
             "20",
             "24",
             "28"});
-            this.encVidCrf.Location = new System.Drawing.Point(392, 32);
+            this.encVidCrf.Location = new System.Drawing.Point(392, 57);
             this.encVidCrf.Name = "encVidCrf";
             this.encVidCrf.Size = new System.Drawing.Size(75, 21);
             this.encVidCrf.TabIndex = 21;
@@ -1560,7 +1625,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(314, 35);
+            this.label40.Location = new System.Drawing.Point(314, 60);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(72, 13);
             this.label40.TabIndex = 20;
@@ -1571,11 +1636,12 @@
             this.encVidCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encVidCodec.FormattingEnabled = true;
             this.encVidCodec.Items.AddRange(new object[] {
+            "No Video",
             "Source (Copy)",
-            "MP4 (h264 using libx264)",
-            "MP4 (h265 using libx265)",
-            "MP4 (av1 using rav1ie)"});
-            this.encVidCodec.Location = new System.Drawing.Point(160, 32);
+            "h264 (libx264)",
+            "h265 (libx265)",
+            "AV1 (rav1ie)"});
+            this.encVidCodec.Location = new System.Drawing.Point(160, 57);
             this.encVidCodec.Name = "encVidCodec";
             this.encVidCodec.Size = new System.Drawing.Size(125, 21);
             this.encVidCodec.TabIndex = 19;
@@ -1585,9 +1651,9 @@
             this.label36.AutoSize = true;
             this.label36.Location = new System.Drawing.Point(7, 35);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(105, 13);
+            this.label36.Size = new System.Drawing.Size(87, 13);
             this.label36.TabIndex = 18;
-            this.label36.Text = "Video Format/Codec";
+            this.label36.Text = "Output Container";
             // 
             // label43
             // 
@@ -1902,6 +1968,33 @@
             this.logTbox.TabIndex = 8;
             this.logTbox.Text = "Ready...";
             // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(7, 85);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(91, 13);
+            this.label74.TabIndex = 32;
+            this.label74.Text = "Frame Rate (FPS)";
+            // 
+            // encFpsBox
+            // 
+            this.encFpsBox.Location = new System.Drawing.Point(160, 82);
+            this.encFpsBox.Name = "encFpsBox";
+            this.encFpsBox.Size = new System.Drawing.Size(125, 20);
+            this.encFpsBox.TabIndex = 33;
+            this.encFpsBox.Text = "0";
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.label75.Location = new System.Drawing.Point(314, 85);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(104, 13);
+            this.label75.TabIndex = 34;
+            this.label75.Text = "0 = Same As Source";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2120,6 +2213,13 @@
         private System.Windows.Forms.CheckBox delayDelSrc;
         private System.Windows.Forms.Label label69;
         private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.ComboBox encContainer;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.ComboBox encAudioCh;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.TextBox encFpsBox;
+        private System.Windows.Forms.Label label74;
     }
 }
 

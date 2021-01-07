@@ -29,10 +29,12 @@ namespace ff_utils_winforms
             InitCombox(loopEncTimes, 0);
             InitCombox(loopEnc, 0);
             InitCombox(loopCrf, 1);
-            InitCombox(encVidCodec, 0);
+            InitCombox(encContainer, 0);
+            InitCombox(encVidCodec, 1);
             InitCombox(encVidCrf, 1);
             InitCombox(encAudCodec, 1);
             InitCombox(encAudBitrate, 4);
+            InitCombox(encAudioCh, 0);
             InitCombox(changeSpeedCombox, 0);
             InitCombox(comparisonEnc, 0);
             InitCombox(comparisonCrf, 1);
@@ -135,7 +137,7 @@ namespace ff_utils_winforms
         void Encode(string[] files)
         {
             foreach (string file in files)
-                EncodeTabHelper.Run(file, encVidCodec, encAudCodec, encVidCrf, encAudBitrate, encDelSrc);
+                EncodeTabHelper.Run(file, encContainer, encVidCodec, encFpsBox, encAudCodec, encAudioCh, encVidCrf, encAudBitrate, encDelSrc);
         }
 
 

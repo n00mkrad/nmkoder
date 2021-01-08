@@ -88,24 +88,24 @@ namespace ff_utils_winforms
                     concatFileContent += $"file '{path}'\n";
                 File.WriteAllText(concatFile, concatFileContent);
 
-                if (createVidTabControl.SelectedIndex == 0) // Create MP4
+                if (createVidTabControl.SelectedTab == framesToVidTab) // Create MP4
                 {
                     bool h265 = createMp4Enc.SelectedIndex == 1;
                     int crf = createMp4Crf.GetInt();
                     float fps = createMp4Fps.GetFloat();
                     FFmpegCommands.FramesToMp4Concat(concatFile, dir + ".mp4", h265, crf, fps);
                 }
-                if (createVidTabControl.SelectedIndex == 1) // Create APNG
-                {
-                    bool optimize = createApngOpti.Checked;
-                    float fps = createApngFps.GetFloat();
-                    FFmpegCommands.FramesToApngConcat(concatFile, dir + ".png", optimize, fps);
-                }
-                if (createVidTabControl.SelectedIndex == 2) // Create GIF
+                if (createVidTabControl.SelectedTab == framesToGifTab) // Create GIF
                 {
                     bool optimize = createGifOpti.Checked;
                     float fps = createGifFps.GetFloat();
                     FFmpegCommands.FramesToGifConcat(concatFile, dir + ".gif", optimize, fps);
+                }
+                if (createVidTabControl.SelectedTab == framesToApngTab) // Create APNG
+                {
+                    bool optimize = createApngOpti.Checked;
+                    float fps = createApngFps.GetFloat();
+                    FFmpegCommands.FramesToApngConcat(concatFile, dir + ".png", optimize, fps);
                 }
 
                 //await Task.Delay(10);

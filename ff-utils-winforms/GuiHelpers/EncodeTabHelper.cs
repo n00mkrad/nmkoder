@@ -11,7 +11,7 @@ namespace ff_utils_winforms
 {
     class EncodeTabHelper
     {
-        public static void Run (string file, CB contCombox, CB vcodecCombox, TextBox fpsBox, CB acodecCombox, CB aMixCombox, CB vQualTbox, CB aQualTbox, CheckBox delSrc)
+        public static void Encode (string file, CB contCombox, CB vcodecCombox, TextBox fpsBox, CB acodecCombox, CB aMixCombox, CB vQualTbox, CB aQualTbox, CheckBox delSrc)
         {
             string vcodec = "";
             string acodec = "";
@@ -58,6 +58,18 @@ namespace ff_utils_winforms
 
             string outPath = filenameNoExt + $"-convert.{extension}";
             FFmpegCommands.EncodeMux(file, outPath, vcodec, fps, acodec, aChannels, crf, audioBitrate, delSrc.Checked);
+        }
+
+        public static void VideoToGif (string file, CheckBox optimizeCbox, TextBox fpsBox)
+        {
+            string outPath = Path.ChangeExtension(file, "gif");
+            FFmpegCommands.VideoToGif(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
+        }
+
+        public static void VideoToApng(string file, CheckBox optimizeCbox, TextBox fpsBox)
+        {
+            string outPath = Path.ChangeExtension(file, "png");
+            FFmpegCommands.VideoToApng(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
         }
     }
 }

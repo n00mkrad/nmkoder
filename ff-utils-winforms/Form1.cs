@@ -125,7 +125,15 @@ namespace ff_utils_winforms
         void Encode(string[] files)
         {
             foreach (string file in files)
-                EncodeTabHelper.Run(file, encContainer, encVidCodec, encFpsBox, encAudCodec, encAudioCh, encVidCrf, encAudBitrate, encDelSrc);
+            {
+                if(encodeTabControl.SelectedTab == encVidTab)
+                    EncodeTabHelper.Encode(file, encContainer, encVidCodec, encFpsBox, encAudCodec, encAudioCh, encVidCrf, encAudBitrate, encDelSrc);
+                if (encodeTabControl.SelectedTab == encGifTab)
+                    EncodeTabHelper.VideoToGif(file, vidToGifOptimize, vidToGifFps);
+                if (encodeTabControl.SelectedTab == encApngTab)
+                    EncodeTabHelper.VideoToApng(file, vidToApngOptimize, vidToApngFps);
+            }
+
         }
 
 

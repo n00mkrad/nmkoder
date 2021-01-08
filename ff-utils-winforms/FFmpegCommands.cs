@@ -71,11 +71,29 @@ namespace ff_utils_winforms
             await AvProcess.Run(args);
         }
 
+        public static async Task VideoToApng(string inputFile, string outPath, bool palette, float resampleFps)
+        {
+            string paletteFilter = palette ? "\"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
+            string fpsFilter = (resampleFps <= 0) ? "" : $"\"fps=fps={resampleFps.ToStringDot()}\"";
+            string filters = FormatUtils.ConcatStrings(new string[] { paletteFilter, fpsFilter });
+            string args = $"-i {inputFile} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
+            await AvProcess.Run(args);
+        }
+
         public static async Task FramesToGifConcat(string concatFile, string outPath, bool palette, float fps, int colors = 128)
         {
             string paletteFilter = palette ? $"-vf \"split[s0][s1];[s0]palettegen={colors}[p];[s1][p]paletteuse=dither=floyd_steinberg:diff_mode=rectangle\"" : "";
             string rate = fps.ToStringDot();
             string args = $"-loglevel error -vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f gif {paletteFilter} {outPath.Wrap()}";
+            await AvProcess.Run(args);
+        }
+
+        public static async Task VideoToGif(string inputFile, string outPath, bool palette, float resampleFps, int colors = 128)
+        {
+            string paletteFilter = palette ? $"\"split[s0][s1];[s0]palettegen={colors}[p];[s1][p]paletteuse=dither=floyd_steinberg:diff_mode=rectangle\"" : "";
+            string fpsFilter = (resampleFps <= 0) ? "" : $"\"fps=fps={resampleFps.ToStringDot()}\"";
+            string filters = FormatUtils.ConcatStrings(new string[] { paletteFilter, fpsFilter });
+            string args = $"-i {inputFile} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 

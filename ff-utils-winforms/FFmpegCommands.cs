@@ -76,7 +76,7 @@ namespace ff_utils_winforms
             string paletteFilter = palette ? "\"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
             string fpsFilter = (resampleFps <= 0) ? "" : $"\"fps=fps={resampleFps.ToStringDot()}\"";
             string filters = FormatUtils.ConcatStrings(new string[] { paletteFilter, fpsFilter });
-            string args = $"-i {inputFile} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
+            string args = $"-i {inputFile.Wrap()} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 
@@ -93,7 +93,7 @@ namespace ff_utils_winforms
             string paletteFilter = palette ? $"\"split[s0][s1];[s0]palettegen={colors}[p];[s1][p]paletteuse=dither=floyd_steinberg:diff_mode=rectangle\"" : "";
             string fpsFilter = (resampleFps <= 0) ? "" : $"\"fps=fps={resampleFps.ToStringDot()}\"";
             string filters = FormatUtils.ConcatStrings(new string[] { paletteFilter, fpsFilter });
-            string args = $"-i {inputFile} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
+            string args = $"-i {inputFile.Wrap()} -f gif {((filters.Length > 2) ? $"-vf {filters}" : "")} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 

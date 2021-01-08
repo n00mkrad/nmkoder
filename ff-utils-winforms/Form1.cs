@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ff_utils_winforms.GuiHelpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,10 +37,8 @@ namespace ff_utils_winforms
             InitCombox(encAudBitrate, 4);
             InitCombox(encAudioCh, 0);
             InitCombox(changeSpeedCombox, 0);
-            InitCombox(comparisonEnc, 0);
+            InitCombox(comparisonType, 0);
             InitCombox(comparisonCrf, 1);
-            InitCombox(comp2enc, 0);
-            InitCombox(comp2crf, 1);
             InitCombox(delayTrackCombox, 0);
         }
 
@@ -153,21 +152,7 @@ namespace ff_utils_winforms
 
         void CreateComparison(string[] files)
         {
-            string vcodec = "libx264";
-
-            if (compTabControl.SelectedIndex == 0) // Side By Side
-            {
-                if (comparisonEnc.SelectedIndex == 1)
-                    vcodec = "libx265";
-                FFmpegCommands.CreateComparison(files[0], files[1], false, vcodec, comparisonCrf.GetInt(), comparisonDelSrc.Checked);
-            }
-
-            if (compTabControl.SelectedIndex == 1) // Over-Under
-            {
-                if (comp2enc.SelectedIndex == 1)
-                    vcodec = "libx265";
-                FFmpegCommands.CreateComparison(files[0], files[1], true, vcodec, comp2crf.GetInt(), comp2delSrc.Checked);
-            }
+            ComparisonHelper.CreateComparison(files, comparisonType.SelectedIndex == 1, comparisonCrf.GetInt());
         }
 
         void Delay(string[] files)

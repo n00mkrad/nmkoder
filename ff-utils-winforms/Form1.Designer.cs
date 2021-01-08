@@ -126,19 +126,9 @@
             this.tabPage17 = new System.Windows.Forms.TabPage();
             this.comparisonCrf = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
-            this.comparisonEnc = new System.Windows.Forms.ComboBox();
-            this.label61 = new System.Windows.Forms.Label();
             this.comparisonDelSrc = new System.Windows.Forms.CheckBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
-            this.tabPage18 = new System.Windows.Forms.TabPage();
-            this.comp2crf = new System.Windows.Forms.ComboBox();
-            this.label62 = new System.Windows.Forms.Label();
-            this.comp2enc = new System.Windows.Forms.ComboBox();
-            this.label63 = new System.Windows.Forms.Label();
-            this.comp2delSrc = new System.Windows.Forms.CheckBox();
-            this.label64 = new System.Windows.Forms.Label();
-            this.label65 = new System.Windows.Forms.Label();
             this.encPage = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage13 = new System.Windows.Forms.TabPage();
@@ -157,16 +147,6 @@
             this.encVidCodec = new System.Windows.Forms.ComboBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
-            this.tabPage14 = new System.Windows.Forms.TabPage();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.label48 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.encodeDropPanel = new System.Windows.Forms.Panel();
@@ -187,6 +167,8 @@
             this.label74 = new System.Windows.Forms.Label();
             this.encFpsBox = new System.Windows.Forms.TextBox();
             this.label75 = new System.Windows.Forms.Label();
+            this.comparisonType = new System.Windows.Forms.ComboBox();
+            this.label47 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -207,11 +189,9 @@
             this.comparisonPage.SuspendLayout();
             this.compTabControl.SuspendLayout();
             this.tabPage17.SuspendLayout();
-            this.tabPage18.SuspendLayout();
             this.encPage.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage13.SuspendLayout();
-            this.tabPage14.SuspendLayout();
             this.delayPage.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
@@ -1249,7 +1229,6 @@
             // compTabControl
             // 
             this.compTabControl.Controls.Add(this.tabPage17);
-            this.compTabControl.Controls.Add(this.tabPage18);
             this.compTabControl.Location = new System.Drawing.Point(7, 105);
             this.compTabControl.Name = "compTabControl";
             this.compTabControl.SelectedIndex = 0;
@@ -1258,10 +1237,10 @@
             // 
             // tabPage17
             // 
+            this.tabPage17.Controls.Add(this.comparisonType);
+            this.tabPage17.Controls.Add(this.label47);
             this.tabPage17.Controls.Add(this.comparisonCrf);
             this.tabPage17.Controls.Add(this.label56);
-            this.tabPage17.Controls.Add(this.comparisonEnc);
-            this.tabPage17.Controls.Add(this.label61);
             this.tabPage17.Controls.Add(this.comparisonDelSrc);
             this.tabPage17.Controls.Add(this.label57);
             this.tabPage17.Controls.Add(this.label58);
@@ -1270,7 +1249,7 @@
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage17.Size = new System.Drawing.Size(473, 195);
             this.tabPage17.TabIndex = 1;
-            this.tabPage17.Text = "Side-By-Side Comparison";
+            this.tabPage17.Text = "Create Comparison";
             this.tabPage17.UseVisualStyleBackColor = true;
             // 
             // comparisonCrf
@@ -1294,27 +1273,6 @@
             this.label56.Size = new System.Drawing.Size(179, 13);
             this.label56.TabIndex = 14;
             this.label56.Text = "Quality (CRF Value) - Lower Is Better";
-            // 
-            // comparisonEnc
-            // 
-            this.comparisonEnc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comparisonEnc.FormattingEnabled = true;
-            this.comparisonEnc.Items.AddRange(new object[] {
-            "MP4 (h264)",
-            "MP4 (h265)"});
-            this.comparisonEnc.Location = new System.Drawing.Point(298, 57);
-            this.comparisonEnc.Name = "comparisonEnc";
-            this.comparisonEnc.Size = new System.Drawing.Size(146, 21);
-            this.comparisonEnc.TabIndex = 13;
-            // 
-            // label61
-            // 
-            this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(7, 60);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(114, 13);
-            this.label61.TabIndex = 12;
-            this.label61.Text = "Video Format/Encoder";
             // 
             // comparisonDelSrc
             // 
@@ -1345,95 +1303,6 @@
             this.label58.TabIndex = 8;
             this.label58.Text = "Delete Source Files After Processing";
             // 
-            // tabPage18
-            // 
-            this.tabPage18.Controls.Add(this.comp2crf);
-            this.tabPage18.Controls.Add(this.label62);
-            this.tabPage18.Controls.Add(this.comp2enc);
-            this.tabPage18.Controls.Add(this.label63);
-            this.tabPage18.Controls.Add(this.comp2delSrc);
-            this.tabPage18.Controls.Add(this.label64);
-            this.tabPage18.Controls.Add(this.label65);
-            this.tabPage18.Location = new System.Drawing.Point(4, 22);
-            this.tabPage18.Name = "tabPage18";
-            this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage18.Size = new System.Drawing.Size(473, 195);
-            this.tabPage18.TabIndex = 2;
-            this.tabPage18.Text = "Over-Under Comparison";
-            this.tabPage18.UseVisualStyleBackColor = true;
-            // 
-            // comp2crf
-            // 
-            this.comp2crf.FormattingEnabled = true;
-            this.comp2crf.Items.AddRange(new object[] {
-            "16",
-            "20",
-            "24",
-            "28"});
-            this.comp2crf.Location = new System.Drawing.Point(298, 82);
-            this.comp2crf.Name = "comp2crf";
-            this.comp2crf.Size = new System.Drawing.Size(146, 21);
-            this.comp2crf.TabIndex = 22;
-            // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(7, 85);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(179, 13);
-            this.label62.TabIndex = 21;
-            this.label62.Text = "Quality (CRF Value) - Lower Is Better";
-            // 
-            // comp2enc
-            // 
-            this.comp2enc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comp2enc.FormattingEnabled = true;
-            this.comp2enc.Items.AddRange(new object[] {
-            "MP4 (h264)",
-            "MP4 (h265)"});
-            this.comp2enc.Location = new System.Drawing.Point(298, 57);
-            this.comp2enc.Name = "comp2enc";
-            this.comp2enc.Size = new System.Drawing.Size(146, 21);
-            this.comp2enc.TabIndex = 20;
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(7, 60);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(114, 13);
-            this.label63.TabIndex = 19;
-            this.label63.Text = "Video Format/Encoder";
-            // 
-            // comp2delSrc
-            // 
-            this.comp2delSrc.AutoSize = true;
-            this.comp2delSrc.Location = new System.Drawing.Point(298, 34);
-            this.comp2delSrc.Name = "comp2delSrc";
-            this.comp2delSrc.Size = new System.Drawing.Size(15, 14);
-            this.comp2delSrc.TabIndex = 18;
-            this.comp2delSrc.UseVisualStyleBackColor = true;
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label64.Location = new System.Drawing.Point(6, 5);
-            this.label64.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(64, 18);
-            this.label64.TabIndex = 17;
-            this.label64.Text = "Options:";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(7, 35);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(179, 13);
-            this.label65.TabIndex = 16;
-            this.label65.Text = "Delete Source Files After Processing";
-            // 
             // encPage
             // 
             this.encPage.Controls.Add(this.tabControl2);
@@ -1451,7 +1320,6 @@
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage13);
-            this.tabControl2.Controls.Add(this.tabPage14);
             this.tabControl2.Location = new System.Drawing.Point(6, 105);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
@@ -1665,121 +1533,6 @@
             this.label43.Size = new System.Drawing.Size(64, 18);
             this.label43.TabIndex = 9;
             this.label43.Text = "Options:";
-            // 
-            // tabPage14
-            // 
-            this.tabPage14.AutoScroll = true;
-            this.tabPage14.Controls.Add(this.comboBox2);
-            this.tabPage14.Controls.Add(this.label47);
-            this.tabPage14.Controls.Add(this.comboBox3);
-            this.tabPage14.Controls.Add(this.label48);
-            this.tabPage14.Controls.Add(this.comboBox4);
-            this.tabPage14.Controls.Add(this.label49);
-            this.tabPage14.Controls.Add(this.checkBox2);
-            this.tabPage14.Controls.Add(this.label50);
-            this.tabPage14.Controls.Add(this.label51);
-            this.tabPage14.Location = new System.Drawing.Point(4, 22);
-            this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(473, 195);
-            this.tabPage14.TabIndex = 0;
-            this.tabPage14.Text = "Extract Audio";
-            this.tabPage14.UseVisualStyleBackColor = true;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "2",
-            "4",
-            "8",
-            "10",
-            "20"});
-            this.comboBox2.Location = new System.Drawing.Point(298, 107);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(146, 21);
-            this.comboBox2.TabIndex = 13;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(7, 110);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(114, 13);
-            this.label47.TabIndex = 12;
-            this.label47.Text = "Loop This Many Times";
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "16",
-            "20",
-            "24",
-            "28"});
-            this.comboBox3.Location = new System.Drawing.Point(298, 82);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(146, 21);
-            this.comboBox3.TabIndex = 11;
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(7, 85);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(179, 13);
-            this.label48.TabIndex = 10;
-            this.label48.Text = "Quality (CRF Value) - Lower Is Better";
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "MP4 (h264)",
-            "MP4 (h265)"});
-            this.comboBox4.Location = new System.Drawing.Point(298, 57);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(146, 21);
-            this.comboBox4.TabIndex = 9;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(7, 60);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(114, 13);
-            this.label49.TabIndex = 8;
-            this.label49.Text = "Video Format/Encoder";
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(298, 34);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label50.Location = new System.Drawing.Point(6, 5);
-            this.label50.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(64, 18);
-            this.label50.TabIndex = 6;
-            this.label50.Text = "Options:";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(7, 35);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(174, 13);
-            this.label51.TabIndex = 5;
-            this.label51.Text = "Delete Source File After Processing";
             // 
             // label34
             // 
@@ -1995,6 +1748,27 @@
             this.label75.TabIndex = 34;
             this.label75.Text = "0 = Same As Source";
             // 
+            // comparisonType
+            // 
+            this.comparisonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comparisonType.FormattingEnabled = true;
+            this.comparisonType.Items.AddRange(new object[] {
+            "Horizontal (Side-By-Side)",
+            "Vertical (Over-Under)"});
+            this.comparisonType.Location = new System.Drawing.Point(298, 57);
+            this.comparisonType.Name = "comparisonType";
+            this.comparisonType.Size = new System.Drawing.Size(146, 21);
+            this.comparisonType.TabIndex = 31;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(7, 60);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(89, 13);
+            this.label47.TabIndex = 30;
+            this.label47.Text = "Comparison Type";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2041,15 +1815,11 @@
             this.compTabControl.ResumeLayout(false);
             this.tabPage17.ResumeLayout(false);
             this.tabPage17.PerformLayout();
-            this.tabPage18.ResumeLayout(false);
-            this.tabPage18.PerformLayout();
             this.encPage.ResumeLayout(false);
             this.encPage.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage13.ResumeLayout(false);
             this.tabPage13.PerformLayout();
-            this.tabPage14.ResumeLayout(false);
-            this.tabPage14.PerformLayout();
             this.delayPage.ResumeLayout(false);
             this.delayPage.PerformLayout();
             this.tabControl3.ResumeLayout(false);
@@ -2157,16 +1927,6 @@
         private System.Windows.Forms.ComboBox encVidCodec;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TabPage tabPage14;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.Label label51;
         private System.Windows.Forms.CheckBox encDelSrc;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label59;
@@ -2190,16 +1950,6 @@
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.ComboBox comparisonCrf;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.ComboBox comparisonEnc;
-        private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.TabPage tabPage18;
-        private System.Windows.Forms.ComboBox comp2crf;
-        private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.ComboBox comp2enc;
-        private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.CheckBox comp2delSrc;
-        private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.Label label65;
         private System.Windows.Forms.TabPage delayPage;
         private System.Windows.Forms.Label label66;
         private System.Windows.Forms.Label label67;
@@ -2220,6 +1970,8 @@
         private System.Windows.Forms.Label label75;
         private System.Windows.Forms.TextBox encFpsBox;
         private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.ComboBox comparisonType;
+        private System.Windows.Forms.Label label47;
     }
 }
 

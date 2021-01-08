@@ -79,19 +79,7 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.loopTimesLossless = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.loopLosslessDelSrc = new System.Windows.Forms.CheckBox();
             this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
-            this.loopEncTimes = new System.Windows.Forms.ComboBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.loopCrf = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.loopEnc = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.loopEncDelSrc = new System.Windows.Forms.CheckBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.loopDropPanel = new System.Windows.Forms.Panel();
@@ -103,9 +91,7 @@
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.changeSpeedCombox = new System.Windows.Forms.ComboBox();
             this.label46 = new System.Windows.Forms.Label();
-            this.changeSpeedDelSrc = new System.Windows.Forms.CheckBox();
             this.label52 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
             this.comparisonPage = new System.Windows.Forms.TabPage();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -116,9 +102,7 @@
             this.label47 = new System.Windows.Forms.Label();
             this.comparisonCrf = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
-            this.comparisonDelSrc = new System.Windows.Forms.CheckBox();
             this.label57 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
             this.encPage = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage13 = new System.Windows.Forms.TabPage();
@@ -153,9 +137,7 @@
             this.label71 = new System.Windows.Forms.Label();
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
-            this.delayDelSrc = new System.Windows.Forms.CheckBox();
             this.label69 = new System.Windows.Forms.Label();
-            this.label70 = new System.Windows.Forms.Label();
             this.logTbox = new System.Windows.Forms.TextBox();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
@@ -170,7 +152,6 @@
             this.loopPage.SuspendLayout();
             this.loopTabControl.SuspendLayout();
             this.tabPage11.SuspendLayout();
-            this.tabPage10.SuspendLayout();
             this.speedPage.SuspendLayout();
             this.speedTabControl.SuspendLayout();
             this.tabPage15.SuspendLayout();
@@ -242,7 +223,7 @@
             // tonemapHdrCbox
             // 
             this.tonemapHdrCbox.AutoSize = true;
-            this.tonemapHdrCbox.Location = new System.Drawing.Point(321, 65);
+            this.tonemapHdrCbox.Location = new System.Drawing.Point(321, 60);
             this.tonemapHdrCbox.Name = "tonemapHdrCbox";
             this.tonemapHdrCbox.Size = new System.Drawing.Size(15, 14);
             this.tonemapHdrCbox.TabIndex = 16;
@@ -251,7 +232,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(7, 65);
+            this.label17.Location = new System.Drawing.Point(7, 60);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(117, 13);
             this.label17.TabIndex = 15;
@@ -709,7 +690,6 @@
             // loopTabControl
             // 
             this.loopTabControl.Controls.Add(this.tabPage11);
-            this.loopTabControl.Controls.Add(this.tabPage10);
             this.loopTabControl.Location = new System.Drawing.Point(7, 105);
             this.loopTabControl.Name = "loopTabControl";
             this.loopTabControl.SelectedIndex = 0;
@@ -720,9 +700,7 @@
             // 
             this.tabPage11.Controls.Add(this.loopTimesLossless);
             this.tabPage11.Controls.Add(this.label28);
-            this.tabPage11.Controls.Add(this.loopLosslessDelSrc);
             this.tabPage11.Controls.Add(this.label37);
-            this.tabPage11.Controls.Add(this.label38);
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
@@ -740,7 +718,7 @@
             "8",
             "10",
             "20"});
-            this.loopTimesLossless.Location = new System.Drawing.Point(298, 57);
+            this.loopTimesLossless.Location = new System.Drawing.Point(298, 32);
             this.loopTimesLossless.Name = "loopTimesLossless";
             this.loopTimesLossless.Size = new System.Drawing.Size(146, 21);
             this.loopTimesLossless.TabIndex = 15;
@@ -748,20 +726,11 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(7, 60);
+            this.label28.Location = new System.Drawing.Point(7, 35);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(114, 13);
             this.label28.TabIndex = 14;
             this.label28.Text = "Loop This Many Times";
-            // 
-            // loopLosslessDelSrc
-            // 
-            this.loopLosslessDelSrc.AutoSize = true;
-            this.loopLosslessDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.loopLosslessDelSrc.Name = "loopLosslessDelSrc";
-            this.loopLosslessDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.loopLosslessDelSrc.TabIndex = 10;
-            this.loopLosslessDelSrc.UseVisualStyleBackColor = true;
             // 
             // label37
             // 
@@ -773,130 +742,6 @@
             this.label37.Size = new System.Drawing.Size(64, 18);
             this.label37.TabIndex = 9;
             this.label37.Text = "Options:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(7, 35);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(174, 13);
-            this.label38.TabIndex = 8;
-            this.label38.Text = "Delete Source File After Processing";
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.AutoScroll = true;
-            this.tabPage10.Controls.Add(this.loopEncTimes);
-            this.tabPage10.Controls.Add(this.label29);
-            this.tabPage10.Controls.Add(this.loopCrf);
-            this.tabPage10.Controls.Add(this.label30);
-            this.tabPage10.Controls.Add(this.loopEnc);
-            this.tabPage10.Controls.Add(this.label31);
-            this.tabPage10.Controls.Add(this.loopEncDelSrc);
-            this.tabPage10.Controls.Add(this.label32);
-            this.tabPage10.Controls.Add(this.label33);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(473, 195);
-            this.tabPage10.TabIndex = 0;
-            this.tabPage10.Text = "Loop With Re-Encoding";
-            this.tabPage10.UseVisualStyleBackColor = true;
-            // 
-            // loopEncTimes
-            // 
-            this.loopEncTimes.FormattingEnabled = true;
-            this.loopEncTimes.Items.AddRange(new object[] {
-            "2",
-            "4",
-            "8",
-            "10",
-            "20"});
-            this.loopEncTimes.Location = new System.Drawing.Point(298, 107);
-            this.loopEncTimes.Name = "loopEncTimes";
-            this.loopEncTimes.Size = new System.Drawing.Size(146, 21);
-            this.loopEncTimes.TabIndex = 13;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(7, 110);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(114, 13);
-            this.label29.TabIndex = 12;
-            this.label29.Text = "Loop This Many Times";
-            // 
-            // loopCrf
-            // 
-            this.loopCrf.FormattingEnabled = true;
-            this.loopCrf.Items.AddRange(new object[] {
-            "16",
-            "20",
-            "24",
-            "28"});
-            this.loopCrf.Location = new System.Drawing.Point(298, 82);
-            this.loopCrf.Name = "loopCrf";
-            this.loopCrf.Size = new System.Drawing.Size(146, 21);
-            this.loopCrf.TabIndex = 11;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(7, 85);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(179, 13);
-            this.label30.TabIndex = 10;
-            this.label30.Text = "Quality (CRF Value) - Lower Is Better";
-            // 
-            // loopEnc
-            // 
-            this.loopEnc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.loopEnc.FormattingEnabled = true;
-            this.loopEnc.Items.AddRange(new object[] {
-            "MP4 (h264)",
-            "MP4 (h265)"});
-            this.loopEnc.Location = new System.Drawing.Point(298, 57);
-            this.loopEnc.Name = "loopEnc";
-            this.loopEnc.Size = new System.Drawing.Size(146, 21);
-            this.loopEnc.TabIndex = 9;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(7, 60);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(114, 13);
-            this.label31.TabIndex = 8;
-            this.label31.Text = "Video Format/Encoder";
-            // 
-            // loopEncDelSrc
-            // 
-            this.loopEncDelSrc.AutoSize = true;
-            this.loopEncDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.loopEncDelSrc.Name = "loopEncDelSrc";
-            this.loopEncDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.loopEncDelSrc.TabIndex = 7;
-            this.loopEncDelSrc.UseVisualStyleBackColor = true;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label32.Location = new System.Drawing.Point(6, 5);
-            this.label32.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(64, 18);
-            this.label32.TabIndex = 6;
-            this.label32.Text = "Options:";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(7, 35);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(174, 13);
-            this.label33.TabIndex = 5;
-            this.label33.Text = "Delete Source File After Processing";
             // 
             // label44
             // 
@@ -993,9 +838,7 @@
             // 
             this.tabPage15.Controls.Add(this.changeSpeedCombox);
             this.tabPage15.Controls.Add(this.label46);
-            this.tabPage15.Controls.Add(this.changeSpeedDelSrc);
             this.tabPage15.Controls.Add(this.label52);
-            this.tabPage15.Controls.Add(this.label53);
             this.tabPage15.Location = new System.Drawing.Point(4, 22);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
@@ -1014,7 +857,7 @@
             "125%",
             "150%",
             "200%"});
-            this.changeSpeedCombox.Location = new System.Drawing.Point(298, 57);
+            this.changeSpeedCombox.Location = new System.Drawing.Point(298, 32);
             this.changeSpeedCombox.Name = "changeSpeedCombox";
             this.changeSpeedCombox.Size = new System.Drawing.Size(146, 21);
             this.changeSpeedCombox.TabIndex = 15;
@@ -1022,20 +865,11 @@
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(7, 60);
+            this.label46.Location = new System.Drawing.Point(7, 35);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(93, 13);
             this.label46.TabIndex = 14;
             this.label46.Text = "New Video Speed";
-            // 
-            // changeSpeedDelSrc
-            // 
-            this.changeSpeedDelSrc.AutoSize = true;
-            this.changeSpeedDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.changeSpeedDelSrc.Name = "changeSpeedDelSrc";
-            this.changeSpeedDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.changeSpeedDelSrc.TabIndex = 10;
-            this.changeSpeedDelSrc.UseVisualStyleBackColor = true;
             // 
             // label52
             // 
@@ -1047,15 +881,6 @@
             this.label52.Size = new System.Drawing.Size(64, 18);
             this.label52.TabIndex = 9;
             this.label52.Text = "Options:";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(7, 35);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(174, 13);
-            this.label53.TabIndex = 8;
-            this.label53.Text = "Delete Source File After Processing";
             // 
             // comparisonPage
             // 
@@ -1120,9 +945,7 @@
             this.tabPage17.Controls.Add(this.label47);
             this.tabPage17.Controls.Add(this.comparisonCrf);
             this.tabPage17.Controls.Add(this.label56);
-            this.tabPage17.Controls.Add(this.comparisonDelSrc);
             this.tabPage17.Controls.Add(this.label57);
-            this.tabPage17.Controls.Add(this.label58);
             this.tabPage17.Location = new System.Drawing.Point(4, 22);
             this.tabPage17.Name = "tabPage17";
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
@@ -1138,7 +961,7 @@
             this.comparisonType.Items.AddRange(new object[] {
             "Horizontal (Side-By-Side)",
             "Vertical (Over-Under)"});
-            this.comparisonType.Location = new System.Drawing.Point(298, 57);
+            this.comparisonType.Location = new System.Drawing.Point(298, 32);
             this.comparisonType.Name = "comparisonType";
             this.comparisonType.Size = new System.Drawing.Size(146, 21);
             this.comparisonType.TabIndex = 31;
@@ -1146,7 +969,7 @@
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(7, 60);
+            this.label47.Location = new System.Drawing.Point(7, 35);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(89, 13);
             this.label47.TabIndex = 30;
@@ -1160,7 +983,7 @@
             "20",
             "24",
             "28"});
-            this.comparisonCrf.Location = new System.Drawing.Point(298, 82);
+            this.comparisonCrf.Location = new System.Drawing.Point(298, 57);
             this.comparisonCrf.Name = "comparisonCrf";
             this.comparisonCrf.Size = new System.Drawing.Size(146, 21);
             this.comparisonCrf.TabIndex = 15;
@@ -1168,20 +991,11 @@
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(7, 85);
+            this.label56.Location = new System.Drawing.Point(7, 60);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(179, 13);
             this.label56.TabIndex = 14;
             this.label56.Text = "Quality (CRF Value) - Lower Is Better";
-            // 
-            // comparisonDelSrc
-            // 
-            this.comparisonDelSrc.AutoSize = true;
-            this.comparisonDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.comparisonDelSrc.Name = "comparisonDelSrc";
-            this.comparisonDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.comparisonDelSrc.TabIndex = 10;
-            this.comparisonDelSrc.UseVisualStyleBackColor = true;
             // 
             // label57
             // 
@@ -1193,15 +1007,6 @@
             this.label57.Size = new System.Drawing.Size(64, 18);
             this.label57.TabIndex = 9;
             this.label57.Text = "Options:";
-            // 
-            // label58
-            // 
-            this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(7, 35);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(179, 13);
-            this.label58.TabIndex = 8;
-            this.label58.Text = "Delete Source Files After Processing";
             // 
             // encPage
             // 
@@ -1558,9 +1363,7 @@
             this.tabPage20.Controls.Add(this.label71);
             this.tabPage20.Controls.Add(this.delayTrackCombox);
             this.tabPage20.Controls.Add(this.label68);
-            this.tabPage20.Controls.Add(this.delayDelSrc);
             this.tabPage20.Controls.Add(this.label69);
-            this.tabPage20.Controls.Add(this.label70);
             this.tabPage20.Location = new System.Drawing.Point(4, 22);
             this.tabPage20.Name = "tabPage20";
             this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
@@ -1571,7 +1374,7 @@
             // 
             // delayAmount
             // 
-            this.delayAmount.Location = new System.Drawing.Point(298, 82);
+            this.delayAmount.Location = new System.Drawing.Point(298, 57);
             this.delayAmount.Name = "delayAmount";
             this.delayAmount.Size = new System.Drawing.Size(146, 20);
             this.delayAmount.TabIndex = 17;
@@ -1580,7 +1383,7 @@
             // label71
             // 
             this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(7, 85);
+            this.label71.Location = new System.Drawing.Point(7, 60);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(85, 13);
             this.label71.TabIndex = 16;
@@ -1593,7 +1396,7 @@
             this.delayTrackCombox.Items.AddRange(new object[] {
             "Audio",
             "Video"});
-            this.delayTrackCombox.Location = new System.Drawing.Point(298, 57);
+            this.delayTrackCombox.Location = new System.Drawing.Point(298, 32);
             this.delayTrackCombox.Name = "delayTrackCombox";
             this.delayTrackCombox.Size = new System.Drawing.Size(146, 21);
             this.delayTrackCombox.TabIndex = 15;
@@ -1601,20 +1404,11 @@
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(7, 60);
+            this.label68.Location = new System.Drawing.Point(7, 35);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(81, 13);
             this.label68.TabIndex = 14;
             this.label68.Text = "Track To Delay";
-            // 
-            // delayDelSrc
-            // 
-            this.delayDelSrc.AutoSize = true;
-            this.delayDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.delayDelSrc.Name = "delayDelSrc";
-            this.delayDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.delayDelSrc.TabIndex = 10;
-            this.delayDelSrc.UseVisualStyleBackColor = true;
             // 
             // label69
             // 
@@ -1626,15 +1420,6 @@
             this.label69.Size = new System.Drawing.Size(64, 18);
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
-            // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(7, 35);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(174, 13);
-            this.label70.TabIndex = 8;
-            this.label70.Text = "Delete Source File After Processing";
             // 
             // logTbox
             // 
@@ -1657,7 +1442,9 @@
             this.Controls.Add(this.mainTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NMKD\'s FFUtils";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainTabControl.ResumeLayout(false);
@@ -1682,8 +1469,6 @@
             this.loopTabControl.ResumeLayout(false);
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
-            this.tabPage10.ResumeLayout(false);
-            this.tabPage10.PerformLayout();
             this.speedPage.ResumeLayout(false);
             this.speedPage.PerformLayout();
             this.speedTabControl.ResumeLayout(false);
@@ -1762,19 +1547,7 @@
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.ComboBox loopTimesLossless;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.CheckBox loopLosslessDelSrc;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.TabPage tabPage10;
-        private System.Windows.Forms.ComboBox loopEncTimes;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ComboBox loopCrf;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.ComboBox loopEnc;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.CheckBox loopEncDelSrc;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Panel loopDropPanel;
@@ -1803,18 +1576,14 @@
         private System.Windows.Forms.TabPage tabPage15;
         private System.Windows.Forms.ComboBox changeSpeedCombox;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.CheckBox changeSpeedDelSrc;
         private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.Label label53;
         private System.Windows.Forms.TabPage comparisonPage;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Panel compDropPanel;
         private System.Windows.Forms.TabControl compTabControl;
         private System.Windows.Forms.TabPage tabPage17;
-        private System.Windows.Forms.CheckBox comparisonDelSrc;
         private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Label label58;
         private System.Windows.Forms.ComboBox comparisonCrf;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.TabPage delayPage;
@@ -1827,9 +1596,7 @@
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.ComboBox delayTrackCombox;
         private System.Windows.Forms.Label label68;
-        private System.Windows.Forms.CheckBox delayDelSrc;
         private System.Windows.Forms.Label label69;
-        private System.Windows.Forms.Label label70;
         private System.Windows.Forms.ComboBox encContainer;
         private System.Windows.Forms.Label label72;
         private System.Windows.Forms.ComboBox encAudioCh;

@@ -27,9 +27,6 @@ namespace ff_utils_winforms
             InitCombox(createMp4Crf, 1);
             InitCombox(createMp4Fps, 2);
             InitCombox(loopTimesLossless, 0);
-            InitCombox(loopEncTimes, 0);
-            InitCombox(loopEnc, 0);
-            InitCombox(loopCrf, 1);
             InitCombox(encContainer, 0);
             InitCombox(encVidCodec, 1);
             InitCombox(encVidCrf, 1);
@@ -121,15 +118,7 @@ namespace ff_utils_winforms
             {
                 int times = loopTimesLossless.GetInt();
                 foreach (string file in files)
-                    FFmpegCommands.LoopVideo(file, times, loopEncDelSrc.Checked);
-            }
-            if (loopTabControl.SelectedIndex == 1) // With Re-Encoding
-            {
-                int times = int.Parse(loopEncTimes.Text.Trim());
-                bool h265 = loopEnc.SelectedIndex == 1;
-                int crf = int.Parse(loopCrf.Text.Trim());
-                foreach (string file in files)
-                    FFmpegCommands.LoopVideoEnc(file, times, h265, crf, loopEncDelSrc.Checked);
+                    FFmpegCommands.LoopVideo(file, times, false);
             }
         }
 
@@ -146,7 +135,7 @@ namespace ff_utils_winforms
             {
                 int times = changeSpeedCombox.GetInt();
                 foreach (string file in files)
-                    FFmpegCommands.ChangeSpeed(file, times, loopEncDelSrc.Checked);
+                    FFmpegCommands.ChangeSpeed(file, times, false);
             }
         }
 
@@ -159,7 +148,7 @@ namespace ff_utils_winforms
         {
             FFmpegCommands.Track track = (delayTrackCombox.SelectedIndex == 0) ? FFmpegCommands.Track.Audio : FFmpegCommands.Track.Video;
             foreach (string file in files)
-                FFmpegCommands.Delay(file, track, delayAmount.Text.GetFloat(), delayDelSrc.Checked);
+                FFmpegCommands.Delay(file, track, delayAmount.Text.GetFloat(), false);
         }
     }
 }

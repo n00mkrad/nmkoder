@@ -67,7 +67,7 @@ namespace ff_utils_winforms
         {
             string paletteFilter = palette ? "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
             string rate = fps.ToStringDot();
-            string args = $"-vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f apng -plays 0 {paletteFilter} {outPath.Wrap()}";
+            string args = $"-loglevel error -vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f apng -plays 0 {paletteFilter} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 
@@ -75,7 +75,7 @@ namespace ff_utils_winforms
         {
             string paletteFilter = palette ? $"-vf \"split[s0][s1];[s0]palettegen={colors}[p];[s1][p]paletteuse=dither=floyd_steinberg:diff_mode=rectangle\"" : "";
             string rate = fps.ToStringDot();
-            string args = $"-vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f gif {paletteFilter} {outPath.Wrap()}";
+            string args = $"-loglevel error -vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f gif {paletteFilter} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 
@@ -128,7 +128,6 @@ namespace ff_utils_winforms
 
         public static async Task CreateComparison(string[] inputs, bool vertical, int crf, bool delSrc)
         {
-            Program.Print("a");
             if (inputs.Length < 2) return;
             string stackStr = vertical ? "\"vstack=shortest=1\"" : "\"hstack=shortest=1\"";
             Size res1 = GetSize(inputs[0]);
@@ -142,8 +141,7 @@ namespace ff_utils_winforms
             }
             string filter = $"\"[0:v]scale={resW}:{resH}[before];[1:v]scale={resW}:{resH}[after];[before][after]{stackStr}[v]\" -map \"[v]\"";
             string fname1 = Path.ChangeExtension(inputs.First(), null);
-            //string fname2 = Path.GetFileName(Path.ChangeExtension(input2, null));
-            string outpath = fname1 + "-comparison.mp4";
+            string outpath = $"{fname1}-comparison-{(vertical ? "v" : "h")}.mp4";
             string args = " ";
             foreach (string input in inputs)
                 args += $"-i {input.Wrap()} ";

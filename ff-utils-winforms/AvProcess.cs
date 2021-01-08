@@ -28,7 +28,7 @@ namespace ff_utils_winforms
             ffmpeg.StartInfo.RedirectStandardError = true;
             ffmpeg.StartInfo.CreateNoWindow = true;
             ffmpeg.StartInfo.FileName = "cmd.exe";
-            ffmpeg.StartInfo.Arguments = "/C cd /D \"" + ffmpegDir + "\" & ffmpeg -hide_banner -loglevel warning -y -stats " + args;
+            ffmpeg.StartInfo.Arguments = $"/C cd /D {ffmpegDir.Wrap()} & ffmpeg -hide_banner {(args.Contains("-loglevel") ? "" : "-loglevel warning")} -y -stats {args}".TrimWhitespacesSafe();
             Program.Print("Running ffmpeg...");
             Program.Print("Args: " + args);
             ffmpeg.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);

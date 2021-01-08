@@ -52,37 +52,25 @@
             this.framesToVideoPage = new System.Windows.Forms.TabPage();
             this.createVidTabControl = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.createMp4Prefix = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.createMp4Fps = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.createMp4Crf = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.createMp4Enc = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.framesToMp4DelSrc = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.createApngFps = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.createApngOpti = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.createApngPrefix = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.createApngDelSrc = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.createGifFps = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.createGifOpti = new System.Windows.Forms.CheckBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.createGifPrefix = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.createGifDelSrc = new System.Windows.Forms.CheckBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.createVidDropPanel = new System.Windows.Forms.Panel();
@@ -124,6 +112,8 @@
             this.compDropPanel = new System.Windows.Forms.Panel();
             this.compTabControl = new System.Windows.Forms.TabControl();
             this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.comparisonType = new System.Windows.Forms.ComboBox();
+            this.label47 = new System.Windows.Forms.Label();
             this.comparisonCrf = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
             this.comparisonDelSrc = new System.Windows.Forms.CheckBox();
@@ -132,6 +122,9 @@
             this.encPage = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.label75 = new System.Windows.Forms.Label();
+            this.encFpsBox = new System.Windows.Forms.TextBox();
+            this.label74 = new System.Windows.Forms.Label();
             this.encAudioCh = new System.Windows.Forms.ComboBox();
             this.label73 = new System.Windows.Forms.Label();
             this.encContainer = new System.Windows.Forms.ComboBox();
@@ -164,11 +157,6 @@
             this.label69 = new System.Windows.Forms.Label();
             this.label70 = new System.Windows.Forms.Label();
             this.logTbox = new System.Windows.Forms.TextBox();
-            this.label74 = new System.Windows.Forms.Label();
-            this.encFpsBox = new System.Windows.Forms.TextBox();
-            this.label75 = new System.Windows.Forms.Label();
-            this.comparisonType = new System.Windows.Forms.ComboBox();
-            this.label47 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -440,17 +428,13 @@
             // tabPage5
             // 
             this.tabPage5.AutoScroll = true;
-            this.tabPage5.Controls.Add(this.createMp4Prefix);
-            this.tabPage5.Controls.Add(this.label21);
             this.tabPage5.Controls.Add(this.createMp4Fps);
             this.tabPage5.Controls.Add(this.label20);
             this.tabPage5.Controls.Add(this.createMp4Crf);
             this.tabPage5.Controls.Add(this.label19);
             this.tabPage5.Controls.Add(this.createMp4Enc);
             this.tabPage5.Controls.Add(this.label18);
-            this.tabPage5.Controls.Add(this.framesToMp4DelSrc);
             this.tabPage5.Controls.Add(this.label9);
-            this.tabPage5.Controls.Add(this.label10);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -458,22 +442,6 @@
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Create MP4";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // createMp4Prefix
-            // 
-            this.createMp4Prefix.Location = new System.Drawing.Point(298, 132);
-            this.createMp4Prefix.Name = "createMp4Prefix";
-            this.createMp4Prefix.Size = new System.Drawing.Size(146, 20);
-            this.createMp4Prefix.TabIndex = 15;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(7, 135);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(110, 13);
-            this.label21.TabIndex = 14;
-            this.label21.Text = "Frame Filename Prefix";
             // 
             // createMp4Fps
             // 
@@ -483,7 +451,7 @@
             "15",
             "30",
             "60"});
-            this.createMp4Fps.Location = new System.Drawing.Point(298, 107);
+            this.createMp4Fps.Location = new System.Drawing.Point(298, 82);
             this.createMp4Fps.Name = "createMp4Fps";
             this.createMp4Fps.Size = new System.Drawing.Size(146, 21);
             this.createMp4Fps.TabIndex = 13;
@@ -491,7 +459,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(7, 110);
+            this.label20.Location = new System.Drawing.Point(7, 85);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(113, 13);
             this.label20.TabIndex = 12;
@@ -505,7 +473,7 @@
             "20",
             "24",
             "28"});
-            this.createMp4Crf.Location = new System.Drawing.Point(298, 82);
+            this.createMp4Crf.Location = new System.Drawing.Point(298, 57);
             this.createMp4Crf.Name = "createMp4Crf";
             this.createMp4Crf.Size = new System.Drawing.Size(146, 21);
             this.createMp4Crf.TabIndex = 11;
@@ -513,7 +481,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 85);
+            this.label19.Location = new System.Drawing.Point(7, 60);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(179, 13);
             this.label19.TabIndex = 10;
@@ -526,7 +494,7 @@
             this.createMp4Enc.Items.AddRange(new object[] {
             "MP4 (h264)",
             "MP4 (h265)"});
-            this.createMp4Enc.Location = new System.Drawing.Point(298, 57);
+            this.createMp4Enc.Location = new System.Drawing.Point(298, 32);
             this.createMp4Enc.Name = "createMp4Enc";
             this.createMp4Enc.Size = new System.Drawing.Size(146, 21);
             this.createMp4Enc.TabIndex = 9;
@@ -534,20 +502,11 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(7, 60);
+            this.label18.Location = new System.Drawing.Point(7, 35);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(114, 13);
             this.label18.TabIndex = 8;
             this.label18.Text = "Video Format/Encoder";
-            // 
-            // framesToMp4DelSrc
-            // 
-            this.framesToMp4DelSrc.AutoSize = true;
-            this.framesToMp4DelSrc.Location = new System.Drawing.Point(298, 34);
-            this.framesToMp4DelSrc.Name = "framesToMp4DelSrc";
-            this.framesToMp4DelSrc.Size = new System.Drawing.Size(15, 14);
-            this.framesToMp4DelSrc.TabIndex = 7;
-            this.framesToMp4DelSrc.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -560,26 +519,13 @@
             this.label9.TabIndex = 6;
             this.label9.Text = "Options:";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 35);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(192, 13);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Delete Source Frames After Processing";
-            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.createApngFps);
             this.tabPage6.Controls.Add(this.label22);
             this.tabPage6.Controls.Add(this.createApngOpti);
             this.tabPage6.Controls.Add(this.label12);
-            this.tabPage6.Controls.Add(this.createApngPrefix);
-            this.tabPage6.Controls.Add(this.label11);
-            this.tabPage6.Controls.Add(this.createApngDelSrc);
             this.tabPage6.Controls.Add(this.label13);
-            this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
@@ -597,15 +543,16 @@
             "15",
             "30",
             "60"});
-            this.createApngFps.Location = new System.Drawing.Point(298, 82);
+            this.createApngFps.Location = new System.Drawing.Point(298, 57);
             this.createApngFps.Name = "createApngFps";
             this.createApngFps.Size = new System.Drawing.Size(146, 21);
             this.createApngFps.TabIndex = 21;
+            this.createApngFps.Text = "10";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(7, 85);
+            this.label22.Location = new System.Drawing.Point(7, 60);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(116, 13);
             this.label22.TabIndex = 20;
@@ -614,7 +561,9 @@
             // createApngOpti
             // 
             this.createApngOpti.AutoSize = true;
-            this.createApngOpti.Location = new System.Drawing.Point(298, 59);
+            this.createApngOpti.Checked = true;
+            this.createApngOpti.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.createApngOpti.Location = new System.Drawing.Point(298, 34);
             this.createApngOpti.Name = "createApngOpti";
             this.createApngOpti.Size = new System.Drawing.Size(15, 14);
             this.createApngOpti.TabIndex = 19;
@@ -623,36 +572,11 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 60);
+            this.label12.Location = new System.Drawing.Point(7, 35);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(182, 13);
+            this.label12.Size = new System.Drawing.Size(110, 13);
             this.label12.TabIndex = 18;
-            this.label12.Text = "Lossy Compression (Optimize Palette)";
-            // 
-            // createApngPrefix
-            // 
-            this.createApngPrefix.Location = new System.Drawing.Point(298, 107);
-            this.createApngPrefix.Name = "createApngPrefix";
-            this.createApngPrefix.Size = new System.Drawing.Size(146, 20);
-            this.createApngPrefix.TabIndex = 17;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 110);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(110, 13);
-            this.label11.TabIndex = 16;
-            this.label11.Text = "Frame Filename Prefix";
-            // 
-            // createApngDelSrc
-            // 
-            this.createApngDelSrc.AutoSize = true;
-            this.createApngDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.createApngDelSrc.Name = "createApngDelSrc";
-            this.createApngDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.createApngDelSrc.TabIndex = 10;
-            this.createApngDelSrc.UseVisualStyleBackColor = true;
+            this.label12.Text = "Optimize Color Palette";
             // 
             // label13
             // 
@@ -665,26 +589,13 @@
             this.label13.TabIndex = 9;
             this.label13.Text = "Options:";
             // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(7, 35);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(174, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Delete Source File After Processing";
-            // 
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.createGifFps);
             this.tabPage7.Controls.Add(this.label23);
             this.tabPage7.Controls.Add(this.createGifOpti);
             this.tabPage7.Controls.Add(this.label24);
-            this.tabPage7.Controls.Add(this.createGifPrefix);
-            this.tabPage7.Controls.Add(this.label25);
-            this.tabPage7.Controls.Add(this.createGifDelSrc);
             this.tabPage7.Controls.Add(this.label26);
-            this.tabPage7.Controls.Add(this.label27);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
@@ -700,17 +611,17 @@
             "1",
             "10",
             "15",
-            "30",
-            "60"});
-            this.createGifFps.Location = new System.Drawing.Point(298, 82);
+            "30"});
+            this.createGifFps.Location = new System.Drawing.Point(298, 57);
             this.createGifFps.Name = "createGifFps";
             this.createGifFps.Size = new System.Drawing.Size(146, 21);
             this.createGifFps.TabIndex = 30;
+            this.createGifFps.Text = "10";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(7, 85);
+            this.label23.Location = new System.Drawing.Point(7, 60);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(103, 13);
             this.label23.TabIndex = 29;
@@ -719,7 +630,9 @@
             // createGifOpti
             // 
             this.createGifOpti.AutoSize = true;
-            this.createGifOpti.Location = new System.Drawing.Point(298, 59);
+            this.createGifOpti.Checked = true;
+            this.createGifOpti.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.createGifOpti.Location = new System.Drawing.Point(298, 34);
             this.createGifOpti.Name = "createGifOpti";
             this.createGifOpti.Size = new System.Drawing.Size(15, 14);
             this.createGifOpti.TabIndex = 28;
@@ -728,36 +641,11 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(7, 60);
+            this.label24.Location = new System.Drawing.Point(7, 35);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(182, 13);
+            this.label24.Size = new System.Drawing.Size(110, 13);
             this.label24.TabIndex = 27;
-            this.label24.Text = "Lossy Compression (Optimize Palette)";
-            // 
-            // createGifPrefix
-            // 
-            this.createGifPrefix.Location = new System.Drawing.Point(298, 107);
-            this.createGifPrefix.Name = "createGifPrefix";
-            this.createGifPrefix.Size = new System.Drawing.Size(146, 20);
-            this.createGifPrefix.TabIndex = 26;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(7, 110);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(110, 13);
-            this.label25.TabIndex = 25;
-            this.label25.Text = "Frame Filename Prefix";
-            // 
-            // createGifDelSrc
-            // 
-            this.createGifDelSrc.AutoSize = true;
-            this.createGifDelSrc.Location = new System.Drawing.Point(298, 34);
-            this.createGifDelSrc.Name = "createGifDelSrc";
-            this.createGifDelSrc.Size = new System.Drawing.Size(15, 14);
-            this.createGifDelSrc.TabIndex = 24;
-            this.createGifDelSrc.UseVisualStyleBackColor = true;
+            this.label24.Text = "Optimize Color Palette";
             // 
             // label26
             // 
@@ -769,15 +657,6 @@
             this.label26.Size = new System.Drawing.Size(64, 18);
             this.label26.TabIndex = 23;
             this.label26.Text = "Options:";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(7, 35);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(174, 13);
-            this.label27.TabIndex = 22;
-            this.label27.Text = "Delete Source File After Processing";
             // 
             // label15
             // 
@@ -1252,6 +1131,27 @@
             this.tabPage17.Text = "Create Comparison";
             this.tabPage17.UseVisualStyleBackColor = true;
             // 
+            // comparisonType
+            // 
+            this.comparisonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comparisonType.FormattingEnabled = true;
+            this.comparisonType.Items.AddRange(new object[] {
+            "Horizontal (Side-By-Side)",
+            "Vertical (Over-Under)"});
+            this.comparisonType.Location = new System.Drawing.Point(298, 57);
+            this.comparisonType.Name = "comparisonType";
+            this.comparisonType.Size = new System.Drawing.Size(146, 21);
+            this.comparisonType.TabIndex = 31;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(7, 60);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(89, 13);
+            this.label47.TabIndex = 30;
+            this.label47.Text = "Comparison Type";
+            // 
             // comparisonCrf
             // 
             this.comparisonCrf.FormattingEnabled = true;
@@ -1353,6 +1253,33 @@
             this.tabPage13.TabIndex = 1;
             this.tabPage13.Text = "Convert";
             this.tabPage13.UseVisualStyleBackColor = true;
+            // 
+            // label75
+            // 
+            this.label75.AutoSize = true;
+            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.label75.Location = new System.Drawing.Point(314, 85);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(104, 13);
+            this.label75.TabIndex = 34;
+            this.label75.Text = "0 = Same As Source";
+            // 
+            // encFpsBox
+            // 
+            this.encFpsBox.Location = new System.Drawing.Point(160, 82);
+            this.encFpsBox.Name = "encFpsBox";
+            this.encFpsBox.Size = new System.Drawing.Size(125, 20);
+            this.encFpsBox.TabIndex = 33;
+            this.encFpsBox.Text = "0";
+            // 
+            // label74
+            // 
+            this.label74.AutoSize = true;
+            this.label74.Location = new System.Drawing.Point(7, 85);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(91, 13);
+            this.label74.TabIndex = 32;
+            this.label74.Text = "Frame Rate (FPS)";
             // 
             // encAudioCh
             // 
@@ -1721,54 +1648,6 @@
             this.logTbox.TabIndex = 8;
             this.logTbox.Text = "Ready...";
             // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(7, 85);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(91, 13);
-            this.label74.TabIndex = 32;
-            this.label74.Text = "Frame Rate (FPS)";
-            // 
-            // encFpsBox
-            // 
-            this.encFpsBox.Location = new System.Drawing.Point(160, 82);
-            this.encFpsBox.Name = "encFpsBox";
-            this.encFpsBox.Size = new System.Drawing.Size(125, 20);
-            this.encFpsBox.TabIndex = 33;
-            this.encFpsBox.Text = "0";
-            // 
-            // label75
-            // 
-            this.label75.AutoSize = true;
-            this.label75.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.label75.Location = new System.Drawing.Point(314, 85);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(104, 13);
-            this.label75.TabIndex = 34;
-            this.label75.Text = "0 = Same As Source";
-            // 
-            // comparisonType
-            // 
-            this.comparisonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comparisonType.FormattingEnabled = true;
-            this.comparisonType.Items.AddRange(new object[] {
-            "Horizontal (Side-By-Side)",
-            "Vertical (Over-Under)"});
-            this.comparisonType.Location = new System.Drawing.Point(298, 57);
-            this.comparisonType.Name = "comparisonType";
-            this.comparisonType.Size = new System.Drawing.Size(146, 21);
-            this.comparisonType.TabIndex = 31;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(7, 60);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(89, 13);
-            this.label47.TabIndex = 30;
-            this.label47.Text = "Comparison Type";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1854,13 +1733,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabControl createVidTabControl;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.CheckBox framesToMp4DelSrc;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.CheckBox createApngDelSrc;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
@@ -1873,23 +1748,15 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox createMp4Fps;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox createMp4Prefix;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.CheckBox createApngOpti;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox createApngPrefix;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox createApngFps;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox createGifFps;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.CheckBox createGifOpti;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox createGifPrefix;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.CheckBox createGifDelSrc;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TabPage loopPage;
         private System.Windows.Forms.TabControl loopTabControl;
         private System.Windows.Forms.TabPage tabPage11;

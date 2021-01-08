@@ -102,13 +102,13 @@ namespace ff_utils_winforms
                 {
                     bool optimize = createApngOpti.Checked;
                     float fps = createApngFps.GetFloat();
-                    FFmpegCommands.FramesToApng(dir, optimize, fps, createApngPrefix.Text.Trim(), createApngDelSrc.Checked);
+                    FFmpegCommands.FramesToApngConcat(concatFile, dir + ".png", optimize, fps);
                 }
                 if (createVidTabControl.SelectedIndex == 2) // Create GIF
                 {
                     bool optimize = createGifOpti.Checked;
                     float fps = createGifFps.GetFloat();
-                    FFmpegCommands.FramesToGif(dir, optimize, fps, createGifPrefix.Text.Trim(), createGifDelSrc.Checked);
+                    FFmpegCommands.FramesToGifConcat(concatFile, dir + ".gif", optimize, fps);
                 }
 
                 //await Task.Delay(10);

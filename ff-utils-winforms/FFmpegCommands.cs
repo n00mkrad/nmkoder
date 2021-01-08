@@ -63,12 +63,11 @@ namespace ff_utils_winforms
             await AvProcess.Run(args);
         }
 
-        public static async Task FramesToApng (string inputDir, bool opti, float fps, string prefix)
+        public static async Task FramesToApngConcat (string concatFile, string outPath, bool palette, float fps)
         {
-            int nums = IOUtils.GetFilenameCounterLength(Directory.GetFiles(inputDir, "*.png")[0], prefix);
-            string filter = opti ? "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
-            string fpsStr = fps.ToString().Replace(",", ".");
-            string args = $"-r {fpsStr} -i \"{inputDir}\\{prefix}%{nums}d.png\" -f apng -plays 0 {filter} \"{inputDir}.png\"";
+            string paletteFilter = palette ? "-vf \"split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"" : "";
+            string rate = fps.ToStringDot();
+            string args = $"-vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f apng -plays 0 {paletteFilter} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 
@@ -76,7 +75,7 @@ namespace ff_utils_winforms
         {
             string paletteFilter = palette ? $"-vf \"split[s0][s1];[s0]palettegen={colors}[p];[s1][p]paletteuse=dither=floyd_steinberg:diff_mode=rectangle\"" : "";
             string rate = fps.ToStringDot();
-            string args = $"-loglevel error -vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f gif {paletteFilter} {outPath.Wrap()}";
+            string args = $"-vsync 0 -safe 0 -f concat -r {rate} -i {concatFile.Wrap()} -f gif {paletteFilter} {outPath.Wrap()}";
             await AvProcess.Run(args);
         }
 

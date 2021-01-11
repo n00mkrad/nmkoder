@@ -144,12 +144,11 @@ namespace ff_utils_winforms
             DeleteSource(inputFile, delSrc);
         }
 
-        public static async Task CreateComparison(string[] inputs, bool vertical, int crf, bool delSrc)
+        public static async Task CreateComparison(string input1, string input2, bool vertical, int crf, bool delSrc)
         {
-            if (inputs.Length < 2) return;
             string stackStr = vertical ? "\"vstack=shortest=1\"" : "\"hstack=shortest=1\"";
-            Size res1 = GetSize(inputs[0]);
-            Size res2 = GetSize(inputs[1]);
+            Size res1 = GetSize(input1);
+            Size res2 = GetSize(input2);
             int resW = res1.Width.RoundDiv2();
             int resH = res1.Height.RoundDiv2();
             if ((res2.Width * res2.Height) > (res1.Width * res1.Height))
@@ -157,16 +156,16 @@ namespace ff_utils_winforms
                 resW = res2.Width.RoundDiv2();
                 resH = res2.Height.RoundDiv2();
             }
+            float rate1 = IOUtils.GetVideoFramerate(input1);
+            float rate2 = IOUtils.GetVideoFramerate(input2);
+            string rate = (rate2 > rate1) ? rate2.ToStringDot() : rate1.ToStringDot();
             string filter = $"\"[0:v]scale={resW}:{resH}[before];[1:v]scale={resW}:{resH}[after];[before][after]{stackStr}[v]\" -map \"[v]\"";
-            string fname1 = Path.ChangeExtension(inputs.First(), null);
+            string fname1 = Path.ChangeExtension(input1, null);
             string outpath = $"{fname1}-comparison-{(vertical ? "v" : "h")}.mp4";
-            string args = " ";
-            foreach (string input in inputs)
-                args += $"-i {input.Wrap()} ";
-            args += $"-filter_complex {filter} -vsync 2 -c:v libx264 -crf {crf} {yuv420p} {faststart} {outpath.Wrap()}";
+            string args = $"-i {input1.Wrap()} -i {input2.Wrap()} -filter_complex {filter} -r {rate} -vsync 2 -c:v libx264 -crf {crf} {yuv420p} {faststart} {outpath.Wrap()}";
             await AvProcess.Run(args);
-            foreach (string input in inputs)
-                DeleteSource(input, delSrc);
+            DeleteSource(input1, delSrc);
+            DeleteSource(input2, delSrc);
         }
 
         public enum Track { Audio, Video }

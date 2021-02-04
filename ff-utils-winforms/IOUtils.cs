@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAPICodePack.Shell;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -128,6 +127,7 @@ namespace ff_utils_winforms
         public static string[] GetFilesSorted(string path, bool recursive = false, string pattern = "*")
         {
             SearchOption opt = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            Program.Print(path);
             return Directory.GetFiles(path, pattern, opt).OrderBy(x => Path.GetFileName(x)).ToArray();
         }
 
@@ -151,27 +151,17 @@ namespace ff_utils_winforms
         public static float GetVideoFramerate(string path)
         {
             float fps = 0;
+
             try
             {
-                ShellFile shellFile = ShellFile.FromFilePath(path);
-                fps = (float)shellFile.Properties.System.Video.FrameRate.Value / 1000f;
+                fps = FFmpegCommands.GetFramerate(path);
                 //Logger.Log("Detected FPS of " + Path.GetFileName(path) + " as " + fps + " FPS", true);
-                if (fps <= 0)
-                    throw new Exception("FPS is 0.");
             }
             catch
             {
-                //Logger.Log("Failed to read FPS - Trying alternative method...", true);
-                try
-                {
-                    fps = FFmpegCommands.GetFramerate(path);
-                    //Logger.Log("Detected FPS of " + Path.GetFileName(path) + " as " + fps + " FPS", true);
-                }
-                catch
-                {
-                    //Logger.Log("Failed to read FPS - Please enter it manually.");
-                }
+                //Logger.Log("Failed to read FPS - Please enter it manually.");
             }
+
             return fps;
         }
     }

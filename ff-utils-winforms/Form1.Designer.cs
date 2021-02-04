@@ -99,6 +99,8 @@
             this.compTabControl = new System.Windows.Forms.TabControl();
             this.tabPage17 = new System.Windows.Forms.TabPage();
             this.comparisonType = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.comparisonLayout = new System.Windows.Forms.ComboBox();
             this.label47 = new System.Windows.Forms.Label();
             this.comparisonCrf = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
@@ -153,6 +155,8 @@
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.logTbox = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.changeSpeedAudio = new System.Windows.Forms.CheckBox();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -852,6 +856,8 @@
             // 
             // tabPage15
             // 
+            this.tabPage15.Controls.Add(this.changeSpeedAudio);
+            this.tabPage15.Controls.Add(this.label32);
             this.tabPage15.Controls.Add(this.changeSpeedCombox);
             this.tabPage15.Controls.Add(this.label46);
             this.tabPage15.Controls.Add(this.label52);
@@ -958,6 +964,8 @@
             // tabPage17
             // 
             this.tabPage17.Controls.Add(this.comparisonType);
+            this.tabPage17.Controls.Add(this.label31);
+            this.tabPage17.Controls.Add(this.comparisonLayout);
             this.tabPage17.Controls.Add(this.label47);
             this.tabPage17.Controls.Add(this.comparisonCrf);
             this.tabPage17.Controls.Add(this.label56);
@@ -975,21 +983,42 @@
             this.comparisonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comparisonType.FormattingEnabled = true;
             this.comparisonType.Items.AddRange(new object[] {
-            "Horizontal (Side-By-Side)",
-            "Vertical (Over-Under)"});
-            this.comparisonType.Location = new System.Drawing.Point(298, 32);
+            "Side-By-Side",
+            "Split View"});
+            this.comparisonType.Location = new System.Drawing.Point(298, 57);
             this.comparisonType.Name = "comparisonType";
             this.comparisonType.Size = new System.Drawing.Size(146, 21);
-            this.comparisonType.TabIndex = 31;
+            this.comparisonType.TabIndex = 33;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(7, 60);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(89, 13);
+            this.label31.TabIndex = 32;
+            this.label31.Text = "Comparison Type";
+            // 
+            // comparisonLayout
+            // 
+            this.comparisonLayout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comparisonLayout.FormattingEnabled = true;
+            this.comparisonLayout.Items.AddRange(new object[] {
+            "Horizontal (Left/Right)",
+            "Vertical (Top/Bottom)"});
+            this.comparisonLayout.Location = new System.Drawing.Point(298, 32);
+            this.comparisonLayout.Name = "comparisonLayout";
+            this.comparisonLayout.Size = new System.Drawing.Size(146, 21);
+            this.comparisonLayout.TabIndex = 31;
             // 
             // label47
             // 
             this.label47.AutoSize = true;
             this.label47.Location = new System.Drawing.Point(7, 35);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(89, 13);
+            this.label47.Size = new System.Drawing.Size(97, 13);
             this.label47.TabIndex = 30;
-            this.label47.Text = "Comparison Type";
+            this.label47.Text = "Comparison Layout";
             // 
             // comparisonCrf
             // 
@@ -999,7 +1028,7 @@
             "20",
             "24",
             "28"});
-            this.comparisonCrf.Location = new System.Drawing.Point(298, 57);
+            this.comparisonCrf.Location = new System.Drawing.Point(298, 82);
             this.comparisonCrf.Name = "comparisonCrf";
             this.comparisonCrf.Size = new System.Drawing.Size(146, 21);
             this.comparisonCrf.TabIndex = 15;
@@ -1007,7 +1036,7 @@
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(7, 60);
+            this.label56.Location = new System.Drawing.Point(7, 85);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(179, 13);
             this.label56.TabIndex = 14;
@@ -1599,6 +1628,24 @@
             this.logTbox.TabIndex = 8;
             this.logTbox.Text = "Ready...";
             // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(7, 60);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(254, 13);
+            this.label32.TabIndex = 16;
+            this.label32.Text = "Process Audio As Well (Only works for 50% or faster)";
+            // 
+            // changeSpeedAudio
+            // 
+            this.changeSpeedAudio.AutoSize = true;
+            this.changeSpeedAudio.Location = new System.Drawing.Point(298, 60);
+            this.changeSpeedAudio.Name = "changeSpeedAudio";
+            this.changeSpeedAudio.Size = new System.Drawing.Size(15, 14);
+            this.changeSpeedAudio.TabIndex = 28;
+            this.changeSpeedAudio.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1774,7 +1821,7 @@
         private System.Windows.Forms.Label label75;
         private System.Windows.Forms.TextBox encFpsBox;
         private System.Windows.Forms.Label label74;
-        private System.Windows.Forms.ComboBox comparisonType;
+        private System.Windows.Forms.ComboBox comparisonLayout;
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.TabPage encGifTab;
         private System.Windows.Forms.TabPage encApngTab;
@@ -1790,6 +1837,10 @@
         private System.Windows.Forms.CheckBox vidToApngOptimize;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox comparisonType;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.CheckBox changeSpeedAudio;
+        private System.Windows.Forms.Label label32;
     }
 }
 

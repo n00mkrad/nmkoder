@@ -24,7 +24,7 @@ namespace ff_utils_winforms
                 Directory.CreateDirectory(frameFolderPath);
             string hdrStr = "";
             if (hdr) hdrStr = FFmpegStrings.hdrFilter;
-            string args = "-i \"" + inputFile + "\" " + hdrStr + " \"" + frameFolderPath + "/%04d.png\"";
+            string args = "-i \"" + inputFile + "\" " + hdrStr + " \"" + frameFolderPath + "/%08d.png\"";
             await AvProcess.Run(args);
             DeleteSource(inputFile, delSrc);
         }
@@ -106,26 +106,17 @@ namespace ff_utils_winforms
             DeleteSource(inputFile, delSrc);
         }
 
-        public static async Task LoopVideoEnc (string inputFile, int times, bool useH265, int crf, bool delSrc)
-        {
-            string pathNoExt = Path.ChangeExtension(inputFile, null);
-            string ext = Path.GetExtension(inputFile);
-            string enc = "libx264";
-            if (useH265) enc = "libx265";
-            string args = "-stream_loop " + times + " -i \"" + inputFile +  "\"  -c:v " + enc + " -crf " + crf + " -pix_fmt yuv420p -movflags +faststart -c:a copy \"" + pathNoExt + "-" + times + "xLoop" + ext + "\"";
-            await AvProcess.Run(args);
-            DeleteSource(inputFile, delSrc);
-        }
-
-        public static async Task ChangeSpeed(string inputFile, int newSpeedPercent, bool delSrc)
+        public static async Task ChangeSpeed(string inputFile, int newSpeedPercent, bool audio)
         {
             string pathNoExt = Path.ChangeExtension(inputFile, null);
             string ext = Path.GetExtension(inputFile);
             float val = newSpeedPercent / 100f;
-            string speedVal = (1f / val).ToString("0.0000").Replace(",", ".");
-            string args = "-itsscale " + speedVal + " -i \"" + inputFile + "\"  -c copy \"" + pathNoExt + "-" + newSpeedPercent + "pcSpeed" + ext + "\"";
+            string speedVal = (1f / val).ToStringDot("0.0000");
+            if (val < 0.5f || val >= 100f)
+                audio = false;
+            string audioStr = audio ? $"-c:a aac -b:a 112k -af atempo={val.ToStringDot("0.0000")}" : "-an";
+            string args = $"-itsscale {speedVal} -i \"{inputFile}\" -c:v copy {audioStr} \"{pathNoExt}-{newSpeedPercent}pcSpeed{ext}\"";
             await AvProcess.Run(args);
-            DeleteSource(inputFile, delSrc);
         }
 
         public static async Task EncodeMux (string inputFile, string outPath, string vCodec, float fps, string aCodec, int aCh, int crf, int audioKbps, bool delSrc)
@@ -144,7 +135,7 @@ namespace ff_utils_winforms
             DeleteSource(inputFile, delSrc);
         }
 
-        public static async Task CreateComparison(string input1, string input2, bool vertical, int crf, bool delSrc)
+        public static async Task CreateComparison(string input1, string input2, bool vertical, bool split, int crf, bool lockFps)
         {
             string stackStr = vertical ? "\"vstack=shortest=1\"" : "\"hstack=shortest=1\"";
             Size res1 = GetSize(input1);
@@ -159,13 +150,14 @@ namespace ff_utils_winforms
             float rate1 = IOUtils.GetVideoFramerate(input1);
             float rate2 = IOUtils.GetVideoFramerate(input2);
             string rate = (rate2 > rate1) ? rate2.ToStringDot() : rate1.ToStringDot();
-            string filter = $"\"[0:v]scale={resW}:{resH}[before];[1:v]scale={resW}:{resH}[after];[before][after]{stackStr}[v]\" -map \"[v]\"";
+            string filterBoth = $"\"[0:v]scale={resW}:{resH}[bef];[1:v]scale={resW}:{resH}[aft];[bef][aft]{stackStr}[v]\" -map \"[v]\"";
+            string splitCrop = vertical ? "[bef]crop=iw:ih/2:0:0[befCrop];[aft]crop=iw:ih/2:0:oh[aftCrop]" : "[bef]crop=iw/2:ih:0:0[befCrop];[aft]crop=iw/2:ih:ow:0[aftCrop]";
+            string filterSplit = $"\"[0:v]scale={resW}:{resH}[bef];[1:v]scale={resW}:{resH}[aft];{splitCrop};[befCrop][aftCrop]{stackStr}[v]\" -map \"[v]\"";
+            string filter = split ? filterSplit : filterBoth;
             string fname1 = Path.ChangeExtension(input1, null);
-            string outpath = $"{fname1}-comparison-{(vertical ? "v" : "h")}.mp4";
-            string args = $"-i {input1.Wrap()} -i {input2.Wrap()} -filter_complex {filter} -r {rate} -vsync 2 -c:v libx264 -crf {crf} {yuv420p} {faststart} {outpath.Wrap()}";
+            string outpath = $"{fname1}-comparison-{(vertical ? "v" : "h")}{(split ? "-split" : "")}.mp4";
+            string args = $"-i {input1.Wrap()} -i {input2.Wrap()} -filter_complex {filter} {(lockFps ? $"-r {rate}" : "")} -vsync 2 -c:v libx264 -crf {crf} {yuv420p} {faststart} {outpath.Wrap()}";
             await AvProcess.Run(args);
-            DeleteSource(input1, delSrc);
-            DeleteSource(input2, delSrc);
         }
 
         public enum Track { Audio, Video }
@@ -211,7 +203,7 @@ namespace ff_utils_winforms
 
         public static Size GetSize(string inputFile)
         {
-            string args = $" -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {inputFile.Wrap()}";
+            string args = $" -v panic -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {inputFile.Wrap()}";
             string output = AvProcess.GetFfprobeOutput(args);
 
             if (output.Length > 4 && output.Contains("x"))

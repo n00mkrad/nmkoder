@@ -8,14 +8,14 @@ namespace ff_utils_winforms.GuiHelpers
 {
     class ComparisonHelper
     {
-        public static async Task CreateComparison (string[] files, bool vertical, int crf)
+        public static async Task CreateComparison (string[] files, bool vertical, bool split, int crf)
         {
             if (files.Length < 2) return;
             string[] sortedFiles = files.OrderBy(f => f).ToArray();
 
             try
             {
-                await FFmpegCommands.CreateComparison(sortedFiles[0], sortedFiles[1], vertical, crf, false);
+                await FFmpegCommands.CreateComparison(sortedFiles[0], sortedFiles[1], vertical, split, crf, false);
             }
             catch (Exception e)
             {

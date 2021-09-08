@@ -6,11 +6,18 @@ using System.Diagnostics;
 using System.Management;
 using DiskDetector;
 using DiskDetector.Models;
-using ff_utils_winforms.IO;
+using Nmkoder.IO;
+using Tulpep.NotificationWindow;
+using System.Threading.Tasks;
+using Nmkoder.Utils;
+using System.Linq;
+using Microsoft.VisualBasic.Devices;
+using System.Windows.Forms;
+using Nmkoder.Extensions;
 
-namespace ff_utils_winforms.OS
+namespace Nmkoder.OS
 {
-    class OSUtils
+    class OsUtils
     {
         public static bool IsUserAdministrator()
         {
@@ -24,12 +31,9 @@ namespace ff_utils_winforms.OS
                 WindowsPrincipal principal = new WindowsPrincipal(user);
                 isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception e)
             {
-                isAdmin = false;
-            }
-            catch (Exception ex)
-            {
+                Logger.Log("IsUserAdministrator() Error: " + e.Message);
                 isAdmin = false;
             }
             finally
@@ -50,17 +54,68 @@ namespace ff_utils_winforms.OS
             return proc;
         }
 
+        public static bool IsProcessHidden(Process proc)
+        {
+            bool defaultVal = true;
+
+            try
+            {
+                if (proc == null)
+                {
+                    Logger.Log($"IsProcessHidden was called but proc is null, defaulting to {defaultVal}", true);
+                    return defaultVal;
+                }
+
+                if (proc.HasExited)
+                {
+                    Logger.Log($"IsProcessHidden was called but proc has already exited, defaulting to {defaultVal}", true);
+                    return defaultVal;
+                }
+
+                ProcessStartInfo si = proc.StartInfo;
+                return !si.UseShellExecute && si.CreateNoWindow;
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"IsProcessHidden errored, defaulting to {defaultVal}: {e.Message}", true);
+                return defaultVal;
+            }
+        }
+
         public static Process NewProcess(bool hidden, string filename = "cmd.exe")
         {
             Process proc = new Process();
             return SetStartInfo(proc, hidden, filename);
         }
 
+        public static void KillProcessTree(int pid)
+        {
+            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
+              ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection processCollection = processSearcher.Get();
+
+            try
+            {
+                Process proc = Process.GetProcessById(pid);
+                if (!proc.HasExited) proc.Kill();
+            }
+            catch (ArgumentException)
+            {
+                // Process already exited.
+            }
+
+            if (processCollection != null)
+            {
+                foreach (ManagementObject mo in processCollection)
+                {
+                    KillProcessTree(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
+                }
+            }
+        }
+
         public static string GetCmdArg()
         {
-            // TODO: Implement Config
-            // bool stayOpen = Config.GetInt("cmdDebugMode") == 2;
-            bool stayOpen = false;
+            bool stayOpen = Config.GetInt(Config.Key.cmdDebugMode) == 2;
             if (stayOpen)
                 return "/K";
             else
@@ -69,9 +124,7 @@ namespace ff_utils_winforms.OS
 
         public static bool ShowHiddenCmd()
         {
-            // TODO: Implement Config
-            //return Config.GetInt("cmdDebugMode") > 0;
-            return false;
+            return Config.GetInt(Config.Key.cmdDebugMode) > 0;
         }
 
         public static bool DriveIsSSD(string path)
@@ -91,7 +144,7 @@ namespace ff_utils_winforms.OS
             }
             catch (Exception e)
             {
-                Logger.Log("Failed to detect drive type: " + e.Message);
+                Logger.Log("Failed to detect drive type: " + e.Message, true);
                 return true;    // Default to SSD on fail
             }
             return false;
@@ -100,6 +153,120 @@ namespace ff_utils_winforms.OS
         public static bool HasNonAsciiChars(string str)
         {
             return (Encoding.UTF8.GetByteCount(str) != str.Length);
+        }
+
+        public static int GetFreeRamMb()
+        {
+            try
+            {
+                return (int)(new ComputerInfo().AvailablePhysicalMemory / 1048576);
+            }
+            catch
+            {
+                return 1000;
+            }
+        }
+
+        public static string TryGetOs()
+        {
+            string info = "";
+
+            try
+            {
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem"))
+                {
+                    ManagementObjectCollection information = searcher.Get();
+
+                    if (information != null)
+                    {
+                        foreach (ManagementObject obj in information)
+                            info = $"{obj["Caption"]} | {obj["OSArchitecture"]}";
+                    }
+
+                    info = info.Replace("NT 5.1.2600", "XP").Replace("NT 5.2.3790", "Server 2003");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log("TryGetOs Error: " + e.Message, true);
+            }
+
+            return info;
+        }
+
+        public static IEnumerable<Process> GetChildProcesses(Process process)
+        {
+            List<Process> children = new List<Process>();
+            ManagementObjectSearcher mos = new ManagementObjectSearcher(String.Format("Select * From Win32_Process Where ParentProcessID={0}", process.Id));
+
+            foreach (ManagementObject mo in mos.Get())
+            {
+                children.Add(Process.GetProcessById(Convert.ToInt32(mo["ProcessID"])));
+            }
+
+            return children;
+        }
+
+        public static async Task<string> GetOutputAsync(Process process, bool onlyLastLine = false)
+        {
+            Logger.Log($"Getting output for {process.StartInfo.FileName} {process.StartInfo.Arguments}", true);
+            NmkdStopwatch sw = new NmkdStopwatch();
+
+            Stopwatch timeSinceLastOutput = new Stopwatch();
+            timeSinceLastOutput.Restart();
+
+            string output = "";
+
+            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) => output += $"{e.Data}\n";
+            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => output += $"{e.Data}\n";
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            while (!process.HasExited) await Task.Delay(50);
+            while (timeSinceLastOutput.ElapsedMilliseconds < 100) await Task.Delay(50);
+            output = output.Trim('\r', '\n');
+
+            Logger.Log($"Output (after {sw.GetElapsedStr()}):  {output.Replace("\r", " / ").Replace("\n", " / ").Trunc(250)}", true);
+
+            if (onlyLastLine)
+                output = output.SplitIntoLines().LastOrDefault();
+
+            return output;
+        }
+
+        public static void Shutdown()
+        {
+            Process proc = NewProcess(true);
+            proc.StartInfo.Arguments = "/C shutdown -s -t 0";
+            proc.Start();
+        }
+
+        public static void Hibernate()
+        {
+            Application.SetSuspendState(PowerState.Hibernate, true, true);
+        }
+
+        public static void Sleep()
+        {
+            Application.SetSuspendState(PowerState.Suspend, true, true);
+        }
+
+        public static void ShowNotification(string title, string text)
+        {
+            var popupNotifier = new PopupNotifier { TitleText = title, ContentText = text, IsRightToLeft = false };
+            popupNotifier.BodyColor = System.Drawing.ColorTranslator.FromHtml("#323232");
+            popupNotifier.ContentColor = System.Drawing.Color.White;
+            popupNotifier.TitleColor = System.Drawing.Color.LightGray;
+            popupNotifier.GradientPower = 0;
+            popupNotifier.Popup();
+        }
+
+        public static void ShowNotificationIfInBackground(string title, string text)
+        {
+            if (Program.mainForm.IsInFocus())
+                return;
+
+            ShowNotification(title, text);
         }
     }
 }

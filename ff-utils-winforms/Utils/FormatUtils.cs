@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ff_utils_winforms.Utils
+namespace Nmkoder.Utils
 {
     class FormatUtils
     {
@@ -57,15 +59,87 @@ namespace ff_utils_winforms.Utils
             return Time(elapsedMs);
         }
 
+        public static long TimestampToSecs(string timestamp, bool hasMilliseconds = true)
+        {
+            try
+            {
+                string[] values = timestamp.Split(':');
+                int hours = int.Parse(values[0]);
+                int minutes = int.Parse(values[1]);
+                int seconds = int.Parse(values[2].Split('.')[0]);
+                long secs = hours * 3600 + minutes * 60 + seconds;
+
+                if (hasMilliseconds)
+                {
+                    int milliseconds = int.Parse(values[2].Split('.')[1].Substring(0, 2)) * 10;
+
+                    if (milliseconds >= 500)
+                        secs++;
+                }
+
+                return secs;
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"TimestampToSecs({timestamp}) Exception: {e.Message}", true);
+                return 0;
+            }
+        }
+
+        public static long TimestampToMs(string timestamp, bool hasMilliseconds = true)
+        {
+            try
+            {
+                string[] values = timestamp.Split(':');
+                int hours = int.Parse(values[0]);
+                int minutes = int.Parse(values[1]);
+                int seconds = int.Parse(values[2].Split('.')[0]);
+                long ms = 0;
+
+                if (hasMilliseconds)
+                {
+                    int milliseconds = int.Parse(values[2].Split('.')[1].Substring(0, 2)) * 10;
+                    ms = hours * 3600000 + minutes * 60000 + seconds * 1000 + milliseconds;
+                }
+                else
+                {
+                    ms = hours * 3600000 + minutes * 60000 + seconds * 1000;
+                }
+
+                return ms;
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"MsFromTimeStamp({timestamp}) Exception: {e.Message}", true);
+                return 0;
+            }
+        }
+
+        public static string SecsToTimestamp(long seconds)
+        {
+            return (new DateTime(1970, 1, 1)).AddSeconds(seconds).ToString("HH:mm:ss");
+        }
+
+        public static string MsToTimestamp(long milliseconds)
+        {
+            return (new DateTime(1970, 1, 1)).AddMilliseconds(milliseconds).ToString("HH:mm:ss");
+        }
+
         public static string Ratio(long numFrom, long numTo)
         {
-            float ratio = ((float)numTo / (float)numFrom) * 100f;
+            float ratio = ((float)numFrom / (float)numTo) * 100f;
             return ratio.ToString("0.00") + "%";
         }
 
-        public static string RatioInt(long numFrom, long numTo)
+        public static int RatioInt(long numFrom, long numTo)
         {
-            double ratio = Math.Round(((float)numTo / (float)numFrom) * 100f);
+            double ratio = Math.Round(((float)numFrom / (float)numTo) * 100f);
+            return (int)ratio;
+        }
+
+        public static string RatioIntStr(long numFrom, long numTo)
+        {
+            double ratio = Math.Round(((float)numFrom / (float)numTo) * 100f);
             return ratio + "%";
         }
 
@@ -85,6 +159,26 @@ namespace ff_utils_winforms.Utils
             }
 
             return outStr;
+        }
+
+        public static System.Drawing.Size ParseSize(string str)
+        {
+            try
+            {
+                string[] values = str.Split('x');
+                return new System.Drawing.Size(values[0].GetInt(), values[1].GetInt());
+            }
+            catch
+            {
+                return new System.Drawing.Size();
+            }
+        }
+
+        public static string BeautifyFfmpegStats(string line)
+        {
+            return line.Remove("q=-0.0").Remove("q=-1.0").Remove("size=N/A").Remove("bitrate=N/A").Replace("frame=", "Frame: ")
+                    .Replace("fps=", "FPS: ").Replace("q=", "QP: ").Replace("time=", "Time: ").Replace("speed=", "Relative Speed: ")
+                    .Replace("bitrate=", "Bitrate: ").Replace("Lsize=", "Size: ").Replace("size=", "Size: ").TrimWhitespaces();
         }
     }
 }

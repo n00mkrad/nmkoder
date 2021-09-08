@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ff_utils_winforms.GuiHelpers
+namespace Nmkoder.GuiHelpers
 {
     class ComparisonHelper
     {
@@ -15,7 +15,7 @@ namespace ff_utils_winforms.GuiHelpers
 
             try
             {
-                await FFmpegCommands.CreateComparison(sortedFiles[0], sortedFiles[1], vertical, split, crf, false);
+                //await FFmpegCommands.CreateComparison(sortedFiles[0], sortedFiles[1], vertical, split, crf, false);
             }
             catch (Exception e)
             {

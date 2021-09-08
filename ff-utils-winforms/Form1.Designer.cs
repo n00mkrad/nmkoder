@@ -1,4 +1,4 @@
-﻿namespace ff_utils_winforms
+﻿namespace Nmkoder
 {
     partial class Form1
     {
@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.logTbox = new System.Windows.Forms.TextBox();
+            this.tabList = new Cyotek.Windows.Forms.TabList();
+            this.tabListPage1 = new Cyotek.Windows.Forms.TabListPage();
+            this.tabListPage2 = new Cyotek.Windows.Forms.TabListPage();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.extractFramesPage = new System.Windows.Forms.TabPage();
             this.extractFramesTabcontrol = new System.Windows.Forms.TabControl();
@@ -89,6 +93,8 @@
             this.speedDropPanel = new System.Windows.Forms.Panel();
             this.speedTabControl = new System.Windows.Forms.TabControl();
             this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.changeSpeedAudio = new System.Windows.Forms.CheckBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.changeSpeedCombox = new System.Windows.Forms.ComboBox();
             this.label46 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
@@ -154,9 +160,13 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.logTbox = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.changeSpeedAudio = new System.Windows.Forms.CheckBox();
+            this.titleLabel = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.tabList.SuspendLayout();
+            this.tabListPage2.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -184,7 +194,46 @@
             this.delayPage.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // logTbox
+            // 
+            this.logTbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.logTbox.ForeColor = System.Drawing.Color.White;
+            this.logTbox.Location = new System.Drawing.Point(252, 416);
+            this.logTbox.Multiline = true;
+            this.logTbox.Name = "logTbox";
+            this.logTbox.ReadOnly = true;
+            this.logTbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.logTbox.Size = new System.Drawing.Size(920, 130);
+            this.logTbox.TabIndex = 8;
+            this.logTbox.Text = "Ready...";
+            // 
+            // tabList
+            // 
+            this.tabList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.tabList.Controls.Add(this.tabListPage1);
+            this.tabList.Controls.Add(this.tabListPage2);
+            this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.tabList.HeaderSize = new System.Drawing.Size(110, 25);
+            this.tabList.Location = new System.Drawing.Point(252, 12);
+            this.tabList.Name = "tabList";
+            this.tabList.Size = new System.Drawing.Size(920, 375);
+            this.tabList.TabIndex = 9;
+            // 
+            // tabListPage1
+            // 
+            this.tabListPage1.Name = "tabListPage1";
+            this.tabListPage1.Size = new System.Drawing.Size(802, 367);
+            this.tabListPage1.Text = "Quick Convert";
+            // 
+            // tabListPage2
+            // 
+            this.tabListPage2.Controls.Add(this.mainTabControl);
+            this.tabListPage2.Name = "tabListPage2";
+            this.tabListPage2.Size = new System.Drawing.Size(802, 367);
+            this.tabListPage2.Text = "Utilities";
             // 
             // mainTabControl
             // 
@@ -195,11 +244,11 @@
             this.mainTabControl.Controls.Add(this.comparisonPage);
             this.mainTabControl.Controls.Add(this.encPage);
             this.mainTabControl.Controls.Add(this.delayPage);
-            this.mainTabControl.Location = new System.Drawing.Point(12, 12);
+            this.mainTabControl.Location = new System.Drawing.Point(3, 6);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(708, 358);
-            this.mainTabControl.TabIndex = 0;
+            this.mainTabControl.TabIndex = 1;
             // 
             // extractFramesPage
             // 
@@ -207,6 +256,7 @@
             this.extractFramesPage.Controls.Add(this.label3);
             this.extractFramesPage.Controls.Add(this.label1);
             this.extractFramesPage.Controls.Add(this.extractFramesDropPanel);
+            this.extractFramesPage.ForeColor = System.Drawing.Color.Black;
             this.extractFramesPage.Location = new System.Drawing.Point(4, 22);
             this.extractFramesPage.Name = "extractFramesPage";
             this.extractFramesPage.Padding = new System.Windows.Forms.Padding(3);
@@ -391,15 +441,13 @@
             // 
             this.extractFramesDropPanel.AllowDrop = true;
             this.extractFramesDropPanel.BackColor = System.Drawing.Color.White;
-            this.extractFramesDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.extractFramesDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.extractFramesDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.extractFramesDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.extractFramesDropPanel.Location = new System.Drawing.Point(494, 126);
             this.extractFramesDropPanel.Name = "extractFramesDropPanel";
             this.extractFramesDropPanel.Size = new System.Drawing.Size(200, 200);
             this.extractFramesDropPanel.TabIndex = 0;
-            this.extractFramesDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.extractFramesDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // framesToVideoPage
             // 
@@ -683,15 +731,13 @@
             // 
             this.createVidDropPanel.AllowDrop = true;
             this.createVidDropPanel.BackColor = System.Drawing.Color.White;
-            this.createVidDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.createVidDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.createVidDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.createVidDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.createVidDropPanel.Location = new System.Drawing.Point(494, 126);
             this.createVidDropPanel.Name = "createVidDropPanel";
             this.createVidDropPanel.Size = new System.Drawing.Size(200, 200);
             this.createVidDropPanel.TabIndex = 6;
-            this.createVidDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.createVidDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // loopPage
             // 
@@ -787,15 +833,13 @@
             // 
             this.loopDropPanel.AllowDrop = true;
             this.loopDropPanel.BackColor = System.Drawing.Color.White;
-            this.loopDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.loopDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.loopDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.loopDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.loopDropPanel.Location = new System.Drawing.Point(494, 126);
             this.loopDropPanel.Name = "loopDropPanel";
             this.loopDropPanel.Size = new System.Drawing.Size(200, 200);
             this.loopDropPanel.TabIndex = 10;
-            this.loopDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.loopDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // speedPage
             // 
@@ -835,15 +879,13 @@
             // 
             this.speedDropPanel.AllowDrop = true;
             this.speedDropPanel.BackColor = System.Drawing.Color.White;
-            this.speedDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.speedDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.speedDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.speedDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.speedDropPanel.Location = new System.Drawing.Point(494, 126);
             this.speedDropPanel.Name = "speedDropPanel";
             this.speedDropPanel.Size = new System.Drawing.Size(200, 200);
             this.speedDropPanel.TabIndex = 15;
-            this.speedDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.speedDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // speedTabControl
             // 
@@ -868,6 +910,24 @@
             this.tabPage15.TabIndex = 1;
             this.tabPage15.Text = "Change Speed Losslessly";
             this.tabPage15.UseVisualStyleBackColor = true;
+            // 
+            // changeSpeedAudio
+            // 
+            this.changeSpeedAudio.AutoSize = true;
+            this.changeSpeedAudio.Location = new System.Drawing.Point(298, 60);
+            this.changeSpeedAudio.Name = "changeSpeedAudio";
+            this.changeSpeedAudio.Size = new System.Drawing.Size(15, 14);
+            this.changeSpeedAudio.TabIndex = 28;
+            this.changeSpeedAudio.UseVisualStyleBackColor = true;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(7, 60);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(254, 13);
+            this.label32.TabIndex = 16;
+            this.label32.Text = "Process Audio As Well (Only works for 50% or faster)";
             // 
             // changeSpeedCombox
             // 
@@ -942,15 +1002,13 @@
             // 
             this.compDropPanel.AllowDrop = true;
             this.compDropPanel.BackColor = System.Drawing.Color.White;
-            this.compDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.compDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.compDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.compDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.compDropPanel.Location = new System.Drawing.Point(494, 126);
             this.compDropPanel.Name = "compDropPanel";
             this.compDropPanel.Size = new System.Drawing.Size(200, 200);
             this.compDropPanel.TabIndex = 19;
-            this.compDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.compDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // compTabControl
             // 
@@ -1485,15 +1543,13 @@
             // 
             this.encodeDropPanel.AllowDrop = true;
             this.encodeDropPanel.BackColor = System.Drawing.Color.White;
-            this.encodeDropPanel.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.encodeDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.encodeDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.encodeDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.encodeDropPanel.Location = new System.Drawing.Point(494, 126);
             this.encodeDropPanel.Name = "encodeDropPanel";
             this.encodeDropPanel.Size = new System.Drawing.Size(200, 200);
             this.encodeDropPanel.TabIndex = 4;
-            this.encodeDropPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.encodeDropPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // delayPage
             // 
@@ -1533,15 +1589,13 @@
             // 
             this.panel1.AllowDrop = true;
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.BackgroundImage = global::ff_utils_winforms.Properties.Resources.dragdrop2;
+            this.panel1.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Location = new System.Drawing.Point(494, 126);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 200);
             this.panel1.TabIndex = 19;
-            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropHandler);
-            this.panel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
             // tabControl3
             // 
@@ -1616,50 +1670,83 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
-            // logTbox
+            // titleLabel
             // 
-            this.logTbox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.logTbox.Location = new System.Drawing.Point(12, 376);
-            this.logTbox.Multiline = true;
-            this.logTbox.Name = "logTbox";
-            this.logTbox.ReadOnly = true;
-            this.logTbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.logTbox.Size = new System.Drawing.Size(708, 168);
-            this.logTbox.TabIndex = 8;
-            this.logTbox.Text = "Ready...";
+            this.titleLabel.AutoSize = true;
+            this.titleLabel.Font = new System.Drawing.Font("Yu Gothic UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titleLabel.ForeColor = System.Drawing.Color.White;
+            this.titleLabel.Location = new System.Drawing.Point(12, 9);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Size = new System.Drawing.Size(156, 40);
+            this.titleLabel.TabIndex = 10;
+            this.titleLabel.Text = "NMKODER";
             // 
-            // label32
+            // panel3
             // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(7, 60);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(254, 13);
-            this.label32.TabIndex = 16;
-            this.label32.Text = "Process Audio As Well (Only works for 50% or faster)";
+            this.panel3.AllowDrop = true;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.panel3.Controls.Add(this.label38);
+            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Controls.Add(this.label33);
+            this.panel3.Location = new System.Drawing.Point(12, 62);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(234, 325);
+            this.panel3.TabIndex = 12;
             // 
-            // changeSpeedAudio
+            // panel2
             // 
-            this.changeSpeedAudio.AutoSize = true;
-            this.changeSpeedAudio.Location = new System.Drawing.Point(298, 60);
-            this.changeSpeedAudio.Name = "changeSpeedAudio";
-            this.changeSpeedAudio.Size = new System.Drawing.Size(15, 14);
-            this.changeSpeedAudio.TabIndex = 28;
-            this.changeSpeedAudio.UseVisualStyleBackColor = true;
+            this.panel2.AllowDrop = true;
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel2.Location = new System.Drawing.Point(6, 27);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(222, 100);
+            this.panel2.TabIndex = 1;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.ForeColor = System.Drawing.Color.White;
+            this.label33.Location = new System.Drawing.Point(4, 4);
+            this.label33.Margin = new System.Windows.Forms.Padding(4);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(170, 13);
+            this.label33.TabIndex = 16;
+            this.label33.Text = "Drag and drop a file here to load it:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.ForeColor = System.Drawing.Color.White;
+            this.label38.Location = new System.Drawing.Point(3, 137);
+            this.label38.Margin = new System.Windows.Forms.Padding(4);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(38, 13);
+            this.label38.TabIndex = 17;
+            this.label38.Text = "Name:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 556);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.ClientSize = new System.Drawing.Size(1184, 601);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.titleLabel);
+            this.Controls.Add(this.tabList);
             this.Controls.Add(this.logTbox);
-            this.Controls.Add(this.mainTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NMKD\'s FFUtils";
+            this.Text = "NMKD\'s NMKoDer";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabList.ResumeLayout(false);
+            this.tabListPage2.ResumeLayout(false);
             this.mainTabControl.ResumeLayout(false);
             this.extractFramesPage.ResumeLayout(false);
             this.extractFramesPage.PerformLayout();
@@ -1706,59 +1793,63 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
+        private System.Windows.Forms.TextBox logTbox;
+        private Cyotek.Windows.Forms.TabList tabList;
+        private Cyotek.Windows.Forms.TabListPage tabListPage1;
+        private Cyotek.Windows.Forms.TabListPage tabListPage2;
         private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.TabPage extractFramesPage;
-        private System.Windows.Forms.Panel extractFramesDropPanel;
-        private System.Windows.Forms.TabPage framesToVideoPage;
-        private System.Windows.Forms.TextBox logTbox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabControl extractFramesTabcontrol;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox tonemapHdrCbox;
+        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox extractAllDelSrcCbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.CheckBox tonemapHdrCbox2;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox frameNumTbox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox extractSingleDelSrcCbox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox tonemapHdrCbox2;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel extractFramesDropPanel;
+        private System.Windows.Forms.TabPage framesToVideoPage;
         private System.Windows.Forms.TabControl createVidTabControl;
         private System.Windows.Forms.TabPage framesToVidTab;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TabPage framesToApngTab;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TabPage framesToGifTab;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Panel createVidDropPanel;
-        private System.Windows.Forms.CheckBox tonemapHdrCbox;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox createMp4Fps;
+        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox createMp4Crf;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox createMp4Enc;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ComboBox createMp4Fps;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.CheckBox createApngOpti;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox createApngFps;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TabPage framesToGifTab;
         private System.Windows.Forms.ComboBox createGifFps;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.CheckBox createGifOpti;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TabPage framesToApngTab;
+        private System.Windows.Forms.ComboBox createApngFps;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox createApngOpti;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Panel createVidDropPanel;
         private System.Windows.Forms.TabPage loopPage;
         private System.Windows.Forms.TabControl loopTabControl;
         private System.Windows.Forms.TabPage tabPage11;
@@ -1769,28 +1860,13 @@
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Panel loopDropPanel;
         private System.Windows.Forms.TabPage speedPage;
-        private System.Windows.Forms.TabPage encPage;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Panel encodeDropPanel;
-        private System.Windows.Forms.TabControl encodeTabControl;
-        private System.Windows.Forms.TabPage encVidTab;
-        private System.Windows.Forms.ComboBox encAudBitrate;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.ComboBox encAudCodec;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.ComboBox encVidCrf;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.ComboBox encVidCodec;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.CheckBox encDelSrc;
-        private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Panel speedDropPanel;
         private System.Windows.Forms.TabControl speedTabControl;
         private System.Windows.Forms.TabPage tabPage15;
+        private System.Windows.Forms.CheckBox changeSpeedAudio;
+        private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ComboBox changeSpeedCombox;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label52;
@@ -1800,9 +1876,51 @@
         private System.Windows.Forms.Panel compDropPanel;
         private System.Windows.Forms.TabControl compTabControl;
         private System.Windows.Forms.TabPage tabPage17;
-        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.ComboBox comparisonType;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox comparisonLayout;
+        private System.Windows.Forms.Label label47;
         private System.Windows.Forms.ComboBox comparisonCrf;
         private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.TabPage encPage;
+        private System.Windows.Forms.TabControl encodeTabControl;
+        private System.Windows.Forms.TabPage encVidTab;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.TextBox encFpsBox;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.ComboBox encAudioCh;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.ComboBox encContainer;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.CheckBox encDelSrc;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.ComboBox encAudBitrate;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.ComboBox encAudCodec;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.ComboBox encVidCrf;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox encVidCodec;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TabPage encGifTab;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox vidToGifFps;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.CheckBox vidToGifOptimize;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TabPage encApngTab;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox vidToApngFps;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.CheckBox vidToApngOptimize;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Panel encodeDropPanel;
         private System.Windows.Forms.TabPage delayPage;
         private System.Windows.Forms.Label label66;
         private System.Windows.Forms.Label label67;
@@ -1814,33 +1932,11 @@
         private System.Windows.Forms.ComboBox delayTrackCombox;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Label label69;
-        private System.Windows.Forms.ComboBox encContainer;
-        private System.Windows.Forms.Label label72;
-        private System.Windows.Forms.ComboBox encAudioCh;
-        private System.Windows.Forms.Label label73;
-        private System.Windows.Forms.Label label75;
-        private System.Windows.Forms.TextBox encFpsBox;
-        private System.Windows.Forms.Label label74;
-        private System.Windows.Forms.ComboBox comparisonLayout;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.TabPage encGifTab;
-        private System.Windows.Forms.TabPage encApngTab;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox vidToGifFps;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.CheckBox vidToGifOptimize;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox vidToApngFps;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.CheckBox vidToApngOptimize;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.ComboBox comparisonType;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.CheckBox changeSpeedAudio;
-        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label38;
     }
 }
 

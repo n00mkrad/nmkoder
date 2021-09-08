@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ff_utils_winforms
+namespace Nmkoder
 {
     class IOUtils
     {
@@ -154,7 +154,7 @@ namespace ff_utils_winforms
 
             try
             {
-                fps = FFmpegCommands.GetFramerate(path);
+                //fps = FFmpegCommands.GetFramerate(path);
                 //Logger.Log("Detected FPS of " + Path.GetFileName(path) + " as " + fps + " FPS", true);
             }
             catch

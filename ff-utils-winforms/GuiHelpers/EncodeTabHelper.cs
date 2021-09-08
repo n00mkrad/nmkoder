@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nmkoder.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CB = System.Windows.Forms.ComboBox;
 
-namespace ff_utils_winforms
+namespace Nmkoder
 {
     class EncodeTabHelper
     {
@@ -57,19 +58,19 @@ namespace ff_utils_winforms
                 extension = contCombox.Text.Trim().Split(' ')[0].ToLower();
 
             string outPath = filenameNoExt + $"-convert.{extension}";
-            FFmpegCommands.EncodeMux(file, outPath, vcodec, fps, acodec, aChannels, crf, audioBitrate, delSrc.Checked);
+            //FFmpegCommands.EncodeMux(file, outPath, vcodec, fps, acodec, aChannels, crf, audioBitrate, delSrc.Checked);
         }
 
-        public static void VideoToGif (string file, CheckBox optimizeCbox, TextBox fpsBox)
-        {
-            string outPath = Path.ChangeExtension(file, "gif");
-            FFmpegCommands.VideoToGif(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
-        }
-
-        public static void VideoToApng(string file, CheckBox optimizeCbox, TextBox fpsBox)
-        {
-            string outPath = Path.ChangeExtension(file, "png");
-            FFmpegCommands.VideoToApng(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
-        }
+        //public static void VideoToGif (string file, CheckBox optimizeCbox, TextBox fpsBox)
+        //{
+        //    string outPath = Path.ChangeExtension(file, "gif");
+        //    FFmpegCommands.VideoToGif(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
+        //}
+        //
+        //public static void VideoToApng(string file, CheckBox optimizeCbox, TextBox fpsBox)
+        //{
+        //    string outPath = Path.ChangeExtension(file, "png");
+        //    FFmpegCommands.VideoToApng(file, outPath, optimizeCbox.Checked, fpsBox.GetFloat());
+        //}
     }
 }

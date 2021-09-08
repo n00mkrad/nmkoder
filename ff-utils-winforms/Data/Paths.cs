@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ff_utils_winforms.Data
+namespace Nmkoder.Data
 {
     class Paths
     {
@@ -18,7 +18,16 @@ namespace ff_utils_winforms.Data
 
 		public static string GetBinPath()
 		{
-			return Path.Combine(IOUtils.GetOwnFolder(), "bin");
+			string path = Path.Combine(IOUtils.GetOwnFolder(), "bin");
+			Directory.CreateDirectory(path);
+			return path;
+		}
+
+		public static string GetDataPath()
+		{
+			string path = Path.Combine(IOUtils.GetOwnFolder(), "data");
+			Directory.CreateDirectory(path);
+			return path;
 		}
 	}
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ff-utils-winforms", "ff-utils-winforms.csproj", "{3FF0127A-2ADC-4EEE-9005-31E5B1A0B12D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nmkoder", "Nmkoder.csproj", "{3FF0127A-2ADC-4EEE-9005-31E5B1A0B12D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

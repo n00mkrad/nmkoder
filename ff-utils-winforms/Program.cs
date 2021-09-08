@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ff_utils_winforms
+namespace Nmkoder
 {
     static class Program
     {
+        public static bool busy;
+        public static Form1 mainForm;
         public static TextBox logTbox;
 
         [STAThread]

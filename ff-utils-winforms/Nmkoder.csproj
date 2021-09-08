@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3FF0127A-2ADC-4EEE-9005-31E5B1A0B12D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ff_utils_winforms</RootNamespace>
-    <AssemblyName>ff-utils-winforms</AssemblyName>
+    <RootNamespace>Nmkoder</RootNamespace>
+    <AssemblyName>Nmkoder</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,21 +36,52 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>NMKD2020-nonly1-smoothed2.ico</ApplicationIcon>
+    <ApplicationIcon>ff-utils-icon-new.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Crc32.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
+      <HintPath>packages\Crc32.NET.1.2.0\lib\net20\Crc32.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Cyotek.Windows.Forms.TabList, Version=2.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
+      <HintPath>packages\CyotekTabList.2.2.0\lib\net35\Cyotek.Windows.Forms.TabList.dll</HintPath>
+    </Reference>
     <Reference Include="DiskDetector, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\diskdetector-net.0.3.2\lib\netstandard2.0\DiskDetector.dll</HintPath>
     </Reference>
+    <Reference Include="HTAlt.Standart, Version=0.1.7.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\HTAlt.Standart.0.1.7.1\lib\netstandard2.0\HTAlt.Standart.dll</HintPath>
+    </Reference>
+    <Reference Include="HTAlt.WinForms, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\HTAlt.WinForms.0.1.7.1\lib\net461\HTAlt.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET-Q16-AnyCPU, Version=8.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>packages\Magick.NET-Q16-AnyCPU.8.3.0\lib\net20\Magick.NET-Q16-AnyCPU.dll</HintPath>
+    </Reference>
+    <Reference Include="Magick.NET.Core, Version=8.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
+      <HintPath>packages\Magick.NET.Core.8.3.0\lib\net20\Magick.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Management.Automation\v4.0_3.0.0.0__31bf3856ad364e35\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security.Claims, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Security.Claims.4.3.0\lib\net46\System.Security.Claims.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Security.Principal.Windows.4.3.0\lib\net46\System.Security.Principal.Windows.dll</HintPath>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,12 +92,25 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tulpep.NotificationWindow, Version=1.1.38.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Tulpep.NotificationWindow.1.1.38\lib\net40\Tulpep.NotificationWindow.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Data\AudioStream.cs" />
+    <Compile Include="Data\Codecs.cs" />
+    <Compile Include="Data\Containers.cs" />
+    <Compile Include="Data\Encoders.cs" />
+    <Compile Include="Data\Fraction.cs" />
+    <Compile Include="Data\MediaFile.cs" />
     <Compile Include="Data\Paths.cs" />
+    <Compile Include="Data\PseudoUniqueFile.cs" />
+    <Compile Include="Data\VideoStream.cs" />
+    <Compile Include="Extensions\MagickExtensions.cs" />
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
-    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Extensions\ExtensionMethods.cs" />
     <Compile Include="AvProcess.cs" />
     <Compile Include="FFmpegCommands.cs" />
     <Compile Include="FFmpegStrings.cs" />
@@ -77,11 +121,25 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="IOUtils.cs" />
+    <Compile Include="IO\Config.cs" />
+    <Compile Include="IO\ConfigParser.cs" />
+    <Compile Include="IO\IoUtils.cs" />
     <Compile Include="IO\Logger.cs" />
-    <Compile Include="OS\OSUtils.cs" />
+    <Compile Include="Main\RunTask.cs" />
+    <Compile Include="Media\AvProcess.cs" />
+    <Compile Include="Media\FfmpegCommands.cs" />
+    <Compile Include="Media\FfmpegEncode.cs" />
+    <Compile Include="Media\FfmpegExtract.cs" />
+    <Compile Include="Media\FfmpegUtils.cs" />
+    <Compile Include="Media\GetFrameCountCached.cs" />
+    <Compile Include="Media\GetMediaResolutionCached.cs" />
+    <Compile Include="Media\GetVideoInfoCached.cs" />
+    <Compile Include="OS\OsUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\MainView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
+    <Compile Include="Utils\NmkdStopwatch.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,7 +168,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
+    <None Include="Resources\dragdrop2-white.png" />
     <None Include="Resources\dragdrop2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

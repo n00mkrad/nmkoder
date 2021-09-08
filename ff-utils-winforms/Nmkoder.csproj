@@ -97,21 +97,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Streams\Stream.cs" />
+    <Compile Include="Data\Streams\SubtitleStream.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
-    <Compile Include="Data\AudioStream.cs" />
+    <Compile Include="Data\Streams\AudioStream.cs" />
     <Compile Include="Data\Codecs.cs" />
     <Compile Include="Data\Containers.cs" />
     <Compile Include="Data\Encoders.cs" />
     <Compile Include="Data\Fraction.cs" />
     <Compile Include="Data\MediaFile.cs" />
     <Compile Include="Data\Paths.cs" />
-    <Compile Include="Data\PseudoUniqueFile.cs" />
-    <Compile Include="Data\VideoStream.cs" />
+    <Compile Include="Data\QueryInfo.cs" />
+    <Compile Include="Data\Streams\VideoStream.cs" />
     <Compile Include="Extensions\MagickExtensions.cs" />
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
-    <Compile Include="AvProcess.cs" />
     <Compile Include="FFmpegCommands.cs" />
     <Compile Include="FFmpegStrings.cs" />
     <Compile Include="Form1.cs">
@@ -120,7 +121,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="IOUtils.cs" />
     <Compile Include="IO\Config.cs" />
     <Compile Include="IO\ConfigParser.cs" />
     <Compile Include="IO\IoUtils.cs" />
@@ -131,6 +131,7 @@
     <Compile Include="Media\FfmpegEncode.cs" />
     <Compile Include="Media\FfmpegExtract.cs" />
     <Compile Include="Media\FfmpegUtils.cs" />
+    <Compile Include="Media\FfmpegUtilsOld.cs" />
     <Compile Include="Media\GetFrameCountCached.cs" />
     <Compile Include="Media\GetMediaResolutionCached.cs" />
     <Compile Include="Media\GetVideoInfoCached.cs" />
@@ -170,6 +171,8 @@
   <ItemGroup>
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
+    <None Include="Resources\play-32px-div.png" />
+    <None Include="Resources\play-32px.png" />
     <None Include="Resources\dragdrop2-white.png" />
     <None Include="Resources\dragdrop2.png" />
   </ItemGroup>

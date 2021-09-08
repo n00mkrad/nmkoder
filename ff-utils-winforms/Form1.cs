@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.GuiHelpers;
 using Nmkoder.IO;
+using Nmkoder.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,8 @@ namespace Nmkoder
 {
     public partial class Form1 : Form
     {
+        public CheckedListBox streamListBox;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,7 +26,9 @@ namespace Nmkoder
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Program.logTbox = logTbox;
+            streamListBox = streamList;
+            Program.mainForm = this;
+            Logger.textbox = logTbox;
             CheckForIllegalCrossThreadCalls = false;
             InitCombox(createMp4Enc, 0);
             InitCombox(createMp4Crf, 1);
@@ -101,6 +106,14 @@ namespace Nmkoder
             //if (mainTabControl.SelectedTab == comparisonPage) await CreateComparison(files);
             //if (mainTabControl.SelectedTab == encPage) await Encode(files);
             //if (mainTabControl.SelectedTab == delayPage) await Delay(files);
+        }
+
+        private void inputPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
+
+        private void inputPanel_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            MainView.HandleFiles(files);
         }
 
         //async Task ExtractFrames(string[] files)

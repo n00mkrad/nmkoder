@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,23 +10,28 @@ namespace Nmkoder.Data
 {
     class Paths
     {
+		public static string GetOwnFolder()
+		{
+			return Environment.CurrentDirectory;
+		}
+
 		public static string GetLogPath()
 		{
-			string path = Path.Combine(IOUtils.GetOwnFolder(), "logs");
+			string path = Path.Combine(GetOwnFolder(), "logs");
 			Directory.CreateDirectory(path);
 			return path;
 		}
 
 		public static string GetBinPath()
 		{
-			string path = Path.Combine(IOUtils.GetOwnFolder(), "bin");
+			string path = Path.Combine(GetOwnFolder(), "bin");
 			Directory.CreateDirectory(path);
 			return path;
 		}
 
 		public static string GetDataPath()
 		{
-			string path = Path.Combine(IOUtils.GetOwnFolder(), "data");
+			string path = Path.Combine(GetOwnFolder(), "data");
 			Directory.CreateDirectory(path);
 			return path;
 		}

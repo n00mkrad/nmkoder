@@ -14,69 +14,92 @@ namespace Nmkoder.Media
     class GetVideoInfoCached
     {
         enum InfoType { Ffmpeg, Ffprobe };
+        public enum FfprobeMode { ShowFormat, ShowStreams, ShowBoth };
 
-        static Dictionary<PseudoUniqueFile, string> ffmpegCache = new Dictionary<PseudoUniqueFile, string>();
-        static Dictionary<PseudoUniqueFile, string> ffprobeCache = new Dictionary<PseudoUniqueFile, string>();
+        static Dictionary<QueryInfo, string> cmdCache = new Dictionary<QueryInfo, string>();
 
         public static async Task<string> GetFfmpegInfoAsync(string path, string lineFilter = "")
         {
-            return await GetInfoAsync(path, InfoType.Ffmpeg, lineFilter);
-        }
-
-        public static async Task<string> GetFfprobeInfoAsync(string path, string lineFilter = "")
-        {
-            return await GetInfoAsync(path, InfoType.Ffprobe, lineFilter);
-        }
-
-        static async Task<string> GetInfoAsync(string path, InfoType type, string lineFilter)
-        {
-            Logger.Log($"Get{type}InfoAsync({path})", true);
-            Dictionary<PseudoUniqueFile, string> cacheDict = new Dictionary<PseudoUniqueFile, string>(type == InfoType.Ffmpeg ? ffmpegCache : ffprobeCache);
-            long filesize = IoUtils.GetFilesize(path);
-            PseudoUniqueFile hash = new PseudoUniqueFile(path, filesize);
-
-            if (filesize > 0 && CacheContains(hash, ref cacheDict))
-            {
-                Logger.Log($"Returning cached {type} info.", true);
-                return GetFromCache(hash, ref cacheDict);
-            }
-
             Process process = OsUtils.NewProcess(true);
-            string dir = Paths.GetBinPath();
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()}";
+            return await GetInfoAsync(path, process , lineFilter, false);
+        }
 
-            if(type == InfoType.Ffmpeg)
-                process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()}";
+        public static async Task<string> GetFfprobeInfoAsync(string path, FfprobeMode mode, string lineFilter = "", int streamIndex = -1, bool stripKeyName = true)
+        {
+            Process process = OsUtils.NewProcess(true);
+            string showFormat = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowFormat ? "-show_format" : "";
+            string showStreams = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowStreams ? "-show_streams" : "";
+            string streamSelect = (streamIndex >= 0) ? $"-select_streams {streamIndex}" : "";
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffprobe -v quiet {showFormat} {showStreams} {streamSelect} {path.Wrap()}";
+            return await GetInfoAsync(path, process, lineFilter, stripKeyName);
+        }
 
-            if (type == InfoType.Ffprobe)
-                process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffprobe -v quiet -show_format -show_streams {path.Wrap()}";
+        static async Task<string> GetInfoAsync(string path, Process process, string lineFilter, bool stripKeyName = true)
+        {
+            //Process process = OsUtils.NewProcess(true);
+            //string dir = Paths.GetBinPath();
+            //
+            //if(type == InfoType.Ffmpeg)
+            //{
+            //    process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()}";
+            //}
+            //
+            //if (type == InfoType.Ffprobe)
+            //{
+            //    string streamSelect = (!string.IsNullOrWhiteSpace(cmd)) ? $"-select_streams {cmd}" : "";
+            //    process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffprobe -v quiet -show_format -show_streams {streamSelect} {path.Wrap()}";
+            //}
 
-            string output = await OsUtils.GetOutputAsync(process);
-
-            if (type == InfoType.Ffmpeg)
-                ffmpegCache.Add(hash, output);
-
-            if (type == InfoType.Ffprobe)
-                ffprobeCache.Add(hash, output);
+            string output = await GetOutputCached(path, process);
 
             if (!string.IsNullOrWhiteSpace(lineFilter.Trim()))
-                output = string.Join("\n", output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToArray());
+            {
+                if (stripKeyName)
+                {
+                    List<string> filtered = output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToList();    // Filter
+                    filtered = filtered.Select(x => string.Join("", x.Split('=').Skip(1))).ToList();    // Ignore everything before (and including) the first '=' sign
+                    output = string.Join("\n", filtered);
+                }
+                else
+                {
+                    output = string.Join("\n", output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToArray());
+                }
+            }
+                
 
             return output;
         }
 
-        private static bool CacheContains(PseudoUniqueFile hash, ref Dictionary<PseudoUniqueFile, string> cacheDict)
+        static async Task<string> GetOutputCached (string path, Process process)
         {
-            foreach (KeyValuePair<PseudoUniqueFile, string> entry in cacheDict)
-                if (entry.Key.path == hash.path && entry.Key.filesize == hash.filesize)
+            long filesize = IoUtils.GetFilesize(path);
+            QueryInfo hash = new QueryInfo(path, filesize, process.StartInfo.Arguments);
+
+            if (filesize > 0 && CacheContains(hash, ref cmdCache))
+            {
+                Logger.Log($"Returning cached info.", true);
+                return GetFromCache(hash, ref cmdCache);
+            }
+
+            string output = await OsUtils.GetOutputAsync(process);
+            cmdCache.Add(hash, output);
+            return output;
+        }
+
+        private static bool CacheContains(QueryInfo hash, ref Dictionary<QueryInfo, string> cacheDict)
+        {
+            foreach (KeyValuePair<QueryInfo, string> entry in cacheDict)
+                if (entry.Key.path == hash.path && entry.Key.filesize == hash.filesize && entry.Key.cmd == hash.cmd)
                     return true;
 
             return false;
         }
 
-        private static string GetFromCache(PseudoUniqueFile hash, ref Dictionary<PseudoUniqueFile, string> cacheDict)
+        private static string GetFromCache(QueryInfo hash, ref Dictionary<QueryInfo, string> cacheDict)
         {
-            foreach (KeyValuePair<PseudoUniqueFile, string> entry in cacheDict)
-                if (entry.Key.path == hash.path && entry.Key.filesize == hash.filesize)
+            foreach (KeyValuePair<QueryInfo, string> entry in cacheDict)
+                if (entry.Key.path == hash.path && entry.Key.filesize == hash.filesize && entry.Key.cmd == hash.cmd)
                     return entry.Value;
 
             return "";

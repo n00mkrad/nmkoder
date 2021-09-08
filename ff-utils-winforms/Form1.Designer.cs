@@ -161,10 +161,13 @@
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.inputPanel = new System.Windows.Forms.Panel();
+            this.streamList = new System.Windows.Forms.CheckedListBox();
+            this.taskMode = new System.Windows.Forms.ComboBox();
+            this.inputDropPanel = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
+            this.runBtn = new System.Windows.Forms.Button();
+            this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList.SuspendLayout();
             this.tabListPage2.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -194,19 +197,19 @@
             this.delayPage.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.inputPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
             // 
             this.logTbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.logTbox.ForeColor = System.Drawing.Color.White;
-            this.logTbox.Location = new System.Drawing.Point(252, 416);
+            this.logTbox.Location = new System.Drawing.Point(332, 458);
             this.logTbox.Multiline = true;
             this.logTbox.Name = "logTbox";
             this.logTbox.ReadOnly = true;
             this.logTbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.logTbox.Size = new System.Drawing.Size(920, 130);
+            this.logTbox.Size = new System.Drawing.Size(840, 110);
             this.logTbox.TabIndex = 8;
             this.logTbox.Text = "Ready...";
             // 
@@ -217,22 +220,22 @@
             this.tabList.Controls.Add(this.tabListPage2);
             this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
             this.tabList.HeaderSize = new System.Drawing.Size(110, 25);
-            this.tabList.Location = new System.Drawing.Point(252, 12);
+            this.tabList.Location = new System.Drawing.Point(332, 62);
             this.tabList.Name = "tabList";
-            this.tabList.Size = new System.Drawing.Size(920, 375);
+            this.tabList.Size = new System.Drawing.Size(840, 390);
             this.tabList.TabIndex = 9;
             // 
             // tabListPage1
             // 
             this.tabListPage1.Name = "tabListPage1";
-            this.tabListPage1.Size = new System.Drawing.Size(802, 367);
+            this.tabListPage1.Size = new System.Drawing.Size(722, 382);
             this.tabListPage1.Text = "Quick Convert";
             // 
             // tabListPage2
             // 
             this.tabListPage2.Controls.Add(this.mainTabControl);
             this.tabListPage2.Name = "tabListPage2";
-            this.tabListPage2.Size = new System.Drawing.Size(802, 367);
+            this.tabListPage2.Size = new System.Drawing.Size(802, 432);
             this.tabListPage2.Text = "Utilities";
             // 
             // mainTabControl
@@ -1682,29 +1685,59 @@
             this.titleLabel.TabIndex = 10;
             this.titleLabel.Text = "NMKODER";
             // 
-            // panel3
+            // inputPanel
             // 
-            this.panel3.AllowDrop = true;
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.panel3.Controls.Add(this.label38);
-            this.panel3.Controls.Add(this.panel2);
-            this.panel3.Controls.Add(this.label33);
-            this.panel3.Location = new System.Drawing.Point(12, 62);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(234, 325);
-            this.panel3.TabIndex = 12;
+            this.inputPanel.AllowDrop = true;
+            this.inputPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.inputPanel.Controls.Add(this.streamList);
+            this.inputPanel.Controls.Add(this.taskMode);
+            this.inputPanel.Controls.Add(this.inputDropPanel);
+            this.inputPanel.Controls.Add(this.label33);
+            this.inputPanel.Location = new System.Drawing.Point(12, 62);
+            this.inputPanel.Name = "inputPanel";
+            this.inputPanel.Size = new System.Drawing.Size(314, 390);
+            this.inputPanel.TabIndex = 12;
+            this.inputPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragDrop);
+            this.inputPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragEnter);
             // 
-            // panel2
+            // streamList
             // 
-            this.panel2.AllowDrop = true;
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(6, 27);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(222, 100);
-            this.panel2.TabIndex = 1;
+            this.streamList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.streamList.ForeColor = System.Drawing.Color.White;
+            this.streamList.FormattingEnabled = true;
+            this.streamList.Location = new System.Drawing.Point(6, 169);
+            this.streamList.Margin = new System.Windows.Forms.Padding(6);
+            this.streamList.Name = "streamList";
+            this.streamList.ScrollAlwaysVisible = true;
+            this.streamList.Size = new System.Drawing.Size(302, 214);
+            this.streamList.TabIndex = 27;
+            // 
+            // taskMode
+            // 
+            this.taskMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.taskMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.taskMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.taskMode.ForeColor = System.Drawing.Color.White;
+            this.taskMode.FormattingEnabled = true;
+            this.taskMode.Items.AddRange(new object[] {
+            "Load File On Drop, Start Manually",
+            "Run Action Right After Dropping File"});
+            this.taskMode.Location = new System.Drawing.Point(6, 136);
+            this.taskMode.Name = "taskMode";
+            this.taskMode.Size = new System.Drawing.Size(302, 21);
+            this.taskMode.TabIndex = 26;
+            // 
+            // inputDropPanel
+            // 
+            this.inputDropPanel.AllowDrop = true;
+            this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
+            this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
+            this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
+            this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
+            this.inputDropPanel.Name = "inputDropPanel";
+            this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
+            this.inputDropPanel.TabIndex = 1;
             // 
             // label33
             // 
@@ -1717,16 +1750,31 @@
             this.label33.TabIndex = 16;
             this.label33.Text = "Drag and drop a file here to load it:";
             // 
-            // label38
+            // runBtn
             // 
-            this.label38.AutoSize = true;
-            this.label38.ForeColor = System.Drawing.Color.White;
-            this.label38.Location = new System.Drawing.Point(3, 137);
-            this.label38.Margin = new System.Windows.Forms.Padding(4);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(38, 13);
-            this.label38.TabIndex = 17;
-            this.label38.Text = "Name:";
+            this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.runBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.runBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.runBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runBtn.ForeColor = System.Drawing.Color.White;
+            this.runBtn.Image = ((System.Drawing.Image)(resources.GetObject("runBtn.Image")));
+            this.runBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.runBtn.Location = new System.Drawing.Point(12, 544);
+            this.runBtn.Name = "runBtn";
+            this.runBtn.Size = new System.Drawing.Size(314, 45);
+            this.runBtn.TabIndex = 13;
+            this.runBtn.Text = "Start";
+            this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.runBtn.UseVisualStyleBackColor = false;
+            // 
+            // progBar
+            // 
+            this.progBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.progBar.BorderThickness = 0;
+            this.progBar.Location = new System.Drawing.Point(332, 574);
+            this.progBar.Name = "progBar";
+            this.progBar.Size = new System.Drawing.Size(840, 15);
+            this.progBar.TabIndex = 34;
             // 
             // Form1
             // 
@@ -1734,7 +1782,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
-            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.progBar);
+            this.Controls.Add(this.runBtn);
+            this.Controls.Add(this.inputPanel);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.tabList);
             this.Controls.Add(this.logTbox);
@@ -1793,8 +1843,8 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.inputPanel.ResumeLayout(false);
+            this.inputPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1933,10 +1983,13 @@
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Label label69;
         private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel inputPanel;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Panel inputDropPanel;
+        private System.Windows.Forms.Button runBtn;
+        private HTAlt.WinForms.HTProgressBar progBar;
+        private System.Windows.Forms.ComboBox taskMode;
+        private System.Windows.Forms.CheckedListBox streamList;
     }
 }
 

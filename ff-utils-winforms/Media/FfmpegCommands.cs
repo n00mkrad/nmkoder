@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using static Nmkoder.Media.AvProcess;
-using Utils = Nmkoder.Media.FfmpegUtils;
+using Utils = Nmkoder.Media.FfmpegUtilsOld;
 
 namespace Nmkoder.Media
 {
@@ -83,7 +83,7 @@ namespace Nmkoder.Media
             return FormatUtils.TimestampToMs(output);
         }
 
-        public static async Task<Fraction> GetFramerate(string inputFile, bool preferFfmpeg = false)
+        public static async Task<Fraction> GetFramerate(string inputFile, bool preferFfmpeg = false, int streamIndex = 0)
         {
             Logger.Log($"GetFramerate(inputFile = '{inputFile}', preferFfmpeg = {preferFfmpeg})", true, false, "ffmpeg");
             Fraction ffprobeFps = new Fraction(0, 1);
@@ -91,7 +91,7 @@ namespace Nmkoder.Media
 
             try
             {
-                string ffprobeOutput = await GetVideoInfoCached.GetFfprobeInfoAsync(inputFile, "r_frame_rate");
+                string ffprobeOutput = await GetVideoInfoCached.GetFfprobeInfoAsync(inputFile, GetVideoInfoCached.FfprobeMode.ShowStreams, "r_frame_rate", streamIndex);
                 string fpsStr = ffprobeOutput.SplitIntoLines().First();
                 string[] numbers = fpsStr.Split('=')[1].Split('/');
                 Logger.Log($"Fractional FPS from ffprobe: {numbers[0]}/{numbers[1]} = {((float)numbers[0].GetInt() / numbers[1].GetInt())}", true, false, "ffmpeg");

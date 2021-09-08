@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using Nmkoder.Data;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.OS;
 using Nmkoder.Utils;
-using Microsoft.VisualBasic;
-using Nmkoder.Data;
-using Nmkoder.Extensions;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Nmkoder.Media
 {
@@ -75,11 +71,11 @@ namespace Nmkoder.Media
 
             string beforeArgs = $"-hide_banner -stats -loglevel {loglevel} -y";
 
-            if(!string.IsNullOrWhiteSpace(workingDir))
+            if (!string.IsNullOrWhiteSpace(workingDir))
                 ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {workingDir.Wrap()} & {Path.Combine(GetDir(), "ffmpeg.exe").Wrap()} {beforeArgs} {args}";
             else
                 ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe {beforeArgs} {args}";
-            
+
             if (logMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
             Logger.Log($"ffmpeg {beforeArgs} {args}", true, false, "ffmpeg");
             ffmpeg.OutputDataReceived += FfmpegOutputHandler;
@@ -91,7 +87,7 @@ namespace Nmkoder.Media
             while (!ffmpeg.HasExited)
                 await Task.Delay(1);
 
-            if(progressBar)
+            if (progressBar)
                 Program.mainForm.SetProgress(0);
         }
 
@@ -114,7 +110,7 @@ namespace Nmkoder.Media
 
             if (line.StartsWith("frame="))
                 line = FormatUtils.BeautifyFfmpegStats(line);
-            
+
             Logger.Log(line, hidden, replaceLastLine, "ffmpeg");
 
             if (line.Contains(".srt: Invalid data found"))
@@ -133,7 +129,7 @@ namespace Nmkoder.Media
             }
         }
 
-        static bool HideMessage (string msg)
+        static bool HideMessage(string msg)
         {
             string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid" };
 
@@ -157,12 +153,12 @@ namespace Nmkoder.Media
             if (setBusy) Program.mainForm.SetWorking(true);
             lastOutputFfmpeg = await OsUtils.GetOutputAsync(ffmpeg);
             while (!ffmpeg.HasExited) await Task.Delay(50);
-            while(timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
+            while (timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
             if (setBusy) Program.mainForm.SetWorking(false);
             return lastOutputFfmpeg;
         }
 
-        public static string GetFfprobeOutput (string args)
+        public static string GetFfprobeOutput(string args)
         {
             Process ffprobe = OsUtils.NewProcess(true);
             ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe.exe {args}";
@@ -180,9 +176,8 @@ namespace Nmkoder.Media
             try
             {
                 Form1 form = Program.mainForm;
-                // TODO: IMPLEMENT
                 //long currInDuration = (form.currInDurationCut < form.currInDuration) ? form.currInDurationCut : form.currInDuration;
-                long currInDuration = 1000 * 60 * 60 * 1; // 1h - TEMPORARY
+                long currInDuration = 1000 * 60 * 60 * 1; // TODO: Use actual duration instead of 1h placeholder
 
                 if (currInDuration < 1)
                 {
@@ -200,23 +195,23 @@ namespace Nmkoder.Media
                 Logger.Log($"Failed to get ffmpeg progress: {e.Message}", true);
             }
         }
-        
-        static string GetDir ()
+
+        static string GetDir()
         {
             return Paths.GetBinPath();
         }
 
-        static string GetCmdArg ()
+        static string GetCmdArg()
         {
             return "/C";
         }
 
-        public static async Task SetBusyWhileRunning ()
+        public static async Task SetBusyWhileRunning()
         {
             if (Program.busy) return;
 
             await Task.Delay(100);
-            while(!lastAvProcess.HasExited)
+            while (!lastAvProcess.HasExited)
                 await Task.Delay(10);
         }
     }

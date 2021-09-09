@@ -2085,6 +2085,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NMKD\'s NMKoDer";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.inputPanel.ResumeLayout(false);
             this.inputPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();

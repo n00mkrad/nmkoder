@@ -26,9 +26,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="Cyotek.Windows.Forms.TabList, Version=2.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
-      <HintPath>packages\CyotekTabList.2.2.0\lib\net35\Cyotek.Windows.Forms.TabList.dll</HintPath>
+      <HintPath>packages\CyotekTabList.2.0.0\lib\net35\Cyotek.Windows.Forms.TabList.dll</HintPath>
     </Reference>
     <Reference Include="DiskDetector, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\diskdetector-net.0.3.2\lib\netstandard2.0\DiskDetector.dll</HintPath>

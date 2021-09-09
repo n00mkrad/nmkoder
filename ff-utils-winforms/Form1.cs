@@ -52,8 +52,6 @@ namespace Nmkoder
             
             CheckForIllegalCrossThreadCalls = false;
 
-            ConfigParser.LoadComboxIndex(taskMode);
-
             InitCombox(createMp4Enc, 0);
             InitCombox(createMp4Crf, 1);
             InitCombox(createMp4Fps, 2);
@@ -69,6 +67,19 @@ namespace Nmkoder
             InitCombox(comparisonType, 0);
             InitCombox(comparisonCrf, 1);
             InitCombox(delayTrackCombox, 0);
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            QuickConvert.Init();
+            LoadConfig();
+        }
+
+        void LoadConfig()
+        {
+            ConfigParser.LoadComboxIndex(taskMode);
+            ConfigParser.LoadComboxIndex(containers);
+            ConfigParser.LoadComboxIndex(encEncoder);
         }
 
         void SaveConfig(object sender, EventArgs e)

@@ -16,12 +16,12 @@ namespace Nmkoder.UI
 
             foreach (Codecs.Codec c in Codecs.vCodecs)
                 form.encEncoderBox.Items.Add(c.LongName);
-
+            
             ConfigParser.LoadComboxIndex(form.encEncoderBox);
-
+            
             foreach (Containers.Container c in Containers.containers)
                 form.containerBox.Items.Add(c.Extension.ToUpper());
-
+            
             ConfigParser.LoadComboxIndex(form.containerBox);
         }
     }

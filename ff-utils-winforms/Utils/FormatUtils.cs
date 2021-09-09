@@ -180,5 +180,13 @@ namespace Nmkoder.Utils
                     .Replace("fps=", "FPS: ").Replace("q=", "QP: ").Replace("time=", "Time: ").Replace("speed=", "Relative Speed: ")
                     .Replace("bitrate=", "Bitrate: ").Replace("Lsize=", "Size: ").Replace("size=", "Size: ").TrimWhitespaces();
         }
+
+        public static string CapsIfShort(string codec, int capsIfShorterThan = 5)
+        {
+            if (codec.Length < capsIfShorterThan)
+                return codec.ToUpper();
+            else
+                return codec.ToTitleCase();
+        }
     }
 }

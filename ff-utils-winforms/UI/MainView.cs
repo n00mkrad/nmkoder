@@ -1,6 +1,8 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Streams;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,24 +44,30 @@ namespace Nmkoder.UI
                 {
                     if(s.Index == i)
                     {
-                        if(s.Type == Stream.StreamType.Video)
+                        string codec = FormatUtils.CapsIfShort(s.Codec, 5);
+                        const int maxChars = 50;
+
+                        if (s.Type == Stream.StreamType.Video)
                         {
                             VideoStream vs = (VideoStream)s;
-                            box.Items.Add($"#{i}: {s.Type} ({s.Codec}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
+                            string codecStr = vs.Kbits > 0 ? $"{codec} at {vs.Kbits} kbps" : codec;
+                            box.Items.Add($"#{i}: {s.Type} ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
                         }
 
                         if (s.Type == Stream.StreamType.Audio)
                         {
                             AudioStream @as = (AudioStream)s;
-                            string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? "No Title" : @as.Title;
-                            box.Items.Add($"#{i}: {s.Type} ({s.Codec}) - {title} - {@as.Layout}");
+                            string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
+                            string codecStr = @as.Kbits > 0 ? $"{codec} at {@as.Kbits} kbps" : codec;
+                            box.Items.Add($"#{i}: {s.Type} ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
                         }
 
                         if (s.Type == Stream.StreamType.Subtitle)
                         {
                             SubtitleStream ss = (SubtitleStream)s;
-                            string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? "Unknown Language" : ss.Language;
-                            box.Items.Add($"#{i}: {s.Type} ({s.Codec}) - {lang}");
+                            string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
+                            string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
+                            box.Items.Add($"#{i}: {s.Type} ({codec}){lang}{ttl}");
                         }
 
                         Program.mainForm.streamListBox.SetItemChecked(i, true);

@@ -171,6 +171,7 @@
   <ItemGroup>
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
+    <None Include="Resources\baseline_image_white_48dp-4x-25pcAlpha.png" />
     <None Include="Resources\play-32px-div.png" />
     <None Include="Resources\play-32px.png" />
     <None Include="Resources\dragdrop2-white.png" />

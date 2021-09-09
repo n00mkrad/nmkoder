@@ -38,12 +38,13 @@ namespace Nmkoder.Media
                         string codec = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_name", idx);
                         string codecLong = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_long_name", idx);
                         string pixFmt = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "pix_fmt", idx)).ToUpper();
+                        int kbits = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "bit_rate", idx)).GetInt() / 1024;
                         Size res = await GetMediaResolutionCached.GetSizeAsync(path);
                         Size sar = SizeFromString(await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "sample_aspect_ratio", idx));
                         Size dar = SizeFromString(await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "display_aspect_ratio", idx));
                         Fraction fps = await IoUtils.GetVideoFramerate(path);
                         //int frames = await GetFrameCountCached.GetFrameCountAsync(path);
-                        VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, res, sar, dar, fps);
+                        VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                         vStream.Index = idx;
                         streamList.Add(vStream);
                         Logger.Log(streamList.Last().ToString());
@@ -59,8 +60,6 @@ namespace Nmkoder.Media
                         int sampleRate = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "sample_rate", idx)).GetInt();
                         int channels = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "channels", idx)).GetInt();
                         string layout = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "channel_layout", idx));
-                        Fraction fps = await IoUtils.GetVideoFramerate(path);
-                        int frames = await GetFrameCountCached.GetFrameCountAsync(path);
                         AudioStream aStream = new AudioStream(title, codec, codecLong, kbits, sampleRate, channels, layout);
                         aStream.Index = idx;
                         streamList.Add(aStream);
@@ -71,20 +70,15 @@ namespace Nmkoder.Media
                     if (streamStr.Contains(": Subtitle:"))
                     {
                         string lang = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "TAG:language", idx);
+                        string title = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "TAG:title", idx);
                         string codec = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_name", idx);
                         string codecLong = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_long_name", idx);
-                        Fraction fps = await IoUtils.GetVideoFramerate(path);
-                        int frames = await GetFrameCountCached.GetFrameCountAsync(path);
-                        SubtitleStream sStream = new SubtitleStream(lang, codec, codecLong);
+                        SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong);
                         sStream.Index = idx;
                         streamList.Add(sStream);
                         Logger.Log(streamList.Last().ToString());
                         continue;
                     }
-
-                    //if (streamStr.Contains(": Video:")) stream.Type = Stream.StreamType.Video;
-                    //if (streamStr.Contains(": Audio:")) stream.Type = Stream.StreamType.Audio;
-                    //if (streamStr.Contains(": Subtitle:")) stream.Type = Stream.StreamType.Subtitle;
 
                     Stream stream = new Stream();
                     stream.Type = Stream.StreamType.Unknown;

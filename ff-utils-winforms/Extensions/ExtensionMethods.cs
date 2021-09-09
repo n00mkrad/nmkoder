@@ -218,5 +218,10 @@ namespace Nmkoder.Extensions
             int b = a + 2;   // Larger multiple
             return (n - a > b - n) ? b : a; // Return of closest of two
         }
+
+        public static string ToTitleCase(this string s)
+        {
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s);
+        }
     }
 }

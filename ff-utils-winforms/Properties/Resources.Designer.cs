@@ -63,6 +63,16 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap baseline_image_white_48dp_4x_25pcAlpha {
+            get {
+                object obj = ResourceManager.GetObject("baseline_image_white_48dp-4x-25pcAlpha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dragdrop2 {
             get {
                 object obj = ResourceManager.GetObject("dragdrop2", resourceCulture);

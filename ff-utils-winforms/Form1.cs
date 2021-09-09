@@ -124,6 +124,11 @@ namespace Nmkoder
             MainView.HandleFiles(files);
         }
 
+        private void streamList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            streamDetails.Text = MainView.GetStreamDetails(streamList.SelectedIndex);
+        }
+
         //async Task ExtractFrames(string[] files)
         //{
         //    if (extractFramesTabcontrol.SelectedIndex == 0)

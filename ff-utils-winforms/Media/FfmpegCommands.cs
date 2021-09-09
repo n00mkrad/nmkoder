@@ -91,9 +91,9 @@ namespace Nmkoder.Media
 
             try
             {
-                string ffprobeOutput = await GetVideoInfoCached.GetFfprobeInfoAsync(inputFile, GetVideoInfoCached.FfprobeMode.ShowStreams, "r_frame_rate", streamIndex);
+                string ffprobeOutput = await GetVideoInfo.GetFfprobeInfoAsync(inputFile, GetVideoInfo.FfprobeMode.ShowStreams, "r_frame_rate", streamIndex);
                 string fpsStr = ffprobeOutput.SplitIntoLines().First();
-                string[] numbers = fpsStr.Split('=')[1].Split('/');
+                string[] numbers = fpsStr.Split('/');
                 Logger.Log($"Fractional FPS from ffprobe: {numbers[0]}/{numbers[1]} = {((float)numbers[0].GetInt() / numbers[1].GetInt())}", true, false, "ffmpeg");
                 ffprobeFps = new Fraction(numbers[0].GetInt(), numbers[1].GetInt());
             }
@@ -104,7 +104,7 @@ namespace Nmkoder.Media
 
             try
             {
-                string ffmpegOutput = await GetVideoInfoCached.GetFfmpegInfoAsync(inputFile);
+                string ffmpegOutput = await GetVideoInfo.GetFfmpegInfoAsync(inputFile);
                 string[] entries = ffmpegOutput.Split(',');
 
                 foreach (string entry in entries)

@@ -109,6 +109,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
@@ -146,7 +147,7 @@
     <Compile Include="Media\FfmpegUtilsOld.cs" />
     <Compile Include="Media\GetFrameCountCached.cs" />
     <Compile Include="Media\GetMediaResolutionCached.cs" />
-    <Compile Include="Media\GetVideoInfoCached.cs" />
+    <Compile Include="Media\GetVideoInfo.cs" />
     <Compile Include="OS\OsUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

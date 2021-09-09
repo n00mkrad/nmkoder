@@ -11,7 +11,7 @@ using Nmkoder.OS;
 
 namespace Nmkoder.Media
 {
-    class GetVideoInfoCached
+    class GetVideoInfo
     {
         enum InfoType { Ffmpeg, Ffprobe };
         public enum FfprobeMode { ShowFormat, ShowStreams, ShowBoth };

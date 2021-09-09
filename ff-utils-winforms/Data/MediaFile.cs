@@ -54,7 +54,7 @@ namespace Nmkoder.Data
         private async Task LoadFormatInfo (string path)
         {
             StreamCount = await FfmpegUtils.GetStreamCount(path);
-            TotalKbits = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
+            TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
         }
     }
 }

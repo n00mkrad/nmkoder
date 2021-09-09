@@ -47,7 +47,7 @@ namespace Nmkoder.UI
 
             Task.Run(() => SaveThumbnails(current.File.FullName));
 
-            string getTitle = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowFormat, "TAG:title");
+            string getTitle = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
             string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(25)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
@@ -147,6 +147,43 @@ namespace Nmkoder.UI
             }
 
             await Slideshow.RunFromPath(Program.mainForm.thumbnailBox, Paths.GetThumbsPath());
+        }
+
+        public static string GetStreamDetails(int index)
+        {
+            if (index < 0)
+                return "";
+
+            Stream stream = current.AllStreams[index];
+            List<string> lines = new List<string>();
+            lines.Add($"Codec: {stream.CodecLong}");
+
+            if(stream.Type == Stream.StreamType.Video)
+            {
+                VideoStream v = (VideoStream)stream;
+                lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
+                lines.Add($"Color Space: {v.ColorSpace}{(v.ColorSpace.ToLower().Contains("p10") ? " (10-bit)" : " (8-bit)")}");
+                lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
+                lines.Add($"Language: {((v.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(v.Language, 4)}" : "Unknown")}");
+            }
+
+            if (stream.Type == Stream.StreamType.Audio)
+            {
+                AudioStream a = (AudioStream)stream;
+                lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title : "None")}");
+                lines.Add($"Sample Rate: {((a.SampleRate > 1) ? $"{a.SampleRate} KHz" : "None")}");
+                lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {a.Layout.ToTitleCase()})" : "")}");
+                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(a.Language, 4)}" : "Unknown")}");
+            }
+
+            if (stream.Type == Stream.StreamType.Subtitle)
+            {
+                SubtitleStream s = (SubtitleStream)stream;
+                lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title : "None")}");
+                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(s.Language, 4)}" : "Unknown")}");
+            }
+
+            return string.Join(Environment.NewLine, lines);
         }
     }
 }

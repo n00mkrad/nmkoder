@@ -9,14 +9,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Nmkoder.Media.GetVideoInfo;
 
 namespace Nmkoder.Media
 {
     class FfmpegUtils
     {
+        private readonly static FfprobeMode showStreams = FfprobeMode.ShowStreams;
+        private readonly static FfprobeMode showFormat = FfprobeMode.ShowFormat;
+
         public static async Task<int> GetStreamCount(string path)
         {
-            string output = await GetVideoInfoCached.GetFfmpegInfoAsync(path, "Stream #0:");
+            string output = await GetFfmpegInfoAsync(path, "Stream #0:");
             return output.SplitIntoLines().Length;
         }
 
@@ -26,7 +30,7 @@ namespace Nmkoder.Media
 
             try
             {
-                string output = await GetVideoInfoCached.GetFfmpegInfoAsync(path, "Stream #0:");
+                string output = await GetFfmpegInfoAsync(path, "Stream #0:");
                 string[] streams = output.SplitIntoLines();
 
                 foreach (string streamStr in streams)
@@ -39,16 +43,17 @@ namespace Nmkoder.Media
 
                     if (streamStr.Contains(": Video:"))
                     {
-                        string codec = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_name", idx);
-                        string codecLong = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_long_name", idx);
-                        string pixFmt = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "pix_fmt", idx)).ToUpper();
-                        int kbits = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "bit_rate", idx)).GetInt() / 1024;
+                        string lang = await GetFfprobeInfoAsync(path, showStreams, "TAG:language", idx);
+                        string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                        string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
+                        string pixFmt = (await GetFfprobeInfoAsync(path, showStreams, "pix_fmt", idx)).ToUpper();
+                        int kbits = (await GetFfprobeInfoAsync(path, showStreams, "bit_rate", idx)).GetInt() / 1024;
                         Size res = await GetMediaResolutionCached.GetSizeAsync(path);
-                        Size sar = SizeFromString(await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "sample_aspect_ratio", idx));
-                        Size dar = SizeFromString(await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "display_aspect_ratio", idx));
+                        Size sar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "sample_aspect_ratio", idx));
+                        Size dar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "display_aspect_ratio", idx));
                         Fraction fps = await IoUtils.GetVideoFramerate(path);
                         //int frames = await GetFrameCountCached.GetFrameCountAsync(path);
-                        VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
+                        VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, kbits, res, sar, dar, fps, lang);
                         vStream.Index = idx;
                         streamList.Add(vStream);
                         continue;
@@ -56,14 +61,15 @@ namespace Nmkoder.Media
 
                     if (streamStr.Contains(": Audio:"))
                     {
-                        string title = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "TAG:title", idx);
-                        string codec = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_name", idx);
-                        string codecLong = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_long_name", idx);
-                        int kbits = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "bit_rate", idx)).GetInt() / 1024;
-                        int sampleRate = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "sample_rate", idx)).GetInt();
-                        int channels = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "channels", idx)).GetInt();
-                        string layout = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "channel_layout", idx));
-                        AudioStream aStream = new AudioStream(title, codec, codecLong, kbits, sampleRate, channels, layout);
+                        string lang = await GetFfprobeInfoAsync(path, showStreams, "TAG:language", idx);
+                        string title = await GetFfprobeInfoAsync(path, showStreams, "TAG:title", idx);
+                        string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                        string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
+                        int kbits = (await GetFfprobeInfoAsync(path, showStreams, "bit_rate", idx)).GetInt() / 1024;
+                        int sampleRate = (await GetFfprobeInfoAsync(path, showStreams, "sample_rate", idx)).GetInt();
+                        int channels = (await GetFfprobeInfoAsync(path, showStreams, "channels", idx)).GetInt();
+                        string layout = (await GetFfprobeInfoAsync(path, showStreams, "channel_layout", idx));
+                        AudioStream aStream = new AudioStream(lang, title, codec, codecLong, kbits, sampleRate, channels, layout);
                         aStream.Index = idx;
                         streamList.Add(aStream);
                         continue;
@@ -71,13 +77,23 @@ namespace Nmkoder.Media
 
                     if (streamStr.Contains(": Subtitle:"))
                     {
-                        string lang = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "TAG:language", idx);
-                        string title = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "TAG:title", idx);
-                        string codec = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_name", idx);
-                        string codecLong = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowStreams, "codec_long_name", idx);
+                        string lang = await GetFfprobeInfoAsync(path, showStreams, "TAG:language", idx);
+                        string title = await GetFfprobeInfoAsync(path, showStreams, "TAG:title", idx);
+                        string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                        string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
                         SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong);
                         sStream.Index = idx;
                         streamList.Add(sStream);
+                        continue;
+                    }
+
+                    if (streamStr.Contains(": Data:"))
+                    {
+                        string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                        string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
+                        DataStream dStream = new DataStream(codec, codecLong);
+                        dStream.Index = idx;
+                        streamList.Add(dStream);
                         continue;
                     }
 

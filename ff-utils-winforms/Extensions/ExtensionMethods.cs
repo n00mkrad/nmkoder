@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Management.Automation;
+using System.Drawing;
 
 namespace Nmkoder.Extensions
 {
@@ -222,6 +223,11 @@ namespace Nmkoder.Extensions
         public static string ToTitleCase(this string s)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s);
+        }
+
+        public static string ToStringShort(this Size s, string separator = "x")
+        {
+            return $"{s.Width}{separator}{s.Height}";
         }
     }
 }

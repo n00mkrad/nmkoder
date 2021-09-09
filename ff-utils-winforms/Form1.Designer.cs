@@ -169,6 +169,7 @@
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.mediaInfoPage = new Cyotek.Windows.Forms.TabListPage();
+            this.streamDetails = new System.Windows.Forms.TextBox();
             this.quickEncodePage = new Cyotek.Windows.Forms.TabListPage();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.mainTabControl.SuspendLayout();
@@ -1677,6 +1678,7 @@
             this.streamList.ScrollAlwaysVisible = true;
             this.streamList.Size = new System.Drawing.Size(670, 242);
             this.streamList.TabIndex = 27;
+            this.streamList.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
             // 
             // titleLabel
             // 
@@ -1739,6 +1741,7 @@
             this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
             this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
             this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.inputDropPanel.Enabled = false;
             this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
             this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
             this.inputDropPanel.Name = "inputDropPanel";
@@ -1752,9 +1755,9 @@
             this.label33.Location = new System.Drawing.Point(4, 4);
             this.label33.Margin = new System.Windows.Forms.Padding(4);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(170, 13);
+            this.label33.Size = new System.Drawing.Size(209, 13);
             this.label33.TabIndex = 16;
-            this.label33.Text = "Drag and drop a file here to load it:";
+            this.label33.Text = "Drag and drop a file into this area to load it:";
             // 
             // runBtn
             // 
@@ -1796,11 +1799,26 @@
             // 
             // mediaInfoPage
             // 
+            this.mediaInfoPage.Controls.Add(this.streamDetails);
             this.mediaInfoPage.Controls.Add(this.formatInfo);
             this.mediaInfoPage.Controls.Add(this.streamList);
             this.mediaInfoPage.Name = "mediaInfoPage";
             this.mediaInfoPage.Size = new System.Drawing.Size(682, 382);
             this.mediaInfoPage.Text = "Media Info";
+            // 
+            // streamDetails
+            // 
+            this.streamDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.streamDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.streamDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.streamDetails.ForeColor = System.Drawing.Color.White;
+            this.streamDetails.Location = new System.Drawing.Point(7, 278);
+            this.streamDetails.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.streamDetails.Multiline = true;
+            this.streamDetails.Name = "streamDetails";
+            this.streamDetails.ReadOnly = true;
+            this.streamDetails.Size = new System.Drawing.Size(669, 101);
+            this.streamDetails.TabIndex = 29;
             // 
             // quickEncodePage
             // 
@@ -2035,6 +2053,7 @@
         private Cyotek.Windows.Forms.TabListPage quickEncodePage;
         private Cyotek.Windows.Forms.TabListPage utilsPage;
         private System.Windows.Forms.PictureBox thumbnail;
+        private System.Windows.Forms.TextBox streamDetails;
     }
 }
 

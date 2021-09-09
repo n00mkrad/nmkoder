@@ -12,12 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Taskbar;
+using ImageMagick;
 
 namespace Nmkoder
 {
     public partial class Form1 : Form
     {
         public CheckedListBox streamListBox;
+        public PictureBox thumbnailBox;
 
         public Form1()
         {
@@ -26,9 +29,13 @@ namespace Nmkoder
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            streamListBox = streamList;
             Program.mainForm = this;
             Logger.textbox = logTbox;
+
+            streamListBox = streamList;
+            thumbnailBox = thumbnail;
+
+            
             CheckForIllegalCrossThreadCalls = false;
             InitCombox(createMp4Enc, 0);
             InitCombox(createMp4Crf, 1);
@@ -57,11 +64,10 @@ namespace Nmkoder
 
         public void SetProgress(int percent)
         {
-            // TODO: IMPLEMENT
-            // percent = percent.Clamp(0, 100);
-            // TaskbarManager.Instance.SetProgressValue(percent, 100);
-            // longProgBar.Value = percent;
-            // longProgBar.Refresh();
+            percent = percent.Clamp(0, 100);
+            TaskbarManager.Instance.SetProgressValue(percent, 100);
+            progBar.Value = percent;
+            progBar.Refresh();
         }
 
         public void SetStatus(string str)

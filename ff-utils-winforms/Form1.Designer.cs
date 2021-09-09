@@ -161,7 +161,6 @@
             this.streamList = new System.Windows.Forms.CheckedListBox();
             this.titleLabel = new System.Windows.Forms.Label();
             this.inputPanel = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.taskMode = new System.Windows.Forms.ComboBox();
             this.inputDropPanel = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
@@ -171,6 +170,7 @@
             this.mediaInfoPage = new Cyotek.Windows.Forms.TabListPage();
             this.quickEncodePage = new Cyotek.Windows.Forms.TabListPage();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
+            this.thumbnail = new System.Windows.Forms.PictureBox();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
             this.extractFramesTabcontrol.SuspendLayout();
@@ -202,6 +202,7 @@
             this.tabList.SuspendLayout();
             this.mediaInfoPage.SuspendLayout();
             this.quickEncodePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -1693,7 +1694,7 @@
             // 
             this.inputPanel.AllowDrop = true;
             this.inputPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.inputPanel.Controls.Add(this.panel2);
+            this.inputPanel.Controls.Add(this.thumbnail);
             this.inputPanel.Controls.Add(this.taskMode);
             this.inputPanel.Controls.Add(this.inputDropPanel);
             this.inputPanel.Controls.Add(this.label33);
@@ -1703,19 +1704,6 @@
             this.inputPanel.TabIndex = 12;
             this.inputPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragDrop);
             this.inputPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragEnter);
-            // 
-            // panel2
-            // 
-            this.panel2.AllowDrop = true;
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlpha;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Enabled = false;
-            this.panel2.Location = new System.Drawing.Point(6, 166);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(302, 218);
-            this.panel2.TabIndex = 2;
             // 
             // taskMode
             // 
@@ -1727,7 +1715,7 @@
             this.taskMode.Items.AddRange(new object[] {
             "Load File On Drop, Start Manually",
             "Run Action Right After Dropping File"});
-            this.taskMode.Location = new System.Drawing.Point(6, 136);
+            this.taskMode.Location = new System.Drawing.Point(6, 362);
             this.taskMode.Name = "taskMode";
             this.taskMode.Size = new System.Drawing.Size(302, 21);
             this.taskMode.TabIndex = 26;
@@ -1814,6 +1802,19 @@
             this.utilsPage.Size = new System.Drawing.Size(682, 382);
             this.utilsPage.Text = "Utilities";
             // 
+            // thumbnail
+            // 
+            this.thumbnail.Enabled = false;
+            this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+            this.thumbnail.InitialImage = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlpha;
+            this.thumbnail.Location = new System.Drawing.Point(7, 133);
+            this.thumbnail.Margin = new System.Windows.Forms.Padding(0);
+            this.thumbnail.Name = "thumbnail";
+            this.thumbnail.Size = new System.Drawing.Size(301, 226);
+            this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.thumbnail.TabIndex = 27;
+            this.thumbnail.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1885,6 +1886,7 @@
             this.mediaInfoPage.ResumeLayout(false);
             this.mediaInfoPage.PerformLayout();
             this.quickEncodePage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2028,11 +2030,11 @@
         private System.Windows.Forms.ComboBox taskMode;
         private System.Windows.Forms.CheckedListBox streamList;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Panel panel2;
         private Cyotek.Windows.Forms.TabList tabList;
         private Cyotek.Windows.Forms.TabListPage mediaInfoPage;
         private Cyotek.Windows.Forms.TabListPage quickEncodePage;
         private Cyotek.Windows.Forms.TabListPage utilsPage;
+        private System.Windows.Forms.PictureBox thumbnail;
     }
 }
 

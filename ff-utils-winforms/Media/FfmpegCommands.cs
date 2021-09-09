@@ -75,7 +75,7 @@ namespace Nmkoder.Media
                 DeleteSource(inputFile);
         }
 
-        public static long GetDuration(string inputFile)
+        public static long GetDurationMs(string inputFile)
         {
             Logger.Log($"GetDuration({inputFile}) - Reading Duration using ffprobe.", true, false, "ffmpeg");
             string args = $" -v panic -select_streams v:0 -show_entries format=duration -of csv=s=x:p=0 -sexagesimal {inputFile.Wrap()}";

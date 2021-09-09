@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Nmkoder.Data;
+using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +17,10 @@ namespace Nmkoder
         [STAThread]
         static void Main()
         {
+            Config.Init();
+            IoUtils.DeleteContentsOfDir(Paths.GetLogPath());
+            IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Console.WriteLine(Environment.CurrentDirectory);

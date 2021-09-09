@@ -73,6 +73,16 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap baseline_image_white_48dp_4x_25pcAlphaPad {
+            get {
+                object obj = ResourceManager.GetObject("baseline_image_white_48dp-4x-25pcAlphaPad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dragdrop2 {
             get {
                 object obj = ResourceManager.GetObject("dragdrop2", resourceCulture);
@@ -86,6 +96,16 @@ namespace Nmkoder.Properties {
         internal static System.Drawing.Bitmap dragdrop2_white {
             get {
                 object obj = ResourceManager.GetObject("dragdrop2-white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap loadingThumbsText {
+            get {
+                object obj = ResourceManager.GetObject("loadingThumbsText", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -35,5 +35,12 @@ namespace Nmkoder.Data
 			Directory.CreateDirectory(path);
 			return path;
 		}
+
+		public static string GetThumbsPath()
+		{
+			string path = Path.Combine(GetDataPath(), "thumbs");
+			Directory.CreateDirectory(path);
+			return path;
+		}
 	}
 }

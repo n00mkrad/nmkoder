@@ -282,16 +282,44 @@ namespace Nmkoder.Media
         //    string args = $"-i {inputFile.Wrap()} {comprArg} {sizeStr} {pixFmt} -vf {GetPadFilter()} {outPath.Wrap()}";
         //    await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
         //}
-        //
-        public static async Task ExtractSingleFrame(string inputFile, string outputPath, int frameNum)
+        
+        public static async Task ExtractSingleFrame(string inputFile, string outputPath, int frameNum, int maxH = 2160)
         {
             bool isPng = (Path.GetExtension(outputPath).ToLower() == ".png");
-            string comprArg = isPng ? pngCompr : "";
+            string comprArg = isPng ? pngCompr : "-q:v 1";
             string pixFmt = "-pix_fmt " + (isPng ? $"rgb24 {comprArg}" : "yuvj420p");
-            string args = $"-i {inputFile.Wrap()} -vf \"select=eq(n\\,{frameNum})\" -vframes 1 {pixFmt} {outputPath.Wrap()}";
+            Size res = await GetMediaResolutionCached.GetSizeAsync(inputFile);
+            string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
+            string args = $"-i {inputFile.Wrap()} -vf \"select=eq(n\\,{frameNum})\" -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
             await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
         }
-        //
+
+        public static async Task ExtractSingleFrameAtTime(string inputFile, string outputPath, int skipSeconds, int maxH = 2160)
+        {
+            bool isPng = (Path.GetExtension(outputPath).ToLower() == ".png");
+            string comprArg = isPng ? pngCompr : "-q:v 1";
+            string pixFmt = "-pix_fmt " + (isPng ? $"rgb24 {comprArg}" : "yuvj420p");
+            Size res = await GetMediaResolutionCached.GetSizeAsync(inputFile);
+            string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
+            string args = $"-ss {skipSeconds} -i {inputFile.Wrap()} -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
+            await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
+        }
+
+        public static async Task ExtractThumbs(string inputFile, string outputDir, int amount, int maxH = 360, string format = "jpg")
+        {
+            long duration = (int)Math.Floor((float)GetDurationMs(inputFile) / 1000);
+            int interval = (int)Math.Floor((float)duration / amount);
+
+            Logger.Log($"Thumbnail Interval: {duration}/{amount} = {interval}", true);
+
+            for (int i = 0; i < amount; i++)
+            {
+                int time = interval * (i + 1);
+                //Logger.Log($"Extracting frame thumb{i + 1}.{format} at time {time}s", true);
+                await ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}.{format}"), time, maxH);
+            }
+        }
+
         //public static async Task ExtractLastFrame(string inputFile, string outputPath, Size size)
         //{
         //    if (QuickSettingsTab.trimEnabled)

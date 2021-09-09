@@ -20,13 +20,8 @@ namespace Nmkoder.Media
             return output.SplitIntoLines().Length;
         }
 
-        public static async Task<List<Stream>> GetStreams (string path, bool progressBar)
+        public static async Task<List<Stream>> GetStreams (string path, bool progressBar, int streamCount)
         {
-            int streamCount = -1;
-
-            if (progressBar)
-                streamCount = await GetStreamCount(path);
-
             List<Stream> streamList = new List<Stream>();
 
             try

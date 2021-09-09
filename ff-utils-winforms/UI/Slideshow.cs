@@ -17,12 +17,12 @@ namespace Nmkoder.UI
         public static async Task RunFromPath (PictureBox box, string imgsDir, string ext = "jpg", int interval = 2)
         {
             Logger.Log($"Slideshow.RunFromPath - imgsDir = {imgsDir}", true);
-            string inputFile = MainView.currentFile.File.FullName;
+            string inputFile = MainView.current.File.FullName;
             long inputFileSize = new FileInfo(inputFile).Length;
 
             for (int i = 0; true; i++)
             {
-                if (inputFile != MainView.currentFile.File.FullName || inputFileSize != new FileInfo(inputFile).Length)
+                if (inputFile != MainView.current.File.FullName || inputFileSize != new FileInfo(inputFile).Length)
                     return;
 
                 string[] files = IoUtils.GetFilesSorted(imgsDir, false, $"*.{ext}");

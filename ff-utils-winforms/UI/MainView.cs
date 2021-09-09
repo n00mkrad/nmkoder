@@ -20,7 +20,7 @@ namespace Nmkoder.UI
 {
     class MainView
     {
-        public static MediaFile currentFile; 
+        public static MediaFile current; 
 
         public static async Task HandleFiles (string[] paths)
         {
@@ -43,14 +43,22 @@ namespace Nmkoder.UI
             Logger.Log($"Loading info for {streamCount} streams.");
             await mediaFile.Initialize();
             Logger.Log($"Loaded all media info.");
-            currentFile = mediaFile;
-            Task.Run(() => SaveThumbnails(currentFile.File.FullName));
+            current = mediaFile;
+
+            Task.Run(() => SaveThumbnails(current.File.FullName));
+
+            string getTitle = await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowFormat, "TAG:title");
+            string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(25)} - " : "";
+            string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
+            string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Streams: {current.StreamCount} - Duration: {dur}{br}";
+
             CheckedListBox box = Program.mainForm.streamListBox;
             box.Items.Clear();
 
-            for (int i = 0; i < currentFile.AllStreams.Count; i++)
+            for (int i = 0; i < current.AllStreams.Count; i++)
             {
-                foreach(Stream s in currentFile.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
+                foreach(Stream s in current.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
                 {
                     if(s.Index == i)
                     {

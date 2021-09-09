@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data.Streams;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using System;
@@ -15,7 +16,8 @@ namespace Nmkoder.Data
     {
         public FileInfo File;
         public string Ext;
-        public int TotalBitrate;
+        public int StreamCount;
+        public int TotalKbits;
         public List<Stream> AllStreams = new List<Stream>();
         public List<VideoStream> VideoStreams = new List<VideoStream>();
         public List<AudioStream> AudioStreams = new List<AudioStream>();
@@ -35,7 +37,8 @@ namespace Nmkoder.Data
                 if (string.IsNullOrWhiteSpace(path))
                     path = File.FullName;
 
-                AllStreams = await FfmpegUtils.GetStreams(path, progressBar);
+                await LoadFormatInfo(path);
+                AllStreams = await FfmpegUtils.GetStreams(path, progressBar, StreamCount);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();
@@ -46,6 +49,12 @@ namespace Nmkoder.Data
             }
 
             Initialized = true;
+        }
+
+        private async Task LoadFormatInfo (string path)
+        {
+            StreamCount = await FfmpegUtils.GetStreamCount(path);
+            TotalKbits = (await GetVideoInfoCached.GetFfprobeInfoAsync(path, GetVideoInfoCached.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
         }
     }
 }

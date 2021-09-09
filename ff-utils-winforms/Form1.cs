@@ -21,6 +21,7 @@ namespace Nmkoder
     {
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
+        public Label formatInfoLabel;
 
         public Form1()
         {
@@ -34,6 +35,7 @@ namespace Nmkoder
 
             streamListBox = streamList;
             thumbnailBox = thumbnail;
+            formatInfoLabel = formatInfo;
 
             
             CheckForIllegalCrossThreadCalls = false;

@@ -18,13 +18,13 @@ using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.UI
 {
-    class MainView
+    class MediaInfo
     {
         public static MediaFile current; 
 
         public static async Task HandleFiles (string[] paths)
         {
-            RemoveThumbs();
+            ThumbnailView.RemoveThumbs();
 
             if (paths.Length == 1)
             {
@@ -45,7 +45,7 @@ namespace Nmkoder.UI
             Logger.Log($"Loaded all media info.");
             current = mediaFile;
 
-            Task.Run(() => SaveThumbnails(current.File.FullName));
+            Task.Run(() => ThumbnailView.SaveThumbnails(current.File.FullName));
 
             string getTitle = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
             string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(25)} - " : "";
@@ -107,61 +107,6 @@ namespace Nmkoder.UI
                 }
                 
             }
-        }
-
-        public static void RemoveThumbs ()
-        {
-            Program.mainForm.thumbnailBox.Image = Resources.loadingThumbsText;
-            IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-        }
-
-        public static async Task SaveThumbnails(string path)
-        {
-            Directory.CreateDirectory(Paths.GetThumbsPath());
-            int randThumbs = 4;
-
-            try
-            {
-                if (!IoUtils.IsPathDirectory(path))     // If path is video - Extract frames
-                {
-                    string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0.jpg");
-                    await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
-
-                    await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
-                    FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, "*.*");
-
-                    var smallerHalf = thumbs.Skip(1).OrderBy(f => f.Length).Take(randThumbs).ToList(); // Get smaller half of thumbs
-
-                    foreach (FileInfo f in smallerHalf) // Delete smaller thumbs to only have high-information thumbs
-                        f.Delete();
-                }
-                else     // Path is frame folder - Copy frames
-                {
-                    FileInfo[] frames = IoUtils.GetFileInfosSorted(path, false, "*.*");
-                    Image img1 = IoUtils.GetImage(frames[0].FullName);
-                    img1.Save(Path.Combine(Paths.GetThumbsPath(), $"thumb0.jpg"), ImageFormat.Jpeg);
-                    Random rnd = new Random();
-                    List<FileInfo> picks = frames.Skip(1).OrderBy(x => rnd.Next()).Take(randThumbs * 2).ToList();
-                    Logger.Log(string.Join(", ", picks.Select(x => (x.Length / 1024).ToString())));
-                    picks = picks.OrderBy(f => f.Length).Take(randThumbs).ToList(); // Delete smaller half of thumbs
-                    Logger.Log(string.Join(", ", picks.Select(x => (x.Length / 1024).ToString())));
-
-                    int idx = 1;
-
-                    foreach(FileInfo pick in picks)
-                    {
-                        Logger.Log($"Saving thumb " + pick.Name);
-                        IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.jpg"), ImageFormat.Jpeg);
-                        idx++;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log("GetThumbnails Error: " + e.Message, true);
-            }
-
-            await Slideshow.RunFromPath(Program.mainForm.thumbnailBox, Paths.GetThumbsPath());
         }
 
         public static string GetStreamDetails(int index)

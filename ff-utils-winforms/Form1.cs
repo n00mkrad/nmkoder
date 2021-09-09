@@ -154,12 +154,12 @@ namespace Nmkoder
         private void inputPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MainView.HandleFiles(files);
+            MediaInfo.HandleFiles(files);
         }
 
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            streamDetails.Text = MainView.GetStreamDetails(streamList.SelectedIndex);
+            streamDetails.Text = MediaInfo.GetStreamDetails(streamList.SelectedIndex);
         }
 
         //async Task ExtractFrames(string[] files)

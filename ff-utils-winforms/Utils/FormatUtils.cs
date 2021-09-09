@@ -29,6 +29,14 @@ namespace Nmkoder.Utils
             }
         }
 
+        public static string Bitrate(int kbits)
+        {
+            if (kbits > 1024 * 10)
+                return $"{((float)kbits / 1024).ToString("0.##")} mbps";
+            else
+                return $"{kbits} kbps";
+        }
+
         public static string Time(long milliseconds)
         {
             double secs = (milliseconds / 1000f);

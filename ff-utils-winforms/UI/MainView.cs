@@ -50,7 +50,7 @@ namespace Nmkoder.UI
                         if (s.Type == Stream.StreamType.Video)
                         {
                             VideoStream vs = (VideoStream)s;
-                            string codecStr = vs.Kbits > 0 ? $"{codec} at {vs.Kbits} kbps" : codec;
+                            string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
                             box.Items.Add($"#{i}: {s.Type} ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
                         }
 
@@ -58,7 +58,7 @@ namespace Nmkoder.UI
                         {
                             AudioStream @as = (AudioStream)s;
                             string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
-                            string codecStr = @as.Kbits > 0 ? $"{codec} at {@as.Kbits} kbps" : codec;
+                            string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
                             box.Items.Add($"#{i}: {s.Type} ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
                         }
 

@@ -28,14 +28,14 @@ namespace Nmkoder.Data
             Ext = File.Extension.Split('.').Last();
         }
 
-        public async Task Initialize (string path = null)
+        public async Task Initialize (string path = null, bool progressBar = true)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(path))
                     path = File.FullName;
 
-                AllStreams = await FfmpegUtils.GetStreams(path);
+                AllStreams = await FfmpegUtils.GetStreams(path, progressBar);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();

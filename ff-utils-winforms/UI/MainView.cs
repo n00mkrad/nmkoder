@@ -39,8 +39,10 @@ namespace Nmkoder.UI
         public static async Task LoadFileInfo (string path)
         {
             MediaFile mediaFile = new MediaFile(path);
+            int streamCount = await FfmpegUtils.GetStreamCount(path);
+            Logger.Log($"Loading info for {streamCount} streams.");
             await mediaFile.Initialize();
-            Logger.Log($"Initialized MediaFile.");
+            Logger.Log($"Loaded all media info.");
             currentFile = mediaFile;
             Task.Run(() => SaveThumbnails(currentFile.File.FullName));
             CheckedListBox box = Program.mainForm.streamListBox;

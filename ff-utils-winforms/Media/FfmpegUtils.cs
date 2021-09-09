@@ -2,6 +2,7 @@
 using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -19,8 +20,13 @@ namespace Nmkoder.Media
             return output.SplitIntoLines().Length;
         }
 
-        public static async Task<List<Stream>> GetStreams (string path)
+        public static async Task<List<Stream>> GetStreams (string path, bool progressBar)
         {
+            int streamCount = -1;
+
+            if (progressBar)
+                streamCount = await GetStreamCount(path);
+
             List<Stream> streamList = new List<Stream>();
 
             try
@@ -32,6 +38,9 @@ namespace Nmkoder.Media
                 {
                     Logger.Log($"Found Stream: {streamStr}", true);
                     int idx = streamStr.Split(':')[1].GetInt();
+
+                    if (progressBar)
+                        Program.mainForm.SetProgress(FormatUtils.RatioInt(idx + 1, streamCount));
 
                     if (streamStr.Contains(": Video:"))
                     {
@@ -47,7 +56,6 @@ namespace Nmkoder.Media
                         VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                         vStream.Index = idx;
                         streamList.Add(vStream);
-                        Logger.Log(streamList.Last().ToString());
                         continue;
                     }
 
@@ -63,7 +71,6 @@ namespace Nmkoder.Media
                         AudioStream aStream = new AudioStream(title, codec, codecLong, kbits, sampleRate, channels, layout);
                         aStream.Index = idx;
                         streamList.Add(aStream);
-                        Logger.Log(streamList.Last().ToString());
                         continue;
                     }
 
@@ -76,7 +83,6 @@ namespace Nmkoder.Media
                         SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong);
                         sStream.Index = idx;
                         streamList.Add(sStream);
-                        Logger.Log(streamList.Last().ToString());
                         continue;
                     }
 
@@ -89,6 +95,9 @@ namespace Nmkoder.Media
             {
                 Logger.Log($"GetStreams Exception: {e.Message}\n{e.StackTrace}", true);
             }
+
+            if (progressBar)
+                Program.mainForm.SetProgress(0);
 
             return streamList;
         }

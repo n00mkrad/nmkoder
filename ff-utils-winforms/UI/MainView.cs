@@ -58,39 +58,54 @@ namespace Nmkoder.UI
 
             for (int i = 0; i < current.AllStreams.Count; i++)
             {
-                foreach(Stream s in current.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
+                try
                 {
-                    if(s.Index == i)
+                    foreach (Stream s in current.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
                     {
-                        string codec = FormatUtils.CapsIfShort(s.Codec, 5);
-                        const int maxChars = 50;
-
-                        if (s.Type == Stream.StreamType.Video)
+                        if (s.Index == i)
                         {
-                            VideoStream vs = (VideoStream)s;
-                            string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
-                            box.Items.Add($"#{i}: {s.Type} ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
-                        }
+                            string codec = FormatUtils.CapsIfShort(s.Codec, 5);
+                            const int maxChars = 50;
 
-                        if (s.Type == Stream.StreamType.Audio)
-                        {
-                            AudioStream @as = (AudioStream)s;
-                            string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
-                            string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
-                            box.Items.Add($"#{i}: {s.Type} ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
-                        }
+                            if (s.Type == Stream.StreamType.Video)
+                            {
+                                VideoStream vs = (VideoStream)s;
+                                string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
+                                box.Items.Add($"#{i}: {s.Type} ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
+                            }
 
-                        if (s.Type == Stream.StreamType.Subtitle)
-                        {
-                            SubtitleStream ss = (SubtitleStream)s;
-                            string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
-                            string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
-                            box.Items.Add($"#{i}: {s.Type} ({codec}){lang}{ttl}");
-                        }
+                            if (s.Type == Stream.StreamType.Audio)
+                            {
+                                AudioStream @as = (AudioStream)s;
+                                string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
+                                string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
+                                box.Items.Add($"#{i}: {s.Type} ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
+                            }
 
-                        Program.mainForm.streamListBox.SetItemChecked(i, true);
+                            if (s.Type == Stream.StreamType.Subtitle)
+                            {
+                                SubtitleStream ss = (SubtitleStream)s;
+                                string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
+                                string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
+                                box.Items.Add($"#{i}: {s.Type} ({codec}){lang}{ttl}");
+                            }
+
+                            if (s.Type == Stream.StreamType.Data)
+                            {
+                                DataStream ds = (DataStream)s;
+                                box.Items.Add($"#{i}: {s.Type} ({codec})");
+                            }
+
+                            if(i >= 0 && i < Program.mainForm.streamListBox.Items.Count)
+                                Program.mainForm.streamListBox.SetItemChecked(i, true);
+                        }
                     }
                 }
+                catch(Exception e)
+                {
+                    Logger.Log($"Error trying to load streams into UI: {e.Message}\n{e.StackTrace}");
+                }
+                
             }
         }
 

@@ -42,6 +42,7 @@ namespace Nmkoder.Data
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();
+                Logger.Log($"Loaded and sorted streams for {File.Name}");
             }
             catch (Exception e)
             {

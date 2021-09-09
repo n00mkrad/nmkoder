@@ -37,20 +37,6 @@ namespace Nmkoder.Media
 
         static async Task<string> GetInfoAsync(string path, Process process, string lineFilter, bool stripKeyName = true)
         {
-            //Process process = OsUtils.NewProcess(true);
-            //string dir = Paths.GetBinPath();
-            //
-            //if(type == InfoType.Ffmpeg)
-            //{
-            //    process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()}";
-            //}
-            //
-            //if (type == InfoType.Ffprobe)
-            //{
-            //    string streamSelect = (!string.IsNullOrWhiteSpace(cmd)) ? $"-select_streams {cmd}" : "";
-            //    process.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} & ffprobe -v quiet -show_format -show_streams {streamSelect} {path.Wrap()}";
-            //}
-
             string output = await GetOutputCached(path, process);
 
             if (!string.IsNullOrWhiteSpace(lineFilter.Trim()))
@@ -77,10 +63,7 @@ namespace Nmkoder.Media
             QueryInfo hash = new QueryInfo(path, filesize, process.StartInfo.Arguments);
 
             if (filesize > 0 && CacheContains(hash, ref cmdCache))
-            {
-                Logger.Log($"Returning cached info.", true);
                 return GetFromCache(hash, ref cmdCache);
-            }
 
             string output = await OsUtils.GetOutputAsync(process);
             cmdCache.Add(hash, output);

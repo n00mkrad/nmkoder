@@ -36,7 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ff-utils-icon-new.ico</ApplicationIcon>
+    <ApplicationIcon>nmkoder.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Crc32.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
@@ -152,6 +152,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\MainView.cs" />
+    <Compile Include="UI\QuickConvert.cs" />
     <Compile Include="UI\Slideshow.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
+    <Content Include="nmkoder.ico" />
     <None Include="Resources\loadingThumbsText.png" />
     <None Include="Resources\baseline_image_white_48dp-4x-25pcAlphaPad.png" />
     <None Include="Resources\baseline_image_white_48dp-4x-25pcAlpha.png" />

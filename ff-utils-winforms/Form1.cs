@@ -23,6 +23,12 @@ namespace Nmkoder
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
 
+        public ComboBox containerBox;
+        public ComboBox encEncoderBox;
+        public ComboBox encQualityBox;
+        public ComboBox encPresetBox;
+        public ComboBox encColorsBox;
+
         public Form1()
         {
             InitializeComponent();
@@ -33,12 +39,21 @@ namespace Nmkoder
             Program.mainForm = this;
             Logger.textbox = logTbox;
 
+            containerBox = containers;
+            encEncoderBox = encEncoder;
+            encQualityBox = encQuality;
+            encPresetBox = encPreset;
+            encColorsBox = encColors;
+
             streamListBox = streamList;
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
 
             
             CheckForIllegalCrossThreadCalls = false;
+
+            ConfigParser.LoadComboxIndex(taskMode);
+
             InitCombox(createMp4Enc, 0);
             InitCombox(createMp4Crf, 1);
             InitCombox(createMp4Fps, 2);
@@ -54,6 +69,13 @@ namespace Nmkoder
             InitCombox(comparisonType, 0);
             InitCombox(comparisonCrf, 1);
             InitCombox(delayTrackCombox, 0);
+        }
+
+        void SaveConfig(object sender, EventArgs e)
+        {
+            ConfigParser.SaveComboxIndex(taskMode);
+            ConfigParser.SaveComboxIndex(containers);
+            ConfigParser.SaveComboxIndex(encEncoder);
         }
 
         void InitCombox(ComboBox cbox, int index)

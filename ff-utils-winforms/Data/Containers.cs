@@ -14,18 +14,20 @@ namespace Nmkoder.Data
             public Codecs.Codec[] SupportedCodecs;
         }
 
-        public Container Mp4 = new Container { 
+        public static Container[] containers = new Container[] { Mp4, Mkv, Webm };
+
+        public static Container Mp4 = new Container { 
             Extension = "mp4", 
             SupportedCodecs = new Codecs.Codec[] { Codecs.Avc, Codecs.Hevc, Codecs.Av1 } 
         };
 
-        public Container Mkv = new Container
+        public static Container Mkv = new Container
         {
             Extension = "mkv",
             SupportedCodecs = new Codecs.Codec[] { Codecs.Avc, Codecs.Hevc, Codecs.Vp9, Codecs.Av1, Codecs.ProRes }
         };
 
-        public Container Webm = new Container
+        public static Container Webm = new Container
         {
             Extension = "mkv",
             SupportedCodecs = new Codecs.Codec[] { Codecs.Vp9, Codecs.Av1 }

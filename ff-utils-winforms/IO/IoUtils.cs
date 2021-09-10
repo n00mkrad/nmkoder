@@ -35,6 +35,7 @@ namespace Nmkoder.IO
 				{
 					MagickImage img = new MagickImage(path);
 					Bitmap bitmap = img.ToBitmap();
+					img.Format = MagickFormat.Png;
 
 					if (log)
 						Logger.Log($"GetImage: Native image reading for '{Path.GetFileName(path)}' failed - Using Magick.NET fallback instead.", true);

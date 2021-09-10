@@ -8,7 +8,7 @@
         {
             base.Type = StreamType.Data;
             Codec = codec;
-            CodecLong = Codec;
+            CodecLong = codecLong;
         }
 
         public override string ToString()

@@ -1,4 +1,6 @@
 ﻿using Nmkoder.IO;
+using Nmkoder.Media;
+using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,8 @@ namespace Nmkoder.Main
 {
     class RunTask
     {
+        public enum TaskType { Convert };
+        public static TaskType currentTask;
         public static bool canceled = false;
 
         public static void Cancel(string reason = "", bool noMsgBox = false)
@@ -19,21 +23,7 @@ namespace Nmkoder.Main
             canceled = true;
             Program.mainForm.SetStatus("Canceled.");
             Program.mainForm.SetProgress(0);
-            //AvProcess.Kill();
-
-            // if (!current.stepByStep && !Config.GetBool(Config.Key.keepTempFolder))
-            // {
-            //     if (false /* IOUtils.GetAmountOfFiles(Path.Combine(current.tempFolder, Paths.resumeDir), true) > 0 */)   // TODO: Uncomment for 1.23
-            //     {
-            //         DialogResult dialogResult = MessageBox.Show($"Delete the temp folder (Yes) or keep it for resuming later (No)?", "Delete temporary files?", MessageBoxButtons.YesNo);
-            //         if (dialogResult == DialogResult.Yes)
-            //             Task.Run(async () => { await IoUtils.TryDeleteIfExistsAsync(current.tempFolder); });
-            //     }
-            //     else
-            //     {
-            //         Task.Run(async () => { await IoUtils.TryDeleteIfExistsAsync(current.tempFolder); });
-            //     }
-            // }
+            AvProcess.Kill();
 
             Program.mainForm.SetWorking(false);
             // Program.mainForm.SetTab("interpolation");
@@ -41,6 +31,12 @@ namespace Nmkoder.Main
 
             //if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
             //    Utils.ShowMessage($"Canceled:\n\n{reason}");
+        }
+
+        public static async Task Start ()
+        {
+            if (currentTask == TaskType.Convert)
+                await QuickConvert.Run();
         }
     }
 }

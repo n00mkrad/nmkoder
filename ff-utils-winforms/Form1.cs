@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ImageMagick;
+using Nmkoder.UI.Tasks;
 
 namespace Nmkoder
 {
@@ -82,7 +83,7 @@ namespace Nmkoder
             ConfigParser.LoadComboxIndex(encEncoder);
         }
 
-        void SaveConfig(object sender, EventArgs e)
+        void SaveConfig(object sender = null, EventArgs e = null)
         {
             ConfigParser.SaveComboxIndex(taskMode);
             ConfigParser.SaveComboxIndex(containers);
@@ -160,6 +161,12 @@ namespace Nmkoder
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
             streamDetails.Text = MediaInfo.GetStreamDetails(streamList.SelectedIndex);
+        }
+
+        private void encEncoder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveConfig();
+            QuickConvert.EncoderSelected(encEncoder.SelectedIndex);
         }
 
         //async Task ExtractFrames(string[] files)

@@ -526,7 +526,6 @@
             // encQuality
             // 
             this.encQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.encQuality.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.encQuality.ForeColor = System.Drawing.Color.White;
             this.encQuality.FormattingEnabled = true;
@@ -547,7 +546,7 @@
             this.encEncoder.Name = "encEncoder";
             this.encEncoder.Size = new System.Drawing.Size(250, 23);
             this.encEncoder.TabIndex = 45;
-            this.encEncoder.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
+            this.encEncoder.SelectedIndexChanged += new System.EventHandler(this.encEncoder_SelectedIndexChanged);
             // 
             // label51
             // 

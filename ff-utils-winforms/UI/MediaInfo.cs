@@ -145,5 +145,18 @@ namespace Nmkoder.UI
 
             return string.Join(Environment.NewLine, lines);
         }
+
+        public static string GetMapArgs ()
+        {
+            List<string> args = new List<string>();
+
+            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            {
+                if (Program.mainForm.streamListBox.GetItemChecked(i))
+                    args.Add($"-map 0:{i}");
+            }
+
+            return string.Join(" ", args);
+        }
     }
 }

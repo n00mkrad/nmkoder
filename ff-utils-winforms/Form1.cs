@@ -33,8 +33,10 @@ namespace Nmkoder
         public ComboBox encVidPresetBox;
         public ComboBox encVidColorsBox;
 
-        public ComboBox encAudioEnc;
-        public NumericUpDown encAudioBr;
+        public ComboBox encAudEnc;
+        public NumericUpDown encAudBr;
+
+        public ComboBox encSubEnc;
 
         public TextBox outputBox;
         public TextBox customArgsBox;
@@ -50,13 +52,15 @@ namespace Nmkoder
             Logger.textbox = logTbox;
 
             containerBox = containers;
-            encVidCodecsBox = encVidCodecs;
+            encVidCodecsBox = encVidCodec;
             encVidQualityBox = encVidQuality;
             encVidPresetBox = encVidPreset;
             encVidColorsBox = encVidColors;
 
-            encAudioEnc = encAudCodecs;
-            encAudioBr = encAudBitrate;
+            encAudEnc = encAudCodec;
+            encAudBr = encAudBitrate;
+
+            encSubEnc = encSubCodec;
 
             outputBox = outputPath;
             customArgsBox = encCustomArgs;
@@ -89,6 +93,9 @@ namespace Nmkoder
         {
             QuickConvert.Init();
             LoadConfig();
+            encVidCodec_SelectedIndexChanged(null, null);
+            encAudioCodec_SelectedIndexChanged(null, null);
+            encSubCodec_SelectedIndexChanged(null, null);
             initialized = true;
         }
 
@@ -96,11 +103,11 @@ namespace Nmkoder
         {
             ConfigParser.LoadComboxIndex(taskMode);
             ConfigParser.LoadComboxIndex(containers);
-            ConfigParser.LoadComboxIndex(encVidCodecs);
+            ConfigParser.LoadComboxIndex(encVidCodec);
             ConfigParser.LoadGuiElement(encVidQuality);
             ConfigParser.LoadComboxIndex(encVidPresetBox);
             ConfigParser.LoadComboxIndex(encVidColorsBox);
-            ConfigParser.LoadComboxIndex(encAudCodecs);
+            ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadGuiElement(encAudBitrate);
         }
 
@@ -111,11 +118,11 @@ namespace Nmkoder
 
             ConfigParser.SaveComboxIndex(taskMode);
             ConfigParser.SaveComboxIndex(containers);
-            ConfigParser.SaveComboxIndex(encVidCodecs);
+            ConfigParser.SaveComboxIndex(encVidCodec);
             ConfigParser.SaveGuiElement(encVidQuality);
             ConfigParser.SaveComboxIndex(encVidPresetBox);
             ConfigParser.SaveComboxIndex(encVidColorsBox);
-            ConfigParser.SaveComboxIndex(encAudCodecs);
+            ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveGuiElement(encAudBitrate);
         }
 
@@ -164,9 +171,9 @@ namespace Nmkoder
         public Main.RunTask.TaskType GetCurrentTaskType()
         {
             if(tabList.SelectedPage == quickConvertPage)
-                return Main.RunTask.TaskType.Convert;
+                return RunTask.TaskType.Convert;
 
-            return Main.RunTask.TaskType.None;
+            return RunTask.TaskType.None;
         }
 
         private void DragEnterHandler(object sender, DragEventArgs e)
@@ -200,10 +207,10 @@ namespace Nmkoder
             streamDetails.Text = MediaInfo.GetStreamDetails(streamList.SelectedIndex);
         }
 
-        private void encEncoder_SelectedIndexChanged(object sender, EventArgs e)
+        private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
-            QuickConvertUi.VidEncoderSelected(encVidCodecs.SelectedIndex);
+            QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);
         }
 
         private void containers_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,10 +224,15 @@ namespace Nmkoder
             RunTask.Start();
         }
 
-        private void encAudioCodecs_SelectedIndexChanged(object sender, EventArgs e)
+        private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
-            QuickConvertUi.AudEncoderSelected(encAudioEnc.SelectedIndex);
+            QuickConvertUi.AudEncoderSelected(encAudEnc.SelectedIndex);
+        }
+
+        private void encSubCodec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveConfig();
         }
 
 

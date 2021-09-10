@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VideoCodec = Nmkoder.Data.Codecs.VideoCodec;
 using AudioCodec = Nmkoder.Data.Codecs.AudioCodec;
+using SubtitleCodec = Nmkoder.Data.Codecs.SubtitleCodec;
 using Nmkoder.IO;
 
 namespace Nmkoder.Data
@@ -51,6 +52,23 @@ namespace Nmkoder.Data
                 return new AudioCodec[] { AudioCodec.Opus };
 
             return new AudioCodec[0];
+        }
+
+        public static SubtitleCodec[] GetSupportedSubtitleCodecs(Container c)
+        {
+            if (c == Container.Mp4)
+                return new SubtitleCodec[] { SubtitleCodec.MovText, SubtitleCodec.Srt };
+
+            if (c == Container.Mkv)
+                return new SubtitleCodec[] { SubtitleCodec.MovText, SubtitleCodec.Srt };
+
+            if (c == Container.Webm)
+                return new SubtitleCodec[] { SubtitleCodec.MovText };
+
+            if (c == Container.Mov)
+                return new SubtitleCodec[] { SubtitleCodec.MovText };
+
+            return new SubtitleCodec[0];
         }
 
         public static bool ContainerSupports(Container c, VideoCodec cv)

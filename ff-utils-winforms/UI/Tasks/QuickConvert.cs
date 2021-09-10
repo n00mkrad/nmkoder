@@ -24,9 +24,10 @@ namespace Nmkoder.UI.Tasks
             string map = MediaInfo.GetMapArgs();
             string video = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgs());
             string audio = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgs());
+            string subs = Codecs.GetArgs(GetCurrentCodecS());
             string custom = Program.mainForm.customArgsBox.Text.Trim();
 
-            string args = $"-i {inPath} {map} {video} {audio} {custom} {outPath}";
+            string args = $"-i {inPath} {map} {video} {audio} {subs} {custom} {outPath}";
             Logger.Log(args);
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);

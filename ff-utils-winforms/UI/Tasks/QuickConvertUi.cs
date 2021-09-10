@@ -24,9 +24,14 @@ namespace Nmkoder.UI.Tasks
             ConfigParser.LoadComboxIndex(form.encVidCodecsBox);
 
             foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
-                form.encAudioEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+                form.encAudEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
 
-            ConfigParser.LoadComboxIndex(form.encAudioEnc);
+            ConfigParser.LoadComboxIndex(form.encAudEnc);
+
+            foreach (Codecs.SubtitleCodec c in Enum.GetValues(typeof(Codecs.SubtitleCodec)))  // Load audio codecs
+                form.encSubEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+
+            ConfigParser.LoadComboxIndex(form.encSubEnc);
 
             foreach (string c in Enum.GetNames(typeof(Containers.Container)))   // Load containers
                 form.containerBox.Items.Add(c.ToUpper());
@@ -95,9 +100,9 @@ namespace Nmkoder.UI.Tasks
         static void LoadAudBitrate(CodecInfo info)
         {
             if (info.QDefault >= 0)
-                form.encAudioBr.Text = info.QDefault.ToString();
+                form.encAudBr.Text = info.QDefault.ToString();
             else
-                form.encAudioBr.Text = "";
+                form.encAudBr.Text = "";
         }
 
         #endregion
@@ -108,7 +113,7 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
-            Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudioEnc.SelectedIndex;
+            Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
 
             Containers.Container c = (Containers.Container)form.containerBox.SelectedIndex;
 
@@ -135,7 +140,12 @@ namespace Nmkoder.UI.Tasks
 
         public static Codecs.AudioCodec GetCurrentCodecA()
         {
-            return (Codecs.AudioCodec)form.encAudioEnc.SelectedIndex;
+            return (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
+        }
+
+        public static Codecs.SubtitleCodec GetCurrentCodecS()
+        {
+            return (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
         }
 
         public static Dictionary<string, string> GetVideoArgs ()
@@ -149,7 +159,7 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetAudioArgs()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("bitrate", form.encAudioBr.Text.ToLower());
+            dict.Add("bitrate", form.encAudBr.Text.ToLower());
             //dict.Add("ac", form.encAudioCh.Text.ToLower());
             return dict;
         }

@@ -13,6 +13,7 @@ namespace Nmkoder.Data
 
         public enum VideoCodec { Copy, StripVideo, H264, H265, Vp9, Av1 };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus };
+        public enum SubtitleCodec { Copy, StripSubs, MovText, Srt };
 
         public static string GetArgs(VideoCodec c, Dictionary<string, string> args)
         {
@@ -88,11 +89,36 @@ namespace Nmkoder.Data
             return "";
         }
 
+        public static string GetArgs(SubtitleCodec c)
+        {
+            if (c == SubtitleCodec.StripSubs)
+            {
+                return $"-sn";
+            }
+
+            if (c == SubtitleCodec.Copy)
+            {
+                return $"-c:s copy";
+            }
+
+            if (c == SubtitleCodec.MovText)
+            {
+                return $"-c:s mov_text";
+            }
+
+            if (c == SubtitleCodec.Srt)
+            {
+                return $"-c:s srt";
+            }
+
+            return "";
+        }
+
         public static CodecInfo GetCodecInfo (VideoCodec c)
         {
             if(c == VideoCodec.Copy)
             {
-                string frName = "Copy Stream Without Re-Encoding";
+                string frName = "Copy Video Without Re-Encoding";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
             }
 
@@ -141,7 +167,7 @@ namespace Nmkoder.Data
         {
             if (c == AudioCodec.Copy)
             {
-                string frName = "Copy Stream Without Re-Encoding";
+                string frName = "Copy Audio Without Re-Encoding";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
             }
 
@@ -161,6 +187,35 @@ namespace Nmkoder.Data
             {
                 string frName = "Opus";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 96 };
+            }
+
+            return new CodecInfo();
+        }
+
+        public static CodecInfo GetCodecInfo(SubtitleCodec c)
+        {
+            if (c == SubtitleCodec.Copy)
+            {
+                string frName = "Copy Subtitles Without Re-Encoding";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName};
+            }
+
+            if (c == SubtitleCodec.StripSubs)
+            {
+                string frName = "Disable (Strip Subtitles)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
+            }
+
+            if (c == SubtitleCodec.MovText)
+            {
+                string frName = "Mov_Text (3GPP Timed Text)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
+            }
+
+            if (c == SubtitleCodec.Srt)
+            {
+                string frName = "SRT (SubRip Text)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
             }
 
             return new CodecInfo();

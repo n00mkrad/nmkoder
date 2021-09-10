@@ -48,12 +48,13 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.encVidQuality = new System.Windows.Forms.NumericUpDown();
             this.label61 = new System.Windows.Forms.Label();
             this.encCustomArgs = new System.Windows.Forms.TextBox();
             this.encVidFps = new System.Windows.Forms.TextBox();
             this.encVidColors = new System.Windows.Forms.ComboBox();
             this.encVidPreset = new System.Windows.Forms.ComboBox();
-            this.encVidCodecs = new System.Windows.Forms.ComboBox();
+            this.encVidCodec = new System.Windows.Forms.ComboBox();
             this.label51 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
@@ -61,10 +62,12 @@
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.encAudBitrate = new System.Windows.Forms.NumericUpDown();
-            this.encAudCodecs = new System.Windows.Forms.ComboBox();
+            this.encAudCodec = new System.Windows.Forms.ComboBox();
             this.label53 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.encSubCodec = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.extractFramesPage = new System.Windows.Forms.TabPage();
@@ -155,7 +158,6 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.encVidQuality = new System.Windows.Forms.NumericUpDown();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -163,8 +165,10 @@
             this.quickConvertPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.encVid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).BeginInit();
+            this.tabPage1.SuspendLayout();
             this.utilsPage.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
@@ -188,7 +192,6 @@
             this.delayPage.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -443,7 +446,7 @@
             this.encVid.Controls.Add(this.encVidFps);
             this.encVid.Controls.Add(this.encVidColors);
             this.encVid.Controls.Add(this.encVidPreset);
-            this.encVid.Controls.Add(this.encVidCodecs);
+            this.encVid.Controls.Add(this.encVidCodec);
             this.encVid.Controls.Add(this.label51);
             this.encVid.Controls.Add(this.label50);
             this.encVid.Controls.Add(this.label49);
@@ -455,6 +458,16 @@
             this.encVid.Size = new System.Drawing.Size(668, 312);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // encVidQuality
+            // 
+            this.encVidQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVidQuality.ForeColor = System.Drawing.Color.White;
+            this.encVidQuality.Location = new System.Drawing.Point(220, 38);
+            this.encVidQuality.Name = "encVidQuality";
+            this.encVidQuality.Size = new System.Drawing.Size(250, 23);
+            this.encVidQuality.TabIndex = 52;
+            this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveConfig);
             // 
             // label61
             // 
@@ -515,18 +528,18 @@
             this.encVidPreset.TabIndex = 47;
             this.encVidPreset.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
             // 
-            // encVidCodecs
+            // encVidCodec
             // 
-            this.encVidCodecs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encVidCodecs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.encVidCodecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encVidCodecs.ForeColor = System.Drawing.Color.White;
-            this.encVidCodecs.FormattingEnabled = true;
-            this.encVidCodecs.Location = new System.Drawing.Point(220, 7);
-            this.encVidCodecs.Name = "encVidCodecs";
-            this.encVidCodecs.Size = new System.Drawing.Size(250, 23);
-            this.encVidCodecs.TabIndex = 45;
-            this.encVidCodecs.SelectedIndexChanged += new System.EventHandler(this.encEncoder_SelectedIndexChanged);
+            this.encVidCodec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVidCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encVidCodec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encVidCodec.ForeColor = System.Drawing.Color.White;
+            this.encVidCodec.FormattingEnabled = true;
+            this.encVidCodec.Location = new System.Drawing.Point(220, 7);
+            this.encVidCodec.Name = "encVidCodec";
+            this.encVidCodec.Size = new System.Drawing.Size(250, 23);
+            this.encVidCodec.TabIndex = 45;
+            this.encVidCodec.SelectedIndexChanged += new System.EventHandler(this.encVidCodec_SelectedIndexChanged);
             // 
             // label51
             // 
@@ -587,7 +600,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tabPage2.Controls.Add(this.encAudBitrate);
-            this.tabPage2.Controls.Add(this.encAudCodecs);
+            this.tabPage2.Controls.Add(this.encAudCodec);
             this.tabPage2.Controls.Add(this.label53);
             this.tabPage2.Controls.Add(this.label58);
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
@@ -607,18 +620,18 @@
             this.encAudBitrate.TabIndex = 51;
             this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveConfig);
             // 
-            // encAudCodecs
+            // encAudCodec
             // 
-            this.encAudCodecs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encAudCodecs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.encAudCodecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encAudCodecs.ForeColor = System.Drawing.Color.White;
-            this.encAudCodecs.FormattingEnabled = true;
-            this.encAudCodecs.Location = new System.Drawing.Point(220, 7);
-            this.encAudCodecs.Name = "encAudCodecs";
-            this.encAudCodecs.Size = new System.Drawing.Size(250, 23);
-            this.encAudCodecs.TabIndex = 49;
-            this.encAudCodecs.SelectedIndexChanged += new System.EventHandler(this.encAudioCodecs_SelectedIndexChanged);
+            this.encAudCodec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encAudCodec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudCodec.ForeColor = System.Drawing.Color.White;
+            this.encAudCodec.FormattingEnabled = true;
+            this.encAudCodec.Location = new System.Drawing.Point(220, 7);
+            this.encAudCodec.Name = "encAudCodec";
+            this.encAudCodec.Size = new System.Drawing.Size(250, 23);
+            this.encAudCodec.TabIndex = 49;
+            this.encAudCodec.SelectedIndexChanged += new System.EventHandler(this.encAudioCodec_SelectedIndexChanged);
             // 
             // label53
             // 
@@ -645,12 +658,38 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage1.Controls.Add(this.encSubCodec);
+            this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(668, 312);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Subtitles";
+            // 
+            // encSubCodec
+            // 
+            this.encSubCodec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encSubCodec.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encSubCodec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encSubCodec.ForeColor = System.Drawing.Color.White;
+            this.encSubCodec.FormattingEnabled = true;
+            this.encSubCodec.Location = new System.Drawing.Point(220, 7);
+            this.encSubCodec.Name = "encSubCodec";
+            this.encSubCodec.Size = new System.Drawing.Size(250, 23);
+            this.encSubCodec.TabIndex = 47;
+            this.encSubCodec.SelectedIndexChanged += new System.EventHandler(this.encSubCodec_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(5, 10);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(98, 15);
+            this.label10.TabIndex = 46;
+            this.label10.Text = "Codec (Encoder):";
             // 
             // utilsPage
             // 
@@ -1653,16 +1692,6 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
-            // encVidQuality
-            // 
-            this.encVidQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encVidQuality.ForeColor = System.Drawing.Color.White;
-            this.encVidQuality.Location = new System.Drawing.Point(220, 38);
-            this.encVidQuality.Name = "encVidQuality";
-            this.encVidQuality.Size = new System.Drawing.Size(250, 23);
-            this.encVidQuality.TabIndex = 52;
-            this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveConfig);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1694,9 +1723,12 @@
             this.htTabControl1.ResumeLayout(false);
             this.encVid.ResumeLayout(false);
             this.encVid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.utilsPage.ResumeLayout(false);
             this.mainTabControl.ResumeLayout(false);
             this.extractFramesPage.ResumeLayout(false);
@@ -1735,7 +1767,6 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1861,14 +1892,16 @@
         private System.Windows.Forms.TextBox encVidFps;
         private System.Windows.Forms.ComboBox encVidColors;
         private System.Windows.Forms.ComboBox encVidPreset;
-        private System.Windows.Forms.ComboBox encVidCodecs;
-        private System.Windows.Forms.ComboBox encAudCodecs;
+        private System.Windows.Forms.ComboBox encVidCodec;
+        private System.Windows.Forms.ComboBox encAudCodec;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.TextBox encCustomArgs;
         private System.Windows.Forms.NumericUpDown encAudBitrate;
         private System.Windows.Forms.NumericUpDown encVidQuality;
+        private System.Windows.Forms.ComboBox encSubCodec;
+        private System.Windows.Forms.Label label10;
     }
 }
 

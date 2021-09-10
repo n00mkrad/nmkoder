@@ -16,6 +16,8 @@ namespace Nmkoder.Data
 
         public static string GetArgs(VideoCodec c, Dictionary<string, string> args)
         {
+            CodecInfo info = GetCodecInfo(c);
+
             if (c == VideoCodec.StripVideo)
             {
                 return $"-vn";
@@ -28,23 +30,30 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.H264)
             {
-                string preset = args.ContainsKey("preset") ? args["preset"] : "medium";
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : "yuv420p";
+                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 return $"-c:v libx264 -preset {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.H265)
             {
-                string preset = args.ContainsKey("preset") ? args["preset"] : "medium";
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : "yuv420p";
+                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 return $"-c:v libx265 -preset {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.Vp9)
             {
-                string preset = args.ContainsKey("preset") ? args["preset"] : "3";
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : "yuv420p";
+                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 return $"-c:v libvpx-vp9 -cpu-used {preset} -pix_fmt {pixFmt}";
+            }
+
+            if (c == VideoCodec.Av1)
+            {
+                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return $"-c:v libsvtav1 -tile_columns 2 -tile_rows 1 -preset {preset} -pix_fmt {pixFmt}";
             }
 
             return "";
@@ -66,25 +75,17 @@ namespace Nmkoder.Data
             {
                 string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "128k";
                 string channels = args.ContainsKey("ac") ? args["ac"] : "2";
-                return $"-c:a aac -b:a {bitrate} -ac {channels}";
+                return $"-c:a aac -b:a {bitrate}k -ac {channels}";
             }
 
             if (c == AudioCodec.Opus)
             {
                 string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "128k";
                 string channels = args.ContainsKey("ac") ? args["ac"] : "2";
-                return $"-c:a libopus -b:a {bitrate} -ac {channels}";
+                return $"-c:a libopus -b:a {bitrate}k -ac {channels}";
             }
 
             return "";
-        }
-
-        public static string GetFriendlyName(AudioCodec c)
-        {
-            if (c == AudioCodec.StripAudio) return "Disable (Strip Audio)";
-            if (c == AudioCodec.Aac) return "AAC (Advanced Audio Coding)";
-            if (c == AudioCodec.Opus) return "Opus";
-            return c.ToString();
         }
 
         public static CodecInfo GetCodecInfo (VideoCodec c)
@@ -131,6 +132,35 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 return new CodecInfo(c.ToString(), frName, presets, 7, colors, 1, 0, 50, 26);
+            }
+
+            return new CodecInfo();
+        }
+
+        public static CodecInfo GetCodecInfo(AudioCodec c)
+        {
+            if (c == AudioCodec.Copy)
+            {
+                string frName = "Copy Stream Without Re-Encoding";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
+            }
+
+            if (c == AudioCodec.StripAudio)
+            {
+                string frName = "Disable (Strip Audio)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
+            }
+
+            if (c == AudioCodec.Aac)
+            {
+                string frName = "AAC (Advanced Audio Coding)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 128 };
+            }
+
+            if (c == AudioCodec.Opus)
+            {
+                string frName = "Opus";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 96 };
             }
 
             return new CodecInfo();

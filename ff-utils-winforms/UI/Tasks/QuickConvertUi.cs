@@ -18,12 +18,17 @@ namespace Nmkoder.UI.Tasks
         {
             form = Program.mainForm;
 
-            foreach (Codecs.VideoCodec c in Enum.GetValues(typeof(Codecs.VideoCodec)))
-                form.encEncoderBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+            foreach (Codecs.VideoCodec c in Enum.GetValues(typeof(Codecs.VideoCodec)))  // Load video codecs
+                form.encVidCodecsBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
 
-            ConfigParser.LoadComboxIndex(form.encEncoderBox);
+            ConfigParser.LoadComboxIndex(form.encVidCodecsBox);
 
-            foreach (string c in Enum.GetNames(typeof(Containers.Container)))
+            foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
+                form.encAudioEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+
+            ConfigParser.LoadComboxIndex(form.encAudioEnc);
+
+            foreach (string c in Enum.GetNames(typeof(Containers.Container)))   // Load containers
                 form.containerBox.Items.Add(c.ToUpper());
 
             ConfigParser.LoadComboxIndex(form.containerBox);
@@ -37,52 +42,73 @@ namespace Nmkoder.UI.Tasks
             LoadQualityLevel(info);
             LoadPresets(info);
             LoadColorFormats(info);
-            CheckContainer();
+            ValidateContainer();
         }
+
+        public static void AudEncoderSelected(int index)
+        {
+            Codecs.AudioCodec c = (Codecs.AudioCodec)index;
+            CodecInfo info = Codecs.GetCodecInfo(c);
+
+            LoadAudBitrate(info);
+            ValidateContainer();
+        }
+
+        #region Load Video Options
 
         static void LoadQualityLevel (CodecInfo info)
         {
             if (info.QDefault >= 0)
-                form.encQualityBox.Text = info.QDefault.ToString();
+                form.encVidQualityBox.Text = info.QDefault.ToString();
             else
-                form.encQualityBox.Text = "";
+                form.encVidQualityBox.Text = "";
         }
 
         static void LoadPresets(CodecInfo info)
         {
-            form.encPresetBox.Items.Clear();
+            form.encVidPresetBox.Items.Clear();
 
             if (info.Presets != null)
                 foreach (string p in info.Presets)
-                    form.encPresetBox.Items.Add(p.ToTitleCase()); // Add every preset to the dropdown
+                    form.encVidPresetBox.Items.Add(p.ToTitleCase()); // Add every preset to the dropdown
 
-            if (form.encPresetBox.Items.Count > 0)
-                form.encPresetBox.SelectedIndex = info.PresetDef; // Select default preset
+            if (form.encVidPresetBox.Items.Count > 0)
+                form.encVidPresetBox.SelectedIndex = info.PresetDef; // Select default preset
         }
 
         static void LoadColorFormats(CodecInfo info)
         {
-            form.encColorsBox.Items.Clear();
+            form.encVidColorsBox.Items.Clear();
 
             if (info.ColorFormats != null)
                 foreach (string p in info.ColorFormats)
-                    form.encColorsBox.Items.Add(p.ToUpper()); // Add every pix_fmt to the dropdown
+                    form.encVidColorsBox.Items.Add(p.ToUpper()); // Add every pix_fmt to the dropdown
 
-            if (form.encColorsBox.Items.Count > 0)
-                form.encColorsBox.SelectedIndex = info.ColorFormatDef; // Select default pix_fmt
-
-            
+            if (form.encVidColorsBox.Items.Count > 0)
+                form.encVidColorsBox.SelectedIndex = info.ColorFormatDef; // Select default pix_fmt
         }
 
-        public static void CheckContainer()
+        #endregion
+
+        #region Load Audio Options
+
+        static void LoadAudBitrate(CodecInfo info)
+        {
+            if (info.QDefault >= 0)
+                form.encAudioBr.Text = info.QDefault.ToString();
+            else
+                form.encAudioBr.Text = "";
+        }
+
+        #endregion
+
+        public static void ValidateContainer()
         {
             if (form.containerBox.SelectedIndex < 0)
                 return;
 
-            Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encEncoderBox.SelectedIndex;
+            Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
             Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudioEnc.SelectedIndex;
-
-            aCodec = Codecs.AudioCodec.Aac;
 
             Containers.Container c = (Containers.Container)form.containerBox.SelectedIndex;
 
@@ -104,7 +130,7 @@ namespace Nmkoder.UI.Tasks
 
         public static Codecs.VideoCodec GetCurrentCodecV ()
         {
-            return (Codecs.VideoCodec)form.encEncoderBox.SelectedIndex;
+            return (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
         }
 
         public static Codecs.AudioCodec GetCurrentCodecA()
@@ -115,8 +141,8 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetVideoArgs ()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("preset", form.encPresetBox.Text.ToLower());
-            dict.Add("pixFmt", form.encColorsBox.Text.ToLower());
+            dict.Add("preset", form.encVidPresetBox.Text.ToLower());
+            dict.Add("pixFmt", form.encVidColorsBox.Text.ToLower());
             return dict;
         }
 

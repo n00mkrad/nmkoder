@@ -71,7 +71,13 @@ namespace Nmkoder.IO
 
 		public static void LoadComboxIndex(ComboBox comboBox)
 		{
-			comboBox.SelectedIndex = Config.GetInt(comboBox.Name);
+			int i = Config.GetInt(comboBox.Name);
+			//comboBox.SelectedIndex = i;
+
+			if (i < comboBox.Items.Count)
+				comboBox.SelectedIndex = i;
+			else
+				Logger.Log($"LoadComboxIndex: [{comboBox.Name}] Index of {i} was loaded but there are only {comboBox.Items.Count} items!", true);
 		}
 	}
 }

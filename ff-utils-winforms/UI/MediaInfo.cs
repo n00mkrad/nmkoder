@@ -4,6 +4,7 @@ using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using Nmkoder.Properties;
+using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Nmkoder.UI
 {
     class MediaInfo
     {
-        public static MediaFile current; 
+        public static MediaFile current;
 
         public static async Task HandleFiles (string[] paths)
         {
@@ -109,6 +110,7 @@ namespace Nmkoder.UI
             }
 
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            QuickConvertUi.ValidateContainer();
         }
 
         public static string GetStreamDetails(int index)

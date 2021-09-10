@@ -21,18 +21,20 @@ namespace Nmkoder
 {
     public partial class Form1 : Form
     {
+        bool initialized = false;
+
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
 
         public ComboBox containerBox;
-        public ComboBox encEncoderBox;
-        public ComboBox encQualityBox;
-        public ComboBox encPresetBox;
-        public ComboBox encColorsBox;
+        public ComboBox encVidCodecsBox;
+        public NumericUpDown encVidQualityBox;
+        public ComboBox encVidPresetBox;
+        public ComboBox encVidColorsBox;
 
         public ComboBox encAudioEnc;
-        public ComboBox encAudioBr;
+        public NumericUpDown encAudioBr;
 
         public TextBox outputBox;
         public TextBox customArgsBox;
@@ -48,16 +50,16 @@ namespace Nmkoder
             Logger.textbox = logTbox;
 
             containerBox = containers;
-            encEncoderBox = encEncoder;
-            encQualityBox = encQuality;
-            encPresetBox = encPreset;
-            encColorsBox = encColors;
+            encVidCodecsBox = encVidCodecs;
+            encVidQualityBox = encVidQuality;
+            encVidPresetBox = encVidPreset;
+            encVidColorsBox = encVidColors;
 
-            encAudioEnc = encAudCodec;
+            encAudioEnc = encAudCodecs;
             encAudioBr = encAudBitrate;
 
             outputBox = outputPath;
-            customArgsBox = customArgs;
+            customArgsBox = encCustomArgs;
 
             streamListBox = streamList;
             thumbnailBox = thumbnail;
@@ -66,41 +68,55 @@ namespace Nmkoder
             
             CheckForIllegalCrossThreadCalls = false;
 
-            InitCombox(createMp4Enc, 0);
-            InitCombox(createMp4Crf, 1);
-            InitCombox(createMp4Fps, 2);
-            InitCombox(loopTimesLossless, 0);
-            InitCombox(encContainer, 0);
-            InitCombox(encVidCodec, 1);
-            InitCombox(encVidCrf, 1);
-            InitCombox(encAudCodec, 1);
-            InitCombox(encAudBitrate, 4);
-            InitCombox(encAudioCh, 0);
-            InitCombox(changeSpeedCombox, 0);
-            InitCombox(comparisonLayout, 0);
-            InitCombox(comparisonType, 0);
-            InitCombox(comparisonCrf, 1);
-            InitCombox(delayTrackCombox, 0);
+            //InitCombox(createMp4Enc, 0);
+            //InitCombox(createMp4Crf, 1);
+            //InitCombox(createMp4Fps, 2);
+            //InitCombox(loopTimesLossless, 0);
+            //InitCombox(encContainer, 0);
+            //InitCombox(encVidCodec, 1);
+            //InitCombox(encVidCrf, 1);
+            //InitCombox(encAudCodec, 1);
+            //InitCombox(encAudBitrate, 4);
+            //InitCombox(encAudioCh, 0);
+            //InitCombox(changeSpeedCombox, 0);
+            //InitCombox(comparisonLayout, 0);
+            //InitCombox(comparisonType, 0);
+            //InitCombox(comparisonCrf, 1);
+            //InitCombox(delayTrackCombox, 0);
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
             QuickConvert.Init();
             LoadConfig();
+            initialized = true;
         }
 
         void LoadConfig()
         {
             ConfigParser.LoadComboxIndex(taskMode);
             ConfigParser.LoadComboxIndex(containers);
-            ConfigParser.LoadComboxIndex(encEncoder);
+            ConfigParser.LoadComboxIndex(encVidCodecs);
+            ConfigParser.LoadGuiElement(encVidQuality);
+            ConfigParser.LoadComboxIndex(encVidPresetBox);
+            ConfigParser.LoadComboxIndex(encVidColorsBox);
+            ConfigParser.LoadComboxIndex(encAudCodecs);
+            ConfigParser.LoadGuiElement(encAudBitrate);
         }
 
         void SaveConfig(object sender = null, EventArgs e = null)
         {
+            if (!initialized)
+                return;
+
             ConfigParser.SaveComboxIndex(taskMode);
             ConfigParser.SaveComboxIndex(containers);
-            ConfigParser.SaveComboxIndex(encEncoder);
+            ConfigParser.SaveComboxIndex(encVidCodecs);
+            ConfigParser.SaveGuiElement(encVidQuality);
+            ConfigParser.SaveComboxIndex(encVidPresetBox);
+            ConfigParser.SaveComboxIndex(encVidColorsBox);
+            ConfigParser.SaveComboxIndex(encAudCodecs);
+            ConfigParser.SaveGuiElement(encAudBitrate);
         }
 
         void InitCombox(ComboBox cbox, int index)
@@ -187,17 +203,24 @@ namespace Nmkoder
         private void encEncoder_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
-            QuickConvertUi.VidEncoderSelected(encEncoder.SelectedIndex);
+            QuickConvertUi.VidEncoderSelected(encVidCodecs.SelectedIndex);
         }
 
         private void containers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            QuickConvertUi.CheckContainer();
+            SaveConfig();
+            QuickConvertUi.ValidateContainer();
         }
 
         private void runBtn_Click(object sender, EventArgs e)
         {
             RunTask.Start();
+        }
+
+        private void encAudioCodecs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveConfig();
+            QuickConvertUi.AudEncoderSelected(encAudioEnc.SelectedIndex);
         }
 
 

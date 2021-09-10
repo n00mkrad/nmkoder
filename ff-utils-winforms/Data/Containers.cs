@@ -55,14 +55,16 @@ namespace Nmkoder.Data
 
         public static bool ContainerSupports(Container c, VideoCodec cv)
         {
-            //Logger.Log($"{c} supports {vCodec}: {GetSupportedVideoCodecs(c).Contains(vCodec)}");
-            return cv == VideoCodec.Copy || cv == VideoCodec.StripVideo || GetSupportedVideoCodecs(c).Contains(cv);
+            bool s = cv == VideoCodec.Copy || cv == VideoCodec.StripVideo || GetSupportedVideoCodecs(c).Contains(cv);
+            //Logger.Log($"{c} supports {cv}: {s}");
+            return s;
         }
 
         public static bool ContainerSupports(Container c, AudioCodec ca)
         {
-            //Logger.Log($"{c} supports {aCodec}: {GetSupportedAudioCodecs(c).Contains(aCodec)}");
-            return ca == AudioCodec.Copy || ca == AudioCodec.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
+            bool s = ca == AudioCodec.Copy || ca == AudioCodec.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
+            //Logger.Log($"{c} supports {ca}: {s}");
+            return s;
         }
 
         public static Container GetSupportedContainer(VideoCodec cv, AudioCodec ca)

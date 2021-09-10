@@ -202,7 +202,14 @@ namespace Nmkoder.IO
 
         public static float GetFloat(string key)
         {
-            return float.Parse(Get(key, Type.Float), CultureInfo.InvariantCulture);
+            try
+            {
+                return float.Parse(Get(key, Type.Float), CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return 0f;
+            }
         }
 
         public static float GetFloat(string key, float defaultVal)

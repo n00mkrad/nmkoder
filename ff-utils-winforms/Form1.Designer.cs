@@ -188,6 +188,10 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
+            this.encAudioBitrate = new System.Windows.Forms.ComboBox();
+            this.encAudioCodecs = new System.Windows.Forms.ComboBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -195,6 +199,7 @@
             this.quickEncodePage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.encVid.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.utilsPage.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.extractFramesPage.SuspendLayout();
@@ -246,9 +251,9 @@
             this.formatInfo.Location = new System.Drawing.Point(4, 4);
             this.formatInfo.Margin = new System.Windows.Forms.Padding(4);
             this.formatInfo.Name = "formatInfo";
-            this.formatInfo.Size = new System.Drawing.Size(65, 16);
+            this.formatInfo.Size = new System.Drawing.Size(83, 13);
             this.formatInfo.TabIndex = 28;
-            this.formatInfo.Text = "Format: ...";
+            this.formatInfo.Text = "No File Loaded.";
             // 
             // streamList
             // 
@@ -606,6 +611,10 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage2.Controls.Add(this.encAudioBitrate);
+            this.tabPage2.Controls.Add(this.encAudioCodecs);
+            this.tabPage2.Controls.Add(this.label53);
+            this.tabPage2.Controls.Add(this.label58);
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -2065,6 +2074,51 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
+            // encAudioBitrate
+            // 
+            this.encAudioBitrate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudioBitrate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudioBitrate.ForeColor = System.Drawing.Color.White;
+            this.encAudioBitrate.FormattingEnabled = true;
+            this.encAudioBitrate.Location = new System.Drawing.Point(220, 37);
+            this.encAudioBitrate.Name = "encAudioBitrate";
+            this.encAudioBitrate.Size = new System.Drawing.Size(250, 23);
+            this.encAudioBitrate.TabIndex = 50;
+            // 
+            // encAudioCodecs
+            // 
+            this.encAudioCodecs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudioCodecs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encAudioCodecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudioCodecs.ForeColor = System.Drawing.Color.White;
+            this.encAudioCodecs.FormattingEnabled = true;
+            this.encAudioCodecs.Location = new System.Drawing.Point(220, 7);
+            this.encAudioCodecs.Name = "encAudioCodecs";
+            this.encAudioCodecs.Size = new System.Drawing.Size(250, 23);
+            this.encAudioCodecs.TabIndex = 49;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.ForeColor = System.Drawing.Color.White;
+            this.label53.Location = new System.Drawing.Point(7, 40);
+            this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(74, 12);
+            this.label53.TabIndex = 48;
+            this.label53.Text = "Quality (Bitrate):";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.ForeColor = System.Drawing.Color.White;
+            this.label58.Location = new System.Drawing.Point(5, 10);
+            this.label58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(98, 15);
+            this.label58.TabIndex = 47;
+            this.label58.Text = "Codec (Encoder):";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2096,6 +2150,8 @@
             this.htTabControl1.ResumeLayout(false);
             this.encVid.ResumeLayout(false);
             this.encVid.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.utilsPage.ResumeLayout(false);
             this.mainTabControl.ResumeLayout(false);
             this.extractFramesPage.ResumeLayout(false);
@@ -2308,6 +2364,10 @@
         private System.Windows.Forms.ComboBox encPreset;
         private System.Windows.Forms.ComboBox encQuality;
         private System.Windows.Forms.ComboBox encEncoder;
+        private System.Windows.Forms.ComboBox encAudioBitrate;
+        private System.Windows.Forms.ComboBox encAudioCodecs;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label58;
     }
 }
 

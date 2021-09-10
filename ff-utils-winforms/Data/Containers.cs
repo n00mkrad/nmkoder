@@ -74,26 +74,33 @@ namespace Nmkoder.Data
         public static bool ContainerSupports(Container c, VideoCodec cv)
         {
             bool s = cv == VideoCodec.Copy || cv == VideoCodec.StripVideo || GetSupportedVideoCodecs(c).Contains(cv);
-            //Logger.Log($"{c} supports {cv}: {s}");
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", s);
             return s;
         }
 
         public static bool ContainerSupports(Container c, AudioCodec ca)
         {
             bool s = ca == AudioCodec.Copy || ca == AudioCodec.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
-            //Logger.Log($"{c} supports {ca}: {s}");
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", s);
             return s;
         }
 
-        public static Container GetSupportedContainer(VideoCodec cv, AudioCodec ca)
+        public static bool ContainerSupports(Container c, SubtitleCodec cs)
         {
-            if (ContainerSupports(Container.Mp4, cv) && ContainerSupports(Container.Mp4, ca))
+            bool s = cs == SubtitleCodec.Copy || cs == SubtitleCodec.StripSubs || GetSupportedSubtitleCodecs(c).Contains(cs);
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cs.ToString().ToUpper()}!", s);
+            return s;
+        }
+
+        public static Container GetSupportedContainer(VideoCodec cv, AudioCodec ca, SubtitleCodec cs)
+        {
+            if (ContainerSupports(Container.Mp4, cv) && ContainerSupports(Container.Mp4, ca) && ContainerSupports(Container.Mp4, cs))
                 return Container.Mp4;
 
-            if (ContainerSupports(Container.Webm, cv) && ContainerSupports(Container.Webm, ca))
+            if (ContainerSupports(Container.Webm, cv) && ContainerSupports(Container.Webm, ca) && ContainerSupports(Container.Webm, cs))
                 return Container.Webm;
 
-            if (ContainerSupports(Container.Mov, cv) && ContainerSupports(Container.Mov, ca))
+            if (ContainerSupports(Container.Mov, cv) && ContainerSupports(Container.Mov, ca) && ContainerSupports(Container.Mov, cs))
                 return Container.Mov;
 
             return Container.Mkv;

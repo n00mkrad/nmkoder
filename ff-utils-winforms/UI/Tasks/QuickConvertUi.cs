@@ -114,12 +114,13 @@ namespace Nmkoder.UI.Tasks
 
             Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
             Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
+            Codecs.SubtitleCodec sCodec = (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
 
             Containers.Container c = (Containers.Container)form.containerBox.SelectedIndex;
 
-            if (!(Containers.ContainerSupports(c, vCodec) && Containers.ContainerSupports(c, aCodec)))
+            if (!(Containers.ContainerSupports(c, vCodec) && Containers.ContainerSupports(c, aCodec) && Containers.ContainerSupports(c, sCodec)))
             {
-                Containers.Container supported = Containers.GetSupportedContainer(vCodec, aCodec);
+                Containers.Container supported = Containers.GetSupportedContainer(vCodec, aCodec, sCodec);
 
                 Logger.Log($"{c} doesn't support one of the selected codecs - Auto-selected {supported} instead.");
 

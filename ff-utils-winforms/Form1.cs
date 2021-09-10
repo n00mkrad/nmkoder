@@ -166,7 +166,7 @@ namespace Nmkoder
         private void encEncoder_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
-            QuickConvert.EncoderSelected(encEncoder.SelectedIndex);
+            QuickConvert.VidEncoderSelected(encEncoder.SelectedIndex);
         }
 
         //async Task ExtractFrames(string[] files)

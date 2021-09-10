@@ -82,16 +82,6 @@ namespace Nmkoder.Data
             }
 
             return "";
-        } 
-
-        public static string GetFriendlyName (VideoCodec c)
-        {
-            if (c == VideoCodec.StripVideo) return "Disable (Strip Video)";
-            if (c == VideoCodec.H264) return "H.264 (AVC - Advanced Video Coding)";
-            if (c == VideoCodec.H265) return "H.265 (HEVC - High Efficiency Video Coding)";
-            if (c == VideoCodec.Vp9) return "VP9 (Google VP9)";
-            if (c == VideoCodec.Av1) return "AV1 (AOMedia Video 1)";
-            return c.ToString();
         }
 
         public static string GetFriendlyName(AudioCodec c)
@@ -100,6 +90,55 @@ namespace Nmkoder.Data
             if (c == AudioCodec.Aac) return "AAC (Advanced Audio Coding)";
             if (c == AudioCodec.Opus) return "Opus";
             return c.ToString();
+        }
+
+        public static CodecInfo GetCodecInfo (VideoCodec c)
+        {
+            if(c == VideoCodec.Copy)
+            {
+                string frName = "Copy Stream Without Re-Encoding";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
+            }
+
+            if (c == VideoCodec.StripVideo)
+            {
+                string frName = "Disable (Strip Video)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
+            }
+
+            if (c == VideoCodec.H264)
+            {
+                string frName = "H.264 (AVC - Advanced Video Coding)";
+                string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
+                return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 18);
+            }
+
+            if (c == VideoCodec.H265)
+            {
+                string frName = "H.265 (HEVC - High Efficiency Video Coding)";
+                string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
+                return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 22);
+            }
+
+            if (c == VideoCodec.Vp9)
+            {
+                string frName = "VP9 (Google VP9)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 63, 28);
+            }
+
+            if (c == VideoCodec.Av1)
+            {
+                string frName = "AV1 (AOMedia Video 1)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                string[] colors = new string[] { "yuv420p", "yuv420p10le" };
+                return new CodecInfo(c.ToString(), frName, presets, 7, colors, 1, 0, 50, 26);
+            }
+
+            return new CodecInfo();
         }
 
         //public static Codec Strip = new Codec("None", "Disable (Strip)");

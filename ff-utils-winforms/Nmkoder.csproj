@@ -109,6 +109,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CodecInfo.cs" />
     <Compile Include="Data\CodecParams.cs" />
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />

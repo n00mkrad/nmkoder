@@ -25,7 +25,8 @@ namespace Nmkoder.UI.Tasks
             //    form.encEncoderBox.Items.Add(c.LongName);
 
             foreach (Codecs.VideoCodec c in Enum.GetValues(typeof(Codecs.VideoCodec)))
-                form.encEncoderBox.Items.Add(Codecs.GetFriendlyName(c));
+                form.encEncoderBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+                
 
             ConfigParser.LoadComboxIndex(form.encEncoderBox);
             
@@ -40,13 +41,33 @@ namespace Nmkoder.UI.Tasks
 
         }
 
-        public static void EncoderSelected(int index)
+        public static void VidEncoderSelected(int index)
         {
-            //Codecs.Codec c = Codecs.vCodecs[index];
+            Codecs.VideoCodec c = (Codecs.VideoCodec)index;
+            CodecInfo info = Codecs.GetCodecInfo(c);
+
+            if (info.QDefault >= 0)
+                form.encQualityBox.Text = info.QDefault.ToString();
+            else
+                form.encQualityBox.Text = "";
 
             form.encPresetBox.Items.Clear();
 
-            
+            if (info.Presets != null)
+                foreach(string p in info.Presets)
+                    form.encPresetBox.Items.Add(p); // Add every preset to the dropdown
+
+            if(form.encPresetBox.Items.Count > 0)
+                form.encPresetBox.SelectedIndex = info.PresetDef; // Select default preset
+
+            form.encColorsBox.Items.Clear();
+
+            if (info.ColorFormats != null)
+                foreach (string p in info.ColorFormats)
+                    form.encColorsBox.Items.Add(p); // Add every pix_fmt to the dropdown
+
+            if (form.encColorsBox.Items.Count > 0)
+                form.encColorsBox.SelectedIndex = info.ColorFormatDef; // Select default pix_fmt
         }
 
         private static string GetStreamArgs()

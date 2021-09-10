@@ -78,8 +78,8 @@ namespace Nmkoder.Media
 
             if (logMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
             Logger.Log($"ffmpeg {beforeArgs} {args}", true, false, "ffmpeg");
-            ffmpeg.OutputDataReceived += FfmpegOutputHandler;
-            ffmpeg.ErrorDataReceived += FfmpegOutputHandler;
+            ffmpeg.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, "ffmpeg"); };
+            ffmpeg.ErrorDataReceived += (sender, outLine) => { LogOutput("[E] " + outLine.Data, "ffmpeg"); };
             ffmpeg.Start();
             ffmpeg.BeginOutputReadLine();
             ffmpeg.BeginErrorReadLine();
@@ -91,14 +91,13 @@ namespace Nmkoder.Media
                 Program.mainForm.SetProgress(0);
         }
 
-        static void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        static void LogOutput(string line, string logFilename)
         {
             timeSinceLastOutput.Restart();
 
-            if (RunTask.canceled || outLine == null || outLine.Data == null)
+            if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
                 return;
 
-            string line = outLine.Data;
             lastOutputFfmpeg = lastOutputFfmpeg + "\n" + line;
 
             bool hidden = currentLogMode == LogMode.Hidden;

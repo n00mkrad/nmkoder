@@ -110,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CodecInfo.cs" />
-    <Compile Include="Data\CodecParams.cs" />
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Data\Streams\AudioStream.cs" />
     <Compile Include="Data\Codecs.cs" />
     <Compile Include="Data\Containers.cs" />
-    <Compile Include="Data\Encoders.cs" />
     <Compile Include="Data\Fraction.cs" />
     <Compile Include="Data\MediaFile.cs" />
     <Compile Include="Data\Paths.cs" />
@@ -155,6 +153,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\MediaInfo.cs" />
     <Compile Include="UI\Tasks\QuickConvert.cs" />
+    <Compile Include="UI\Tasks\QuickConvertUi.cs" />
     <Compile Include="UI\ThumbnailView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />

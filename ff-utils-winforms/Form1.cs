@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using ImageMagick;
 using Nmkoder.UI.Tasks;
+using Nmkoder.Main;
 
 namespace Nmkoder
 {
@@ -29,6 +30,12 @@ namespace Nmkoder
         public ComboBox encQualityBox;
         public ComboBox encPresetBox;
         public ComboBox encColorsBox;
+
+        public ComboBox encAudioEnc;
+        public ComboBox encAudioBr;
+
+        public TextBox outputBox;
+        public TextBox customArgsBox;
 
         public Form1()
         {
@@ -45,6 +52,12 @@ namespace Nmkoder
             encQualityBox = encQuality;
             encPresetBox = encPreset;
             encColorsBox = encColors;
+
+            encAudioEnc = encAudCodec;
+            encAudioBr = encAudBitrate;
+
+            outputBox = outputPath;
+            customArgsBox = customArgs;
 
             streamListBox = streamList;
             thumbnailBox = thumbnail;
@@ -132,6 +145,14 @@ namespace Nmkoder
             Program.busy = state;
         }
 
+        public Main.RunTask.TaskType GetCurrentTaskType()
+        {
+            if(tabList.SelectedPage == quickConvertPage)
+                return Main.RunTask.TaskType.Convert;
+
+            return Main.RunTask.TaskType.None;
+        }
+
         private void DragEnterHandler(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
@@ -166,8 +187,19 @@ namespace Nmkoder
         private void encEncoder_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
-            QuickConvert.VidEncoderSelected(encEncoder.SelectedIndex);
+            QuickConvertUi.VidEncoderSelected(encEncoder.SelectedIndex);
         }
+
+        private void containers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            QuickConvertUi.CheckContainer();
+        }
+
+        private void runBtn_Click(object sender, EventArgs e)
+        {
+            RunTask.Start();
+        }
+
 
         //async Task ExtractFrames(string[] files)
         //{

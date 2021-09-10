@@ -107,6 +107,8 @@ namespace Nmkoder.UI
                 }
                 
             }
+
+            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
         }
 
         public static string GetStreamDetails(int index)
@@ -156,7 +158,10 @@ namespace Nmkoder.UI
                     args.Add($"-map 0:{i}");
             }
 
-            return string.Join(" ", args);
+            if (args.Count == Program.mainForm.streamListBox.Items.Count)
+                return "-map 0";
+            else
+                return string.Join(" ", args);
         }
     }
 }

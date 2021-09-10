@@ -9,22 +9,7 @@ namespace Nmkoder.Data
 {
     class Codecs
     {
-        public enum CodecType { Video, AnimImage, Image, Audio }
-
-       //public class Codec
-       //{
-       //    public string Name;
-       //    public string LongName;
-       //    public CodecType Type = CodecType.Video;
-       //
-       //    public Codec (string name, string longName, CodecType type, Encoders.Encoder encoder)
-       //    {
-       //        Name = name;
-       //        LongName = longName;
-       //        Type = type;
-       //        Encoders.Encoder Encoder = encoder;
-       //    }
-       //}
+        //public enum CodecType { Video, AnimImage, Image, Audio }
 
         public enum VideoCodec { Copy, StripVideo, H264, H265, Vp9, Av1 };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus };
@@ -34,6 +19,11 @@ namespace Nmkoder.Data
             if (c == VideoCodec.StripVideo)
             {
                 return $"-vn";
+            }
+
+            if (c == VideoCodec.Copy)
+            {
+                return $"-c:v copy";
             }
 
             if (c == VideoCodec.H264)
@@ -65,6 +55,11 @@ namespace Nmkoder.Data
             if (c == AudioCodec.StripAudio)
             {
                 return $"-an";
+            }
+
+            if (c == AudioCodec.Copy)
+            {
+                return $"-c:a copy";
             }
 
             if (c == AudioCodec.Aac)

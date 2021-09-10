@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Nmkoder.Main
 {
-    class RunTask
+    public class RunTask
     {
-        public enum TaskType { Convert };
-        public static TaskType currentTask;
+        public enum TaskType { None, Convert };
+        //public static TaskType currentTask;
         public static bool canceled = false;
 
         public static void Cancel(string reason = "", bool noMsgBox = false)
@@ -35,8 +35,10 @@ namespace Nmkoder.Main
 
         public static async Task Start ()
         {
-            if (currentTask == TaskType.Convert)
+            if (Program.mainForm.GetCurrentTaskType() == TaskType.Convert)
                 await QuickConvert.Run();
         }
+
+        
     }
 }

@@ -43,7 +43,7 @@
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.mediaInfoPage = new Cyotek.Windows.Forms.TabListPage();
             this.streamDetails = new System.Windows.Forms.TextBox();
-            this.quickEncodePage = new Cyotek.Windows.Forms.TabListPage();
+            this.quickConvertPage = new Cyotek.Windows.Forms.TabListPage();
             this.outputPath = new System.Windows.Forms.TextBox();
             this.containers = new System.Windows.Forms.ComboBox();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
@@ -59,6 +59,10 @@
             this.label48 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.encAudioBitrate = new System.Windows.Forms.ComboBox();
+            this.encAudioCodecs = new System.Windows.Forms.ComboBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.mainTabControl = new System.Windows.Forms.TabControl();
@@ -188,15 +192,13 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.encAudioBitrate = new System.Windows.Forms.ComboBox();
-            this.encAudioCodecs = new System.Windows.Forms.ComboBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
+            this.customArgs = new System.Windows.Forms.TextBox();
+            this.label61 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
             this.mediaInfoPage.SuspendLayout();
-            this.quickEncodePage.SuspendLayout();
+            this.quickConvertPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.encVid.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -251,7 +253,7 @@
             this.formatInfo.Location = new System.Drawing.Point(4, 4);
             this.formatInfo.Margin = new System.Windows.Forms.Padding(4);
             this.formatInfo.Name = "formatInfo";
-            this.formatInfo.Size = new System.Drawing.Size(83, 13);
+            this.formatInfo.Size = new System.Drawing.Size(104, 16);
             this.formatInfo.TabIndex = 28;
             this.formatInfo.Text = "No File Loaded.";
             // 
@@ -365,6 +367,7 @@
             this.runBtn.Text = "Start";
             this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runBtn.UseVisualStyleBackColor = false;
+            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
             // progBar
             // 
@@ -379,7 +382,7 @@
             // 
             this.tabList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.tabList.Controls.Add(this.mediaInfoPage);
-            this.tabList.Controls.Add(this.quickEncodePage);
+            this.tabList.Controls.Add(this.quickConvertPage);
             this.tabList.Controls.Add(this.utilsPage);
             this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
             this.tabList.Location = new System.Drawing.Point(332, 62);
@@ -410,14 +413,14 @@
             this.streamDetails.Size = new System.Drawing.Size(669, 101);
             this.streamDetails.TabIndex = 29;
             // 
-            // quickEncodePage
+            // quickConvertPage
             // 
-            this.quickEncodePage.Controls.Add(this.outputPath);
-            this.quickEncodePage.Controls.Add(this.containers);
-            this.quickEncodePage.Controls.Add(this.htTabControl1);
-            this.quickEncodePage.Name = "quickEncodePage";
-            this.quickEncodePage.Size = new System.Drawing.Size(682, 382);
-            this.quickEncodePage.Text = "Quick Convert";
+            this.quickConvertPage.Controls.Add(this.outputPath);
+            this.quickConvertPage.Controls.Add(this.containers);
+            this.quickConvertPage.Controls.Add(this.htTabControl1);
+            this.quickConvertPage.Name = "quickConvertPage";
+            this.quickConvertPage.Size = new System.Drawing.Size(682, 382);
+            this.quickConvertPage.Text = "Quick Convert";
             // 
             // outputPath
             // 
@@ -441,6 +444,7 @@
             this.containers.Name = "containers";
             this.containers.Size = new System.Drawing.Size(107, 21);
             this.containers.TabIndex = 44;
+            this.containers.SelectedIndexChanged += new System.EventHandler(this.containers_SelectedIndexChanged);
             // 
             // htTabControl1
             // 
@@ -474,6 +478,8 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.label61);
+            this.encVid.Controls.Add(this.customArgs);
             this.encVid.Controls.Add(this.fps);
             this.encVid.Controls.Add(this.encColors);
             this.encVid.Controls.Add(this.encPreset);
@@ -621,6 +627,51 @@
             this.tabPage2.Size = new System.Drawing.Size(668, 312);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Audio";
+            // 
+            // encAudioBitrate
+            // 
+            this.encAudioBitrate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudioBitrate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudioBitrate.ForeColor = System.Drawing.Color.White;
+            this.encAudioBitrate.FormattingEnabled = true;
+            this.encAudioBitrate.Location = new System.Drawing.Point(220, 37);
+            this.encAudioBitrate.Name = "encAudioBitrate";
+            this.encAudioBitrate.Size = new System.Drawing.Size(250, 23);
+            this.encAudioBitrate.TabIndex = 50;
+            // 
+            // encAudioCodecs
+            // 
+            this.encAudioCodecs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudioCodecs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encAudioCodecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudioCodecs.ForeColor = System.Drawing.Color.White;
+            this.encAudioCodecs.FormattingEnabled = true;
+            this.encAudioCodecs.Location = new System.Drawing.Point(220, 7);
+            this.encAudioCodecs.Name = "encAudioCodecs";
+            this.encAudioCodecs.Size = new System.Drawing.Size(250, 23);
+            this.encAudioCodecs.TabIndex = 49;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.ForeColor = System.Drawing.Color.White;
+            this.label53.Location = new System.Drawing.Point(7, 40);
+            this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(93, 15);
+            this.label53.TabIndex = 48;
+            this.label53.Text = "Quality (Bitrate):";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.ForeColor = System.Drawing.Color.White;
+            this.label58.Location = new System.Drawing.Point(5, 10);
+            this.label58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(98, 15);
+            this.label58.TabIndex = 47;
+            this.label58.Text = "Codec (Encoder):";
             // 
             // tabPage1
             // 
@@ -2074,50 +2125,27 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
-            // encAudioBitrate
+            // customArgs
             // 
-            this.encAudioBitrate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encAudioBitrate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encAudioBitrate.ForeColor = System.Drawing.Color.White;
-            this.encAudioBitrate.FormattingEnabled = true;
-            this.encAudioBitrate.Location = new System.Drawing.Point(220, 37);
-            this.encAudioBitrate.Name = "encAudioBitrate";
-            this.encAudioBitrate.Size = new System.Drawing.Size(250, 23);
-            this.encAudioBitrate.TabIndex = 50;
+            this.customArgs.AllowDrop = true;
+            this.customArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.customArgs.ForeColor = System.Drawing.Color.White;
+            this.customArgs.Location = new System.Drawing.Point(220, 157);
+            this.customArgs.MinimumSize = new System.Drawing.Size(4, 21);
+            this.customArgs.Name = "customArgs";
+            this.customArgs.Size = new System.Drawing.Size(250, 23);
+            this.customArgs.TabIndex = 50;
             // 
-            // encAudioCodecs
+            // label61
             // 
-            this.encAudioCodecs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encAudioCodecs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.encAudioCodecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encAudioCodecs.ForeColor = System.Drawing.Color.White;
-            this.encAudioCodecs.FormattingEnabled = true;
-            this.encAudioCodecs.Location = new System.Drawing.Point(220, 7);
-            this.encAudioCodecs.Name = "encAudioCodecs";
-            this.encAudioCodecs.Size = new System.Drawing.Size(250, 23);
-            this.encAudioCodecs.TabIndex = 49;
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.ForeColor = System.Drawing.Color.White;
-            this.label53.Location = new System.Drawing.Point(7, 40);
-            this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(74, 12);
-            this.label53.TabIndex = 48;
-            this.label53.Text = "Quality (Bitrate):";
-            // 
-            // label58
-            // 
-            this.label58.AutoSize = true;
-            this.label58.ForeColor = System.Drawing.Color.White;
-            this.label58.Location = new System.Drawing.Point(5, 10);
-            this.label58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(98, 15);
-            this.label58.TabIndex = 47;
-            this.label58.Text = "Codec (Encoder):";
+            this.label61.AutoSize = true;
+            this.label61.ForeColor = System.Drawing.Color.White;
+            this.label61.Location = new System.Drawing.Point(7, 160);
+            this.label61.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(91, 12);
+            this.label61.TabIndex = 51;
+            this.label61.Text = "Custom Arguments:";
             // 
             // Form1
             // 
@@ -2145,8 +2173,8 @@
             this.tabList.ResumeLayout(false);
             this.mediaInfoPage.ResumeLayout(false);
             this.mediaInfoPage.PerformLayout();
-            this.quickEncodePage.ResumeLayout(false);
-            this.quickEncodePage.PerformLayout();
+            this.quickConvertPage.ResumeLayout(false);
+            this.quickConvertPage.PerformLayout();
             this.htTabControl1.ResumeLayout(false);
             this.encVid.ResumeLayout(false);
             this.encVid.PerformLayout();
@@ -2217,7 +2245,7 @@
         private System.Windows.Forms.Label formatInfo;
         private Cyotek.Windows.Forms.TabList tabList;
         private Cyotek.Windows.Forms.TabListPage mediaInfoPage;
-        private Cyotek.Windows.Forms.TabListPage quickEncodePage;
+        private Cyotek.Windows.Forms.TabListPage quickConvertPage;
         private Cyotek.Windows.Forms.TabListPage utilsPage;
         private System.Windows.Forms.PictureBox thumbnail;
         private System.Windows.Forms.TextBox streamDetails;
@@ -2368,6 +2396,8 @@
         private System.Windows.Forms.ComboBox encAudioCodecs;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TextBox customArgs;
     }
 }
 

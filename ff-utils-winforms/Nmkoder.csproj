@@ -189,6 +189,7 @@
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
     <None Include="Resources\loadingThumbsText.png" />
+    <None Include="Resources\loadingThumbsTextNew.png" />
     <None Include="Resources\baseline_image_white_48dp-4x-25pcAlphaPad.png" />
     <None Include="Resources\baseline_image_white_48dp-4x-25pcAlpha.png" />
     <None Include="Resources\play-32px-div.png" />

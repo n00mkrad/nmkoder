@@ -25,7 +25,7 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles (string[] paths)
         {
-            ThumbnailView.RemoveThumbs();
+            ThumbnailView.ClearUi();
 
             if (paths.Length == 1)
             {
@@ -39,6 +39,8 @@ namespace Nmkoder.UI
 
         public static async Task LoadFileInfo (string path)
         {
+            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
             Logger.Log($"Loading info for {streamCount} streams.");
@@ -46,10 +48,8 @@ namespace Nmkoder.UI
             Logger.Log($"Loaded all media info.");
             current = mediaFile;
 
-            Task.Run(() => ThumbnailView.SaveThumbnails(current.File.FullName));
-
             string getTitle = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
-            string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(25)} - " : "";
+            string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(28)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Streams: {current.StreamCount} - Duration: {dur}{br}";

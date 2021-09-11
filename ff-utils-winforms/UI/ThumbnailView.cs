@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using Nmkoder.Properties;
@@ -9,23 +10,33 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Nmkoder.UI
 {
     class ThumbnailView
     {
         private static long currHash;
-        private static Image[] currThumbs;
+        //private static Image[] currThumbs;
+        private static Dictionary<string, Image> currThumbs;
+        private static int currThumbIndex;
 
-        public static void RemoveThumbs()
+        public static void ClearUi()
         {
-            Program.mainForm.thumbnailBox.Image = Resources.loadingThumbsText;
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
+            Program.mainForm.thumbnailBox.Image = Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+            Program.mainForm.thumbLabel.Text = "";
         }
 
-        public static async Task SaveThumbnails(string path)
+        public static void LoadUi()
         {
+            IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
+            Program.mainForm.thumbnailBox.Image = Resources.loadingThumbsText;
+            Program.mainForm.thumbLabel.Text = "Loading Thumbnails...";
+        }
+
+        public static async Task GenerateThumbs(string path)
+        {
+            LoadUi();
             Directory.CreateDirectory(Paths.GetThumbsPath());
             int randThumbs = 4;
 
@@ -33,7 +44,7 @@ namespace Nmkoder.UI
             {
                 if (!IoUtils.IsPathDirectory(path))     // If path is video - Extract frames
                 {
-                    string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0.jpg");
+                    string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0-s0.jpg");
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
 
                     await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
@@ -70,12 +81,47 @@ namespace Nmkoder.UI
                 Logger.Log("GetThumbnails Error: " + e.Message, true);
             }
 
-            await ThumbnailView.SlideshowLoop(Program.mainForm.thumbnailBox, Paths.GetThumbsPath());
+            //await SlideshowLoop();
+            await LoadThumbnailsOnce();
         }
 
-        public static async Task SlideshowLoop (PictureBox box, string imgsDir, string ext = "jpg", int interval = 2)
+        public static async Task LoadThumbnailsOnce()
         {
-            Logger.Log($"Slideshow.RunFromPath - imgsDir = {imgsDir}", true);
+            string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, "*.*p*");
+            Image[] thumbs = files.Select(x => IoUtils.GetImage(x)).Where(x => x != null).ToArray();
+            string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
+            currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
+            currThumbIndex = 1;
+            ShowThumb();
+        }
+
+        public static void ThumbnailClick ()
+        {
+            ShowThumb(true);
+        }
+
+        public static void ShowThumb(bool next = false)
+        {
+            Program.mainForm.thumbnailBox.Enabled = true;
+
+            if (next)
+            {
+                currThumbIndex++;
+
+                if (currThumbIndex >= currThumbs.Count)
+                    currThumbIndex = 0;
+            }
+
+            int s = currThumbs.ElementAt(currThumbIndex).Key.Split("-s")[1].GetInt();
+            string time = TimeSpan.FromSeconds(s).ToString(@"hh\:mm\:ss");
+
+            Program.mainForm.thumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
+            Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}). Click To Cycle.";
+        }
+
+        public static async Task SlideshowLoop (int interval = 2)
+        {
+            Logger.Log($"Slideshow.RunFromPath - imgsDir = {Paths.GetThumbsPath()}", true);
             string inputFile = MediaInfo.current.File.FullName;
             long inputFileSize = new FileInfo(inputFile).Length;
 
@@ -84,7 +130,7 @@ namespace Nmkoder.UI
                 if (inputFile != MediaInfo.current.File.FullName || inputFileSize != new FileInfo(inputFile).Length)
                     return;
 
-                string[] files = IoUtils.GetFilesSorted(imgsDir, false, $"*.{ext}");
+                string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, "*.*p*");
 
                 if (files.Length < 1)
                 {
@@ -102,11 +148,13 @@ namespace Nmkoder.UI
                     try
                     {
                         if (currThumbs != null)
-                            foreach (Image img in currThumbs)
-                                if (img != null)
-                                    img.Dispose();
+                            foreach (var kvp in currThumbs)
+                                if (kvp.Value != null)
+                                    kvp.Value.Dispose();
 
-                        currThumbs = files.Select(x => IoUtils.GetImage(x)).ToArray();
+                        Image[] thumbs = files.Select(x => IoUtils.GetImage(x)).Where(x => x != null).ToArray();
+                        string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
+                        currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
                     }
                     catch(Exception e)
                     {
@@ -116,7 +164,8 @@ namespace Nmkoder.UI
                     currHash = newHash;
                 }
 
-                box.Image = currThumbs[i];
+                currThumbIndex = i;
+                ShowThumb();
                 await Task.Delay(interval * 1000);
             }
         }

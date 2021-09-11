@@ -28,6 +28,7 @@ namespace Nmkoder
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
+        public Label thumbLabel;
 
         public ComboBox containerBox;
         public ComboBox encVidCodecsBox;
@@ -72,6 +73,7 @@ namespace Nmkoder
             streamListBox = streamList;
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
+            thumbLabel = thumbInfo;
 
             
             CheckForIllegalCrossThreadCalls = false;
@@ -237,6 +239,11 @@ namespace Nmkoder
         private void encSubCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
+        }
+
+        private void thumbnail_Click(object sender, EventArgs e)
+        {
+            ThumbnailView.ThumbnailClick();
         }
 
 

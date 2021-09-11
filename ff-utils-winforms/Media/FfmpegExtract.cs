@@ -316,7 +316,7 @@ namespace Nmkoder.Media
             {
                 int time = interval * (i + 1);
                 //Logger.Log($"Extracting frame thumb{i + 1}.{format} at time {time}s", true);
-                await ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}.{format}"), time, maxH);
+                await ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH);
             }
         }
 

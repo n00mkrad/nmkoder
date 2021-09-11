@@ -23,6 +23,8 @@ namespace Nmkoder
     {
         bool initialized = false;
 
+        public Cyotek.Windows.Forms.TabList mainTabList;
+
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
@@ -50,6 +52,8 @@ namespace Nmkoder
         {
             Program.mainForm = this;
             Logger.textbox = logTbox;
+
+            mainTabList = tabList;
 
             containerBox = containers;
             encVidCodecsBox = encVidCodec;

@@ -111,6 +111,7 @@ namespace Nmkoder.UI
 
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
             QuickConvertUi.ValidateContainer();
+            Program.mainForm.mainTabList.SelectedIndex = 0;
         }
 
         public static string GetStreamDetails(int index)

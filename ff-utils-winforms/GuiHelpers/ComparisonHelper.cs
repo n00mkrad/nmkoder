@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Nmkoder.GuiHelpers
             }
             catch (Exception e)
             {
-                Program.Print("CreateComparison Error: " + e.Message);
+                Logger.Log("CreateComparison Error: " + e.Message);
             }
         }
     }

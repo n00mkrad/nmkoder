@@ -12,7 +12,6 @@ namespace Nmkoder
     {
         public static bool busy;
         public static Form1 mainForm;
-        public static TextBox logTbox;
 
         [STAThread]
         static void Main()
@@ -26,15 +25,6 @@ namespace Nmkoder
             Console.WriteLine(Environment.CurrentDirectory);
             Application.Run(new Form1());
             
-        }
-
-        public static void Print(string s)
-        {
-            if (string.IsNullOrWhiteSpace(s))
-                return;
-            Console.WriteLine(s);
-            s = s.Replace("\n", Environment.NewLine);
-            logTbox.AppendText(Environment.NewLine + s);
         }
     }
 }

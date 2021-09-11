@@ -27,7 +27,7 @@ namespace Nmkoder.UI.Tasks
             string subs = Codecs.GetArgs(GetCurrentCodecS());
             string custom = Program.mainForm.customArgsBox.Text.Trim();
 
-            string args = $"-i {inPath} {map} {video} {audio} {subs} {custom} {outPath}";
+            string args = $"-i {inPath.Wrap()} {map} {video} {audio} {subs} {custom} {outPath.Wrap()}";
             Logger.Log(args);
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);

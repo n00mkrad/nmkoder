@@ -38,7 +38,7 @@ namespace Nmkoder.UI
         {
             LoadUi();
             Directory.CreateDirectory(Paths.GetThumbsPath());
-            int randThumbs = 4;
+            int randThumbs = 5;
 
             try
             {
@@ -47,13 +47,18 @@ namespace Nmkoder.UI
                     string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0-s0.jpg");
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
 
-                    await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
-                    FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, "*.*");
+                    int duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
 
-                    var smallerHalf = thumbs.Skip(1).OrderBy(f => f.Length).Take(randThumbs).ToList(); // Get smaller half of thumbs
+                    if(duration > randThumbs)   // Only generate random thumbs if duration is long enough
+                    {
+                        await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
+                        FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, "*.*");
 
-                    foreach (FileInfo f in smallerHalf) // Delete smaller thumbs to only have high-information thumbs
-                        f.Delete();
+                        var smallerHalf = thumbs.Skip(1).OrderBy(f => f.Length).Take(randThumbs).ToList(); // Get smaller half of thumbs
+
+                        foreach (FileInfo f in smallerHalf) // Delete smaller thumbs to only have high-information thumbs
+                            f.Delete();
+                    }
                 }
                 else     // Path is frame folder - Copy frames
                 {
@@ -91,7 +96,7 @@ namespace Nmkoder.UI
             Image[] thumbs = files.Select(x => IoUtils.GetImage(x)).Where(x => x != null).ToArray();
             string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
             currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
-            currThumbIndex = 1;
+            currThumbIndex = currThumbs.Count > 1 ? 1 : 0;
             ShowThumb();
         }
 
@@ -116,7 +121,7 @@ namespace Nmkoder.UI
             string time = TimeSpan.FromSeconds(s).ToString(@"hh\:mm\:ss");
 
             Program.mainForm.thumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
-            Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}). Click To Cycle.";
+            Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}).{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
         }
 
         public static async Task SlideshowLoop (int interval = 2)

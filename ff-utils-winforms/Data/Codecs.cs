@@ -31,30 +31,34 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.H264)
             {
+                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libx264 -preset {preset} -pix_fmt {pixFmt}";
+                return $"-c:v libx264 -crf {q} -preset {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.H265)
             {
+                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libx265 -preset {preset} -pix_fmt {pixFmt}";
+                return $"-c:v libx265 -crf {q} -preset {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.Vp9)
             {
+                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libvpx-vp9 -cpu-used {preset} -pix_fmt {pixFmt}";
+                return $"-c:v libvpx-vp9 -crf {q} -cpu-used {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.Av1)
             {
+                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libsvtav1 -tile_columns 2 -tile_rows 1 -preset {preset} -pix_fmt {pixFmt}";
+                return $"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} -pix_fmt {pixFmt}";
             }
 
             return "";

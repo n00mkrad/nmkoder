@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -296,6 +297,7 @@ namespace Nmkoder.Media
 
         public static async Task ExtractSingleFrameAtTime(string inputFile, string outputPath, int skipSeconds, int maxH = 2160)
         {
+            NmkdStopwatch sw = new NmkdStopwatch();
             bool isPng = (Path.GetExtension(outputPath).ToLower() == ".png");
             string comprArg = isPng ? pngCompr : "-q:v 1";
             string pixFmt = "-pix_fmt " + (isPng ? $"rgb24 {comprArg}" : "yuvj420p");

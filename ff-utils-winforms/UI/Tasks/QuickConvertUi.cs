@@ -149,15 +149,16 @@ namespace Nmkoder.UI.Tasks
             return (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
         }
 
-        public static Dictionary<string, string> GetVideoArgs ()
+        public static Dictionary<string, string> GetVideoArgsFromUi ()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("q", form.encVidQualityBox.Value.ToString());
             dict.Add("preset", form.encVidPresetBox.Text.ToLower());
             dict.Add("pixFmt", form.encVidColorsBox.Text.ToLower());
             return dict;
         }
 
-        public static Dictionary<string, string> GetAudioArgs()
+        public static Dictionary<string, string> GetAudioArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("bitrate", form.encAudBr.Text.ToLower());

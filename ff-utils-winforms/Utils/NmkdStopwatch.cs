@@ -14,7 +14,12 @@ namespace Nmkoder.Utils
                 sw.Restart();
         }
 
-        public string GetElapsedStr ()
+        public long GetElapsedMs ()
+        {
+            return sw.ElapsedMilliseconds;
+        }
+
+        public override string ToString()
         {
             return FormatUtils.TimeSw(sw);
         }

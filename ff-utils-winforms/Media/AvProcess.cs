@@ -58,6 +58,7 @@ namespace Nmkoder.Media
 
         public static async Task RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, TaskType taskType = TaskType.Other, bool progressBar = false)
         {
+            NmkdStopwatch sw = new NmkdStopwatch();
             lastOutputFfmpeg = "";
             currentLogMode = logMode;
             showProgressBar = progressBar;
@@ -86,6 +87,8 @@ namespace Nmkoder.Media
 
             while (!ffmpeg.HasExited)
                 await Task.Delay(1);
+
+            Logger.Log($"Ffmpeg has exited after {sw}");
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);

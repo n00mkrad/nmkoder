@@ -22,8 +22,8 @@ namespace Nmkoder.UI.Tasks
             string inPath = MediaInfo.current.File.FullName;
             string outPath = Program.mainForm.outputBox.Text.Trim();
             string map = MediaInfo.GetMapArgs();
-            string video = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgs());
-            string audio = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgs());
+            string video = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi());
+            string audio = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
             string subs = Codecs.GetArgs(GetCurrentCodecS());
             string custom = Program.mainForm.customArgsBox.Text.Trim();
 

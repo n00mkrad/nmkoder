@@ -34,6 +34,7 @@
             this.streamList = new System.Windows.Forms.CheckedListBox();
             this.titleLabel = new System.Windows.Forms.Label();
             this.inputPanel = new System.Windows.Forms.Panel();
+            this.thumbInfo = new System.Windows.Forms.Label();
             this.taskMode = new System.Windows.Forms.ComboBox();
             this.label33 = new System.Windows.Forms.Label();
             this.progBar = new HTAlt.WinForms.HTProgressBar();
@@ -149,7 +150,7 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
-            this.thumbInfo = new System.Windows.Forms.Label();
+            this.stopBtn = new System.Windows.Forms.Button();
             this.extractFramesDropPanel = new System.Windows.Forms.Panel();
             this.createVidDropPanel = new System.Windows.Forms.Panel();
             this.loopDropPanel = new System.Windows.Forms.Panel();
@@ -159,6 +160,9 @@
             this.runBtn = new System.Windows.Forms.Button();
             this.thumbnail = new System.Windows.Forms.PictureBox();
             this.inputDropPanel = new System.Windows.Forms.Panel();
+            this.pauseBtn = new System.Windows.Forms.Button();
+            this.progressCircle = new CircularProgressBar.CircularProgressBar();
+            this.busyControlsPanel = new System.Windows.Forms.Panel();
             this.inputPanel.SuspendLayout();
             this.tabList.SuspendLayout();
             this.mediaInfoPage.SuspendLayout();
@@ -193,6 +197,7 @@
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
+            this.busyControlsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -261,6 +266,15 @@
             this.inputPanel.TabIndex = 12;
             this.inputPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragDrop);
             this.inputPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.inputPanel_DragEnter);
+            // 
+            // thumbInfo
+            // 
+            this.thumbInfo.ForeColor = System.Drawing.Color.DarkGray;
+            this.thumbInfo.Location = new System.Drawing.Point(3, 342);
+            this.thumbInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.thumbInfo.Name = "thumbInfo";
+            this.thumbInfo.Size = new System.Drawing.Size(304, 13);
+            this.thumbInfo.TabIndex = 29;
             // 
             // taskMode
             // 
@@ -669,6 +683,7 @@
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(661, 358);
             this.mainTabControl.TabIndex = 2;
+            this.mainTabControl.Visible = false;
             // 
             // extractFramesPage
             // 
@@ -1578,14 +1593,20 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
-            // thumbInfo
+            // stopBtn
             // 
-            this.thumbInfo.ForeColor = System.Drawing.Color.DarkGray;
-            this.thumbInfo.Location = new System.Drawing.Point(3, 342);
-            this.thumbInfo.Margin = new System.Windows.Forms.Padding(4);
-            this.thumbInfo.Name = "thumbInfo";
-            this.thumbInfo.Size = new System.Drawing.Size(304, 13);
-            this.thumbInfo.TabIndex = 29;
+            this.stopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.stopBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_stop_white_48dp;
+            this.stopBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopBtn.ForeColor = System.Drawing.Color.White;
+            this.stopBtn.Location = new System.Drawing.Point(51, 0);
+            this.stopBtn.Name = "stopBtn";
+            this.stopBtn.Size = new System.Drawing.Size(45, 45);
+            this.stopBtn.TabIndex = 36;
+            this.stopBtn.UseVisualStyleBackColor = false;
+            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
             // extractFramesDropPanel
             // 
@@ -1703,12 +1724,73 @@
             this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
             this.inputDropPanel.TabIndex = 1;
             // 
+            // pauseBtn
+            // 
+            this.pauseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.pauseBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_pause_white_48dp;
+            this.pauseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pauseBtn.ForeColor = System.Drawing.Color.White;
+            this.pauseBtn.Location = new System.Drawing.Point(0, 0);
+            this.pauseBtn.Name = "pauseBtn";
+            this.pauseBtn.Size = new System.Drawing.Size(45, 45);
+            this.pauseBtn.TabIndex = 37;
+            this.pauseBtn.UseVisualStyleBackColor = false;
+            this.pauseBtn.Click += new System.EventHandler(this.pauseBtn_Click);
+            // 
+            // progressCircle
+            // 
+            this.progressCircle.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
+            this.progressCircle.AnimationSpeed = 500;
+            this.progressCircle.BackColor = System.Drawing.Color.Transparent;
+            this.progressCircle.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold);
+            this.progressCircle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.progressCircle.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.progressCircle.InnerMargin = 2;
+            this.progressCircle.InnerWidth = -1;
+            this.progressCircle.Location = new System.Drawing.Point(174, 9);
+            this.progressCircle.MarqueeAnimationSpeed = 2000;
+            this.progressCircle.Name = "progressCircle";
+            this.progressCircle.OuterColor = System.Drawing.Color.Gray;
+            this.progressCircle.OuterMargin = -21;
+            this.progressCircle.OuterWidth = 21;
+            this.progressCircle.ProgressColor = System.Drawing.Color.LimeGreen;
+            this.progressCircle.ProgressWidth = 8;
+            this.progressCircle.SecondaryFont = new System.Drawing.Font("Microsoft Sans Serif", 36F);
+            this.progressCircle.Size = new System.Drawing.Size(40, 40);
+            this.progressCircle.StartAngle = 270;
+            this.progressCircle.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressCircle.SubscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.progressCircle.SubscriptMargin = new System.Windows.Forms.Padding(10, -35, 0, 0);
+            this.progressCircle.SubscriptText = ".23";
+            this.progressCircle.SuperscriptColor = System.Drawing.Color.FromArgb(((int)(((byte)(166)))), ((int)(((byte)(166)))), ((int)(((byte)(166)))));
+            this.progressCircle.SuperscriptMargin = new System.Windows.Forms.Padding(10, 35, 0, 0);
+            this.progressCircle.SuperscriptText = "°C";
+            this.progressCircle.TabIndex = 38;
+            this.progressCircle.TextMargin = new System.Windows.Forms.Padding(8, 8, 0, 0);
+            this.progressCircle.Value = 33;
+            this.progressCircle.Visible = false;
+            // 
+            // busyControlsPanel
+            // 
+            this.busyControlsPanel.Controls.Add(this.pauseBtn);
+            this.busyControlsPanel.Controls.Add(this.stopBtn);
+            this.busyControlsPanel.Location = new System.Drawing.Point(12, 544);
+            this.busyControlsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.busyControlsPanel.Name = "busyControlsPanel";
+            this.busyControlsPanel.Size = new System.Drawing.Size(314, 45);
+            this.busyControlsPanel.TabIndex = 39;
+            this.busyControlsPanel.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
+            this.Controls.Add(this.busyControlsPanel);
+            this.Controls.Add(this.progressCircle);
             this.Controls.Add(this.tabList);
             this.Controls.Add(this.progBar);
             this.Controls.Add(this.runBtn);
@@ -1778,6 +1860,7 @@
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
+            this.busyControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1914,6 +1997,10 @@
         private System.Windows.Forms.ComboBox encSubCodec;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label thumbInfo;
+        private System.Windows.Forms.Button stopBtn;
+        private System.Windows.Forms.Button pauseBtn;
+        private CircularProgressBar.CircularProgressBar progressCircle;
+        private System.Windows.Forms.Panel busyControlsPanel;
     }
 }
 

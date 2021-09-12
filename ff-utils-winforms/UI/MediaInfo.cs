@@ -26,6 +26,7 @@ namespace Nmkoder.UI
         public static async Task HandleFiles (string[] paths)
         {
             ThumbnailView.ClearUi();
+            Logger.ClearLogBox();
 
             if (paths.Length == 1)
             {

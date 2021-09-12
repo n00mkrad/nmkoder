@@ -159,10 +159,10 @@ namespace Nmkoder
         {
             Logger.Log($"SetWorking({state})", true);
             SetProgress(-1);
-            Control[] controlsToDisable = new Control[] { /* runBtn, runStepBtn, stepSelector, settingsBtn */ };
-            Control[] controlsToHide = new Control[] { /* runBtn, runStepBtn, stepSelector */ };
-            //progressCircle.Visible = state;
-            //busyControlsPanel.Visible = state;
+            Control[] controlsToDisable = new Control[] { runBtn /* runStepBtn, stepSelector, settingsBtn */ };
+            Control[] controlsToHide = new Control[] { runBtn /* runBtn, runStepBtn, stepSelector */ };
+            progressCircle.Visible = state;
+            busyControlsPanel.Visible = state;
 
             foreach (Control c in controlsToDisable)
                 c.Enabled = !state;
@@ -244,6 +244,16 @@ namespace Nmkoder
         private void thumbnail_Click(object sender, EventArgs e)
         {
             ThumbnailView.ThumbnailClick();
+        }
+
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+            RunTask.Cancel("Canceled manually.", true);
+        }
+
+        private void pauseBtn_Click(object sender, EventArgs e)
+        {
+            Logger.Log($"Not implemented yet.");
         }
 
 

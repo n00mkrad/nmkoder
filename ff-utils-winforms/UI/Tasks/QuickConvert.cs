@@ -19,6 +19,8 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run ()
         {
+            Program.mainForm.SetWorking(true);
+
             string inPath = MediaInfo.current.File.FullName;
             string outPath = Program.mainForm.outputBox.Text.Trim();
             string map = MediaInfo.GetMapArgs();
@@ -31,6 +33,8 @@ namespace Nmkoder.UI.Tasks
             Logger.Log(args);
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);
+
+            Program.mainForm.SetWorking(false);
         }
 
         

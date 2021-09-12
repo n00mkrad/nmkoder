@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Nmkoder.Main
 {
@@ -27,7 +28,7 @@ namespace Nmkoder.Main
 
             Program.mainForm.SetWorking(false);
             // Program.mainForm.SetTab("interpolation");
-            // Logger.LogIfLastLineDoesNotContainMsg("Canceled interpolation.");
+            Logger.LogIfLastLineDoesNotContainMsg("Canceled.");
 
             //if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
             //    Utils.ShowMessage($"Canceled:\n\n{reason}");
@@ -35,6 +36,12 @@ namespace Nmkoder.Main
 
         public static async Task Start ()
         {
+            if (Program.mainForm.GetCurrentTaskType() == TaskType.None)
+            {
+                MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+                return;
+            }
+
             if (Program.mainForm.GetCurrentTaskType() == TaskType.Convert)
                 await QuickConvert.Run();
         }

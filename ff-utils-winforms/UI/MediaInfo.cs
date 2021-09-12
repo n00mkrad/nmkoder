@@ -39,14 +39,23 @@ namespace Nmkoder.UI
 
         public static async Task LoadFileInfo (string path)
         {
-            NmkdStopwatch sw = new NmkdStopwatch();
             //Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
 
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
-            Logger.Log($"Loading info for {streamCount} streams.");
+            Logger.Log($"Scanning '{mediaFile.File.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
-            Logger.Log($"Loaded all media info.");
+
+            string vTracks = mediaFile.VideoStreams.Count > 0 ? $"{mediaFile.VideoStreams.Count} video track{(mediaFile.VideoStreams.Count == 1 ? "" : "s")}" : "";
+            string aTracks = mediaFile.AudioStreams.Count > 0 ? $", {mediaFile.AudioStreams.Count} audio track{(mediaFile.AudioStreams.Count == 1 ? "" : "s")}" : "";
+            string sTracks = mediaFile.SubtitleStreams.Count > 0 ? $", {mediaFile.SubtitleStreams.Count} subtitle track{(mediaFile.SubtitleStreams.Count == 1 ? "" : "s")}" : "";
+            string dTracks = mediaFile.DataStreams.Count > 0 ? $", {mediaFile.DataStreams.Count} data track{(mediaFile.DataStreams.Count == 1 ? "" : "s")}" : "";
+
+            if (mediaFile.AllStreams.Count > 0)
+                Logger.Log($"Found {vTracks}{aTracks}{sTracks}{dTracks}.");
+            else
+                Logger.Log($"Found no media streams in '{mediaFile.File.Name}'!");
+
             current = mediaFile;
 
             string getTitle = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");

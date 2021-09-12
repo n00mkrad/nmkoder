@@ -58,11 +58,11 @@ namespace Nmkoder.Media
 
         public static async Task RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, TaskType taskType = TaskType.Other, bool progressBar = false)
         {
-            NmkdStopwatch sw = new NmkdStopwatch();
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             lastOutputFfmpeg = "";
             currentLogMode = logMode;
             showProgressBar = progressBar;
-            Process ffmpeg = OsUtils.NewProcess(true);
+            Process ffmpeg = OsUtils.NewProcess(!show);
             timeSinceLastOutput.Restart();
             lastAvProcess = ffmpeg;
             lastTask = taskType;
@@ -79,16 +79,24 @@ namespace Nmkoder.Media
 
             if (logMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
             Logger.Log($"ffmpeg {beforeArgs} {args}", true, false, "ffmpeg");
-            ffmpeg.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, "ffmpeg"); };
-            ffmpeg.ErrorDataReceived += (sender, outLine) => { LogOutput("[E] " + outLine.Data, "ffmpeg"); };
+
+            if (!show)
+            {
+                ffmpeg.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, "ffmpeg"); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { LogOutput("[E] " + outLine.Data, "ffmpeg"); };
+            }
+            
             ffmpeg.Start();
-            ffmpeg.BeginOutputReadLine();
-            ffmpeg.BeginErrorReadLine();
+
+            if (!show)
+            {
+                ffmpeg.BeginOutputReadLine();
+                ffmpeg.BeginErrorReadLine();
+            }
+            
 
             while (!ffmpeg.HasExited)
                 await Task.Delay(1);
-
-            Logger.Log($"Ffmpeg has exited after {sw}");
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);
@@ -203,9 +211,14 @@ namespace Nmkoder.Media
             return Paths.GetBinPath();
         }
 
-        static string GetCmdArg()
+        public static string GetCmdArg()
         {
-            return "/C";
+            bool stayOpen = Config.GetInt(Config.Key.cmdDebugMode) == 2;
+
+            if (stayOpen)
+                return "/K";
+            else
+                return "/C";
         }
 
         public static async Task SetBusyWhileRunning()

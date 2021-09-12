@@ -39,7 +39,8 @@ namespace Nmkoder.UI
 
         public static async Task LoadFileInfo (string path)
         {
-            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+            NmkdStopwatch sw = new NmkdStopwatch();
+            //Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
 
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
@@ -112,6 +113,8 @@ namespace Nmkoder.UI
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
             QuickConvertUi.ValidateContainer();
             Program.mainForm.mainTabList.SelectedIndex = 0;
+
+            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
         }
 
         public static string GetStreamDetails(int index)

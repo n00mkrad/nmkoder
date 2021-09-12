@@ -314,12 +314,15 @@ namespace Nmkoder.Media
 
             Logger.Log($"Thumbnail Interval: {duration}/{amount} = {interval}", true);
 
+            List<Task> tasks = new List<Task>();
+
             for (int i = 0; i < amount; i++)
             {
                 int time = interval * (i + 1);
-                //Logger.Log($"Extracting frame thumb{i + 1}.{format} at time {time}s", true);
-                await ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH);
+                tasks.Add(ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH));
             }
+
+            await Task.WhenAll(tasks);
         }
 
         //public static async Task ExtractLastFrame(string inputFile, string outputPath, Size size)

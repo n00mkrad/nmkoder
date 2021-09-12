@@ -30,8 +30,8 @@ namespace Nmkoder.Main
             // Program.mainForm.SetTab("interpolation");
             Logger.LogIfLastLineDoesNotContainMsg("Canceled.");
 
-            //if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
-            //    Utils.ShowMessage($"Canceled:\n\n{reason}");
+            if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
+                MessageBox.Show($"Canceled:\n\n{reason}", "Message");
         }
 
         public static async Task Start ()

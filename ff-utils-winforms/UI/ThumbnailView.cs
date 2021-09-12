@@ -19,26 +19,33 @@ namespace Nmkoder.UI
         //private static Image[] currThumbs;
         private static Dictionary<string, Image> currThumbs;
         private static int currThumbIndex;
+        private static bool busy;
+
+        private static readonly Image placeholderImg = Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+        private static readonly Image loadingImg = Resources.loadingThumbsText;
 
         public static void ClearUi()
         {
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-            Program.mainForm.thumbnailBox.Image = Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+            Program.mainForm.thumbnailBox.Image = placeholderImg;
             Program.mainForm.thumbLabel.Text = "";
+            busy = false;
         }
 
         public static void LoadUi()
         {
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-            Program.mainForm.thumbnailBox.Image = Resources.loadingThumbsText;
+            Program.mainForm.thumbnailBox.Image = loadingImg;
             Program.mainForm.thumbLabel.Text = "Loading Thumbnails...";
+            busy = true;
         }
 
         public static async Task GenerateThumbs(string path)
         {
             LoadUi();
             Directory.CreateDirectory(Paths.GetThumbsPath());
-            int randThumbs = 5;
+            string format = "jpg";
+            int randThumbs = 4;
 
             try
             {
@@ -46,13 +53,14 @@ namespace Nmkoder.UI
                 {
                     string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0-s0.jpg");
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
+                    await LoadThumbnailsOnce();
 
                     int duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
 
                     if(duration > randThumbs)   // Only generate random thumbs if duration is long enough
                     {
                         await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
-                        FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, "*.*");
+                        FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, $"*.{format}");
 
                         var smallerHalf = thumbs.Skip(1).OrderBy(f => f.Length).Take(randThumbs).ToList(); // Get smaller half of thumbs
 
@@ -76,7 +84,7 @@ namespace Nmkoder.UI
                     foreach (FileInfo pick in picks)
                     {
                         Logger.Log($"Saving thumb " + pick.Name);
-                        IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.jpg"), ImageFormat.Jpeg);
+                        IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.{format}"), ImageFormat.Jpeg);
                         idx++;
                     }
                 }
@@ -87,7 +95,17 @@ namespace Nmkoder.UI
             }
 
             //await SlideshowLoop();
-            await LoadThumbnailsOnce();
+
+            if (IoUtils.GetAmountOfFiles(Paths.GetThumbsPath(), false, $"*.{format}") > 0)
+                await LoadThumbnailsOnce();
+            else
+                Fail();
+        }
+
+        static void Fail ()
+        {
+            Program.mainForm.thumbnailBox.Image = placeholderImg;
+            Program.mainForm.thumbLabel.Text = $"Failed to extract thumbnails.";
         }
 
         public static async Task LoadThumbnailsOnce()
@@ -97,11 +115,15 @@ namespace Nmkoder.UI
             string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
             currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
             currThumbIndex = currThumbs.Count > 1 ? 1 : 0;
+            busy = false;
             ShowThumb();
         }
 
         public static void ThumbnailClick ()
         {
+            if (busy || Program.mainForm.thumbnailBox.Image == placeholderImg || Program.mainForm.thumbnailBox.Image == loadingImg)
+                return;
+
             ShowThumb(true);
         }
 

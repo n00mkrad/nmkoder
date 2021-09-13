@@ -22,6 +22,7 @@ namespace Nmkoder.UI
     class MediaInfo
     {
         public static MediaFile current;
+        public static bool streamListLoaded;
 
         public static async Task HandleFiles (string[] paths)
         {
@@ -40,8 +41,7 @@ namespace Nmkoder.UI
 
         public static async Task LoadFileInfo (string path)
         {
-            //Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
-
+            streamListLoaded = false;
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
             Logger.Log($"Scanning '{mediaFile.File.Name}' (Streams: {streamCount})...");
@@ -119,8 +119,9 @@ namespace Nmkoder.UI
                 
             }
 
-            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            streamListLoaded = true;
             QuickConvertUi.LoadMetadataGrid();
+            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
             QuickConvertUi.SetAudioChannelsCombox(current.AudioStreams.First()?.Channels);
             QuickConvertUi.ValidateContainer();
             Program.mainForm.mainTabList.SelectedIndex = 0;

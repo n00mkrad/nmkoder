@@ -195,6 +195,9 @@ namespace Nmkoder.UI.Tasks
 
         public static void LoadMetadataGrid()
         {
+            if (MediaInfo.current == null || !MediaInfo.streamListLoaded)
+                return;
+
             DataGridView grid = Program.mainForm.metaGrid;
 
             if (grid.Columns.Count != 2)
@@ -209,13 +212,16 @@ namespace Nmkoder.UI.Tasks
             grid.Rows.Add($"Title (File)", MediaInfo.current.Title);
 
             for (int i = 0; i < MediaInfo.current.VideoStreams.Count; i++)
-                grid.Rows.Add($"Title (Video Track {i + 1})", MediaInfo.current.VideoStreams[i].Title);
+                if(Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.VideoStreams[i].Index))
+                    grid.Rows.Add($"Title (Video Track {i + 1})", MediaInfo.current.VideoStreams[i].Title);
 
             for (int i = 0; i < MediaInfo.current.AudioStreams.Count; i++)
-                grid.Rows.Add($"Title (Audio Track {i + 1})", MediaInfo.current.AudioStreams[i].Title);
+                if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.AudioStreams[i].Index))
+                    grid.Rows.Add($"Title (Audio Track {i + 1})", MediaInfo.current.AudioStreams[i].Title);
 
             for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
-                grid.Rows.Add($"Title (Subtitle Track {i + 1})", MediaInfo.current.SubtitleStreams[i].Title);
+                if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.SubtitleStreams[i].Index))
+                    grid.Rows.Add($"Title (Subtitle Track {i + 1})", MediaInfo.current.SubtitleStreams[i].Title);
 
 
             grid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;

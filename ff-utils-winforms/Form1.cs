@@ -42,7 +42,6 @@ namespace Nmkoder
         public ComboBox encAudCh;
         // Quick Convert - Subs
         public ComboBox encSubEnc;
-
         // Quick Convert - Other
         public CheckBox mapMeta;
         public DataGridView metaGrid;
@@ -263,6 +262,11 @@ namespace Nmkoder
         private void pauseBtn_Click(object sender, EventArgs e)
         {
             Logger.Log($"Not implemented yet.");
+        }
+
+        private void streamList_Leave(object sender, EventArgs e)
+        {
+            QuickConvertUi.LoadMetadataGrid();
         }
 
 

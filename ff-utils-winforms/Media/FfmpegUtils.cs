@@ -44,6 +44,7 @@ namespace Nmkoder.Media
                     if (streamStr.Contains(": Video:"))
                     {
                         string lang = await GetFfprobeInfoAsync(path, showStreams, "TAG:language", idx);
+                        string title = await GetFfprobeInfoAsync(path, showStreams, "TAG:title", idx);
                         string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
                         string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
                         string pixFmt = (await GetFfprobeInfoAsync(path, showStreams, "pix_fmt", idx)).ToUpper();
@@ -53,7 +54,7 @@ namespace Nmkoder.Media
                         Size dar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "display_aspect_ratio", idx));
                         Fraction fps = await IoUtils.GetVideoFramerate(path);
                         //int frames = await GetFrameCountCached.GetFrameCountAsync(path);
-                        VideoStream vStream = new VideoStream(codec, codecLong, pixFmt, kbits, res, sar, dar, fps, lang);
+                        VideoStream vStream = new VideoStream(lang, title, codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                         vStream.Index = idx;
                         Logger.Log($"Added video stream to list: {vStream}", true);
                         streamList.Add(vStream);

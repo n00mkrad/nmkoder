@@ -11,8 +11,9 @@ namespace Nmkoder.Data.Streams
         public Size Dar;
         public Fraction Rate;
         public string Language;
+        public string Title;
 
-        public VideoStream(string codec, string codecLong, string colorSpace, int kbits, Size resolution, Size sar, Size dar, Fraction rate, string language)
+        public VideoStream(string language, string title, string codec, string codecLong, string colorSpace, int kbits, Size resolution, Size sar, Size dar, Fraction rate)
         {
             base.Type = StreamType.Video;
             Codec = codec;
@@ -24,6 +25,7 @@ namespace Nmkoder.Data.Streams
             Dar = dar;
             Rate = rate;
             Language = language;
+            Title = title;
         }
 
         public override string ToString()

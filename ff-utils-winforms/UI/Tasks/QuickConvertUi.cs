@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using System;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -188,5 +190,76 @@ namespace Nmkoder.UI.Tasks
                     form.encAudCh.SelectedIndex = i;
             }
         }
+
+        #region Metadata Tab 
+
+        public static void LoadMetadataGrid()
+        {
+            DataGridView grid = Program.mainForm.metaGrid;
+
+            if (grid.Columns.Count != 2)
+            {
+                grid.Columns.Clear();
+                grid.Columns.Add("keys", "Tag");
+                grid.Columns.Add("vals", "Text");
+            }
+
+            grid.Rows.Clear();
+
+            grid.Rows.Add($"Title (File)", MediaInfo.current.Title);
+
+            for (int i = 0; i < MediaInfo.current.VideoStreams.Count; i++)
+                grid.Rows.Add($"Title (Video Track {i + 1})", MediaInfo.current.VideoStreams[i].Title);
+
+            for (int i = 0; i < MediaInfo.current.AudioStreams.Count; i++)
+                grid.Rows.Add($"Title (Audio Track {i + 1})", MediaInfo.current.AudioStreams[i].Title);
+
+            for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
+                grid.Rows.Add($"Title (Subtitle Track {i + 1})", MediaInfo.current.SubtitleStreams[i].Title);
+
+
+            grid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[0].FillWeight = 30;
+            grid.Columns[1].FillWeight = 70;
+        }
+
+        public static string GetMetadataArgs ()
+        {
+            DataGridView grid = Program.mainForm.metaGrid;
+            bool map = Program.mainForm.mapMeta.Checked;
+            List<string> args = new List<string>();
+
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                string key = row.Cells[0].Value?.ToString();
+                string val = row.Cells[1].Value?.ToString().Trim();
+
+                int streamIdx = key.GetInt() - 1;
+
+                if (!map && string.IsNullOrWhiteSpace(val))
+                    continue;
+
+                if(streamIdx < 0)
+                {
+                    args.Add($"-metadata title=\"{val}\"");
+                }
+                else
+                {
+                    if (key.ToLower().Contains("video"))
+                        args.Add($"-metadata:s:v:{streamIdx} title=\"{val}\"");
+
+                    if (key.ToLower().Contains("audio"))
+                        args.Add($"-metadata:s:a:{streamIdx} title=\"{val}\"");
+
+                    if (key.ToLower().Contains("subtitle"))
+                        args.Add($"-metadata:s:s:{streamIdx} title=\"{val}\"");
+                }
+            }
+
+            return $"-map_metadata {(map ? "0" : "-1")} {string.Join(" ", args)}";
+        }
+
+        #endregion
     }
 }

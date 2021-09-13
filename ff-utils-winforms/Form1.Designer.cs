@@ -165,6 +165,13 @@
             this.busyControlsPanel = new System.Windows.Forms.Panel();
             this.encAudChannels = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.encMetaTab = new System.Windows.Forms.TabPage();
+            this.metadataGrid = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.mapMetadata = new System.Windows.Forms.CheckBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -200,6 +207,10 @@
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
+            this.encMetaTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -416,6 +427,7 @@
             this.htTabControl1.Controls.Add(this.encVid);
             this.htTabControl1.Controls.Add(this.tabPage2);
             this.htTabControl1.Controls.Add(this.tabPage1);
+            this.htTabControl1.Controls.Add(this.encMetaTab);
             this.htTabControl1.DisableClose = true;
             this.htTabControl1.DisableDragging = true;
             this.htTabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1825,6 +1837,88 @@
             this.label11.TabIndex = 53;
             this.label11.Text = "Channels:";
             // 
+            // encMetaTab
+            // 
+            this.encMetaTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encMetaTab.Controls.Add(this.panel3);
+            this.encMetaTab.Controls.Add(this.panel2);
+            this.encMetaTab.ForeColor = System.Drawing.Color.White;
+            this.encMetaTab.Location = new System.Drawing.Point(4, 27);
+            this.encMetaTab.Name = "encMetaTab";
+            this.encMetaTab.Padding = new System.Windows.Forms.Padding(3);
+            this.encMetaTab.Size = new System.Drawing.Size(668, 312);
+            this.encMetaTab.TabIndex = 3;
+            this.encMetaTab.Text = "Metadata";
+            // 
+            // metadataGrid
+            // 
+            this.metadataGrid.AllowUserToAddRows = false;
+            this.metadataGrid.AllowUserToDeleteRows = false;
+            this.metadataGrid.AllowUserToResizeColumns = false;
+            this.metadataGrid.AllowUserToResizeRows = false;
+            this.metadataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.metadataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.metadataGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.metadataGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.metadataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.metadataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metadataGrid.Location = new System.Drawing.Point(0, 0);
+            this.metadataGrid.MultiSelect = false;
+            this.metadataGrid.Name = "metadataGrid";
+            this.metadataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.metadataGrid.Size = new System.Drawing.Size(656, 199);
+            this.metadataGrid.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.mapMetadata);
+            this.panel2.Controls.Add(this.label21);
+            this.panel2.Controls.Add(this.label14);
+            this.panel2.Location = new System.Drawing.Point(6, 6);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(656, 95);
+            this.panel2.TabIndex = 6;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.SystemColors.Control;
+            this.label14.Location = new System.Drawing.Point(3, 3);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(309, 30);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Here you can edit the title of each track.\r\nTo edit a cell, double click it or pr" +
+    "ess F2 while it\'s selected.";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.metadataGrid);
+            this.panel3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel3.Location = new System.Drawing.Point(6, 107);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(656, 199);
+            this.panel3.TabIndex = 7;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.ForeColor = System.Drawing.Color.White;
+            this.label21.Location = new System.Drawing.Point(4, 70);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(171, 15);
+            this.label21.TabIndex = 18;
+            this.label21.Text = "Copy Metadata From Input File";
+            // 
+            // mapMetadata
+            // 
+            this.mapMetadata.AutoSize = true;
+            this.mapMetadata.Location = new System.Drawing.Point(220, 71);
+            this.mapMetadata.Name = "mapMetadata";
+            this.mapMetadata.Size = new System.Drawing.Size(15, 14);
+            this.mapMetadata.TabIndex = 19;
+            this.mapMetadata.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1903,6 +1997,11 @@
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
+            this.encMetaTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2045,6 +2144,13 @@
         private System.Windows.Forms.Panel busyControlsPanel;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox encAudChannels;
+        private System.Windows.Forms.TabPage encMetaTab;
+        private System.Windows.Forms.DataGridView metadataGrid;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.CheckBox mapMetadata;
+        private System.Windows.Forms.Label label21;
     }
 }
 

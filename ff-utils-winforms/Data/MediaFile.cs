@@ -16,6 +16,7 @@ namespace Nmkoder.Data
     {
         public FileInfo File;
         public string Ext;
+        public string Title;
         public int StreamCount;
         public int TotalKbits;
         public List<Stream> AllStreams = new List<Stream>();
@@ -56,6 +57,7 @@ namespace Nmkoder.Data
 
         private async Task LoadFormatInfo (string path)
         {
+            Title = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
             StreamCount = await FfmpegUtils.GetStreamCount(path);
             TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
         }

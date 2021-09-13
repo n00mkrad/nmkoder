@@ -25,23 +25,27 @@ namespace Nmkoder
 
         public Cyotek.Windows.Forms.TabList mainTabList;
 
+        // General
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
         public Label thumbLabel;
-
+        // Quick Convert - Video
         public ComboBox containerBox;
         public ComboBox encVidCodecsBox;
         public NumericUpDown encVidQualityBox;
         public ComboBox encVidPresetBox;
         public ComboBox encVidColorsBox;
-
+        // Quick Convert - Audio
         public ComboBox encAudEnc;
         public NumericUpDown encAudBr;
         public ComboBox encAudCh;
-
+        // Quick Convert - Subs
         public ComboBox encSubEnc;
 
+        // Quick Convert - Other
+        public CheckBox mapMeta;
+        public DataGridView metaGrid;
         public TextBox outputBox;
         public TextBox customArgsBox;
 
@@ -69,6 +73,8 @@ namespace Nmkoder
 
             encSubEnc = encSubCodec;
 
+            mapMeta = mapMetadata;
+            metaGrid = metadataGrid;
             outputBox = outputPath;
             customArgsBox = encCustomArgs;
 

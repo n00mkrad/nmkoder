@@ -59,8 +59,7 @@ namespace Nmkoder.UI
 
             current = mediaFile;
 
-            string getTitle = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
-            string titleStr = getTitle.Trim().Length > 2 ? $"Title: {getTitle.Trunc(28)} - " : "";
+            string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(28)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Streams: {current.StreamCount} - Duration: {dur}{br}";
@@ -121,6 +120,7 @@ namespace Nmkoder.UI
             }
 
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            QuickConvertUi.LoadMetadataGrid();
             QuickConvertUi.SetAudioChannelsCombox(current.AudioStreams.First()?.Channels);
             QuickConvertUi.ValidateContainer();
             Program.mainForm.mainTabList.SelectedIndex = 0;
@@ -140,6 +140,7 @@ namespace Nmkoder.UI
             if(stream.Type == Stream.StreamType.Video)
             {
                 VideoStream v = (VideoStream)stream;
+                lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title : "None")}");
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
                 lines.Add($"Color Space: {v.ColorSpace}{(v.ColorSpace.ToLower().Contains("p10") ? " (10-bit)" : " (8-bit)")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");

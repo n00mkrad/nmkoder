@@ -27,9 +27,10 @@ namespace Nmkoder.UI.Tasks
             string video = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi());
             string audio = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
             string subs = Codecs.GetArgs(GetCurrentCodecS());
+            string meta = GetMetadataArgs();
             string custom = Program.mainForm.customArgsBox.Text.Trim();
 
-            string args = $"-i {inPath.Wrap()} {map} {video} {audio} {subs} {custom} {outPath.Wrap()}";
+            string args = $"-i {inPath.Wrap()} {map} {video} {audio} {subs} {meta} {custom} {outPath.Wrap()}";
             Logger.Log($"> ffmpeg {args}");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);

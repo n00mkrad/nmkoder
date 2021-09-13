@@ -50,7 +50,7 @@ namespace Nmkoder.Data
                 string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libvpx-vp9 -crf {q} -cpu-used {preset} -pix_fmt {pixFmt}";
+                return $"-c:v libvpx-vp9 -crf {q} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} -pix_fmt {pixFmt}";
             }
 
             if (c == VideoCodec.Av1)

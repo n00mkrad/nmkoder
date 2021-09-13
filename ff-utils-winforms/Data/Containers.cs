@@ -60,10 +60,10 @@ namespace Nmkoder.Data
                 return new SubtitleCodec[] { SubtitleCodec.MovText, SubtitleCodec.Srt };
 
             if (c == Container.Mkv)
-                return new SubtitleCodec[] { SubtitleCodec.MovText, SubtitleCodec.Srt };
+                return new SubtitleCodec[] { SubtitleCodec.MovText, SubtitleCodec.Srt, SubtitleCodec.WebVtt };
 
             if (c == Container.Webm)
-                return new SubtitleCodec[] { SubtitleCodec.MovText };
+                return new SubtitleCodec[] { SubtitleCodec.WebVtt };
 
             if (c == Container.Mov)
                 return new SubtitleCodec[] { SubtitleCodec.MovText };
@@ -74,21 +74,21 @@ namespace Nmkoder.Data
         public static bool ContainerSupports(Container c, VideoCodec cv)
         {
             bool s = cv == VideoCodec.Copy || cv == VideoCodec.StripVideo || GetSupportedVideoCodecs(c).Contains(cv);
-            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", s);
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", true);
             return s;
         }
 
         public static bool ContainerSupports(Container c, AudioCodec ca)
         {
             bool s = ca == AudioCodec.Copy || ca == AudioCodec.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
-            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", s);
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", true);
             return s;
         }
 
         public static bool ContainerSupports(Container c, SubtitleCodec cs)
         {
             bool s = cs == SubtitleCodec.Copy || cs == SubtitleCodec.StripSubs || GetSupportedSubtitleCodecs(c).Contains(cs);
-            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cs.ToString().ToUpper()}!", s);
+            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cs.ToString().ToUpper()}!", true);
             return s;
         }
 
@@ -96,6 +96,9 @@ namespace Nmkoder.Data
         {
             if (ContainerSupports(Container.Mp4, cv) && ContainerSupports(Container.Mp4, ca) && ContainerSupports(Container.Mp4, cs))
                 return Container.Mp4;
+
+            if (ContainerSupports(Container.Mkv, cv) && ContainerSupports(Container.Mkv, ca) && ContainerSupports(Container.Mkv, cs))
+                return Container.Mkv;
 
             if (ContainerSupports(Container.Webm, cv) && ContainerSupports(Container.Webm, ca) && ContainerSupports(Container.Webm, cs))
                 return Container.Webm;

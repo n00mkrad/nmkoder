@@ -42,8 +42,12 @@ namespace Nmkoder.Main
                 return;
             }
 
+            canceled = false;
+
             if (Program.mainForm.GetCurrentTaskType() == TaskType.Convert)
                 await QuickConvert.Run();
+
+            Logger.Log($"Done.");
         }
 
         

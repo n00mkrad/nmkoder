@@ -1,0 +1,78 @@
+﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
+using Nmkoder.Main;
+using Nmkoder.Utils;
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using static Nmkoder.Media.AvProcess;
+
+namespace Nmkoder.Media
+{
+    class FfmpegOutputHandler
+    {
+        public static void LogOutput(string line, string logFilename, bool showProgressBar)
+        {
+            timeSinceLastOutput.Restart();
+
+            if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
+                return;
+
+            lastOutputFfmpeg = lastOutputFfmpeg + "\n" + line;
+
+            bool hidden = currentLogMode == LogMode.Hidden;
+
+            if (HideMessage(line)) // Don't print certain warnings 
+                hidden = true;
+
+            bool replaceLastLine = currentLogMode == LogMode.OnlyLastLine;
+
+            if (line.StartsWith("frame="))
+                line = FormatUtils.BeautifyFfmpegStats(line);
+
+            Logger.Log(line, hidden, replaceLastLine, "ffmpeg");
+
+            if (!hidden && showProgressBar && line.Contains("Time:"))
+            {
+                Regex timeRegex = new Regex("(?<=Time:).*(?= )");
+                UpdateFfmpegProgress(timeRegex.Match(line).Value);
+            }
+
+            if (line.Contains("Could not open file"))
+            {
+                RunTask.Cancel($"Error: {line}");
+                return;
+            }
+
+            if (line.Contains("No NVENC capable devices found") || line.MatchesWildcard("*nvcuda.dll*"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nMake sure you have an NVENC-capable Nvidia GPU.");
+                return;
+            }
+
+            if (line.Contains("not currently supported in container"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nIt looks like you are trying to copy a stream into a container that doesn't support this codec.");
+                return;
+            }
+
+            if (line.Contains("Subtitle encoding currently only possible from text to text or bitmap to bitmap"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nYou cannot encode image-based subtitles into text-based subtitles. Please use the Copy Subtitles option instead, with a compatible container.");
+                return;
+            }
+        }
+
+        static bool HideMessage(string msg)
+        {
+            string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid" };
+
+            foreach (string str in hiddenMsgs)
+                if (msg.MatchesWildcard($"*{str}*"))
+                    return true;
+
+            return false;
+        }
+    }
+}

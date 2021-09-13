@@ -285,6 +285,7 @@
     <Compile Include="Media\FfmpegCommands.cs" />
     <Compile Include="Media\FfmpegEncode.cs" />
     <Compile Include="Media\FfmpegExtract.cs" />
+    <Compile Include="Media\FfmpegOutputHandler.cs" />
     <Compile Include="Media\FfmpegUtils.cs" />
     <Compile Include="Media\FfmpegUtilsOld.cs" />
     <Compile Include="Media\GetFrameCountCached.cs" />

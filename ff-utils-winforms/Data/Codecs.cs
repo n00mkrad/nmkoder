@@ -13,7 +13,7 @@ namespace Nmkoder.Data
 
         public enum VideoCodec { Copy, StripVideo, H264, H265, Vp9, Av1 };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus };
-        public enum SubtitleCodec { Copy, StripSubs, MovText, Srt };
+        public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
 
         public static string GetArgs(VideoCodec c, Dictionary<string, string> args)
         {
@@ -115,6 +115,11 @@ namespace Nmkoder.Data
                 return $"-c:s srt";
             }
 
+            if (c == SubtitleCodec.WebVtt)
+            {
+                return $"-c:s webvtt";
+            }
+
             return "";
         }
 
@@ -212,38 +217,23 @@ namespace Nmkoder.Data
 
             if (c == SubtitleCodec.MovText)
             {
-                string frName = "Mov_Text (3GPP Timed Text)";
+                string frName = "Mov_Text (3GPP Timed Text) - For MP4, MOV";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
             }
 
             if (c == SubtitleCodec.Srt)
             {
-                string frName = "SRT (SubRip Text)";
+                string frName = "SRT (SubRip Text) - For MKV";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
+            }
+
+            if (c == SubtitleCodec.WebVtt)
+            {
+                string frName = "WebVTT (Web Video Text Tracks) - For WEBM";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName };
             }
 
             return new CodecInfo();
         }
-
-        //public static Codec Strip = new Codec("None", "Disable (Strip)");
-        //public static Codec Copy = new Codec("Copy", "Copy Stream Without Re-Encoding");
-
-        //public static Codec Avc = new Codec("H.264", "H.264 (AVC)", CodecType.Video, Encoders.X264);
-        //public static Codec Hevc = new Codec("H.265", "H.265 (HEVC)", CodecType.Video, Encoders.X265);
-        //public static Codec Vp9 = new Codec("VP9", "Google VP9", CodecType.Video, Encoders.VpxVp9);
-        //public static Codec Av1 = new Codec("AV1", "AV1 (AOMedia Video 1)", CodecType.Video, Encoders.SvtAv1);
-        //public static Codec ProRes = new Codec("ProRes", "Apple ProRes", CodecType.Video);
-        //public static Codec Gif = new Codec("GIF", "Animated GIF", CodecType.AnimImage);
-
-        //public static Codec Aac = new Codec("AAC", "AAC (Advanced Audio Coding)", CodecType.Audio);
-        //public static Codec Opus = new Codec("Opus", "Opus", CodecType.Audio);
-        //
-        //public static Codec Png = new Codec("PNG", "PNG (Portable Network Graphics)", CodecType.Image);
-        //public static Codec Jpeg = new Codec("JPEG", "JPEG (Joint Photographic Experts Group)", CodecType.Image);
-
-        //public static List<Codec> all = new List<Codec> { Avc, Hevc, Vp9, Av1 };
-        //public static List<Codec> vCodecs = new List<Codec> { Avc, Hevc, Vp9, Av1 };
-        //public static List<Codec> aCodecs = new List<Codec> { Aac, Opus };
-        //public static List<Codec> iCodecs = new List<Codec> { Png, Jpeg };
     }
 }

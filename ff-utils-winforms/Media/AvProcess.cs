@@ -22,7 +22,7 @@ namespace Nmkoder.Media
         public static string lastOutputFfmpeg;
 
         public enum LogMode { Visible, OnlyLastLine, Hidden }
-        static LogMode currentLogMode;
+        public static LogMode currentLogMode;
         static bool showProgressBar;
 
         static readonly string defLogLevel = "warning";
@@ -82,8 +82,8 @@ namespace Nmkoder.Media
 
             if (!show)
             {
-                ffmpeg.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, "ffmpeg"); };
-                ffmpeg.ErrorDataReceived += (sender, outLine) => { LogOutput("[E] " + outLine.Data, "ffmpeg"); };
+                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, "ffmpeg", showProgressBar); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput("[E] " + outLine.Data, "ffmpeg", showProgressBar); };
             }
             
             ffmpeg.Start();
@@ -100,54 +100,6 @@ namespace Nmkoder.Media
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);
-        }
-
-        static void LogOutput(string line, string logFilename)
-        {
-            timeSinceLastOutput.Restart();
-
-            if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
-                return;
-
-            lastOutputFfmpeg = lastOutputFfmpeg + "\n" + line;
-
-            bool hidden = currentLogMode == LogMode.Hidden;
-
-            if (HideMessage(line)) // Don't print certain warnings 
-                hidden = true;
-
-            bool replaceLastLine = currentLogMode == LogMode.OnlyLastLine;
-
-            if (line.StartsWith("frame="))
-                line = FormatUtils.BeautifyFfmpegStats(line);
-
-            Logger.Log(line, hidden, replaceLastLine, "ffmpeg");
-
-            if (line.Contains(".srt: Invalid data found"))
-                Logger.Log($"Warning: Failed to encode subtitle track {line.Split(':')[2]}. This track will be missing in the output file.");
-
-            if (line.Contains("Could not open file"))
-                RunTask.Cancel($"FFmpeg Error: {line}");
-
-            if (line.Contains("No NVENC capable devices found") || line.MatchesWildcard("*nvcuda.dll*"))
-                RunTask.Cancel($"FFmpeg Error: {line}\nMake sure you have an NVENC-capable Nvidia GPU.");
-
-            if (!hidden && showProgressBar && line.Contains("Time:"))
-            {
-                Regex timeRegex = new Regex("(?<=Time:).*(?= )");
-                UpdateFfmpegProgress(timeRegex.Match(line).Value);
-            }
-        }
-
-        static bool HideMessage(string msg)
-        {
-            string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid" };
-
-            foreach (string str in hiddenMsgs)
-                if (msg.MatchesWildcard($"*{str}*"))
-                    return true;
-
-            return false;
         }
 
         public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)

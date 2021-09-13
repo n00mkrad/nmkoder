@@ -131,7 +131,7 @@ namespace Nmkoder.UI.Tasks
             {
                 Containers.Container supported = Containers.GetSupportedContainer(vCodec, aCodec, sCodec);
 
-                Logger.Log($"{c} doesn't support one of the selected codecs - Auto-selected {supported} instead.");
+                Logger.Log($"{c.ToString().ToUpper()} doesn't support one of the selected codecs - Auto-selected {supported.ToString().ToUpper()} instead.");
 
                 for (int i = 0; i < form.containerBox.Items.Count; i++)
                     if (form.containerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())

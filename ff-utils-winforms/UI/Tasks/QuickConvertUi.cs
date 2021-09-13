@@ -46,6 +46,11 @@ namespace Nmkoder.UI.Tasks
             Codecs.VideoCodec c = (Codecs.VideoCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
 
+            bool enableEncOptions = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
+            Program.mainForm.encVidQualityBox.Enabled = enableEncOptions;
+            Program.mainForm.encVidPresetBox.Enabled = enableEncOptions;
+            Program.mainForm.encVidColorsBox.Enabled = enableEncOptions;
+
             LoadQualityLevel(info);
             LoadPresets(info);
             LoadColorFormats(info);
@@ -57,6 +62,7 @@ namespace Nmkoder.UI.Tasks
             Codecs.AudioCodec c = (Codecs.AudioCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
 
+            Program.mainForm.encAudCh.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
             LoadAudBitrate(info);
             ValidateContainer();
         }

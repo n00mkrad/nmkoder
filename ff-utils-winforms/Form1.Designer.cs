@@ -812,9 +812,9 @@
             this.label21.Location = new System.Drawing.Point(4, 70);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(171, 15);
+            this.label21.Size = new System.Drawing.Size(204, 15);
             this.label21.TabIndex = 18;
-            this.label21.Text = "Copy Metadata From Input File";
+            this.label21.Text = "Copy Other Metadata From Input File";
             // 
             // label14
             // 

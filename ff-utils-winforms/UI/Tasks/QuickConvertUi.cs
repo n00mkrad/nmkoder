@@ -205,35 +205,39 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             DataGridView grid = Program.mainForm.metaGrid;
+            MediaFile c = MediaInfo.current;
 
-            if (grid.Columns.Count != 2)
+            if (grid.Columns.Count != 3)
             {
                 grid.Columns.Clear();
-                grid.Columns.Add("keys", "Tag");
-                grid.Columns.Add("vals", "Text");
+                grid.Columns.Add("1", "Track");
+                grid.Columns.Add("2", "Title");
+                grid.Columns.Add("3", "Lang");
             }
 
             grid.Rows.Clear();
 
-            grid.Rows.Add($"Title (File)", MediaInfo.current.Title);
+            grid.Rows.Add($"File", MediaInfo.current.Title, MediaInfo.current.Language);
 
             for (int i = 0; i < MediaInfo.current.VideoStreams.Count; i++)
-                if(Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.VideoStreams[i].Index))
-                    grid.Rows.Add($"Title (Video Track {i + 1})", MediaInfo.current.VideoStreams[i].Title);
+                if(Program.mainForm.streamListBox.GetItemChecked(c.VideoStreams[i].Index))
+                    grid.Rows.Add($"Video Track {i + 1}", c.VideoStreams[i].Title, c.VideoStreams[i].Language);
 
             for (int i = 0; i < MediaInfo.current.AudioStreams.Count; i++)
                 if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.AudioStreams[i].Index))
-                    grid.Rows.Add($"Title (Audio Track {i + 1})", MediaInfo.current.AudioStreams[i].Title);
+                    grid.Rows.Add($"Audio Track {i + 1}", MediaInfo.current.AudioStreams[i].Title, c.AudioStreams[i].Language);
 
             for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
                 if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.SubtitleStreams[i].Index))
-                    grid.Rows.Add($"Title (Subtitle Track {i + 1})", MediaInfo.current.SubtitleStreams[i].Title);
+                    grid.Rows.Add($"Subtitle Track {i + 1}", MediaInfo.current.SubtitleStreams[i].Title, c.SubtitleStreams[i].Language);
 
-
+            grid.Columns[0].ReadOnly = true;
             grid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grid.Columns[0].FillWeight = 30;
-            grid.Columns[1].FillWeight = 70;
+            grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[0].FillWeight = 15;
+            grid.Columns[1].FillWeight = 75;
+            grid.Columns[2].FillWeight = 10;
         }
 
         public static string GetMetadataArgs ()
@@ -244,28 +248,29 @@ namespace Nmkoder.UI.Tasks
 
             foreach (DataGridViewRow row in grid.Rows)
             {
-                string key = row.Cells[0].Value?.ToString();
-                string val = row.Cells[1].Value?.ToString().Trim();
+                string track = row.Cells[0].Value?.ToString();
+                string title = row.Cells[1].Value?.ToString().Trim();
+                string lang = row.Cells[2].Value?.ToString().Trim();
 
-                int streamIdx = key.GetInt() - 1;
+                int streamIdx = track.GetInt() - 1;
 
-                if (!map && string.IsNullOrWhiteSpace(val))
+                if (!map && string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(lang))
                     continue;
 
                 if(streamIdx < 0)
                 {
-                    args.Add($"-metadata title=\"{val}\"");
+                    args.Add($"-metadata title=\"{title}\"");
                 }
                 else
                 {
-                    if (key.ToLower().Contains("video"))
-                        args.Add($"-metadata:s:v:{streamIdx} title=\"{val}\"");
+                    if (track.ToLower().Contains("video"))
+                        args.Add($"-metadata:s:v:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
 
-                    if (key.ToLower().Contains("audio"))
-                        args.Add($"-metadata:s:a:{streamIdx} title=\"{val}\"");
+                    if (track.ToLower().Contains("audio"))
+                        args.Add($"-metadata:s:a:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
 
-                    if (key.ToLower().Contains("subtitle"))
-                        args.Add($"-metadata:s:s:{streamIdx} title=\"{val}\"");
+                    if (track.ToLower().Contains("subtitle"))
+                        args.Add($"-metadata:s:s:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
                 }
             }
 

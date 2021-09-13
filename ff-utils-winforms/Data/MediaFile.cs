@@ -17,8 +17,10 @@ namespace Nmkoder.Data
         public FileInfo File;
         public string Ext;
         public string Title;
+        public string Language;
         public int StreamCount;
         public int TotalKbits;
+        public long SizeKb;
         public List<Stream> AllStreams = new List<Stream>();
         public List<VideoStream> VideoStreams = new List<VideoStream>();
         public List<AudioStream> AudioStreams = new List<AudioStream>();
@@ -58,8 +60,10 @@ namespace Nmkoder.Data
         private async Task LoadFormatInfo (string path)
         {
             Title = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
+            Language = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:language");
             StreamCount = await FfmpegUtils.GetStreamCount(path);
             TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
+            SizeKb = File.Length / 1024;
         }
     }
 }

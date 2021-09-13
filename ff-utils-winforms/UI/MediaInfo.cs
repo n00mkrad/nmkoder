@@ -121,6 +121,7 @@ namespace Nmkoder.UI
             }
 
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            QuickConvertUi.SetAudioChannelsCombox(current.AudioStreams.First()?.Channels);
             QuickConvertUi.ValidateContainer();
             Program.mainForm.mainTabList.SelectedIndex = 0;
 

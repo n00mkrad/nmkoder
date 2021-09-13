@@ -63,6 +63,13 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadQualityLevel (CodecInfo info)
         {
+            if (info.QMax > 0)
+                form.encVidQualityBox.Maximum = info.QMax;
+            else
+                form.encVidQualityBox.Maximum = 100;
+
+            form.encVidQualityBox.Minimum = info.QMin;
+
             if (info.QDefault >= 0)
                 form.encVidQualityBox.Text = info.QDefault.ToString();
             else
@@ -162,13 +169,24 @@ namespace Nmkoder.UI.Tasks
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("bitrate", form.encAudBr.Text.ToLower());
-            //dict.Add("ac", form.encAudioCh.Text.ToLower());
+            dict.Add("ac", form.encAudCh.Text.Split(' ')[0].Trim());
             return dict;
         }
 
-        private static string GetStreamArgs()
+        public static void SetAudioChannelsCombox (int? ch)
         {
-            return "";
+            if(ch == null || ch < 1)
+            {
+                Logger.Log($"SetAudioChannelsCombox: ch is null or < 1 - returning", true);
+                form.encAudCh.SelectedIndex = 1;
+                return;
+            }
+
+            for (int i = 0; i < form.encAudCh.Items.Count; i++)
+            {
+                if (form.encAudCh.Items[i].ToString().Split(' ').First().GetInt() == ch)
+                    form.encAudCh.SelectedIndex = i;
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Nmkoder
 
         public ComboBox encAudEnc;
         public NumericUpDown encAudBr;
+        public ComboBox encAudCh;
 
         public ComboBox encSubEnc;
 
@@ -64,6 +65,7 @@ namespace Nmkoder
 
             encAudEnc = encAudCodec;
             encAudBr = encAudBitrate;
+            encAudCh = encAudChannels;
 
             encSubEnc = encSubCodec;
 
@@ -75,7 +77,8 @@ namespace Nmkoder
             formatInfoLabel = formatInfo;
             thumbLabel = thumbInfo;
 
-            
+            encAudChannels.SelectedIndex = 1;
+
             CheckForIllegalCrossThreadCalls = false;
 
             //InitCombox(createMp4Enc, 0);

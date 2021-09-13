@@ -30,7 +30,7 @@ namespace Nmkoder.UI.Tasks
             string custom = Program.mainForm.customArgsBox.Text.Trim();
 
             string args = $"-i {inPath.Wrap()} {map} {video} {audio} {subs} {custom} {outPath.Wrap()}";
-            Logger.Log(args);
+            Logger.Log($"> ffmpeg {args}");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);
 

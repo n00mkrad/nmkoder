@@ -208,6 +208,12 @@ namespace Nmkoder
             MediaInfo.HandleFiles(files);
         }
 
+        public void ClearCurrentFile ()
+        {
+            streamList.Items.Clear();
+            streamDetails.Text = "";
+        }
+
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
             streamDetails.Text = MediaInfo.GetStreamDetails(streamList.SelectedIndex);

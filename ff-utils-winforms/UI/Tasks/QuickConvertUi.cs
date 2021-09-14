@@ -212,10 +212,19 @@ namespace Nmkoder.UI.Tasks
 
         #region Metadata Tab 
 
+        public static string lastMap = "";
+
         public static void LoadMetadataGrid()
         {
             if (MediaInfo.current == null || !MediaInfo.streamListLoaded)
                 return;
+
+            string currMap = MediaInfo.GetMapArgs();
+
+            if (currMap == lastMap)
+                return;
+
+            lastMap = currMap;
 
             DataGridView grid = Program.mainForm.metaGrid;
             MediaFile c = MediaInfo.current;

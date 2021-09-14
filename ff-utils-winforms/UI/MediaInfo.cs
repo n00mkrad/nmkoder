@@ -31,6 +31,7 @@ namespace Nmkoder.UI
 
             if (paths.Length == 1)
             {
+                Program.mainForm.ClearCurrentFile();
                 await LoadFileInfo(paths[0]);
             }
             else
@@ -60,6 +61,7 @@ namespace Nmkoder.UI
                 Logger.Log($"Found no media streams in '{mediaFile.File.Name}'!");
 
             current = mediaFile;
+            QuickConvertUi.lastMap = "";
 
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(28)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";

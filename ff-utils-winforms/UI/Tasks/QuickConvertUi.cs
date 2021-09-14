@@ -41,6 +41,14 @@ namespace Nmkoder.UI.Tasks
             ConfigParser.LoadComboxIndex(form.containerBox);
         }
 
+        public static void InitFile ()
+        {
+            SetAudioChannelsCombox(MediaInfo.current.AudioStreams.First()?.Channels);
+            InitBurnCombox();
+            LoadMetadataGrid();
+            ValidateContainer();
+        }
+
         public static void VidEncoderSelected(int index)
         {
             Codecs.VideoCodec c = (Codecs.VideoCodec)index;
@@ -150,6 +158,8 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.outputBox.Text = path;
         }
 
+        #region Get Current Codec
+
         public static Codecs.VideoCodec GetCurrentCodecV ()
         {
             return (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
@@ -164,6 +174,8 @@ namespace Nmkoder.UI.Tasks
         {
             return (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
         }
+
+        #endregion
 
         public static Dictionary<string, string> GetVideoArgsFromUi ()
         {
@@ -304,6 +316,12 @@ namespace Nmkoder.UI.Tasks
             if (vs.Rate.GetFloat() != fps.GetFloat())
                 filters.Add($"fps=fps={fps}");
 
+            if(Program.mainForm.encSubBurnBox.SelectedIndex > 0)
+            {
+                string filename = MediaInfo.current.File.FullName.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
+                filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
+            }
+
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters.Select(x => x.Wrap()))}";
             else
@@ -331,6 +349,26 @@ namespace Nmkoder.UI.Tasks
             }
 
             return new Fraction();
+        }
+
+        public static void InitBurnCombox ()
+        {
+            ComboBox burnBox = Program.mainForm.encSubBurnBox;
+
+            burnBox.Items.Clear();
+            burnBox.Items.Add("Disabled");
+
+            //foreach(SubtitleStream ss in MediaInfo.current.SubtitleStreams)
+            //    burnBox.Items.Add($"Subtitle Track {ss.Index + 1}");
+
+            for(int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
+            {
+                string lang = MediaInfo.current.SubtitleStreams[i].Language.Trim();
+                burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
+            }
+                
+
+            burnBox.SelectedIndex = 0;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Nmkoder
         public ComboBox encAudCh;
         // Quick Convert - Subs
         public ComboBox encSubEnc;
+        public ComboBox encSubBurnBox;
         // Quick Convert - Other
         public DataGridView metaGrid;
         public TextBox outputBox;
@@ -72,6 +73,7 @@ namespace Nmkoder
             encAudCh = encAudChannels;
 
             encSubEnc = encSubCodec;
+            encSubBurnBox = encSubBurn;
 
             metaGrid = metadataGrid;
             outputBox = outputPath;

@@ -122,11 +122,9 @@ namespace Nmkoder.UI
             }
 
             streamListLoaded = true;
-            QuickConvertUi.LoadMetadataGrid();
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
             Program.mainForm.encVidFpsBox.Text = current.VideoStreams.First()?.Rate.ToString();
-            QuickConvertUi.SetAudioChannelsCombox(current.AudioStreams.First()?.Channels);
-            QuickConvertUi.ValidateContainer();
+            QuickConvertUi.InitFile();
             Program.mainForm.mainTabList.SelectedIndex = 0;
 
             Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background

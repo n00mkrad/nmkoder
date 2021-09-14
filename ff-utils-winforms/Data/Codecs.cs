@@ -80,14 +80,14 @@ namespace Nmkoder.Data
             {
                 string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "128k";
                 string channels = args.ContainsKey("ac") ? args["ac"] : "2";
-                return $"-c:a aac -b:a {bitrate}k -ac {channels}";
+                return $"-c:a aac -b:a {bitrate}k -aac_coder twoloop -ac {channels}";
             }
 
             if (c == AudioCodec.Opus)
             {
-                string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "128k";
+                string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "96k";
                 string channels = args.ContainsKey("ac") ? args["ac"] : "2";
-                return $"-c:a libopus -b:a {bitrate}k -aac_coder twoloop -ac {channels}";
+                return $"-c:a libopus -b:a {bitrate}k -ac {channels}";
             }
 
             return "";

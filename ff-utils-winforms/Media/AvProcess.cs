@@ -87,6 +87,7 @@ namespace Nmkoder.Media
             }
             
             ffmpeg.Start();
+            ffmpeg.PriorityClass = ProcessPriorityClass.BelowNormal;
 
             if (!show)
             {

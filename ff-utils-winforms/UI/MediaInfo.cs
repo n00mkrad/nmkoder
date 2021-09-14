@@ -63,10 +63,10 @@ namespace Nmkoder.UI
             current = mediaFile;
             QuickConvertUi.lastMap = "";
 
-            string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(28)} - " : "";
-            string br = current.TotalKbits > 0 ? $" - Total Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
+            string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
+            string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Streams: {current.StreamCount} - Duration: {dur}{br}";
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
 
             CheckedListBox box = Program.mainForm.streamListBox;
             box.Items.Clear();

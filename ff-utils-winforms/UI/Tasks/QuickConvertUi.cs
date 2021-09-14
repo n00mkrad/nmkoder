@@ -323,7 +323,7 @@ namespace Nmkoder.UI.Tasks
             }
 
             if (filters.Count > 0)
-                return $"-vf {string.Join(",", filters.Select(x => x.Wrap()))}";
+                return $"-vf {string.Join(",", filters)}";
             else
                 return "";
         }

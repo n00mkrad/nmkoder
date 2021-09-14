@@ -18,6 +18,7 @@ namespace Nmkoder.Data
         public string Ext;
         public string Title;
         public string Language;
+        public long DurationMs;
         public int StreamCount;
         public int TotalKbits;
         public long SizeKb;
@@ -61,6 +62,7 @@ namespace Nmkoder.Data
         {
             Title = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:title");
             Language = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:language");
+            DurationMs = FfmpegCommands.GetDurationMs(path);
             StreamCount = await FfmpegUtils.GetStreamCount(path);
             TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
             SizeKb = File.Length / 1024;

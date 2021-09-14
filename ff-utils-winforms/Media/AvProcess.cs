@@ -3,6 +3,7 @@ using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.OS;
+using Nmkoder.UI;
 using Nmkoder.Utils;
 using System;
 using System.Diagnostics;
@@ -83,7 +84,7 @@ namespace Nmkoder.Media
             if (!show)
             {
                 ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, "ffmpeg", showProgressBar); };
-                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput("[E] " + outLine.Data, "ffmpeg", showProgressBar); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, "ffmpeg", showProgressBar); };
             }
             
             ffmpeg.Start();
@@ -138,9 +139,12 @@ namespace Nmkoder.Media
         {
             try
             {
+                if (MediaInfo.current == null)
+                    return;
+
                 Form1 form = Program.mainForm;
                 //long currInDuration = (form.currInDurationCut < form.currInDuration) ? form.currInDurationCut : form.currInDuration;
-                long currInDuration = 1000 * 60 * 60 * 1; // TODO: Use actual duration instead of 1h placeholder
+                long currInDuration = MediaInfo.current.DurationMs;
 
                 if (currInDuration < 1)
                 {

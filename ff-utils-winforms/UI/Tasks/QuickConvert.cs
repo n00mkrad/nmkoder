@@ -33,9 +33,9 @@ namespace Nmkoder.UI.Tasks
             string muxing = GetMuxingArgsFromUi();
 
             string args = $"-i {inPath.Wrap()} {map} {video} {vf} {audio} {subs} {meta} {custom} {muxing} {outPath.Wrap()}";
-            Logger.Log($"> ffmpeg {args}");
+            Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
-            await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);
+            await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.Encode, true);
 
             Program.mainForm.SetWorking(false);
         }

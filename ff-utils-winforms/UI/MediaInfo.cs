@@ -65,7 +65,7 @@ namespace Nmkoder.UI
 
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
-            string dur = FormatUtils.MsToTimestamp(FfmpegCommands.GetDurationMs(path));
+            string dur = FormatUtils.MsToTimestamp(current.DurationMs);
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
 
             CheckedListBox box = Program.mainForm.streamListBox;

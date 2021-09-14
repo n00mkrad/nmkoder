@@ -111,7 +111,7 @@ namespace Nmkoder.UI
                                 box.Items.Add($"#{i}: {s.Type} ({codec})");
                             }
 
-                            if(i >= 0 && i < Program.mainForm.streamListBox.Items.Count)
+                            if(i >= 0 && i < Program.mainForm.streamListBox.Items.Count && codec.ToLower().Trim() != "unknown")
                                 Program.mainForm.streamListBox.SetItemChecked(i, true);
                         }
                     }

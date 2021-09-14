@@ -21,6 +21,10 @@ namespace Nmkoder.Media
         public static async Task<int> GetStreamCount(string path)
         {
             string output = await GetFfmpegInfoAsync(path, "Stream #0:");
+
+            if (string.IsNullOrWhiteSpace(output.Trim()))
+                return 0;
+
             return output.SplitIntoLines().Length;
         }
 

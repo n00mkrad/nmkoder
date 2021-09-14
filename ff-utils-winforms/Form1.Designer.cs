@@ -74,7 +74,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.metadataGrid = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.mapMetadata = new System.Windows.Forms.CheckBox();
+            this.metaMode = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
@@ -788,7 +788,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.mapMetadata);
+            this.panel2.Controls.Add(this.metaMode);
             this.panel2.Controls.Add(this.label21);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Location = new System.Drawing.Point(6, 6);
@@ -796,14 +796,22 @@
             this.panel2.Size = new System.Drawing.Size(656, 95);
             this.panel2.TabIndex = 6;
             // 
-            // mapMetadata
+            // metaMode
             // 
-            this.mapMetadata.AutoSize = true;
-            this.mapMetadata.Location = new System.Drawing.Point(220, 71);
-            this.mapMetadata.Name = "mapMetadata";
-            this.mapMetadata.Size = new System.Drawing.Size(15, 14);
-            this.mapMetadata.TabIndex = 19;
-            this.mapMetadata.UseVisualStyleBackColor = true;
+            this.metaMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.metaMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.metaMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.metaMode.ForeColor = System.Drawing.Color.White;
+            this.metaMode.FormattingEnabled = true;
+            this.metaMode.Items.AddRange(new object[] {
+            "Copy All From Input",
+            "Only Apply Titles/Languages",
+            "Strip All Metadata"});
+            this.metaMode.Location = new System.Drawing.Point(220, 67);
+            this.metaMode.Name = "metaMode";
+            this.metaMode.Size = new System.Drawing.Size(250, 23);
+            this.metaMode.TabIndex = 49;
+            this.metaMode.SelectedIndexChanged += new System.EventHandler(this.metaMode_SelectedIndexChanged);
             // 
             // label21
             // 
@@ -812,9 +820,9 @@
             this.label21.Location = new System.Drawing.Point(4, 70);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(204, 15);
+            this.label21.Size = new System.Drawing.Size(91, 15);
             this.label21.TabIndex = 18;
-            this.label21.Text = "Copy Other Metadata From Input File";
+            this.label21.Text = "Metadata Mode";
             // 
             // label14
             // 
@@ -822,10 +830,10 @@
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
             this.label14.Location = new System.Drawing.Point(3, 3);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(309, 30);
+            this.label14.Size = new System.Drawing.Size(373, 30);
             this.label14.TabIndex = 0;
-            this.label14.Text = "Here you can edit the title of each track.\r\nTo edit a cell, double click it or pr" +
-    "ess F2 while it\'s selected.";
+            this.label14.Text = "Here you can edit the title and language tag (ISO 639-2) of each track.\r\nTo edit " +
+    "a cell, double click it or press F2 while it\'s selected.";
             // 
             // utilsPage
             // 
@@ -2151,8 +2159,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.CheckBox mapMetadata;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox metaMode;
     }
 }
 

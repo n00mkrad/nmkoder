@@ -43,7 +43,6 @@ namespace Nmkoder
         // Quick Convert - Subs
         public ComboBox encSubEnc;
         // Quick Convert - Other
-        public CheckBox mapMeta;
         public DataGridView metaGrid;
         public TextBox outputBox;
         public TextBox customArgsBox;
@@ -72,7 +71,6 @@ namespace Nmkoder
 
             encSubEnc = encSubCodec;
 
-            mapMeta = mapMetadata;
             metaGrid = metadataGrid;
             outputBox = outputPath;
             customArgsBox = encCustomArgs;
@@ -123,6 +121,7 @@ namespace Nmkoder
             ConfigParser.LoadComboxIndex(encVidColorsBox);
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadGuiElement(encAudBitrate);
+            ConfigParser.LoadComboxIndex(metaMode);
         }
 
         void SaveConfig(object sender = null, EventArgs e = null)
@@ -138,6 +137,7 @@ namespace Nmkoder
             ConfigParser.SaveComboxIndex(encVidColorsBox);
             ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveGuiElement(encAudBitrate);
+            ConfigParser.SaveComboxIndex(metaMode);
         }
 
         void InitCombox(ComboBox cbox, int index)
@@ -267,6 +267,11 @@ namespace Nmkoder
         private void streamList_Leave(object sender, EventArgs e)
         {
             QuickConvertUi.LoadMetadataGrid();
+        }
+
+        private void metaMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveConfig();
         }
 
 

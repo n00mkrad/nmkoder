@@ -252,44 +252,8 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
-            if (key == Key.maxVidHeight)          return WriteDefault(key, "2160");
-            if (key == Key.delLogsOnStartup)      return WriteDefault(key, "True");
-            if (key == Key.clearLogOnInput)       return WriteDefault(key, "True");
-            if (key == Key.tempDirCustom)         return WriteDefault(key, "D:/");
-            if (key == Key.exportNamePattern)     return WriteDefault(key, "[NAME]-[FACTOR]x-[AI]-[MODEL]-[FPS]fps");
-            if (key == Key.exportNamePatternLoop) return WriteDefault(key, "-Loop[LOOPS]");
-            // Interpolation
-            if (key == Key.dedupThresh)           return WriteDefault(key, "2");
-            if (key == Key.keepAudio)             return WriteDefault(key, "True");
-            if (key == Key.keepSubs)              return WriteDefault(key, "True");
-            if (key == Key.keepMeta)              return WriteDefault(key, "True");
-            if (key == Key.scnDetect)             return WriteDefault(key, "True");
-            if (key == Key.scnDetectValue)        return WriteDefault(key, "0.2");
-            if (key == Key.sceneChangeFillMode)   return WriteDefault(key, "1");
-            if (key == Key.autoEncMode)           return WriteDefault(key, "2");
-            if (key == Key.jpegFrames)            return WriteDefault(key, "True");
-            // Video Export
-            if (key == Key.minOutVidLength)   return WriteDefault(key, "5");
-            if (key == Key.h264Crf)           return WriteDefault(key, "20");
-            if (key == Key.h265Crf)           return WriteDefault(key, "24");
-            if (key == Key.av1Crf)            return WriteDefault(key, "27");
-            if (key == Key.vp9Crf)            return WriteDefault(key, "28");
-            if (key == Key.proResProfile)     return WriteDefault(key, "2");
-            if (key == Key.aviCodec)          return WriteDefault(key, "ffv1");
-            if (key == Key.imgSeqFormat)      return WriteDefault(key, "PNG");
-            if (key == Key.aviColors)         return WriteDefault(key, "yuv420p");
-            if (key == Key.gifColors)         return WriteDefault(key, "128 (High)");
-            if (key == Key.gifDitherType)     return WriteDefault(key, "bayer (Recommended)");
-            if (key == Key.minVidLength)      return WriteDefault(key, "5");
-            // AI
-            if (key == Key.uhdThresh)         return WriteDefault(key, "1600");
-            if (key == Key.torchGpus)         return WriteDefault(key, "0");
-            if (key == Key.ncnnGpus)          return WriteDefault(key, "0");
-            if (key == Key.ncnnThreads)       return WriteDefault(key, "1");
-            if (key == Key.dainNcnnTilesize)  return WriteDefault(key, "768");
-            // Debug / Other / Experimental
-            if (key == Key.ffEncPreset)   return WriteDefault(key, "medium");
-            if (key == Key.sbsRunPreviousStepIfNeeded) return WriteDefault(key, "true");
+            if (key == Key.metaMode)                return WriteDefault(key, "1");
+
 
             if (type == Type.Int || type == Type.Float) return WriteDefault(key, "0");     // Write default int/float (0)
             if (type == Type.Bool)                      return WriteDefault(key, "False");     // Write default bool (False)
@@ -310,87 +274,8 @@ namespace Nmkoder.IO
 
         public enum Key
         {
-            aacBitrate,
-            askedForDevModeVersion,
-            aiCombox,
-            allowConsecutiveSceneChanges,
-            allowCustomInputRate,
-            allowCustomInterpFactor,
-            allowSymlinkEncoding,
-            allowSymlinkImport,
-            alwaysWaitForAutoEnc,
-            autoEncBackupMode,
-            autoEncDebug,
-            autoEncMode,
-            autoEncSafeBufferCuda,
-            autoEncSafeBufferNcnn,
-            aviCodec,
-            aviColors,
-            clearLogOnInput,
             cmdDebugMode,
-            compressedPyVersion,
-            customServer,
-            dainNcnnTilesize,
-            dedupMode,
-            dedupThresh,
-            delLogsOnStartup,
-            disablePreview,
-            dupeScanDebug,
-            enableLoop,
-            exportNamePattern,
-            exportNamePatternLoop,
-            fetchModelsFromRepo,
-            ffEncArgs,
-            ffEncPreset,
-            ffEncThreads,
-            ffprobeFrameCount,
-            fixOutputDuration,
-            frameOrderDebug,
-            gifColors,
-            gifDitherType,
-            h264Crf,
-            h265Crf,
-            av1Crf,
-            imgSeqFormat,
-            imgSeqSampleCount,
-            jpegFrames,
-            jpegInterp,
-            keepAspectRatio,
-            keepAudio,
-            keepColorSpace,
-            keepMeta,
-            keepSubs,
-            keepTempFolder,
-            loopMode,
-            lowDiskSpaceCancelGb,
-            lowDiskSpacePauseGb,
-            maxFps,
-            maxFpsMode,
-            maxVidHeight,
-            minOutVidLength,
-            minVidLength,
-            mp4Enc,
-            pixFmt,
-            mpdecimateMode,
-            ncnnGpus,
-            ncnnThreads,
-            opusBitrate,
-            processingMode,
-            proResProfile,
-            rifeCudaBufferSize,
-            rifeCudaFp16,
-            rifeNcnnUseTta,
-            sbsAllowAutoEnc,
-            sbsRunPreviousStepIfNeeded,
-            sceneChangeFillMode,
-            scnDetect,
-            scnDetectValue,
-            silentDevmodeCheck,
-            tempDirCustom,
-            tempFolderLoc,
-            torchGpus,
-            uhdThresh,
-            vp9Crf
+            metaMode
         }
     }
 }

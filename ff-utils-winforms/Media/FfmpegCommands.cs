@@ -53,7 +53,7 @@ namespace Nmkoder.Media
         {
             string pathNoExt = Path.ChangeExtension(inputFile, null);
             string ext = Path.GetExtension(inputFile);
-            string loopSuffix = Config.Get(Config.Key.exportNamePatternLoop).Replace("[LOOPS]", $"{times}").Replace("[PLAYS]", $"{times + 1}");
+            string loopSuffix = $"{times}x";
             string outpath = $"{pathNoExt}{loopSuffix}{ext}";
             IoUtils.RenameExistingFile(outpath);
             string args = $" -stream_loop {times} -i {inputFile.Wrap()} -c copy {outpath.Wrap()}";
@@ -160,7 +160,7 @@ namespace Nmkoder.Media
         {
             Logger.Log($"GetFrameCountAsync('{inputFile}') - Trying ffprobe first.", true, false, "ffmpeg");
 
-            int frames = await ReadFrameCountFfprobeAsync(inputFile, Config.GetBool(Config.Key.ffprobeFrameCount));      // Try reading frame count with ffprobe
+            int frames = await ReadFrameCountFfprobeAsync(inputFile);      // Try reading frame count with ffprobe
             if (frames > 0) return frames;
 
             Logger.Log($"Failed to get frame count using ffprobe (frames = {frames}). Trying to read with ffmpeg.", true, false, "ffmpeg");
@@ -180,21 +180,14 @@ namespace Nmkoder.Media
             return frameCountRounded;
         }
 
-        static async Task<int> ReadFrameCountFfprobeAsync(string inputFile, bool readFramesSlow)
+        static async Task<int> ReadFrameCountFfprobeAsync(string inputFile)
         {
             string args = $" -v panic -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {inputFile.Wrap()}";
-            if (readFramesSlow)
-            {
-                Logger.Log("Counting total frames using FFprobe. This can take a moment...");
-                await Task.Delay(10);
-                args = $" -v panic -threads 0 -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of default=nokey=1:noprint_wrappers=1 {inputFile.Wrap()}";
-            }
             string info = GetFfprobeOutput(args);
             string[] entries = info.SplitIntoLines();
+
             try
             {
-                if (readFramesSlow)
-                    return info.GetInt();
                 foreach (string entry in entries)
                 {
                     if (entry.Contains("nb_frames="))
@@ -202,6 +195,7 @@ namespace Nmkoder.Media
                 }
             }
             catch { }
+
             return -1;
         }
 

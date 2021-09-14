@@ -242,8 +242,13 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetMetadataArgs ()
         {
+            int cfg = Config.GetInt(Config.Key.metaMode);
+
+            if (cfg == 2) // 2 = Strip All
+                return "-map_metadata -1";
+
+            bool map = cfg == 0;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             DataGridView grid = Program.mainForm.metaGrid;
-            bool map = Program.mainForm.mapMeta.Checked;
             List<string> args = new List<string>();
 
             foreach (DataGridViewRow row in grid.Rows)
@@ -252,25 +257,25 @@ namespace Nmkoder.UI.Tasks
                 string title = row.Cells[1].Value?.ToString().Trim();
                 string lang = row.Cells[2].Value?.ToString().Trim();
 
-                int streamIdx = track.GetInt() - 1;
+                int idx = track.GetInt() - 1;
 
                 if (!map && string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(lang))
                     continue;
 
-                if(streamIdx < 0)
+                if(idx < 0)
                 {
                     args.Add($"-metadata title=\"{title}\"");
                 }
                 else
                 {
                     if (track.ToLower().Contains("video"))
-                        args.Add($"-metadata:s:v:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("audio"))
-                        args.Add($"-metadata:s:a:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("subtitle"))
-                        args.Add($"-metadata:s:s:{streamIdx} title=\"{title}\" -metadata:s:s:{streamIdx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
                 }
             }
 

@@ -278,5 +278,11 @@ namespace Nmkoder.UI.Tasks
         }
 
         #endregion
+
+        public static string GetMuxingArgsFromUi()
+        {
+            Containers.Container c = (Containers.Container)Program.mainForm.containerBox.SelectedIndex;
+            return Containers.GetMuxingArgs(c);
+        }
     }
 }

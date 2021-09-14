@@ -108,5 +108,22 @@ namespace Nmkoder.Data
 
             return Container.Mkv;
         }
+
+        public static string GetMuxingArgs(Container c)
+        {
+            if (c == Container.Mp4)
+                return "-movflags +faststart"; // Web Optimize
+
+            if (c == Container.Mkv)
+                return "-max_interleave_delta 0"; // Fix muxing bug
+
+            if (c == Container.Webm)
+                return "";
+
+            if (c == Container.Mov)
+                return "";
+
+            return "";
+        }
     }
 }

@@ -84,7 +84,7 @@ namespace Nmkoder.UI
                             {
                                 VideoStream vs = (VideoStream)s;
                                 string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
-                                box.Items.Add($"#{i}: {s.Type} ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
+                                box.Items.Add($"#{i}: Video ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
                             }
 
                             if (s.Type == Stream.StreamType.Audio)
@@ -92,7 +92,7 @@ namespace Nmkoder.UI
                                 AudioStream @as = (AudioStream)s;
                                 string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
                                 string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
-                                box.Items.Add($"#{i}: {s.Type} ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
+                                box.Items.Add($"#{i}: Audio ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
                             }
 
                             if (s.Type == Stream.StreamType.Subtitle)
@@ -100,7 +100,7 @@ namespace Nmkoder.UI
                                 SubtitleStream ss = (SubtitleStream)s;
                                 string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
                                 string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
-                                box.Items.Add($"#{i}: {s.Type} ({codec}){lang}{ttl}");
+                                box.Items.Add($"#{i}: Subtitles ({codec}){lang}{ttl}");
                             }
 
                             if (s.Type == Stream.StreamType.Data)
@@ -163,6 +163,7 @@ namespace Nmkoder.UI
                 SubtitleStream s = (SubtitleStream)stream;
                 lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title : "None")}");
                 lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(s.Language, 4)}" : "Unknown")}");
+                lines.Add($"Type: {((s.Bitmap) ? $"Bitmap-based" : "Text-based")}");
             }
 
             return string.Join(Environment.NewLine, lines);

@@ -20,9 +20,14 @@ namespace Nmkoder.Media
 
         public static async Task<string> GetFfmpegInfoAsync(string path, string lineFilter = "")
         {
+            return await GetFfmpegOutputAsync(path, "", lineFilter);
+        }
+
+        public static async Task<string> GetFfmpegOutputAsync(string path, string args, string lineFilter = "")
+        {
             Process process = OsUtils.NewProcess(true);
-            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()}";
-            return await GetInfoAsync(path, process , lineFilter, false);
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()} {args}";
+            return await GetInfoAsync(path, process, lineFilter, false);
         }
 
         public static async Task<string> GetFfprobeInfoAsync(string path, FfprobeMode mode, string lineFilter = "", int streamIndex = -1, bool stripKeyName = true)
@@ -63,8 +68,12 @@ namespace Nmkoder.Media
             QueryInfo hash = new QueryInfo(path, filesize, process.StartInfo.Arguments);
 
             if (filesize > 0 && CacheContains(hash, ref cmdCache))
+            {
+                Logger.Log($"GetVideoInfo: '{process.StartInfo.FileName} {process.StartInfo.Arguments}' cached, won't re-run.", true, false, "ffmpeg");
                 return GetFromCache(hash, ref cmdCache);
+            }
 
+            Logger.Log($"GetVideoInfo: '{process.StartInfo.FileName} {process.StartInfo.Arguments}' not cached, running.", true, false, "ffmpeg");
             string output = await OsUtils.GetOutputAsync(process);
             cmdCache.Add(hash, output);
             return output;

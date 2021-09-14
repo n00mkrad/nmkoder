@@ -88,7 +88,8 @@ namespace Nmkoder.Media
                         string title = await GetFfprobeInfoAsync(path, showStreams, "TAG:title", idx);
                         string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
                         string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
-                        SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong);
+                        bool bitmap = await IsSubtitleBitmapBased(path, idx, codec);
+                        SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong, bitmap);
                         sStream.Index = idx;
                         Logger.Log($"Added subtitle stream to list: {sStream}", true);
                         streamList.Add(sStream);
@@ -120,6 +121,19 @@ namespace Nmkoder.Media
                 Program.mainForm.SetProgress(0);
 
             return streamList;
+        }
+
+        public static async Task<bool> IsSubtitleBitmapBased (string path, int streamIndex, string codec = "")
+        {
+            if (codec == "ssa" || codec == "ass" || codec == "mov_text" || codec == "srt" || codec == "subrip" || codec == "text" || codec == "webvtt")
+                return false;
+
+            if (codec == "dvdsub" || codec == "pgssub" || codec == "hdmv_pgs_subtitle")
+                return true;
+
+            // If codec was not listed above, manually check if it's compatible by trying to encode it:
+            string ffmpegCheck = await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c:s srt -t 0 -f null -");
+            return ffmpegCheck.Contains($"encoding currently only possible from text to text or bitmap to bitmap");
         }
 
         public static Size SizeFromString (string str, char delimiter = ':')

@@ -36,6 +36,7 @@ namespace Nmkoder
         public NumericUpDown encVidQualityBox;
         public ComboBox encVidPresetBox;
         public ComboBox encVidColorsBox;
+        public TextBox encVidFpsBox;
         // Quick Convert - Audio
         public ComboBox encAudEnc;
         public NumericUpDown encAudBr;
@@ -64,6 +65,7 @@ namespace Nmkoder
             encVidQualityBox = encVidQuality;
             encVidPresetBox = encVidPreset;
             encVidColorsBox = encVidColors;
+            encVidFpsBox = encVidFps;
 
             encAudEnc = encAudCodec;
             encAudBr = encAudBitrate;
@@ -116,11 +118,8 @@ namespace Nmkoder
             ConfigParser.LoadComboxIndex(taskMode);
             ConfigParser.LoadComboxIndex(containers);
             ConfigParser.LoadComboxIndex(encVidCodec);
-            ConfigParser.LoadGuiElement(encVidQuality);
-            ConfigParser.LoadComboxIndex(encVidPresetBox);
-            ConfigParser.LoadComboxIndex(encVidColorsBox);
             ConfigParser.LoadComboxIndex(encAudCodec);
-            ConfigParser.LoadGuiElement(encAudBitrate);
+            ConfigParser.LoadComboxIndex(encSubCodec);
             ConfigParser.LoadComboxIndex(metaMode);
         }
 
@@ -132,18 +131,9 @@ namespace Nmkoder
             ConfigParser.SaveComboxIndex(taskMode);
             ConfigParser.SaveComboxIndex(containers);
             ConfigParser.SaveComboxIndex(encVidCodec);
-            ConfigParser.SaveGuiElement(encVidQuality);
-            ConfigParser.SaveComboxIndex(encVidPresetBox);
-            ConfigParser.SaveComboxIndex(encVidColorsBox);
             ConfigParser.SaveComboxIndex(encAudCodec);
-            ConfigParser.SaveGuiElement(encAudBitrate);
+            ConfigParser.SaveComboxIndex(encSubCodec);
             ConfigParser.SaveComboxIndex(metaMode);
-        }
-
-        void InitCombox(ComboBox cbox, int index)
-        {
-            cbox.SelectedIndex = index;
-            cbox.Text = cbox.Items[index].ToString();
         }
 
         public bool IsInFocus() { return (ActiveForm == this); }

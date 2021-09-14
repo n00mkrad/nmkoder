@@ -804,12 +804,12 @@
             this.metaMode.ForeColor = System.Drawing.Color.White;
             this.metaMode.FormattingEnabled = true;
             this.metaMode.Items.AddRange(new object[] {
-            "Copy All From Input",
-            "Only Apply Titles/Languages",
-            "Strip All Metadata"});
+            "Copy All From Input, Edit Titles/Languages",
+            "Apply Titles/Languages, Strip Rest",
+            "Strip All Metadata Including Titles/Languages"});
             this.metaMode.Location = new System.Drawing.Point(220, 67);
             this.metaMode.Name = "metaMode";
-            this.metaMode.Size = new System.Drawing.Size(250, 23);
+            this.metaMode.Size = new System.Drawing.Size(433, 23);
             this.metaMode.TabIndex = 49;
             this.metaMode.SelectedIndexChanged += new System.EventHandler(this.metaMode_SelectedIndexChanged);
             // 
@@ -820,9 +820,9 @@
             this.label21.Location = new System.Drawing.Point(4, 70);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(91, 15);
+            this.label21.Size = new System.Drawing.Size(143, 15);
             this.label21.TabIndex = 18;
-            this.label21.Text = "Metadata Mode";
+            this.label21.Text = "Metadata Handling Mode";
             // 
             // label14
             // 

@@ -25,13 +25,14 @@ namespace Nmkoder.UI.Tasks
             string outPath = Program.mainForm.outputBox.Text.Trim();
             string map = MediaInfo.GetMapArgs();
             string video = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi());
+            string vf = GetVideoFilterArgs();
             string audio = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
             string subs = Codecs.GetArgs(GetCurrentCodecS());
             string meta = GetMetadataArgs();
             string custom = Program.mainForm.customArgsBox.Text.Trim();
             string muxing = GetMuxingArgsFromUi();
 
-            string args = $"-i {inPath.Wrap()} {map} {video} {audio} {subs} {meta} {custom} {muxing} {outPath.Wrap()}";
+            string args = $"-i {inPath.Wrap()} {map} {video} {vf} {audio} {subs} {meta} {custom} {muxing} {outPath.Wrap()}";
             Logger.Log($"> ffmpeg {args}");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Visible, AvProcess.TaskType.Encode, false);

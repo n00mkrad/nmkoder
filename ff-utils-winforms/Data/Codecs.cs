@@ -139,7 +139,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.H264)
             {
-                string frName = "H.264 (AVC - Advanced Video Coding)";
+                string frName = "H.264 / AVC (x264)";
                 string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 18);
@@ -147,7 +147,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.H265)
             {
-                string frName = "H.265 (HEVC - High Efficiency Video Coding)";
+                string frName = "H.265 / HEVC (x265)";
                 string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 22);
@@ -155,7 +155,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Vp9)
             {
-                string frName = "VP9 (Google VP9)";
+                string frName = "VP9 (vpx-vp9)";
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 63, 28);
@@ -163,10 +163,10 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Av1)
             {
-                string frName = "AV1 (AOMedia Video 1)";
+                string frName = "AV1 (svt-av1)";
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 7, colors, 1, 0, 50, 26);
+                return new CodecInfo(c.ToString(), frName, presets, 6, colors, 1, 0, 50, 26);
             }
 
             return new CodecInfo();

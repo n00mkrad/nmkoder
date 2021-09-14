@@ -50,6 +50,7 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.encVidQualityBox.Enabled = enableEncOptions;
             Program.mainForm.encVidPresetBox.Enabled = enableEncOptions;
             Program.mainForm.encVidColorsBox.Enabled = enableEncOptions;
+            Program.mainForm.encVidFpsBox.Enabled = enableEncOptions;
 
             LoadQualityLevel(info);
             LoadPresets(info);
@@ -288,6 +289,48 @@ namespace Nmkoder.UI.Tasks
         {
             Containers.Container c = (Containers.Container)Program.mainForm.containerBox.SelectedIndex;
             return Containers.GetMuxingArgs(c);
+        }
+
+        public static string GetVideoFilterArgs ()
+        {
+            List<string> filters = new List<string>();
+
+            if (MediaInfo.current.VideoStreams.Count < 1)
+                return "";
+
+            VideoStream vs = MediaInfo.current.VideoStreams.First();
+            Fraction fps = GetUiFps();
+
+            if (vs.Rate.GetFloat() != fps.GetFloat())
+                filters.Add($"fps=fps={fps}");
+
+            if (filters.Count > 0)
+                return $"-vf {string.Join(",", filters.Select(x => x.Wrap()))}";
+            else
+                return "";
+        }
+
+        public static Fraction GetUiFps ()
+        {
+            TextBox fpsBox = Program.mainForm.encVidFpsBox;
+
+            if (Program.mainForm.encVidFpsBox.Text.Contains("/"))   // Parse fraction
+            {
+                string[] split = fpsBox.Text.Split('/');
+                Fraction frac = new Fraction(split[0].GetInt(), split[1].GetInt());
+
+                if (!fpsBox.ReadOnly)
+                    return frac;
+            }
+            else    // Parse float
+            {
+                fpsBox.Text = fpsBox.Text.TrimNumbers(true);
+
+                if (!fpsBox.ReadOnly)
+                    return new Fraction(fpsBox.GetFloat());
+            }
+
+            return new Fraction();
         }
     }
 }

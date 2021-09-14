@@ -172,6 +172,8 @@
             this.pauseBtn = new System.Windows.Forms.Button();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
+            this.label25 = new System.Windows.Forms.Label();
+            this.encSubBurn = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -712,6 +714,8 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage1.Controls.Add(this.encSubBurn);
+            this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.encSubCodec);
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
@@ -1929,6 +1933,29 @@
             this.busyControlsPanel.TabIndex = 39;
             this.busyControlsPanel.Visible = false;
             // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.ForeColor = System.Drawing.Color.White;
+            this.label25.Location = new System.Drawing.Point(7, 40);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(36, 12);
+            this.label25.TabIndex = 48;
+            this.label25.Text = "Burn In";
+            // 
+            // encSubBurn
+            // 
+            this.encSubBurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encSubBurn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encSubBurn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encSubBurn.ForeColor = System.Drawing.Color.White;
+            this.encSubBurn.FormattingEnabled = true;
+            this.encSubBurn.Location = new System.Drawing.Point(220, 37);
+            this.encSubBurn.Name = "encSubBurn";
+            this.encSubBurn.Size = new System.Drawing.Size(250, 23);
+            this.encSubBurn.TabIndex = 49;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2161,6 +2188,8 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox metaMode;
+        private System.Windows.Forms.ComboBox encSubBurn;
+        private System.Windows.Forms.Label label25;
     }
 }
 

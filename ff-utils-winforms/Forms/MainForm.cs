@@ -210,13 +210,20 @@ namespace Nmkoder.Forms
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            DialogResult dialog = MessageBox.Show($"You have loaded multiple files. Do you want to run batch processing and apply this action to all of them?" +
+            if(fileList.Items.Count > 1)
+            {
+                DialogResult dialog = MessageBox.Show($"You have loaded multiple files. Do you want to run batch processing and apply this action to all of them?" +
                 $"\n\nClick \"No\" if you only want to run the first (currently loaded) file.", "Batch Processing", MessageBoxButtons.YesNo);
 
-            if (dialog == DialogResult.Yes)
-                RunTask.StartBatch();
+                if (dialog == DialogResult.Yes)
+                    RunTask.StartBatch();
+                else
+                    RunTask.Start();
+            }
             else
+            {
                 RunTask.Start();
+            }
         }
 
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)

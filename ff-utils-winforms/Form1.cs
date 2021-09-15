@@ -216,15 +216,13 @@ namespace Nmkoder
         {
             streamList.Items.Clear();
             streamDetails.Text = "";
+            ThumbnailView.ClearUi();
         }
 
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(streamList.SelectedItem == null)
-            {
-                Logger.Log($"streamList.SelectedItem null!!");
                 return;
-            }
 
             MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
             streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream);
@@ -244,7 +242,13 @@ namespace Nmkoder
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            RunTask.Start();
+            DialogResult dialog = MessageBox.Show($"You have loaded multiple files. Do you want to run batch processing and apply this action to all of them?" +
+                $"\n\nClick \"No\" if you only want to run the first (currently loaded) file.", "Batch Processing", MessageBoxButtons.YesNo);
+
+            if (dialog == DialogResult.Yes)
+                RunTask.StartBatch();
+            else
+                RunTask.Start();
         }
 
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
@@ -286,6 +290,12 @@ namespace Nmkoder
         private void addTracksFromFileBtn_Click(object sender, EventArgs e)
         {
             MediaInfo.AddStreamsToList((MediaFile)fileList.SelectedItem, false);
+        }
+
+        private void streamList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
+                streamList.SelectedItems.Clear();
         }
 
 

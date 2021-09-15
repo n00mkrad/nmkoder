@@ -1,5 +1,7 @@
-﻿using Nmkoder.IO;
+﻿using Nmkoder.Data;
+using Nmkoder.IO;
 using Nmkoder.Media;
+using Nmkoder.UI;
 using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,12 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { None, Convert };
+        public enum TaskType { Null, None, Convert };
         //public static TaskType currentTask;
+
+        public enum FileListMode { MultiFileInput, BatchProcess };
+        public static FileListMode currentFileListMode;
+
         public static bool canceled = false;
 
         public static void Cancel(string reason = "", bool noMsgBox = false)
@@ -34,9 +40,11 @@ namespace Nmkoder.Main
                 MessageBox.Show($"Canceled:\n\n{reason}", "Message");
         }
 
-        public static async Task Start ()
+        public static async Task Start (TaskType overrideTask = TaskType.Null)
         {
-            if (Program.mainForm.GetCurrentTaskType() == TaskType.None)
+            TaskType taskType = overrideTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : overrideTask;
+
+            if (taskType == TaskType.None)
             {
                 MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
                 return;
@@ -44,13 +52,40 @@ namespace Nmkoder.Main
 
             canceled = false;
 
-            if (Program.mainForm.GetCurrentTaskType() == TaskType.Convert)
+            if (taskType == TaskType.Convert)
                 await QuickConvert.Run();
 
             Logger.Log($"Done.");
             Program.mainForm.SetProgress(0);
         }
 
-        
+        public static async Task StartBatch ()
+        {
+            TaskType batchTask = Program.mainForm.GetCurrentTaskType();
+
+            if (batchTask == TaskType.None)
+            {
+                MessageBox.Show("No task selected for batch processing! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+                return;
+            }
+
+            Program.mainForm.ClearCurrentFile();
+            System.Windows.Forms.ListBox fileList = Program.mainForm.fileListBox;
+
+            object[] taskFileList = new object[fileList.Items.Count];
+            fileList.Items.CopyTo(taskFileList, 0);
+
+            for (int i = 0; i < taskFileList.Length; i++)
+            {
+                MediaFile mf = (MediaFile)taskFileList[i];
+                Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.File.Name}.");
+                Program.mainForm.ClearCurrentFile();
+                await MediaInfo.LoadFileInfo(mf.File.FullName, false, false); // Load file info
+                await Start(batchTask); // Run task
+                fileList.Items.RemoveAt(0);
+            }
+
+            Logger.Log($"Queue: Completed {fileList.Items.Count} tasks.");
+        }
     }
 }

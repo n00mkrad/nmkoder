@@ -136,6 +136,11 @@ namespace Nmkoder.Media
             return ffmpegCheck.Contains($"encoding currently only possible from text to text or bitmap to bitmap");
         }
 
+        public static string GetPadFilter(int px = 2)
+        {
+            return $"pad=width=ceil(iw/{px})*{px}:height=ceil(ih/{px})*{px}:color=black@0";
+        }
+
         public static Size SizeFromString (string str, char delimiter = ':')
         {
             try

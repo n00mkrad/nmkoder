@@ -16,7 +16,6 @@ namespace Nmkoder.UI
     class ThumbnailView
     {
         private static long currHash;
-        //private static Image[] currThumbs;
         private static Dictionary<string, Image> currThumbs;
         private static int currThumbIndex;
         private static bool busy;

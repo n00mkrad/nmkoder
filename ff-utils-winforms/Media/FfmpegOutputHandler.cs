@@ -65,7 +65,13 @@ namespace Nmkoder.Media
 
             if (line.Contains("Only VP8 or VP9 or AV1 video and Vorbis or Opus audio and WebVTT subtitles are supported for WebM"))
             {
-                RunTask.Cancel($"Error: {line}\n\nIt looks like you are trying to copy an unsupported stream into WEBM!\nWEBM only supports VP8, VP9, AV1, Opus, and WebVTT Subtitles.");
+                RunTask.Cancel($"Error: {line}\n\nIt looks like you are trying to copy an unsupported stream into WEBM!");
+                return;
+            }
+
+            if (line.Contains("*codec*not supported*"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nTry using a different codec.");
                 return;
             }
         }

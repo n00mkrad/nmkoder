@@ -261,6 +261,7 @@
             this.streamList.TabIndex = 27;
             this.streamList.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
             this.streamList.Leave += new System.EventHandler(this.streamList_Leave);
+            this.streamList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
             // 
             // titleLabel
             // 

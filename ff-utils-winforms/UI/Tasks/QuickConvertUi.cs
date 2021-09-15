@@ -2,6 +2,7 @@
 using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,10 +44,17 @@ namespace Nmkoder.UI.Tasks
 
         public static void InitFile ()
         {
-            SetAudioChannelsCombox(MediaInfo.current.AudioStreams.First()?.Channels);
-            InitBurnCombox();
-            LoadMetadataGrid();
-            ValidateContainer();
+            try
+            {
+                SetAudioChannelsCombox(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                InitBurnCombox();
+                LoadMetadataGrid();
+                ValidateContainer();
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"Failed to initialized media file: {e.Message}\n{e.StackTrace}");
+            }
         }
 
         public static void VidEncoderSelected(int index)
@@ -312,24 +320,27 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static string GetVideoFilterArgs ()
+        public static string GetVideoFilterArgs (Codecs.VideoCodec vCodec)
         {
             List<string> filters = new List<string>();
 
-            if (MediaInfo.current.VideoStreams.Count < 1)
+            if (MediaInfo.current.VideoStreams.Count < 1 || (vCodec == Codecs.VideoCodec.Copy || vCodec == Codecs.VideoCodec.StripVideo))
                 return "";
 
             VideoStream vs = MediaInfo.current.VideoStreams.First();
             Fraction fps = GetUiFps();
 
-            if (vs.Rate.GetFloat() != fps.GetFloat())
+            if (vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
                 filters.Add($"fps=fps={fps}");
 
-            if(Program.mainForm.encSubBurnBox.SelectedIndex > 0)
+            if(Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
                 string filename = MediaInfo.current.File.FullName.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
                 filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
+
+            if ((vs.Resolution.Width % 2 != 0) || (vs.Resolution.Height % 2 != 0)) // Check Filter: Pad for mod2
+                filters.Add(FfmpegUtils.GetPadFilter(2));
 
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";

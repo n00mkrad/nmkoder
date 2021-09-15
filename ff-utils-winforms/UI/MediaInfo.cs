@@ -3,6 +3,7 @@ using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using Nmkoder.Media;
 using Nmkoder.Properties;
 using Nmkoder.UI.Tasks;
@@ -25,21 +26,20 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles (string[] paths)
         {
+            RunTask.currentFileListMode = RunTask.FileListMode.BatchProcess;
             ThumbnailView.ClearUi();
             Logger.ClearLogBox();
             
-            Logger.Log($"Adding {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
+            Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
 
             Program.mainForm.ClearCurrentFile();
 
             FileList.LoadFiles(paths);
 
             await LoadFileInfo(paths[0]);
-
-            
         }
 
-        public static async Task LoadFileInfo (string path)
+        public static async Task LoadFileInfo(string path, bool switchToTrackList = true, bool generateThumbs = true)
         {
             streamListLoaded = false;
             MediaFile mediaFile = new MediaFile(path);
@@ -59,11 +59,14 @@ namespace Nmkoder.UI
 
             streamListLoaded = true;
             Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
-            Program.mainForm.encVidFpsBox.Text = current.VideoStreams.First()?.Rate.ToString();
+            Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
             QuickConvertUi.InitFile();
-            Program.mainForm.mainTabList.SelectedIndex = 0;
 
-            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+            if(switchToTrackList)
+                Program.mainForm.mainTabList.SelectedIndex = 1;
+
+            if(generateThumbs)
+                Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
         }
 
         private static void PrintFoundStreams(MediaFile mediaFile)
@@ -84,6 +87,13 @@ namespace Nmkoder.UI
         public static async Task AddStreamsToList (MediaFile mediaFile, bool clear, bool printInit = true)
         {
             CheckedListBox box = Program.mainForm.streamListBox;
+            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
+
+            if (uniqueFileCount > 0 && RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
+            {
+                RunTask.currentFileListMode = RunTask.FileListMode.MultiFileInput; // Disable batch processing when using multiple input files
+                Logger.Log($"Using multiple files as input for one output file - Batch Processing is disabled until you load a new set of files.");
+            }
 
             if(clear)
                 box.Items.Clear();
@@ -99,14 +109,13 @@ namespace Nmkoder.UI
                     PrintFoundStreams(mediaFile);
             }
 
-            int fileIdx = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
             bool alreadyHasVidStream = box.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).Count() > 0;
 
             foreach (Stream s in mediaFile.AllStreams)
             {
                 try
                 {
-                    box.Items.Add(new MediaStreamListEntry(mediaFile, s, fileIdx));
+                    box.Items.Add(new MediaStreamListEntry(mediaFile, s, uniqueFileCount));
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !alreadyHasVidStream;
                     box.SetItemChecked(box.Items.Count - 1, check);
                 }

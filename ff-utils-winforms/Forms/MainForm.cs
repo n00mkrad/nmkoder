@@ -57,7 +57,7 @@ namespace Nmkoder
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             Program.mainForm = this;
             Logger.textbox = logTbox;
@@ -109,7 +109,7 @@ namespace Nmkoder
             //InitCombox(delayTrackCombox, 0);
         }
 
-        private void Form1_Shown(object sender, EventArgs e)
+        private void MainForm_Shown(object sender, EventArgs e)
         {
             QuickConvert.Init();
             LoadConfig();

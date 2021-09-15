@@ -887,5 +887,16 @@ namespace Nmkoder.IO
 
 			return 0;
 		}
+
+		public static string GetAvailableFilename(string preferredPath)
+        {
+			string ext = Path.GetExtension(preferredPath);
+			string renamedPath = preferredPath;
+
+			while (File.Exists(renamedPath))
+				renamedPath = Path.ChangeExtension(renamedPath, null) + "_" + ext;
+
+			return renamedPath;
+		}
     }
 }

@@ -58,7 +58,8 @@ namespace Nmkoder.UI
             await AddStreamsToList(current, true);
 
             streamListLoaded = true;
-            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            Program.mainForm.outputBox.Text = current.File.FullName;
+            QuickConvertUi.ValidatePath();
             Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
             QuickConvertUi.InitFile();
 

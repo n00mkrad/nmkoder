@@ -164,6 +164,16 @@ namespace Nmkoder.UI.Tasks
             Containers.Container current = (Containers.Container)form.containerBox.SelectedIndex;
             string path = Path.ChangeExtension(form.outputBox.Text.Trim(), current.ToString().ToLower());
             Program.mainForm.outputBox.Text = path;
+            ValidatePath();
+        }
+
+        public static void ValidatePath ()
+        {
+            if (MediaInfo.current == null)
+                return;
+
+            string ext = Program.mainForm.containerBox.Text.ToLower();
+            Program.mainForm.outputBox.Text = IoUtils.GetAvailableFilename(Path.ChangeExtension(MediaInfo.current.File.FullName, ext));
         }
 
         #region Get Current Codec

@@ -21,7 +21,7 @@ using Nmkoder.Data.Ui;
 
 namespace Nmkoder
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         bool initialized = false;
 
@@ -52,7 +52,7 @@ namespace Nmkoder
         public TextBox outputBox;
         public TextBox customArgsBox;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }

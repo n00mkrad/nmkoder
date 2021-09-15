@@ -15,7 +15,7 @@ namespace Nmkoder.UI.Tasks
 {
     partial class QuickConvertUi : QuickConvert
     {
-        private static Form1 form;
+        private static MainForm form;
 
         public static void Init()
         {

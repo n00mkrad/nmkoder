@@ -13,7 +13,7 @@ namespace Nmkoder
     static class Program
     {
         public static bool busy;
-        public static Form1 mainForm;
+        public static MainForm mainForm;
 
         [STAThread]
         static void Main()
@@ -25,7 +25,7 @@ namespace Nmkoder
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Console.WriteLine(Environment.CurrentDirectory);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
             
         }
     }

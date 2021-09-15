@@ -1,6 +1,6 @@
 ﻿namespace Nmkoder
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.logTbox = new System.Windows.Forms.TextBox();
             this.formatInfo = new System.Windows.Forms.Label();
             this.streamList = new System.Windows.Forms.CheckedListBox();

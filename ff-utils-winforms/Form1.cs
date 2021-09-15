@@ -16,6 +16,8 @@ using Microsoft.WindowsAPICodePack.Taskbar;
 using ImageMagick;
 using Nmkoder.UI.Tasks;
 using Nmkoder.Main;
+using Nmkoder.Data;
+using Nmkoder.Data.Ui;
 
 namespace Nmkoder
 {
@@ -26,6 +28,7 @@ namespace Nmkoder
         public Cyotek.Windows.Forms.TabList mainTabList;
 
         // General
+        public ListBox fileListBox;
         public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
@@ -79,6 +82,7 @@ namespace Nmkoder
             outputBox = outputPath;
             customArgsBox = encCustomArgs;
 
+            fileListBox = fileList;
             streamListBox = streamList;
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
@@ -216,7 +220,14 @@ namespace Nmkoder
 
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            streamDetails.Text = MediaInfo.GetStreamDetails(streamList.SelectedIndex);
+            if(streamList.SelectedItem == null)
+            {
+                Logger.Log($"streamList.SelectedItem null!!");
+                return;
+            }
+
+            MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
+            streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream);
         }
 
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
@@ -270,6 +281,11 @@ namespace Nmkoder
         private void metaMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
+        }
+
+        private void addTracksFromFileBtn_Click(object sender, EventArgs e)
+        {
+            MediaInfo.AddStreamsToList((MediaFile)fileList.SelectedItem, false);
         }
 
 

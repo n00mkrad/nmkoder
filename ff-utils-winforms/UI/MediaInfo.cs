@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Streams;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
@@ -9,10 +10,8 @@ using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Stream = Nmkoder.Data.Streams.Stream;
@@ -28,16 +27,16 @@ namespace Nmkoder.UI
         {
             ThumbnailView.ClearUi();
             Logger.ClearLogBox();
+            
+            Logger.Log($"Adding {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
 
-            if (paths.Length == 1)
-            {
-                Program.mainForm.ClearCurrentFile();
-                await LoadFileInfo(paths[0]);
-            }
-            else
-            {
-                // many
-            }
+            Program.mainForm.ClearCurrentFile();
+
+            FileList.LoadFiles(paths);
+
+            await LoadFileInfo(paths[0]);
+
+            
         }
 
         public static async Task LoadFileInfo (string path)
@@ -47,7 +46,28 @@ namespace Nmkoder.UI
             int streamCount = await FfmpegUtils.GetStreamCount(path);
             Logger.Log($"Scanning '{mediaFile.File.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
+            PrintFoundStreams(mediaFile);
+            current = mediaFile;
+            QuickConvertUi.lastMap = "";
 
+            string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
+            string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
+            string dur = FormatUtils.MsToTimestamp(current.DurationMs);
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
+
+            await AddStreamsToList(current, true);
+
+            streamListLoaded = true;
+            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
+            Program.mainForm.encVidFpsBox.Text = current.VideoStreams.First()?.Rate.ToString();
+            QuickConvertUi.InitFile();
+            Program.mainForm.mainTabList.SelectedIndex = 0;
+
+            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+        }
+
+        private static void PrintFoundStreams(MediaFile mediaFile)
+        {
             List<string> foundTracks = new List<string>();
 
             if (mediaFile.VideoStreams.Count > 0) foundTracks.Add($"{mediaFile.VideoStreams.Count} video track{(mediaFile.VideoStreams.Count == 1 ? "" : "s")}");
@@ -59,85 +79,70 @@ namespace Nmkoder.UI
                 Logger.Log($"Found {string.Join(", ", foundTracks)}.");
             else
                 Logger.Log($"Found no media streams in '{mediaFile.File.Name}'!");
+        }
 
-            current = mediaFile;
-            QuickConvertUi.lastMap = "";
-
-            string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
-            string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
-            string dur = FormatUtils.MsToTimestamp(current.DurationMs);
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
-
+        public static async Task AddStreamsToList (MediaFile mediaFile, bool clear, bool printInit = true)
+        {
             CheckedListBox box = Program.mainForm.streamListBox;
-            box.Items.Clear();
 
-            for (int i = 0; i < current.AllStreams.Count; i++)
+            if(clear)
+                box.Items.Clear();
+
+            if (!mediaFile.Initialized)
+            {
+                if (printInit)
+                    Logger.Log($"Scanning '{mediaFile.File.Name}'...");
+
+                await mediaFile.Initialize();
+
+                if(printInit)
+                    PrintFoundStreams(mediaFile);
+            }
+
+            int fileIdx = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
+            bool alreadyHasVidStream = box.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).Count() > 0;
+
+            foreach (Stream s in mediaFile.AllStreams)
             {
                 try
                 {
-                    foreach (Stream s in current.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
-                    {
-                        if (s.Index == i)
-                        {
-                            string codec = FormatUtils.CapsIfShort(s.Codec, 5);
-                            const int maxChars = 50;
-
-                            if (s.Type == Stream.StreamType.Video)
-                            {
-                                VideoStream vs = (VideoStream)s;
-                                string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
-                                box.Items.Add($"#{i}: Video ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS");
-                            }
-
-                            if (s.Type == Stream.StreamType.Audio)
-                            {
-                                AudioStream @as = (AudioStream)s;
-                                string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
-                                string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
-                                box.Items.Add($"#{i}: Audio ({codecStr}){title}- {@as.Layout.ToTitleCase()}");
-                            }
-
-                            if (s.Type == Stream.StreamType.Subtitle)
-                            {
-                                SubtitleStream ss = (SubtitleStream)s;
-                                string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
-                                string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
-                                box.Items.Add($"#{i}: Subtitles ({codec}){lang}{ttl}");
-                            }
-
-                            if (s.Type == Stream.StreamType.Data)
-                            {
-                                DataStream ds = (DataStream)s;
-                                box.Items.Add($"#{i}: {s.Type} ({codec})");
-                            }
-
-                            if(i >= 0 && i < Program.mainForm.streamListBox.Items.Count && codec.ToLower().Trim() != "unknown")
-                                Program.mainForm.streamListBox.SetItemChecked(i, true);
-                        }
-                    }
+                    box.Items.Add(new MediaStreamListEntry(mediaFile, s, fileIdx));
+                    bool check = s.Codec.ToLower().Trim() != "unknown" && !alreadyHasVidStream;
+                    box.SetItemChecked(box.Items.Count - 1, check);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Logger.Log($"Error trying to load streams into UI: {e.Message}\n{e.StackTrace}");
                 }
-                
             }
 
-            streamListLoaded = true;
-            Program.mainForm.outputBox.Text = IoUtils.FilenameSuffix(current.File.FullName, ".convert");
-            Program.mainForm.encVidFpsBox.Text = current.VideoStreams.First()?.Rate.ToString();
-            QuickConvertUi.InitFile();
-            Program.mainForm.mainTabList.SelectedIndex = 0;
-
-            Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+            //for (int i = 0; i < mediaFile.AllStreams.Count; i++)
+            //{
+            //    try
+            //    {
+            //        foreach (Stream s in mediaFile.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
+            //        {
+            //            if (s.Index == i)
+            //            {
+            //                box.Items.Add(new MediaStreamListEntry(mediaFile, s, fileIdx));
+            //
+            //                if (i >= 0 && i < box.Items.Count && s.Codec.ToLower().Trim() != "unknown")
+            //                    box.SetItemChecked(i, true);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Logger.Log($"Error trying to load streams into UI: {e.Message}\n{e.StackTrace}");
+            //    }
+            //}
         }
 
-        public static string GetStreamDetails(int index)
+        public static string GetStreamDetails(Stream stream)
         {
-            if (index < 0)
+            if (stream == null)
                 return "";
 
-            Stream stream = current.AllStreams[index];
             List<string> lines = new List<string>();
             lines.Add($"Codec: {stream.CodecLong}");
 
@@ -171,18 +176,53 @@ namespace Nmkoder.UI
             return string.Join(Environment.NewLine, lines);
         }
 
+        public static string GetInputFiles()
+        {
+            List<string> files = new List<string>();
+
+            foreach(MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
+            {
+                if (entry.Stream.Index == 0)
+                    files.Add($"-i {entry.MediaFile.File.FullName.Wrap()}");
+            }
+
+            return string.Join(" ", files);
+        }
+
         public static string GetMapArgs ()
         {
             List<string> args = new List<string>();
+            List<string> files = new List<string>();
 
-            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            //for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            //{
+            //    if (Program.mainForm.streamListBox.GetItemChecked(i))
+            //    {
+            //        Stream stream = ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream;
+            //        args.Add($"-map {}:{stream.Index}");
+            //    }
+            //}
+
+            bool all = true;
+
+            int fileIdx = -1;
+
+            foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
             {
-                if (Program.mainForm.streamListBox.GetItemChecked(i))
-                    args.Add($"-map 0:{i}");
+                if (entry.Stream.Index == 0)
+                {
+                    fileIdx++;
+                    files.Add($"-map {fileIdx}");
+                }
+
+                if (Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
+                    args.Add($"-map {fileIdx}:{entry.Stream.Index}");
+                else
+                    all = false;
             }
 
-            if (args.Count == Program.mainForm.streamListBox.Items.Count)
-                return "-map 0";
+            if (all)
+                return string.Join(" ", files);
             else
                 return string.Join(" ", args);
         }

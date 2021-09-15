@@ -48,6 +48,7 @@ namespace Nmkoder.Main
                 await QuickConvert.Run();
 
             Logger.Log($"Done.");
+            Program.mainForm.SetProgress(0);
         }
 
         

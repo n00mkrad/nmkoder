@@ -255,6 +255,7 @@
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
+    <Compile Include="Data\Ui\MediaStreamListEntry.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Data\Streams\AudioStream.cs" />
     <Compile Include="Data\Codecs.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="OS\OsUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\FileList.cs" />
     <Compile Include="UI\MediaInfo.cs" />
     <Compile Include="UI\Tasks\QuickConvert.cs" />
     <Compile Include="UI\Tasks\QuickConvertUi.cs" />

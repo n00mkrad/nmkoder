@@ -2,6 +2,7 @@
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,6 +67,11 @@ namespace Nmkoder.Data
             StreamCount = await FfmpegUtils.GetStreamCount(path);
             TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
             SizeKb = File.Length / 1024;
+        }
+
+        public override string ToString()
+        {
+            return $"{File.Name} ({FormatUtils.Bytes(File.Length)})";
         }
     }
 }

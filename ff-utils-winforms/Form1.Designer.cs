@@ -41,6 +41,12 @@
             this.label33 = new System.Windows.Forms.Label();
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
+            this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.addTracksFromFileBtn = new System.Windows.Forms.Button();
+            this.fileList = new System.Windows.Forms.ListBox();
             this.mediaInfoPage = new Cyotek.Windows.Forms.TabListPage();
             this.streamDetails = new System.Windows.Forms.TextBox();
             this.quickConvertPage = new Cyotek.Windows.Forms.TabListPage();
@@ -68,6 +74,8 @@
             this.label53 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.encSubBurn = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.encSubCodec = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.encMetaTab = new System.Windows.Forms.TabPage();
@@ -172,11 +180,10 @@
             this.pauseBtn = new System.Windows.Forms.Button();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
-            this.label25 = new System.Windows.Forms.Label();
-            this.encSubBurn = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
+            this.fileListPage.SuspendLayout();
             this.mediaInfoPage.SuspendLayout();
             this.quickConvertPage.SuspendLayout();
             this.quickEncTabControl.SuspendLayout();
@@ -358,6 +365,7 @@
             // tabList
             // 
             this.tabList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.tabList.Controls.Add(this.fileListPage);
             this.tabList.Controls.Add(this.mediaInfoPage);
             this.tabList.Controls.Add(this.quickConvertPage);
             this.tabList.Controls.Add(this.utilsPage);
@@ -367,6 +375,82 @@
             this.tabList.Size = new System.Drawing.Size(840, 390);
             this.tabList.TabIndex = 35;
             // 
+            // fileListPage
+            // 
+            this.fileListPage.Controls.Add(this.button4);
+            this.fileListPage.Controls.Add(this.button3);
+            this.fileListPage.Controls.Add(this.button2);
+            this.fileListPage.Controls.Add(this.addTracksFromFileBtn);
+            this.fileListPage.Controls.Add(this.fileList);
+            this.fileListPage.Name = "fileListPage";
+            this.fileListPage.Size = new System.Drawing.Size(682, 382);
+            this.fileListPage.Text = "File List";
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(583, 330);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(45, 45);
+            this.button4.TabIndex = 41;
+            this.button4.Text = "Up";
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(532, 330);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(45, 45);
+            this.button3.TabIndex = 40;
+            this.button3.Text = "X";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(634, 330);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(45, 45);
+            this.button2.TabIndex = 39;
+            this.button2.Text = "Dow";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // addTracksFromFileBtn
+            // 
+            this.addTracksFromFileBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.addTracksFromFileBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addTracksFromFileBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addTracksFromFileBtn.ForeColor = System.Drawing.Color.White;
+            this.addTracksFromFileBtn.Location = new System.Drawing.Point(532, 3);
+            this.addTracksFromFileBtn.Name = "addTracksFromFileBtn";
+            this.addTracksFromFileBtn.Size = new System.Drawing.Size(147, 45);
+            this.addTracksFromFileBtn.TabIndex = 38;
+            this.addTracksFromFileBtn.Text = "Load Tracks Into List";
+            this.addTracksFromFileBtn.UseVisualStyleBackColor = false;
+            this.addTracksFromFileBtn.Click += new System.EventHandler(this.addTracksFromFileBtn_Click);
+            // 
+            // fileList
+            // 
+            this.fileList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.fileList.ForeColor = System.Drawing.Color.White;
+            this.fileList.FormattingEnabled = true;
+            this.fileList.ItemHeight = 16;
+            this.fileList.Location = new System.Drawing.Point(3, 3);
+            this.fileList.Name = "fileList";
+            this.fileList.Size = new System.Drawing.Size(523, 372);
+            this.fileList.TabIndex = 0;
+            // 
             // mediaInfoPage
             // 
             this.mediaInfoPage.Controls.Add(this.streamDetails);
@@ -374,7 +458,7 @@
             this.mediaInfoPage.Controls.Add(this.streamList);
             this.mediaInfoPage.Name = "mediaInfoPage";
             this.mediaInfoPage.Size = new System.Drawing.Size(682, 382);
-            this.mediaInfoPage.Text = "Media Info";
+            this.mediaInfoPage.Text = "Media Info (Track List)";
             // 
             // streamDetails
             // 
@@ -724,6 +808,29 @@
             this.tabPage1.Size = new System.Drawing.Size(668, 312);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Subtitles";
+            // 
+            // encSubBurn
+            // 
+            this.encSubBurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encSubBurn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encSubBurn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encSubBurn.ForeColor = System.Drawing.Color.White;
+            this.encSubBurn.FormattingEnabled = true;
+            this.encSubBurn.Location = new System.Drawing.Point(220, 37);
+            this.encSubBurn.Name = "encSubBurn";
+            this.encSubBurn.Size = new System.Drawing.Size(250, 23);
+            this.encSubBurn.TabIndex = 49;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.ForeColor = System.Drawing.Color.White;
+            this.label25.Location = new System.Drawing.Point(7, 40);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(45, 15);
+            this.label25.TabIndex = 48;
+            this.label25.Text = "Burn In";
             // 
             // encSubCodec
             // 
@@ -1933,29 +2040,6 @@
             this.busyControlsPanel.TabIndex = 39;
             this.busyControlsPanel.Visible = false;
             // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(7, 40);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(36, 12);
-            this.label25.TabIndex = 48;
-            this.label25.Text = "Burn In";
-            // 
-            // encSubBurn
-            // 
-            this.encSubBurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encSubBurn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.encSubBurn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encSubBurn.ForeColor = System.Drawing.Color.White;
-            this.encSubBurn.FormattingEnabled = true;
-            this.encSubBurn.Location = new System.Drawing.Point(220, 37);
-            this.encSubBurn.Name = "encSubBurn";
-            this.encSubBurn.Size = new System.Drawing.Size(250, 23);
-            this.encSubBurn.TabIndex = 49;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1982,6 +2066,7 @@
             this.inputPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.tabList.ResumeLayout(false);
+            this.fileListPage.ResumeLayout(false);
             this.mediaInfoPage.ResumeLayout(false);
             this.mediaInfoPage.PerformLayout();
             this.quickConvertPage.ResumeLayout(false);
@@ -2190,6 +2275,12 @@
         private System.Windows.Forms.ComboBox metaMode;
         private System.Windows.Forms.ComboBox encSubBurn;
         private System.Windows.Forms.Label label25;
+        private Cyotek.Windows.Forms.TabListPage fileListPage;
+        private System.Windows.Forms.ListBox fileList;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button addTracksFromFileBtn;
     }
 }
 

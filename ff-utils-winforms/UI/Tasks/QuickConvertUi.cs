@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
+using Nmkoder.Forms;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using System;

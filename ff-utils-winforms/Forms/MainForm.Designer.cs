@@ -1,4 +1,4 @@
-﻿namespace Nmkoder
+﻿namespace Nmkoder.Forms
 {
     partial class MainForm
     {

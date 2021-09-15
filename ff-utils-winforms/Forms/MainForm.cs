@@ -19,7 +19,7 @@ using Nmkoder.Main;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 
-namespace Nmkoder
+namespace Nmkoder.Forms
 {
     public partial class MainForm : Form
     {
@@ -33,24 +33,6 @@ namespace Nmkoder
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
         public Label thumbLabel;
-        // Quick Convert - Video
-        public ComboBox containerBox;
-        public ComboBox encVidCodecsBox;
-        public NumericUpDown encVidQualityBox;
-        public ComboBox encVidPresetBox;
-        public ComboBox encVidColorsBox;
-        public TextBox encVidFpsBox;
-        // Quick Convert - Audio
-        public ComboBox encAudEnc;
-        public NumericUpDown encAudBr;
-        public ComboBox encAudCh;
-        // Quick Convert - Subs
-        public ComboBox encSubEnc;
-        public ComboBox encSubBurnBox;
-        // Quick Convert - Other
-        public DataGridView metaGrid;
-        public TextBox outputBox;
-        public TextBox customArgsBox;
 
         public MainForm()
         {
@@ -64,19 +46,7 @@ namespace Nmkoder
 
             mainTabList = tabList;
 
-            containerBox = containers;
-            encVidCodecsBox = encVidCodec;
-            encVidQualityBox = encVidQuality;
-            encVidPresetBox = encVidPreset;
-            encVidColorsBox = encVidColors;
-            encVidFpsBox = encVidFps;
-
-            encAudEnc = encAudCodec;
-            encAudBr = encAudBitrate;
-            encAudCh = encAudChannels;
-
-            encSubEnc = encSubCodec;
-            encSubBurnBox = encSubBurn;
+            AssignControlsQuickConvert();
 
             metaGrid = metadataGrid;
             outputBox = outputPath;
@@ -87,8 +57,6 @@ namespace Nmkoder
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
             thumbLabel = thumbInfo;
-
-            encAudChannels.SelectedIndex = 1;
 
             CheckForIllegalCrossThreadCalls = false;
 

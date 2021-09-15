@@ -6,6 +6,7 @@ using Nmkoder.IO;
 using Nmkoder.Media;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,8 @@ namespace Nmkoder.UI.Tasks
         {
             try
             {
-                SetAudioChannelsCombox(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                InitAudioChannels(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                InitScale(MediaInfo.current.VideoStreams.FirstOrDefault());
                 InitBurnCombox();
                 LoadMetadataGrid();
                 ValidateContainer();
@@ -63,11 +65,13 @@ namespace Nmkoder.UI.Tasks
             Codecs.VideoCodec c = (Codecs.VideoCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
 
-            bool enableEncOptions = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
-            Program.mainForm.encVidQualityBox.Enabled = enableEncOptions;
-            Program.mainForm.encVidPresetBox.Enabled = enableEncOptions;
-            Program.mainForm.encVidColorsBox.Enabled = enableEncOptions;
-            Program.mainForm.encVidFpsBox.Enabled = enableEncOptions;
+            bool enc = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
+            Program.mainForm.encVidQualityBox.Enabled = enc;
+            Program.mainForm.encVidPresetBox.Enabled = enc;
+            Program.mainForm.encVidColorsBox.Enabled = enc;
+            Program.mainForm.encVidFpsBox.Enabled = enc;
+            Program.mainForm.encScaleBoxW.Enabled = Program.mainForm.encScaleBoxH.Enabled = enc;
+            Program.mainForm.encCropModeBox.Enabled = enc;
 
             LoadQualityLevel(info);
             LoadPresets(info);
@@ -213,7 +217,9 @@ namespace Nmkoder.UI.Tasks
             return dict;
         }
 
-        public static void SetAudioChannelsCombox (int? ch)
+        #region Load Media Info Into UI Where Needed
+
+        public static void InitAudioChannels (int? ch)
         {
             if(ch == null || ch < 1)
             {
@@ -228,6 +234,37 @@ namespace Nmkoder.UI.Tasks
                     form.encAudCh.SelectedIndex = i;
             }
         }
+
+        public static void InitBurnCombox()
+        {
+            ComboBox burnBox = Program.mainForm.encSubBurnBox;
+
+            burnBox.Items.Clear();
+            burnBox.Items.Add("Disabled");
+
+            //foreach(SubtitleStream ss in MediaInfo.current.SubtitleStreams)
+            //    burnBox.Items.Add($"Subtitle Track {ss.Index + 1}");
+
+            for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
+            {
+                string lang = MediaInfo.current.SubtitleStreams[i].Language.Trim();
+                burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
+            }
+
+
+            burnBox.SelectedIndex = 0;
+        }
+
+        public static void InitScale (VideoStream vs)
+        {
+            if (vs == null || vs.Resolution.IsEmpty)
+                return;
+
+            Program.mainForm.encScaleBoxW.Value = vs.Resolution.Width;
+            Program.mainForm.encScaleBoxH.Value = vs.Resolution.Height;
+        }
+
+        #endregion
 
         #region Metadata Tab 
 
@@ -325,10 +362,17 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
+        #region Get Args
+
         public static string GetMuxingArgsFromUi()
         {
             Containers.Container c = (Containers.Container)Program.mainForm.containerBox.SelectedIndex;
             return Containers.GetMuxingArgs(c);
+        }
+
+        public static string GetScaleArg ()
+        {
+            return $"-s {Program.mainForm.encScaleBoxW.Value}x{Program.mainForm.encScaleBoxH.Value}";
         }
 
         public static string GetVideoFilterArgs (Codecs.VideoCodec vCodec)
@@ -359,6 +403,8 @@ namespace Nmkoder.UI.Tasks
                 return "";
         }
 
+        #endregion
+
         public static Fraction GetUiFps ()
         {
             TextBox fpsBox = Program.mainForm.encVidFpsBox;
@@ -380,26 +426,6 @@ namespace Nmkoder.UI.Tasks
             }
 
             return new Fraction();
-        }
-
-        public static void InitBurnCombox ()
-        {
-            ComboBox burnBox = Program.mainForm.encSubBurnBox;
-
-            burnBox.Items.Clear();
-            burnBox.Items.Add("Disabled");
-
-            //foreach(SubtitleStream ss in MediaInfo.current.SubtitleStreams)
-            //    burnBox.Items.Add($"Subtitle Track {ss.Index + 1}");
-
-            for(int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
-            {
-                string lang = MediaInfo.current.SubtitleStreams[i].Language.Trim();
-                burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
-            }
-                
-
-            burnBox.SelectedIndex = 0;
         }
     }
 }

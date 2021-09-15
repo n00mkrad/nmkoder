@@ -269,6 +269,9 @@
     <Compile Include="Forms\MainForm.QuickConvert.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\MainForm.Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
@@ -336,6 +339,7 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\baseline_unlink_white_24dp.png" />
     <None Include="Resources\baseline_link_white_24dp.png" />
     <None Include="Resources\baseline_stop_white_48dp.png" />
     <None Include="Resources\baseline_play_arrow_white_48dp.png" />

@@ -143,8 +143,6 @@ namespace Nmkoder.Media
                 if (MediaInfo.current == null)
                     return;
 
-                MainForm form = Program.mainForm;
-                //long currInDuration = (form.currInDurationCut < form.currInDuration) ? form.currInDurationCut : form.currInDuration;
                 long currInDuration = MediaInfo.current.DurationMs;
 
                 if (currInDuration < 1)

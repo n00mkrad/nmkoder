@@ -30,6 +30,10 @@ namespace Nmkoder.Forms
         public ComboBox encVidPresetBox;
         public ComboBox encVidColorsBox;
         public TextBox encVidFpsBox;
+        public NumericUpDown encScaleBoxW { get { return encScaleW; } }
+        public NumericUpDown encScaleBoxH { get { return encScaleH; } }
+        public HTAlt.WinForms.HTButton encScaleLinkButton { get { return encScaleLinkBtn; } }
+        public ComboBox encCropModeBox { get { return encCropMode; } }
         // Quick Convert - Audio
         public ComboBox encAudEnc;
         public NumericUpDown encAudBr;
@@ -60,6 +64,11 @@ namespace Nmkoder.Forms
 
 
             encAudChannels.SelectedIndex = 1;
+        }
+
+        private void encScaleLinkBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

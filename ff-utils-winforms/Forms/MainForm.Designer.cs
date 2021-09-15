@@ -57,10 +57,10 @@
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
-            this.scaleLinkBtn = new HTAlt.WinForms.HTButton();
+            this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
             this.encScaleH = new System.Windows.Forms.NumericUpDown();
             this.encScaleW = new System.Windows.Forms.NumericUpDown();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.encCropMode = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
             this.encVidQuality = new System.Windows.Forms.NumericUpDown();
             this.label61 = new System.Windows.Forms.Label();
@@ -182,6 +182,7 @@
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
             this.pauseBtn = new System.Windows.Forms.Button();
@@ -379,6 +380,7 @@
             this.tabList.Controls.Add(this.mediaInfoPage);
             this.tabList.Controls.Add(this.quickConvertPage);
             this.tabList.Controls.Add(this.utilsPage);
+            this.tabList.Controls.Add(this.settingsPage);
             this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
             this.tabList.Location = new System.Drawing.Point(332, 62);
             this.tabList.Name = "tabList";
@@ -575,10 +577,10 @@
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.encVid.Controls.Add(this.label29);
-            this.encVid.Controls.Add(this.scaleLinkBtn);
+            this.encVid.Controls.Add(this.encScaleLinkBtn);
             this.encVid.Controls.Add(this.encScaleH);
             this.encVid.Controls.Add(this.encScaleW);
-            this.encVid.Controls.Add(this.comboBox1);
+            this.encVid.Controls.Add(this.encCropMode);
             this.encVid.Controls.Add(this.label27);
             this.encVid.Controls.Add(this.encVidQuality);
             this.encVid.Controls.Add(this.label61);
@@ -609,21 +611,22 @@
             this.label29.TabIndex = 58;
             this.label29.Text = "x";
             // 
-            // scaleLinkBtn
+            // encScaleLinkBtn
             // 
-            this.scaleLinkBtn.AutoColor = true;
-            this.scaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.scaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
-            this.scaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.scaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.scaleLinkBtn.DrawImage = true;
-            this.scaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.scaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.scaleLinkBtn.Location = new System.Drawing.Point(447, 158);
-            this.scaleLinkBtn.Name = "scaleLinkBtn";
-            this.scaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.scaleLinkBtn.Size = new System.Drawing.Size(23, 23);
-            this.scaleLinkBtn.TabIndex = 57;
+            this.encScaleLinkBtn.AutoColor = false;
+            this.encScaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.encScaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
+            this.encScaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encScaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.encScaleLinkBtn.DrawImage = true;
+            this.encScaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.encScaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.encScaleLinkBtn.Location = new System.Drawing.Point(447, 158);
+            this.encScaleLinkBtn.Name = "encScaleLinkBtn";
+            this.encScaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.encScaleLinkBtn.Size = new System.Drawing.Size(23, 23);
+            this.encScaleLinkBtn.TabIndex = 57;
+            this.encScaleLinkBtn.Click += new System.EventHandler(this.encScaleLinkBtn_Click);
             // 
             // encScaleH
             // 
@@ -653,20 +656,20 @@
             this.encScaleW.Size = new System.Drawing.Size(100, 23);
             this.encScaleW.TabIndex = 55;
             // 
-            // comboBox1
+            // encCropMode
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.encCropMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encCropMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encCropMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encCropMode.ForeColor = System.Drawing.Color.White;
+            this.encCropMode.FormattingEnabled = true;
+            this.encCropMode.Items.AddRange(new object[] {
             "Disable",
             "Automatic"});
-            this.comboBox1.Location = new System.Drawing.Point(220, 187);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(250, 23);
-            this.comboBox1.TabIndex = 54;
+            this.encCropMode.Location = new System.Drawing.Point(220, 187);
+            this.encCropMode.Name = "encCropMode";
+            this.encCropMode.Size = new System.Drawing.Size(250, 23);
+            this.encCropMode.TabIndex = 54;
             // 
             // label27
             // 
@@ -2057,6 +2060,12 @@
             this.panel1.Size = new System.Drawing.Size(200, 200);
             this.panel1.TabIndex = 19;
             // 
+            // settingsPage
+            // 
+            this.settingsPage.Name = "settingsPage";
+            this.settingsPage.Size = new System.Drawing.Size(682, 382);
+            this.settingsPage.Text = "Settings";
+            // 
             // progressCircle
             // 
             this.progressCircle.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
@@ -2149,7 +2158,7 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -2166,7 +2175,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NMKD\'s NMKoDer";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -2394,11 +2403,12 @@
         private System.Windows.Forms.Button addTracksFromFileBtn;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label29;
-        private HTAlt.WinForms.HTButton scaleLinkBtn;
+        private HTAlt.WinForms.HTButton encScaleLinkBtn;
         private System.Windows.Forms.NumericUpDown encScaleH;
         private System.Windows.Forms.NumericUpDown encScaleW;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox encCropMode;
         private System.Windows.Forms.Label label27;
+        private Cyotek.Windows.Forms.TabListPage settingsPage;
     }
 }
 

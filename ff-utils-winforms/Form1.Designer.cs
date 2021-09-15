@@ -50,13 +50,20 @@
             this.mediaInfoPage = new Cyotek.Windows.Forms.TabListPage();
             this.streamDetails = new System.Windows.Forms.TextBox();
             this.quickConvertPage = new Cyotek.Windows.Forms.TabListPage();
+            this.label30 = new System.Windows.Forms.Label();
             this.outputPath = new System.Windows.Forms.TextBox();
+            this.encCustomArgs = new System.Windows.Forms.TextBox();
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.label29 = new System.Windows.Forms.Label();
+            this.scaleLinkBtn = new HTAlt.WinForms.HTButton();
+            this.encScaleH = new System.Windows.Forms.NumericUpDown();
+            this.encScaleW = new System.Windows.Forms.NumericUpDown();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
             this.encVidQuality = new System.Windows.Forms.NumericUpDown();
             this.label61 = new System.Windows.Forms.Label();
-            this.encCustomArgs = new System.Windows.Forms.TextBox();
             this.encVidFps = new System.Windows.Forms.TextBox();
             this.encVidColors = new System.Windows.Forms.ComboBox();
             this.encVidPreset = new System.Windows.Forms.ComboBox();
@@ -175,11 +182,11 @@
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.stopBtn = new System.Windows.Forms.Button();
-            this.runBtn = new System.Windows.Forms.Button();
-            this.pauseBtn = new System.Windows.Forms.Button();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
+            this.pauseBtn = new System.Windows.Forms.Button();
+            this.stopBtn = new System.Windows.Forms.Button();
+            this.runBtn = new System.Windows.Forms.Button();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -188,6 +195,8 @@
             this.quickConvertPage.SuspendLayout();
             this.quickEncTabControl.SuspendLayout();
             this.encVid.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.encScaleH)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encScaleW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).BeginInit();
@@ -477,12 +486,25 @@
             // 
             // quickConvertPage
             // 
+            this.quickConvertPage.Controls.Add(this.label30);
             this.quickConvertPage.Controls.Add(this.outputPath);
+            this.quickConvertPage.Controls.Add(this.encCustomArgs);
             this.quickConvertPage.Controls.Add(this.containers);
             this.quickConvertPage.Controls.Add(this.quickEncTabControl);
             this.quickConvertPage.Name = "quickConvertPage";
             this.quickConvertPage.Size = new System.Drawing.Size(682, 382);
             this.quickConvertPage.Text = "Quick Convert";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(14, 331);
+            this.label30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(98, 13);
+            this.label30.TabIndex = 52;
+            this.label30.Text = "Custom Arguments:";
             // 
             // outputPath
             // 
@@ -494,6 +516,17 @@
             this.outputPath.Name = "outputPath";
             this.outputPath.Size = new System.Drawing.Size(555, 20);
             this.outputPath.TabIndex = 45;
+            // 
+            // encCustomArgs
+            // 
+            this.encCustomArgs.AllowDrop = true;
+            this.encCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encCustomArgs.ForeColor = System.Drawing.Color.White;
+            this.encCustomArgs.Location = new System.Drawing.Point(227, 328);
+            this.encCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encCustomArgs.Name = "encCustomArgs";
+            this.encCustomArgs.Size = new System.Drawing.Size(250, 20);
+            this.encCustomArgs.TabIndex = 50;
             // 
             // containers
             // 
@@ -529,7 +562,7 @@
             this.quickEncTabControl.SelectedIndex = 0;
             this.quickEncTabControl.SelectedTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(151)))), ((int)(((byte)(234)))));
             this.quickEncTabControl.SelectedTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.quickEncTabControl.Size = new System.Drawing.Size(676, 343);
+            this.quickEncTabControl.Size = new System.Drawing.Size(676, 267);
             this.quickEncTabControl.TabIndex = 0;
             this.quickEncTabControl.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.quickEncTabControl.UnderBorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(67)))), ((int)(((byte)(70)))));
@@ -541,9 +574,14 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.label29);
+            this.encVid.Controls.Add(this.scaleLinkBtn);
+            this.encVid.Controls.Add(this.encScaleH);
+            this.encVid.Controls.Add(this.encScaleW);
+            this.encVid.Controls.Add(this.comboBox1);
+            this.encVid.Controls.Add(this.label27);
             this.encVid.Controls.Add(this.encVidQuality);
             this.encVid.Controls.Add(this.label61);
-            this.encVid.Controls.Add(this.encCustomArgs);
             this.encVid.Controls.Add(this.encVidFps);
             this.encVid.Controls.Add(this.encVidColors);
             this.encVid.Controls.Add(this.encVidPreset);
@@ -556,9 +594,90 @@
             this.encVid.Location = new System.Drawing.Point(4, 27);
             this.encVid.Name = "encVid";
             this.encVid.Padding = new System.Windows.Forms.Padding(3);
-            this.encVid.Size = new System.Drawing.Size(668, 312);
+            this.encVid.Size = new System.Drawing.Size(668, 236);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(325, 160);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(13, 15);
+            this.label29.TabIndex = 58;
+            this.label29.Text = "x";
+            // 
+            // scaleLinkBtn
+            // 
+            this.scaleLinkBtn.AutoColor = true;
+            this.scaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.scaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
+            this.scaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.scaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.scaleLinkBtn.DrawImage = true;
+            this.scaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.scaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.scaleLinkBtn.Location = new System.Drawing.Point(447, 158);
+            this.scaleLinkBtn.Name = "scaleLinkBtn";
+            this.scaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.scaleLinkBtn.Size = new System.Drawing.Size(23, 23);
+            this.scaleLinkBtn.TabIndex = 57;
+            // 
+            // encScaleH
+            // 
+            this.encScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleH.ForeColor = System.Drawing.Color.White;
+            this.encScaleH.Location = new System.Drawing.Point(341, 158);
+            this.encScaleH.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.encScaleH.Name = "encScaleH";
+            this.encScaleH.Size = new System.Drawing.Size(100, 23);
+            this.encScaleH.TabIndex = 56;
+            // 
+            // encScaleW
+            // 
+            this.encScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleW.ForeColor = System.Drawing.Color.White;
+            this.encScaleW.Location = new System.Drawing.Point(220, 158);
+            this.encScaleW.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.encScaleW.Name = "encScaleW";
+            this.encScaleW.Size = new System.Drawing.Size(100, 23);
+            this.encScaleW.TabIndex = 55;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox1.ForeColor = System.Drawing.Color.White;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Disable",
+            "Automatic"});
+            this.comboBox1.Location = new System.Drawing.Point(220, 187);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(250, 23);
+            this.comboBox1.TabIndex = 54;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.ForeColor = System.Drawing.Color.White;
+            this.label27.Location = new System.Drawing.Point(7, 190);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(36, 15);
+            this.label27.TabIndex = 53;
+            this.label27.Text = "Crop:";
             // 
             // encVidQuality
             // 
@@ -582,20 +701,9 @@
             this.label61.Location = new System.Drawing.Point(7, 160);
             this.label61.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(114, 15);
+            this.label61.Size = new System.Drawing.Size(42, 15);
             this.label61.TabIndex = 51;
-            this.label61.Text = "Custom Arguments:";
-            // 
-            // encCustomArgs
-            // 
-            this.encCustomArgs.AllowDrop = true;
-            this.encCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.encCustomArgs.Location = new System.Drawing.Point(220, 157);
-            this.encCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
-            this.encCustomArgs.Name = "encCustomArgs";
-            this.encCustomArgs.Size = new System.Drawing.Size(250, 23);
-            this.encCustomArgs.TabIndex = 50;
+            this.label61.Text = "Resize:";
             // 
             // encVidFps
             // 
@@ -714,7 +822,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(668, 312);
+            this.tabPage2.Size = new System.Drawing.Size(668, 236);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Audio";
             // 
@@ -806,7 +914,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(668, 312);
+            this.tabPage1.Size = new System.Drawing.Size(668, 236);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Subtitles";
             // 
@@ -866,7 +974,7 @@
             this.encMetaTab.Location = new System.Drawing.Point(4, 27);
             this.encMetaTab.Name = "encMetaTab";
             this.encMetaTab.Padding = new System.Windows.Forms.Padding(3);
-            this.encMetaTab.Size = new System.Drawing.Size(668, 312);
+            this.encMetaTab.Size = new System.Drawing.Size(668, 236);
             this.encMetaTab.TabIndex = 3;
             this.encMetaTab.Text = "Metadata";
             // 
@@ -1949,54 +2057,6 @@
             this.panel1.Size = new System.Drawing.Size(200, 200);
             this.panel1.TabIndex = 19;
             // 
-            // stopBtn
-            // 
-            this.stopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.stopBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_stop_white_48dp;
-            this.stopBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopBtn.ForeColor = System.Drawing.Color.White;
-            this.stopBtn.Location = new System.Drawing.Point(51, 0);
-            this.stopBtn.Name = "stopBtn";
-            this.stopBtn.Size = new System.Drawing.Size(45, 45);
-            this.stopBtn.TabIndex = 36;
-            this.stopBtn.UseVisualStyleBackColor = false;
-            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
-            // 
-            // runBtn
-            // 
-            this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.runBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.runBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.runBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.runBtn.ForeColor = System.Drawing.Color.White;
-            this.runBtn.Image = ((System.Drawing.Image)(resources.GetObject("runBtn.Image")));
-            this.runBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.runBtn.Location = new System.Drawing.Point(12, 544);
-            this.runBtn.Name = "runBtn";
-            this.runBtn.Size = new System.Drawing.Size(314, 45);
-            this.runBtn.TabIndex = 13;
-            this.runBtn.Text = "Start";
-            this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.runBtn.UseVisualStyleBackColor = false;
-            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
-            // 
-            // pauseBtn
-            // 
-            this.pauseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.pauseBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_pause_white_48dp;
-            this.pauseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pauseBtn.ForeColor = System.Drawing.Color.White;
-            this.pauseBtn.Location = new System.Drawing.Point(0, 0);
-            this.pauseBtn.Name = "pauseBtn";
-            this.pauseBtn.Size = new System.Drawing.Size(45, 45);
-            this.pauseBtn.TabIndex = 37;
-            this.pauseBtn.UseVisualStyleBackColor = false;
-            this.pauseBtn.Click += new System.EventHandler(this.pauseBtn_Click);
-            // 
             // progressCircle
             // 
             this.progressCircle.AnimationFunction = WinFormAnimation.KnownAnimationFunctions.Liner;
@@ -2041,6 +2101,54 @@
             this.busyControlsPanel.TabIndex = 39;
             this.busyControlsPanel.Visible = false;
             // 
+            // pauseBtn
+            // 
+            this.pauseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.pauseBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_pause_white_48dp;
+            this.pauseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pauseBtn.ForeColor = System.Drawing.Color.White;
+            this.pauseBtn.Location = new System.Drawing.Point(0, 0);
+            this.pauseBtn.Name = "pauseBtn";
+            this.pauseBtn.Size = new System.Drawing.Size(45, 45);
+            this.pauseBtn.TabIndex = 37;
+            this.pauseBtn.UseVisualStyleBackColor = false;
+            this.pauseBtn.Click += new System.EventHandler(this.pauseBtn_Click);
+            // 
+            // stopBtn
+            // 
+            this.stopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.stopBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_stop_white_48dp;
+            this.stopBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopBtn.ForeColor = System.Drawing.Color.White;
+            this.stopBtn.Location = new System.Drawing.Point(51, 0);
+            this.stopBtn.Name = "stopBtn";
+            this.stopBtn.Size = new System.Drawing.Size(45, 45);
+            this.stopBtn.TabIndex = 36;
+            this.stopBtn.UseVisualStyleBackColor = false;
+            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
+            // 
+            // runBtn
+            // 
+            this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.runBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.runBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.runBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runBtn.ForeColor = System.Drawing.Color.White;
+            this.runBtn.Image = ((System.Drawing.Image)(resources.GetObject("runBtn.Image")));
+            this.runBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.runBtn.Location = new System.Drawing.Point(12, 544);
+            this.runBtn.Name = "runBtn";
+            this.runBtn.Size = new System.Drawing.Size(314, 45);
+            this.runBtn.TabIndex = 13;
+            this.runBtn.Text = "Start";
+            this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.runBtn.UseVisualStyleBackColor = false;
+            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2075,6 +2183,8 @@
             this.quickEncTabControl.ResumeLayout(false);
             this.encVid.ResumeLayout(false);
             this.encVid.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.encScaleH)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encScaleW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -2282,6 +2392,13 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button addTracksFromFileBtn;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private HTAlt.WinForms.HTButton scaleLinkBtn;
+        private System.Windows.Forms.NumericUpDown encScaleH;
+        private System.Windows.Forms.NumericUpDown encScaleW;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label27;
     }
 }
 

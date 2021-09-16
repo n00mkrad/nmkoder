@@ -374,7 +374,7 @@ namespace Nmkoder.UI.Tasks
             VideoStream vs = MediaInfo.current.VideoStreams.First();
             Fraction fps = GetUiFps();
 
-            if (vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
+            if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
                 filters.Add($"fps=fps={fps}");
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In

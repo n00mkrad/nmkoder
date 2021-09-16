@@ -26,22 +26,19 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles (string[] paths)
         {
-            //RunTask.currentFileListMode = RunTask.FileListMode.BatchProcess;
+            Program.mainForm.mainTabList.SelectedIndex = 0;
             ThumbnailView.ClearUi();
             Logger.ClearLogBox();
-            
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
-
             Program.mainForm.ClearCurrentFile();
-
             FileList.LoadFiles(paths);
 
-            await LoadFileInfo(paths[0]);
+            if(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && paths.Length == 1)
+                await LoadFirstFile(paths[0]);
         }
 
-        public static async Task LoadFileInfo(string path, bool switchToTrackList = true, bool generateThumbs = true)
+        public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
         {
-            streamListLoaded = false;
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
             Logger.Log($"Scanning '{mediaFile.File.Name}' (Streams: {streamCount})...");
@@ -54,17 +51,13 @@ namespace Nmkoder.UI
             string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(current.DurationMs);
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
+            Program.mainForm.streamListBox.Items.Clear();
+            await AddStreamsToList(current, switchToTrackList);
 
-            await AddStreamsToList(current, true);
-
-            streamListLoaded = true;
             Program.mainForm.outputBox.Text = current.File.FullName;
             QuickConvertUi.ValidatePath();
-            Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
+            // Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
             QuickConvertUi.InitFile();
-
-            if(switchToTrackList)
-                Program.mainForm.mainTabList.SelectedIndex = 1;
 
             if(generateThumbs)
                 Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
@@ -85,7 +78,7 @@ namespace Nmkoder.UI
                 Logger.Log($"Found no media streams in '{mediaFile.File.Name}'!");
         }
 
-        public static async Task AddStreamsToList (MediaFile mediaFile, bool clear, bool printInit = true)
+        public static async Task AddStreamsToList (MediaFile mediaFile, bool switchToList, bool silent = false)
         {
             CheckedListBox box = Program.mainForm.streamListBox;
             int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
@@ -96,17 +89,14 @@ namespace Nmkoder.UI
                 Logger.Log($"Using multiple files as input for one output file - Batch Processing is disabled until you load a new set of files.");
             }
 
-            if(clear)
-                box.Items.Clear();
-
             if (!mediaFile.Initialized)
             {
-                if (printInit)
+                if (!silent)
                     Logger.Log($"Scanning '{mediaFile.File.Name}'...");
 
                 await mediaFile.Initialize();
 
-                if(printInit)
+                if(!silent)
                     PrintFoundStreams(mediaFile);
             }
 
@@ -126,26 +116,8 @@ namespace Nmkoder.UI
                 }
             }
 
-            //for (int i = 0; i < mediaFile.AllStreams.Count; i++)
-            //{
-            //    try
-            //    {
-            //        foreach (Stream s in mediaFile.AllStreams) // This is somewhat unnecessary but ensures that the order of the list matches the stream index.
-            //        {
-            //            if (s.Index == i)
-            //            {
-            //                box.Items.Add(new MediaStreamListEntry(mediaFile, s, fileIdx));
-            //
-            //                if (i >= 0 && i < box.Items.Count && s.Codec.ToLower().Trim() != "unknown")
-            //                    box.SetItemChecked(i, true);
-            //            }
-            //        }
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        Logger.Log($"Error trying to load streams into UI: {e.Message}\n{e.StackTrace}");
-            //    }
-            //}
+            if(switchToList)
+                Program.mainForm.mainTabList.SelectedIndex = 1;
         }
 
         public static string GetStreamDetails(Stream stream)

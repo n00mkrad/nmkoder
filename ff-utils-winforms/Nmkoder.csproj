@@ -266,10 +266,16 @@
     <Compile Include="Data\QueryInfo.cs" />
     <Compile Include="Data\Streams\VideoStream.cs" />
     <Compile Include="Extensions\MagickExtensions.cs" />
+    <Compile Include="Forms\MainForm.FileList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\MainForm.QuickConvert.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.StreamList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />

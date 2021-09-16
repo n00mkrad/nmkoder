@@ -86,7 +86,7 @@ namespace Nmkoder.Main
                 MediaFile mf = (MediaFile)taskFileList[i];
                 Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.File.Name}.");
                 Program.mainForm.ClearCurrentFile();
-                await MediaInfo.LoadFileInfo(mf.File.FullName, false, false); // Load file info
+                await MediaInfo.LoadFirstFile(mf.File.FullName, false, false); // Load file info
                 await Start(batchTask); // Run task
                 fileList.Items.RemoveAt(0);
             }

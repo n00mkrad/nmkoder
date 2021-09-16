@@ -184,18 +184,12 @@ namespace Nmkoder.Forms
 
         public void ClearCurrentFile ()
         {
+            MediaInfo.current = null;
+            outputPath.Text = "";
             streamList.Items.Clear();
             streamDetails.Text = "";
+            formatInfo.Text = "";
             ThumbnailView.ClearUi();
-        }
-
-        private void streamList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(streamList.SelectedItem == null)
-                return;
-
-            MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
-            streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream);
         }
 
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,20 +206,10 @@ namespace Nmkoder.Forms
 
         private void runBtn_Click(object sender, EventArgs e)
         {
-            if(fileList.Items.Count > 1)
-            {
-                DialogResult dialog = MessageBox.Show($"You have loaded multiple files. Do you want to run batch processing and apply this action to all of them?" +
-                $"\n\nClick \"No\" if you only want to run the first (currently loaded) file.", "Batch Processing", MessageBoxButtons.YesNo);
-
-                if (dialog == DialogResult.Yes)
-                    RunTask.StartBatch();
-                else
-                    RunTask.Start();
-            }
-            else
-            {
+            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
                 RunTask.Start();
-            }
+            else
+                RunTask.StartBatch();
         }
 
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
@@ -254,30 +238,18 @@ namespace Nmkoder.Forms
             Logger.Log($"Not implemented yet.");
         }
 
-        private void streamList_Leave(object sender, EventArgs e)
-        {
-            QuickConvertUi.LoadMetadataGrid();
-        }
-
         private void metaMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfig();
         }
 
-        private void addTracksFromFileBtn_Click(object sender, EventArgs e)
+        private void tabList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MediaInfo.AddStreamsToList((MediaFile)fileList.SelectedItem, false);
-        }
+            if(tabList.SelectedPage == fileListPage)
+                RefreshFileListUi();
 
-        private void streamList_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
-                streamList.SelectedItems.Clear();
-        }
-
-        private void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            RunTask.currentFileListMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
+            if (tabList.SelectedPage == streamListPage)
+                RefreshStreamListUi();
         }
 
         //async Task ExtractFrames(string[] files)

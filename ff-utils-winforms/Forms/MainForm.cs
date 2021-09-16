@@ -273,7 +273,6 @@ namespace Nmkoder.Forms
                 streamList.SelectedItems.Clear();
         }
 
-
         //async Task ExtractFrames(string[] files)
         //{
         //    if (extractFramesTabcontrol.SelectedIndex == 0)

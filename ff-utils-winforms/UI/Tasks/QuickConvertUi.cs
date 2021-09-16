@@ -18,6 +18,8 @@ namespace Nmkoder.UI.Tasks
     partial class QuickConvertUi : QuickConvert
     {
         private static MainForm form;
+        public static bool scaleLink = true;
+
 
         public static void Init()
         {

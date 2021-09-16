@@ -58,8 +58,6 @@
             this.encVid = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
-            this.encScaleH = new System.Windows.Forms.NumericUpDown();
-            this.encScaleW = new System.Windows.Forms.NumericUpDown();
             this.encCropMode = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
             this.encVidQuality = new System.Windows.Forms.NumericUpDown();
@@ -188,6 +186,8 @@
             this.pauseBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.runBtn = new System.Windows.Forms.Button();
+            this.encScaleW = new System.Windows.Forms.TextBox();
+            this.encScaleH = new System.Windows.Forms.TextBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -196,8 +196,6 @@
             this.quickConvertPage.SuspendLayout();
             this.quickEncTabControl.SuspendLayout();
             this.encVid.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encScaleH)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.encScaleW)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).BeginInit();
@@ -576,10 +574,10 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encVid.Controls.Add(this.label29);
-            this.encVid.Controls.Add(this.encScaleLinkBtn);
             this.encVid.Controls.Add(this.encScaleH);
             this.encVid.Controls.Add(this.encScaleW);
+            this.encVid.Controls.Add(this.label29);
+            this.encVid.Controls.Add(this.encScaleLinkBtn);
             this.encVid.Controls.Add(this.encCropMode);
             this.encVid.Controls.Add(this.label27);
             this.encVid.Controls.Add(this.encVidQuality);
@@ -604,7 +602,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(325, 160);
+            this.label29.Location = new System.Drawing.Point(339, 160);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(13, 15);
@@ -621,40 +619,13 @@
             this.encScaleLinkBtn.DrawImage = true;
             this.encScaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.encScaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.encScaleLinkBtn.Location = new System.Drawing.Point(447, 158);
+            this.encScaleLinkBtn.Location = new System.Drawing.Point(483, 158);
             this.encScaleLinkBtn.Name = "encScaleLinkBtn";
             this.encScaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.encScaleLinkBtn.Size = new System.Drawing.Size(23, 23);
             this.encScaleLinkBtn.TabIndex = 57;
+            this.encScaleLinkBtn.Visible = false;
             this.encScaleLinkBtn.Click += new System.EventHandler(this.encScaleLinkBtn_Click);
-            // 
-            // encScaleH
-            // 
-            this.encScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encScaleH.ForeColor = System.Drawing.Color.White;
-            this.encScaleH.Location = new System.Drawing.Point(341, 158);
-            this.encScaleH.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.encScaleH.Name = "encScaleH";
-            this.encScaleH.Size = new System.Drawing.Size(100, 23);
-            this.encScaleH.TabIndex = 56;
-            // 
-            // encScaleW
-            // 
-            this.encScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encScaleW.ForeColor = System.Drawing.Color.White;
-            this.encScaleW.Location = new System.Drawing.Point(220, 158);
-            this.encScaleW.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.encScaleW.Name = "encScaleW";
-            this.encScaleW.Size = new System.Drawing.Size(100, 23);
-            this.encScaleW.TabIndex = 55;
             // 
             // encCropMode
             // 
@@ -2158,6 +2129,28 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // encScaleW
+            // 
+            this.encScaleW.AllowDrop = true;
+            this.encScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleW.ForeColor = System.Drawing.Color.White;
+            this.encScaleW.Location = new System.Drawing.Point(220, 157);
+            this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encScaleW.Name = "encScaleW";
+            this.encScaleW.Size = new System.Drawing.Size(110, 23);
+            this.encScaleW.TabIndex = 59;
+            // 
+            // encScaleH
+            // 
+            this.encScaleH.AllowDrop = true;
+            this.encScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleH.ForeColor = System.Drawing.Color.White;
+            this.encScaleH.Location = new System.Drawing.Point(360, 157);
+            this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encScaleH.Name = "encScaleH";
+            this.encScaleH.Size = new System.Drawing.Size(110, 23);
+            this.encScaleH.TabIndex = 60;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2192,8 +2185,6 @@
             this.quickEncTabControl.ResumeLayout(false);
             this.encVid.ResumeLayout(false);
             this.encVid.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encScaleH)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.encScaleW)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -2404,11 +2395,11 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label29;
         private HTAlt.WinForms.HTButton encScaleLinkBtn;
-        private System.Windows.Forms.NumericUpDown encScaleH;
-        private System.Windows.Forms.NumericUpDown encScaleW;
         private System.Windows.Forms.ComboBox encCropMode;
         private System.Windows.Forms.Label label27;
         private Cyotek.Windows.Forms.TabListPage settingsPage;
+        private System.Windows.Forms.TextBox encScaleH;
+        private System.Windows.Forms.TextBox encScaleW;
     }
 }
 

@@ -20,6 +20,7 @@ namespace Nmkoder.Main
         public enum FileListMode { MultiFileInput, BatchProcess };
         public static FileListMode currentFileListMode;
 
+        public static bool runningBatch = false;
         public static bool canceled = false;
 
         public static void Cancel(string reason = "", bool noMsgBox = false)
@@ -40,9 +41,12 @@ namespace Nmkoder.Main
                 MessageBox.Show($"Canceled:\n\n{reason}", "Message");
         }
 
-        public static async Task Start (TaskType overrideTask = TaskType.Null)
+        public static async Task Start (TaskType batchTask = TaskType.Null)
         {
-            TaskType taskType = overrideTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : overrideTask;
+            if (batchTask == TaskType.Null)
+                runningBatch = false;
+
+            TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
 
             if (taskType == TaskType.None)
             {
@@ -75,6 +79,8 @@ namespace Nmkoder.Main
             object[] taskFileList = new object[fileList.Items.Count];
             fileList.Items.CopyTo(taskFileList, 0);
 
+            runningBatch = true;
+
             for (int i = 0; i < taskFileList.Length; i++)
             {
                 MediaFile mf = (MediaFile)taskFileList[i];
@@ -84,6 +90,8 @@ namespace Nmkoder.Main
                 await Start(batchTask); // Run task
                 fileList.Items.RemoveAt(0);
             }
+
+            runningBatch = false;
 
             Logger.Log($"Queue: Completed {fileList.Items.Count} tasks.");
         }

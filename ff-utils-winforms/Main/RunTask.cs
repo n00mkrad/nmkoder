@@ -93,7 +93,7 @@ namespace Nmkoder.Main
 
             runningBatch = false;
 
-            Logger.Log($"Queue: Completed {fileList.Items.Count} tasks.");
+            Logger.Log($"Queue: Completed {taskFileList.Length} tasks.");
         }
     }
 }

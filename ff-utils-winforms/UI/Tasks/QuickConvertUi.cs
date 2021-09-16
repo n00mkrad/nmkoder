@@ -47,7 +47,7 @@ namespace Nmkoder.UI.Tasks
             ConfigParser.LoadComboxIndex(form.containerBox);
         }
 
-        public static void InitFile ()
+        public static void InitFile()
         {
             try
             {
@@ -58,10 +58,10 @@ namespace Nmkoder.UI.Tasks
                     InitBurnCombox();
                     LoadMetadataGrid();
                 }
-                
+
                 ValidateContainer();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"Failed to initialized media file: {e.Message}\n{e.StackTrace}");
             }
@@ -98,7 +98,7 @@ namespace Nmkoder.UI.Tasks
 
         #region Load Video Options
 
-        static void LoadQualityLevel (CodecInfo info)
+        static void LoadQualityLevel(CodecInfo info)
         {
             if (info.QMax > 0)
                 form.encVidQualityBox.Maximum = info.QMax;
@@ -179,7 +179,7 @@ namespace Nmkoder.UI.Tasks
             ValidatePath();
         }
 
-        public static void ValidatePath ()
+        public static void ValidatePath()
         {
             if (MediaInfo.current == null)
                 return;
@@ -190,7 +190,7 @@ namespace Nmkoder.UI.Tasks
 
         #region Get Current Codec
 
-        public static Codecs.VideoCodec GetCurrentCodecV ()
+        public static Codecs.VideoCodec GetCurrentCodecV()
         {
             return (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
         }
@@ -207,7 +207,7 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
-        public static Dictionary<string, string> GetVideoArgsFromUi ()
+        public static Dictionary<string, string> GetVideoArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("q", form.encVidQualityBox.Value.ToString());
@@ -226,9 +226,9 @@ namespace Nmkoder.UI.Tasks
 
         #region Load Media Info Into UI Where Needed
 
-        public static void InitAudioChannels (int? ch)
+        public static void InitAudioChannels(int? ch)
         {
-            if(ch == null || ch < 1)
+            if (ch == null || ch < 1)
             {
                 Logger.Log($"SetAudioChannelsCombox: ch is null or < 1 - returning", true);
                 form.encAudCh.SelectedIndex = 1;
@@ -292,7 +292,7 @@ namespace Nmkoder.UI.Tasks
             grid.Rows.Add($"File", MediaInfo.current.Title, MediaInfo.current.Language);
 
             for (int i = 0; i < MediaInfo.current.VideoStreams.Count; i++)
-                if(Program.mainForm.streamListBox.GetItemChecked(c.VideoStreams[i].Index))
+                if (Program.mainForm.streamListBox.GetItemChecked(c.VideoStreams[i].Index))
                     grid.Rows.Add($"Video Track {i + 1}", c.VideoStreams[i].Title, c.VideoStreams[i].Language);
 
             for (int i = 0; i < MediaInfo.current.AudioStreams.Count; i++)
@@ -312,7 +312,7 @@ namespace Nmkoder.UI.Tasks
             grid.Columns[2].FillWeight = 10;
         }
 
-        public static string GetMetadataArgs ()
+        public static string GetMetadataArgs()
         {
             int cfg = Config.GetInt(Config.Key.metaMode);
 
@@ -334,7 +334,7 @@ namespace Nmkoder.UI.Tasks
                 if (!map && string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(lang))
                     continue;
 
-                if(idx < 0)
+                if (idx < 0)
                 {
                     args.Add($"-metadata title=\"{title}\"");
                 }
@@ -364,7 +364,7 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static string GetVideoFilterArgs (Codecs.VideoCodec vCodec)
+        public static string GetVideoFilterArgs(Codecs.VideoCodec vCodec)
         {
             List<string> filters = new List<string>();
 
@@ -377,7 +377,7 @@ namespace Nmkoder.UI.Tasks
             if (vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
                 filters.Add($"fps=fps={fps}");
 
-            if(Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
+            if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
                 string filename = MediaInfo.current.File.FullName.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
                 filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
@@ -400,25 +400,25 @@ namespace Nmkoder.UI.Tasks
 
         private static string GetScaleFilter(string w, string h)
         {
-            string argW = w.Replace("W", "iw").Replace("H", "ih");
-            string argH = h.Replace("W", "iw").Replace("H", "ih");
+            string argW = w.Replace("w", "iw").Replace("h", "ih");
+            string argH = h.Replace("w", "iw").Replace("h", "ih");
 
             if (w.EndsWith("%"))
                 argW = $"iw*{((float)w.GetInt() / 100).ToStringDot()}";
-            else if (w.GetInt() <= 0)
+            else if (string.IsNullOrWhiteSpace(w))
                 argW = "-1";
 
             if (h.EndsWith("%"))
                 argH = $"ih*{((float)h.GetInt() / 100).ToStringDot()}";
-            else if (h.GetInt() <= 0)
+            else if (string.IsNullOrWhiteSpace(h))
                 argH = "-1";
 
-            return $"scale={argW}:{argH}";
+            return $"scale={argW}:{argH},setsar=1:1";
         }
 
         #endregion
 
-        public static Fraction GetUiFps ()
+        public static Fraction GetUiFps()
         {
             TextBox fpsBox = Program.mainForm.encVidFpsBox;
 

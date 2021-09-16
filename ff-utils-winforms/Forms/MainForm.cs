@@ -89,6 +89,7 @@ namespace Nmkoder.Forms
 
         void LoadConfig()
         {
+            ConfigParser.LoadComboxIndex(fileListMode);
             ConfigParser.LoadComboxIndex(taskMode);
             ConfigParser.LoadComboxIndex(containers);
             ConfigParser.LoadComboxIndex(encVidCodec);
@@ -102,6 +103,7 @@ namespace Nmkoder.Forms
             if (!initialized)
                 return;
 
+            ConfigParser.SaveComboxIndex(fileListMode);
             ConfigParser.SaveComboxIndex(taskMode);
             ConfigParser.SaveComboxIndex(containers);
             ConfigParser.SaveComboxIndex(encVidCodec);
@@ -271,6 +273,11 @@ namespace Nmkoder.Forms
         {
             if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
                 streamList.SelectedItems.Clear();
+        }
+
+        private void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RunTask.currentFileListMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
         }
 
         //async Task ExtractFrames(string[] files)

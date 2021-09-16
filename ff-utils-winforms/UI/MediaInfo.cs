@@ -26,7 +26,7 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles (string[] paths)
         {
-            RunTask.currentFileListMode = RunTask.FileListMode.BatchProcess;
+            //RunTask.currentFileListMode = RunTask.FileListMode.BatchProcess;
             ThumbnailView.ClearUi();
             Logger.ClearLogBox();
             
@@ -92,7 +92,7 @@ namespace Nmkoder.UI
 
             if (uniqueFileCount > 0 && RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
             {
-                RunTask.currentFileListMode = RunTask.FileListMode.MultiFileInput; // Disable batch processing when using multiple input files
+                //RunTask.currentFileListMode = RunTask.FileListMode.MultiFileInput; // Disable batch processing when using multiple input files
                 Logger.Log($"Using multiple files as input for one output file - Batch Processing is disabled until you load a new set of files.");
             }
 

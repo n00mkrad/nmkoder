@@ -42,6 +42,7 @@
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.fileListMode = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -56,6 +57,8 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.encScaleH = new System.Windows.Forms.TextBox();
+            this.encScaleW = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
             this.encCropMode = new System.Windows.Forms.ComboBox();
@@ -186,8 +189,6 @@
             this.pauseBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.runBtn = new System.Windows.Forms.Button();
-            this.encScaleW = new System.Windows.Forms.TextBox();
-            this.encScaleH = new System.Windows.Forms.TextBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -387,6 +388,7 @@
             // 
             // fileListPage
             // 
+            this.fileListPage.Controls.Add(this.fileListMode);
             this.fileListPage.Controls.Add(this.button4);
             this.fileListPage.Controls.Add(this.button3);
             this.fileListPage.Controls.Add(this.button2);
@@ -395,6 +397,23 @@
             this.fileListPage.Name = "fileListPage";
             this.fileListPage.Size = new System.Drawing.Size(682, 382);
             this.fileListPage.Text = "File List";
+            // 
+            // fileListMode
+            // 
+            this.fileListMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fileListMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.fileListMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListMode.ForeColor = System.Drawing.Color.White;
+            this.fileListMode.FormattingEnabled = true;
+            this.fileListMode.Items.AddRange(new object[] {
+            "Single File Mode - Create One Output File, Optionally Load Tracks From Other Inpu" +
+                "t Files",
+            "Batch Processing Mode - Apply An Action To All Files In The List"});
+            this.fileListMode.Location = new System.Drawing.Point(3, 3);
+            this.fileListMode.Name = "fileListMode";
+            this.fileListMode.Size = new System.Drawing.Size(523, 21);
+            this.fileListMode.TabIndex = 42;
+            this.fileListMode.SelectedIndexChanged += new System.EventHandler(this.fileListMode_SelectedIndexChanged);
             // 
             // button4
             // 
@@ -455,10 +474,11 @@
             this.fileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.fileList.ForeColor = System.Drawing.Color.White;
             this.fileList.FormattingEnabled = true;
+            this.fileList.IntegralHeight = false;
             this.fileList.ItemHeight = 16;
-            this.fileList.Location = new System.Drawing.Point(3, 3);
+            this.fileList.Location = new System.Drawing.Point(3, 30);
             this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(523, 372);
+            this.fileList.Size = new System.Drawing.Size(523, 345);
             this.fileList.TabIndex = 0;
             // 
             // mediaInfoPage
@@ -597,6 +617,30 @@
             this.encVid.Size = new System.Drawing.Size(668, 236);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // encScaleH
+            // 
+            this.encScaleH.AllowDrop = true;
+            this.encScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleH.ForeColor = System.Drawing.Color.White;
+            this.encScaleH.Location = new System.Drawing.Point(360, 157);
+            this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encScaleH.Name = "encScaleH";
+            this.encScaleH.Size = new System.Drawing.Size(110, 23);
+            this.encScaleH.TabIndex = 60;
+            this.encScaleH.Text = "Height";
+            // 
+            // encScaleW
+            // 
+            this.encScaleW.AllowDrop = true;
+            this.encScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encScaleW.ForeColor = System.Drawing.Color.White;
+            this.encScaleW.Location = new System.Drawing.Point(220, 157);
+            this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encScaleW.Name = "encScaleW";
+            this.encScaleW.Size = new System.Drawing.Size(110, 23);
+            this.encScaleW.TabIndex = 59;
+            this.encScaleW.Text = "Width";
             // 
             // label29
             // 
@@ -2129,28 +2173,6 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // encScaleW
-            // 
-            this.encScaleW.AllowDrop = true;
-            this.encScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encScaleW.ForeColor = System.Drawing.Color.White;
-            this.encScaleW.Location = new System.Drawing.Point(220, 157);
-            this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
-            this.encScaleW.Name = "encScaleW";
-            this.encScaleW.Size = new System.Drawing.Size(110, 23);
-            this.encScaleW.TabIndex = 59;
-            // 
-            // encScaleH
-            // 
-            this.encScaleH.AllowDrop = true;
-            this.encScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encScaleH.ForeColor = System.Drawing.Color.White;
-            this.encScaleH.Location = new System.Drawing.Point(360, 157);
-            this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
-            this.encScaleH.Name = "encScaleH";
-            this.encScaleH.Size = new System.Drawing.Size(110, 23);
-            this.encScaleH.TabIndex = 60;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2400,6 +2422,7 @@
         private Cyotek.Windows.Forms.TabListPage settingsPage;
         private System.Windows.Forms.TextBox encScaleH;
         private System.Windows.Forms.TextBox encScaleW;
+        private System.Windows.Forms.ComboBox fileListMode;
     }
 }
 

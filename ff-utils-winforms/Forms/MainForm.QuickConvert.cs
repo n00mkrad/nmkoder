@@ -63,7 +63,6 @@ namespace Nmkoder.Forms
             encSubEnc = encSubCodec;
             encSubBurnBox = encSubBurn;
 
-
             encAudChannels.SelectedIndex = 1;
         }
 

@@ -27,12 +27,15 @@ namespace Nmkoder.Forms
             addTracksFromFileBtn.Text = AreAnyTracksLoaded() ? "Add Tracks To List" : "Load File";
         }
 
-        private void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
+        private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RunTask.FileListMode oldMode = RunTask.currentFileListMode;
             RunTask.FileListMode newMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
 
-            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && newMode == RunTask.FileListMode.BatchProcess)
+            if (oldMode == RunTask.FileListMode.MultiFileInput && newMode == RunTask.FileListMode.BatchProcess)
+            {
                 ClearCurrentFile();
+            }
 
             RunTask.currentFileListMode = newMode;
 
@@ -40,6 +43,12 @@ namespace Nmkoder.Forms
 
             SaveConfig();
             RefreshFileListUi();
+
+            if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
+            {
+                if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
+                    await MediaInfo.LoadFirstFile(((MediaFile)fileList.Items[0]).File.FullName);
+            }
         }
 
         private async void addTracksFromFileBtn_Click(object sender, EventArgs e)

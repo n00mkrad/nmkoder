@@ -3,6 +3,7 @@ using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using Nmkoder.Media;
 using System;
 using System.Collections.Generic;
@@ -50,10 +51,14 @@ namespace Nmkoder.UI.Tasks
         {
             try
             {
-                InitAudioChannels(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
-                InitScale(MediaInfo.current.VideoStreams.FirstOrDefault());
-                InitBurnCombox();
-                LoadMetadataGrid();
+                if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
+                {
+                    Program.mainForm.encScaleBoxW.Text = Program.mainForm.encScaleBoxH.Text = "";
+                    InitAudioChannels(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                    InitBurnCombox();
+                    LoadMetadataGrid();
+                }
+                
                 ValidateContainer();
             }
             catch(Exception e)
@@ -244,26 +249,13 @@ namespace Nmkoder.UI.Tasks
             burnBox.Items.Clear();
             burnBox.Items.Add("Disabled");
 
-            //foreach(SubtitleStream ss in MediaInfo.current.SubtitleStreams)
-            //    burnBox.Items.Add($"Subtitle Track {ss.Index + 1}");
-
             for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
             {
                 string lang = MediaInfo.current.SubtitleStreams[i].Language.Trim();
                 burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
             }
 
-
             burnBox.SelectedIndex = 0;
-        }
-
-        public static void InitScale (VideoStream vs)
-        {
-            if (vs == null || vs.Resolution.IsEmpty)
-                return;
-
-            Program.mainForm.encScaleBoxW.Value = vs.Resolution.Width;
-            Program.mainForm.encScaleBoxH.Value = vs.Resolution.Height;
         }
 
         #endregion
@@ -372,11 +364,6 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static string GetScaleArg ()
-        {
-            return $"-s {Program.mainForm.encScaleBoxW.Value}x{Program.mainForm.encScaleBoxH.Value}";
-        }
-
         public static string GetVideoFilterArgs (Codecs.VideoCodec vCodec)
         {
             List<string> filters = new List<string>();
@@ -399,10 +386,34 @@ namespace Nmkoder.UI.Tasks
             if ((vs.Resolution.Width % 2 != 0) || (vs.Resolution.Height % 2 != 0)) // Check Filter: Pad for mod2
                 filters.Add(FfmpegUtils.GetPadFilter(2));
 
+            string scaleW = Program.mainForm.encScaleBoxW.Text.Trim().ToLower();
+            string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
+
+            if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
+                filters.Add(GetScaleFilter(scaleW, scaleH));
+
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";
             else
                 return "";
+        }
+
+        private static string GetScaleFilter(string w, string h)
+        {
+            string argW = w.Replace("W", "iw").Replace("H", "ih");
+            string argH = h.Replace("W", "iw").Replace("H", "ih");
+
+            if (w.EndsWith("%"))
+                argW = $"iw*{((float)w.GetInt() / 100).ToStringDot()}";
+            else if (w.GetInt() <= 0)
+                argW = "-1";
+
+            if (h.EndsWith("%"))
+                argH = $"ih*{((float)h.GetInt() / 100).ToStringDot()}";
+            else if (h.GetInt() <= 0)
+                argH = "-1";
+
+            return $"scale={argW}:{argH}";
         }
 
         #endregion

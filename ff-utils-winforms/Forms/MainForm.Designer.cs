@@ -628,7 +628,6 @@
             this.encScaleH.Name = "encScaleH";
             this.encScaleH.Size = new System.Drawing.Size(110, 27);
             this.encScaleH.TabIndex = 60;
-            this.encScaleH.Text = "Height";
             // 
             // encScaleW
             // 
@@ -640,7 +639,6 @@
             this.encScaleW.Name = "encScaleW";
             this.encScaleW.Size = new System.Drawing.Size(110, 27);
             this.encScaleW.TabIndex = 59;
-            this.encScaleW.Text = "Width";
             // 
             // label29
             // 

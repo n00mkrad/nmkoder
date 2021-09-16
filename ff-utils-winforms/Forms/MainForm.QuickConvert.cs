@@ -45,7 +45,7 @@ namespace Nmkoder.Forms
         public TextBox outputBox;
         public TextBox customArgsBox;
 
-        public void AssignControlsQuickConvert ()
+        public void InitQuickConvert ()
         {
             containerBox = containers;
             encVidCodecsBox = encVidCodec;
@@ -62,6 +62,7 @@ namespace Nmkoder.Forms
             encSubBurnBox = encSubBurn;
 
             encAudChannels.SelectedIndex = 1;
+            encCropMode.SelectedIndex = 1;
         }
 
         private void encScaleLinkBtn_Click(object sender, EventArgs e)

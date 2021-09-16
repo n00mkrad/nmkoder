@@ -46,7 +46,7 @@ namespace Nmkoder.Forms
 
             mainTabList = tabList;
 
-            AssignControlsQuickConvert();
+            InitQuickConvert();
 
             metaGrid = metadataGrid;
             outputBox = outputPath;

@@ -295,7 +295,7 @@ namespace Nmkoder.Media
             await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
         }
 
-        public static async Task ExtractSingleFrameAtTime(string inputFile, string outputPath, int skipSeconds, int maxH = 2160)
+        public static async Task ExtractSingleFrameAtTime(string inputFile, string outputPath, int skipSeconds, int maxH = 2160, bool noKey = false)
         {
             NmkdStopwatch sw = new NmkdStopwatch();
             bool isPng = (Path.GetExtension(outputPath).ToLower() == ".png");
@@ -303,7 +303,8 @@ namespace Nmkoder.Media
             string pixFmt = "-pix_fmt " + (isPng ? $"rgb24 {comprArg}" : "yuvj420p");
             Size res = await GetMediaResolutionCached.GetSizeAsync(inputFile);
             string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
-            string args = $"-ss {skipSeconds} -i {inputFile.Wrap()} -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
+            string noKeyArg = noKey ? "-skip_frame nokey" : "";
+            string args = $"{noKeyArg} -ss {skipSeconds} -i {inputFile.Wrap()} -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
             await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
         }
 
@@ -319,7 +320,7 @@ namespace Nmkoder.Media
             for (int i = 0; i < amount; i++)
             {
                 int time = interval * (i + 1);
-                tasks.Add(ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH));
+                tasks.Add(ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH, true));
             }
 
             await Task.WhenAll(tasks);

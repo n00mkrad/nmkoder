@@ -274,6 +274,7 @@ namespace Nmkoder.IO
 
         public enum Key
         {
+            autoCropSamples,
             cmdDebugMode,
             metaMode
         }

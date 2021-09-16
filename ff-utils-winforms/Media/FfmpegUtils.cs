@@ -2,14 +2,17 @@
 using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.UI;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Nmkoder.Media.GetVideoInfo;
+using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.Media
 {
@@ -139,6 +142,35 @@ namespace Nmkoder.Media
         public static string GetPadFilter(int px = 2)
         {
             return $"pad=width=ceil(iw/{px})*{px}:height=ceil(ih/{px})*{px}:color=black@0";
+        }
+
+        public static async Task<string> GetCurrentAutoCrop (bool print)
+        {
+            string msg = "Detecting crop... This can take several minutes for long videos.";
+            Logger.Log(msg, !print);
+            NmkdStopwatch sw = new NmkdStopwatch();
+            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 6);
+            string path = MediaInfo.current.File.FullName;
+            long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
+            int interval = (int)Math.Floor((float)duration / sampleCount);
+            List<string> detectedCrops = new List<string>();
+            List<Task> tasks = new List<Task>();
+
+            for (int i = 0; i < sampleCount; i++)
+            {
+                int t = interval * (i + 1) - (interval > 1 ? 1 : 0);
+
+                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -ss {t}", "-an -sn -sn -vf cropdetect -vframes 3 -f null - 2>&1 1>nul | findstr crop=", "");
+
+                foreach (string l in output.SplitIntoLines().Where(x => x.MatchesWildcard("*:*:*:*")))
+                    detectedCrops.Add(l.Split(" crop=").Last());
+            }
+
+            var mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            string[] cropVals = mostCommon.Split(':');
+            bool repl = Logger.GetLastLine().Contains(msg);
+            Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", !print, print && repl);
+            return $"crop={mostCommon}";
         }
 
         public static Size SizeFromString (string str, char delimiter = ':')

@@ -364,7 +364,7 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static string GetVideoFilterArgs(Codecs.VideoCodec vCodec)
+        public static async Task<string> GetVideoFilterArgs(Codecs.VideoCodec vCodec)
         {
             List<string> filters = new List<string>();
 
@@ -391,6 +391,11 @@ namespace Nmkoder.UI.Tasks
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(GetScaleFilter(scaleW, scaleH));
+
+            if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
+            {
+                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(true));
+            }
 
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";

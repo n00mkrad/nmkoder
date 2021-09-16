@@ -25,8 +25,13 @@ namespace Nmkoder.Media
 
         public static async Task<string> GetFfmpegOutputAsync(string path, string args, string lineFilter = "")
         {
+            return await GetFfmpegOutputAsync(path, "", args, lineFilter);
+        }
+
+        public static async Task<string> GetFfmpegOutputAsync(string path, string argsIn, string argsOut, string lineFilter = "")
+        {
             Process process = OsUtils.NewProcess(true);
-            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y -stats -i {path.Wrap()} {args}";
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y {argsIn} -i {path.Wrap()} {argsOut}";
             return await GetInfoAsync(path, process, lineFilter, false);
         }
 

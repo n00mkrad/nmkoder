@@ -68,6 +68,21 @@ namespace Nmkoder.Forms
             RefreshFileListUi();
         }
 
+        private void fileListCleanBtn_Click(object sender, EventArgs e)
+        {
+            fileList.Items.RemoveAt(fileList.SelectedIndex);
+        }
+
+        private void fileListMoveUpBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileListMoveDownBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private bool AreAnyTracksLoaded ()
         {
             return streamList.Items.Count > 0;

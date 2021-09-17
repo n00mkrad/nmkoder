@@ -345,6 +345,9 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\icon_clear.png" />
+    <None Include="Resources\icon_arrow_up.png" />
+    <None Include="Resources\icon_arrow_down.png" />
     <None Include="Resources\baseline_unlink_white_24dp.png" />
     <None Include="Resources\baseline_link_white_24dp.png" />
     <None Include="Resources\baseline_stop_white_48dp.png" />

@@ -174,12 +174,24 @@ namespace Nmkoder.Forms
             //if (mainTabControl.SelectedTab == delayPage) await Delay(files);
         }
 
-        private void inputPanel_DragEnter(object sender, DragEventArgs e) { e.Effect = DragDropEffects.Copy; }
+        private void inputPanel_DragEnter(object sender, DragEventArgs e)
+        {
+            if(fileList.Items.Count < 1)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                dropPanel.Visible = true;
+                dropLoadClearBg.BackColor = Color.FromArgb(48, 48, 48);
+                dropLoadAddBg.BackColor = Color.FromArgb(48, 48, 48);
+            }
+        }
 
         private void inputPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MediaInfo.HandleFiles(files);
+            MediaInfo.HandleFiles(files, true);
         }
 
         public void ClearCurrentFile ()
@@ -251,6 +263,43 @@ namespace Nmkoder.Forms
             if (tabList.SelectedPage == streamListPage)
                 RefreshStreamListUi();
         }
+
+        #region File Drop Panel
+
+        private void dropLoadFilesClear_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+            dropLoadClearBg.BackColor = Color.FromArgb(64, 64, 64);
+            dropLoadAddBg.BackColor = Color.FromArgb(48, 48, 48);
+        }
+
+        private void dropLoadFilesAdd_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+            dropLoadClearBg.BackColor = Color.FromArgb(48, 48, 48);
+            dropLoadAddBg.BackColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private void dropLoadFilesClear_DragDrop(object sender, DragEventArgs e)
+        {
+            dropPanel.Visible = false;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            MediaInfo.HandleFiles(files, true);
+        }
+
+        private void dropLoadFilesAdd_DragDrop(object sender, DragEventArgs e)
+        {
+            dropPanel.Visible = false;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            MediaInfo.HandleFiles(files, false);
+        }
+
+        private void dropPanel_DragLeave(object sender, EventArgs e)
+        {
+            dropPanel.Visible = false;
+        }
+
+        #endregion
 
         //async Task ExtractFrames(string[] files)
         //{

@@ -24,16 +24,20 @@ namespace Nmkoder.UI
         public static MediaFile current;
         public static bool streamListLoaded;
 
-        public static async Task HandleFiles (string[] paths)
+        public static async Task HandleFiles (string[] paths, bool clearExisting)
         {
-            Program.mainForm.mainTabList.SelectedIndex = 0;
-            ThumbnailView.ClearUi();
-            Logger.ClearLogBox();
-            Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
-            Program.mainForm.ClearCurrentFile();
-            FileList.LoadFiles(paths);
+            if (clearExisting)
+            {
+                ThumbnailView.ClearUi();
+                Program.mainForm.ClearCurrentFile();
+                Logger.ClearLogBox();
+            }
 
-            if(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && paths.Length == 1)
+            Program.mainForm.mainTabList.SelectedIndex = 0;
+            Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
+            FileList.LoadFiles(paths, clearExisting);
+
+            if(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
                 await LoadFirstFile(paths[0]);
         }
 
@@ -107,7 +111,7 @@ namespace Nmkoder.UI
                 try
                 {
                     box.Items.Add(new MediaStreamListEntry(mediaFile, s, uniqueFileCount));
-                    bool check = s.Codec.ToLower().Trim() != "unknown" && !alreadyHasVidStream;
+                    bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
                     box.SetItemChecked(box.Items.Count - 1, check);
                 }
                 catch (Exception e)

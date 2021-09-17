@@ -266,6 +266,12 @@
     <Compile Include="Data\QueryInfo.cs" />
     <Compile Include="Data\Streams\VideoStream.cs" />
     <Compile Include="Extensions\MagickExtensions.cs" />
+    <Compile Include="Forms\DragDropForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DragDropForm.Designer.cs">
+      <DependentUpon>DragDropForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.FileList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     <Compile Include="UI\ThumbnailView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
+    <EmbeddedResource Include="Forms\DragDropForm.resx">
+      <DependentUpon>DragDropForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

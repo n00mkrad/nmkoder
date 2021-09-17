@@ -16,9 +16,10 @@ namespace Nmkoder.UI
                 Program.mainForm.fileListBox.Items.Add(mediaFile.File.Name);
         }
 
-        public static void LoadFiles (string[] paths)
+        public static void LoadFiles (string[] paths, bool clearExisting)
         {
-            Program.mainForm.fileListBox.Items.Clear();
+            if(clearExisting)
+                Program.mainForm.fileListBox.Items.Clear();
 
             foreach (string file in paths)
             {

@@ -36,13 +36,16 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.inputPanel = new System.Windows.Forms.Panel();
             this.thumbInfo = new System.Windows.Forms.Label();
+            this.thumbnail = new System.Windows.Forms.PictureBox();
             this.taskMode = new System.Windows.Forms.ComboBox();
+            this.inputDropPanel = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
             this.fileListMode = new System.Windows.Forms.ComboBox();
             this.fileListMoveUpBtn = new System.Windows.Forms.Button();
+            this.fileListCleanBtn = new System.Windows.Forms.Button();
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListBox();
@@ -58,6 +61,7 @@
             this.encScaleH = new System.Windows.Forms.TextBox();
             this.encScaleW = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
+            this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
             this.encCropMode = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
             this.encVidQuality = new System.Windows.Forms.NumericUpDown();
@@ -110,6 +114,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.extractFramesDropPanel = new System.Windows.Forms.Panel();
             this.framesToVideoPage = new System.Windows.Forms.TabPage();
             this.createVidTabControl = new System.Windows.Forms.TabControl();
             this.framesToVidTab = new System.Windows.Forms.TabPage();
@@ -134,6 +139,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.createVidDropPanel = new System.Windows.Forms.Panel();
             this.loopPage = new System.Windows.Forms.TabPage();
             this.loopTabControl = new System.Windows.Forms.TabControl();
             this.tabPage11 = new System.Windows.Forms.TabPage();
@@ -142,6 +148,7 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
+            this.loopDropPanel = new System.Windows.Forms.Panel();
             this.speedPage = new System.Windows.Forms.TabPage();
             this.label59 = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
@@ -152,6 +159,7 @@
             this.changeSpeedCombox = new System.Windows.Forms.ComboBox();
             this.label46 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
+            this.speedDropPanel = new System.Windows.Forms.Panel();
             this.comparisonPage = new System.Windows.Forms.TabPage();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
@@ -164,6 +172,7 @@
             this.comparisonCrf = new System.Windows.Forms.ComboBox();
             this.label56 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
+            this.compDropPanel = new System.Windows.Forms.Panel();
             this.delayPage = new System.Windows.Forms.TabPage();
             this.label66 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
@@ -174,24 +183,22 @@
             this.delayTrackCombox = new System.Windows.Forms.ComboBox();
             this.label68 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
             this.pauseBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
-            this.fileListCleanBtn = new System.Windows.Forms.Button();
-            this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
-            this.extractFramesDropPanel = new System.Windows.Forms.Panel();
-            this.createVidDropPanel = new System.Windows.Forms.Panel();
-            this.loopDropPanel = new System.Windows.Forms.Panel();
-            this.speedDropPanel = new System.Windows.Forms.Panel();
-            this.compDropPanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.runBtn = new System.Windows.Forms.Button();
-            this.thumbnail = new System.Windows.Forms.PictureBox();
-            this.inputDropPanel = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.dropPanel = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.dropLoadAddBg = new System.Windows.Forms.Panel();
+            this.dropLoadFilesAdd = new System.Windows.Forms.Label();
+            this.dropLoadClearBg = new System.Windows.Forms.Panel();
+            this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
             this.fileListPage.SuspendLayout();
             this.streamListPage.SuspendLayout();
@@ -230,7 +237,10 @@
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
+            this.dropPanel.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.dropLoadAddBg.SuspendLayout();
+            this.dropLoadClearBg.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -263,11 +273,11 @@
             this.streamList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.streamList.ForeColor = System.Drawing.Color.White;
             this.streamList.FormattingEnabled = true;
-            this.streamList.Location = new System.Drawing.Point(6, 30);
-            this.streamList.Margin = new System.Windows.Forms.Padding(6);
+            this.streamList.IntegralHeight = false;
+            this.streamList.Location = new System.Drawing.Point(3, 30);
             this.streamList.Name = "streamList";
             this.streamList.ScrollAlwaysVisible = true;
-            this.streamList.Size = new System.Drawing.Size(670, 225);
+            this.streamList.Size = new System.Drawing.Size(679, 243);
             this.streamList.TabIndex = 27;
             this.streamList.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
             this.streamList.Leave += new System.EventHandler(this.streamList_Leave);
@@ -310,6 +320,19 @@
             this.thumbInfo.Size = new System.Drawing.Size(304, 13);
             this.thumbInfo.TabIndex = 29;
             // 
+            // thumbnail
+            // 
+            this.thumbnail.Enabled = false;
+            this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+            this.thumbnail.Location = new System.Drawing.Point(7, 133);
+            this.thumbnail.Margin = new System.Windows.Forms.Padding(0);
+            this.thumbnail.Name = "thumbnail";
+            this.thumbnail.Size = new System.Drawing.Size(301, 205);
+            this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.thumbnail.TabIndex = 27;
+            this.thumbnail.TabStop = false;
+            this.thumbnail.Click += new System.EventHandler(this.thumbnail_Click);
+            // 
             // taskMode
             // 
             this.taskMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -326,6 +349,19 @@
             this.taskMode.TabIndex = 26;
             this.taskMode.Visible = false;
             this.taskMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
+            // 
+            // inputDropPanel
+            // 
+            this.inputDropPanel.AllowDrop = true;
+            this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
+            this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
+            this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.inputDropPanel.Enabled = false;
+            this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
+            this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
+            this.inputDropPanel.Name = "inputDropPanel";
+            this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
+            this.inputDropPanel.TabIndex = 1;
             // 
             // label33
             // 
@@ -406,6 +442,22 @@
             this.fileListMoveUpBtn.UseVisualStyleBackColor = false;
             this.fileListMoveUpBtn.Click += new System.EventHandler(this.fileListMoveUpBtn_Click);
             // 
+            // fileListCleanBtn
+            // 
+            this.fileListCleanBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListCleanBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
+            this.fileListCleanBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fileListCleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListCleanBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListCleanBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListCleanBtn.Location = new System.Drawing.Point(532, 330);
+            this.fileListCleanBtn.Name = "fileListCleanBtn";
+            this.fileListCleanBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListCleanBtn.TabIndex = 40;
+            this.toolTip.SetToolTip(this.fileListCleanBtn, "Remove This File From The List");
+            this.fileListCleanBtn.UseVisualStyleBackColor = false;
+            this.fileListCleanBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
+            // 
             // fileListMoveDownBtn
             // 
             this.fileListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -465,12 +517,11 @@
             this.streamDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.streamDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.streamDetails.ForeColor = System.Drawing.Color.White;
-            this.streamDetails.Location = new System.Drawing.Point(7, 278);
-            this.streamDetails.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.streamDetails.Location = new System.Drawing.Point(7, 279);
             this.streamDetails.Multiline = true;
             this.streamDetails.Name = "streamDetails";
             this.streamDetails.ReadOnly = true;
-            this.streamDetails.Size = new System.Drawing.Size(669, 101);
+            this.streamDetails.Size = new System.Drawing.Size(669, 100);
             this.streamDetails.TabIndex = 29;
             // 
             // quickConvertPage
@@ -619,6 +670,24 @@
             this.label29.Size = new System.Drawing.Size(13, 15);
             this.label29.TabIndex = 58;
             this.label29.Text = "x";
+            // 
+            // encScaleLinkBtn
+            // 
+            this.encScaleLinkBtn.AutoColor = false;
+            this.encScaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.encScaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
+            this.encScaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encScaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.encScaleLinkBtn.DrawImage = true;
+            this.encScaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.encScaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.encScaleLinkBtn.Location = new System.Drawing.Point(483, 158);
+            this.encScaleLinkBtn.Name = "encScaleLinkBtn";
+            this.encScaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.encScaleLinkBtn.Size = new System.Drawing.Size(23, 23);
+            this.encScaleLinkBtn.TabIndex = 57;
+            this.encScaleLinkBtn.Visible = false;
+            this.encScaleLinkBtn.Click += new System.EventHandler(this.encScaleLinkBtn_Click);
             // 
             // encCropMode
             // 
@@ -1232,6 +1301,18 @@
             this.label1.Text = "Drop One Or Multiple Video Files Here:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // extractFramesDropPanel
+            // 
+            this.extractFramesDropPanel.AllowDrop = true;
+            this.extractFramesDropPanel.BackColor = System.Drawing.Color.White;
+            this.extractFramesDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.extractFramesDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.extractFramesDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.extractFramesDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.extractFramesDropPanel.Name = "extractFramesDropPanel";
+            this.extractFramesDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.extractFramesDropPanel.TabIndex = 0;
+            // 
             // framesToVideoPage
             // 
             this.framesToVideoPage.Controls.Add(this.createVidTabControl);
@@ -1510,6 +1591,18 @@
             this.label16.Text = "Drop A Folder Containing PNG Frames Here:";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // createVidDropPanel
+            // 
+            this.createVidDropPanel.AllowDrop = true;
+            this.createVidDropPanel.BackColor = System.Drawing.Color.White;
+            this.createVidDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.createVidDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.createVidDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.createVidDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.createVidDropPanel.Name = "createVidDropPanel";
+            this.createVidDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.createVidDropPanel.TabIndex = 6;
+            // 
             // loopPage
             // 
             this.loopPage.Controls.Add(this.loopTabControl);
@@ -1599,6 +1692,18 @@
             this.label45.TabIndex = 11;
             this.label45.Text = "Drop One Or Multiple Video Files Here:";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // loopDropPanel
+            // 
+            this.loopDropPanel.AllowDrop = true;
+            this.loopDropPanel.BackColor = System.Drawing.Color.White;
+            this.loopDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.loopDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.loopDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.loopDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.loopDropPanel.Name = "loopDropPanel";
+            this.loopDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.loopDropPanel.TabIndex = 10;
             // 
             // speedPage
             // 
@@ -1710,6 +1815,18 @@
             this.label52.Size = new System.Drawing.Size(64, 18);
             this.label52.TabIndex = 9;
             this.label52.Text = "Options:";
+            // 
+            // speedDropPanel
+            // 
+            this.speedDropPanel.AllowDrop = true;
+            this.speedDropPanel.BackColor = System.Drawing.Color.White;
+            this.speedDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.speedDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.speedDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.speedDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.speedDropPanel.Name = "speedDropPanel";
+            this.speedDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.speedDropPanel.TabIndex = 15;
             // 
             // comparisonPage
             // 
@@ -1846,6 +1963,18 @@
             this.label57.TabIndex = 9;
             this.label57.Text = "Options:";
             // 
+            // compDropPanel
+            // 
+            this.compDropPanel.AllowDrop = true;
+            this.compDropPanel.BackColor = System.Drawing.Color.White;
+            this.compDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.compDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.compDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.compDropPanel.Location = new System.Drawing.Point(494, 126);
+            this.compDropPanel.Name = "compDropPanel";
+            this.compDropPanel.Size = new System.Drawing.Size(200, 200);
+            this.compDropPanel.TabIndex = 19;
+            // 
             // delayPage
             // 
             this.delayPage.Controls.Add(this.label66);
@@ -1953,6 +2082,18 @@
             this.label69.TabIndex = 9;
             this.label69.Text = "Options:";
             // 
+            // panel1
+            // 
+            this.panel1.AllowDrop = true;
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Location = new System.Drawing.Point(494, 126);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 200);
+            this.panel1.TabIndex = 19;
+            // 
             // settingsPage
             // 
             this.settingsPage.Name = "settingsPage";
@@ -2033,112 +2174,6 @@
             this.stopBtn.UseVisualStyleBackColor = false;
             this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
-            // fileListCleanBtn
-            // 
-            this.fileListCleanBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.fileListCleanBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
-            this.fileListCleanBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.fileListCleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileListCleanBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileListCleanBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListCleanBtn.Location = new System.Drawing.Point(532, 330);
-            this.fileListCleanBtn.Name = "fileListCleanBtn";
-            this.fileListCleanBtn.Size = new System.Drawing.Size(45, 45);
-            this.fileListCleanBtn.TabIndex = 40;
-            this.toolTip.SetToolTip(this.fileListCleanBtn, "Remove This File From The List");
-            this.fileListCleanBtn.UseVisualStyleBackColor = false;
-            this.fileListCleanBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
-            // 
-            // encScaleLinkBtn
-            // 
-            this.encScaleLinkBtn.AutoColor = false;
-            this.encScaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.encScaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
-            this.encScaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.encScaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.encScaleLinkBtn.DrawImage = true;
-            this.encScaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.encScaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.encScaleLinkBtn.Location = new System.Drawing.Point(483, 158);
-            this.encScaleLinkBtn.Name = "encScaleLinkBtn";
-            this.encScaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.encScaleLinkBtn.Size = new System.Drawing.Size(23, 23);
-            this.encScaleLinkBtn.TabIndex = 57;
-            this.encScaleLinkBtn.Visible = false;
-            this.encScaleLinkBtn.Click += new System.EventHandler(this.encScaleLinkBtn_Click);
-            // 
-            // extractFramesDropPanel
-            // 
-            this.extractFramesDropPanel.AllowDrop = true;
-            this.extractFramesDropPanel.BackColor = System.Drawing.Color.White;
-            this.extractFramesDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.extractFramesDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.extractFramesDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.extractFramesDropPanel.Location = new System.Drawing.Point(494, 126);
-            this.extractFramesDropPanel.Name = "extractFramesDropPanel";
-            this.extractFramesDropPanel.Size = new System.Drawing.Size(200, 200);
-            this.extractFramesDropPanel.TabIndex = 0;
-            // 
-            // createVidDropPanel
-            // 
-            this.createVidDropPanel.AllowDrop = true;
-            this.createVidDropPanel.BackColor = System.Drawing.Color.White;
-            this.createVidDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.createVidDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.createVidDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.createVidDropPanel.Location = new System.Drawing.Point(494, 126);
-            this.createVidDropPanel.Name = "createVidDropPanel";
-            this.createVidDropPanel.Size = new System.Drawing.Size(200, 200);
-            this.createVidDropPanel.TabIndex = 6;
-            // 
-            // loopDropPanel
-            // 
-            this.loopDropPanel.AllowDrop = true;
-            this.loopDropPanel.BackColor = System.Drawing.Color.White;
-            this.loopDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.loopDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.loopDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.loopDropPanel.Location = new System.Drawing.Point(494, 126);
-            this.loopDropPanel.Name = "loopDropPanel";
-            this.loopDropPanel.Size = new System.Drawing.Size(200, 200);
-            this.loopDropPanel.TabIndex = 10;
-            // 
-            // speedDropPanel
-            // 
-            this.speedDropPanel.AllowDrop = true;
-            this.speedDropPanel.BackColor = System.Drawing.Color.White;
-            this.speedDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.speedDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.speedDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.speedDropPanel.Location = new System.Drawing.Point(494, 126);
-            this.speedDropPanel.Name = "speedDropPanel";
-            this.speedDropPanel.Size = new System.Drawing.Size(200, 200);
-            this.speedDropPanel.TabIndex = 15;
-            // 
-            // compDropPanel
-            // 
-            this.compDropPanel.AllowDrop = true;
-            this.compDropPanel.BackColor = System.Drawing.Color.White;
-            this.compDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.compDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.compDropPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.compDropPanel.Location = new System.Drawing.Point(494, 126);
-            this.compDropPanel.Name = "compDropPanel";
-            this.compDropPanel.Size = new System.Drawing.Size(200, 200);
-            this.compDropPanel.TabIndex = 19;
-            // 
-            // panel1
-            // 
-            this.panel1.AllowDrop = true;
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Location = new System.Drawing.Point(494, 126);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 200);
-            this.panel1.TabIndex = 19;
-            // 
             // runBtn
             // 
             this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -2157,31 +2192,84 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // thumbnail
+            // dropPanel
             // 
-            this.thumbnail.Enabled = false;
-            this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
-            this.thumbnail.Location = new System.Drawing.Point(7, 133);
-            this.thumbnail.Margin = new System.Windows.Forms.Padding(0);
-            this.thumbnail.Name = "thumbnail";
-            this.thumbnail.Size = new System.Drawing.Size(301, 205);
-            this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.thumbnail.TabIndex = 27;
-            this.thumbnail.TabStop = false;
-            this.thumbnail.Click += new System.EventHandler(this.thumbnail_Click);
+            this.dropPanel.AllowDrop = true;
+            this.dropPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.dropPanel.Controls.Add(this.tableLayoutPanel1);
+            this.dropPanel.Location = new System.Drawing.Point(12, 86);
+            this.dropPanel.Name = "dropPanel";
+            this.dropPanel.Size = new System.Drawing.Size(314, 366);
+            this.dropPanel.TabIndex = 30;
+            this.dropPanel.Visible = false;
+            this.dropPanel.DragLeave += new System.EventHandler(this.dropPanel_DragLeave);
             // 
-            // inputDropPanel
+            // tableLayoutPanel1
             // 
-            this.inputDropPanel.AllowDrop = true;
-            this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
-            this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
-            this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.inputDropPanel.Enabled = false;
-            this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
-            this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
-            this.inputDropPanel.Name = "inputDropPanel";
-            this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
-            this.inputDropPanel.TabIndex = 1;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.dropLoadAddBg, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.dropLoadClearBg, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(314, 366);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // dropLoadAddBg
+            // 
+            this.dropLoadAddBg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dropLoadAddBg.Controls.Add(this.dropLoadFilesAdd);
+            this.dropLoadAddBg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dropLoadAddBg.Location = new System.Drawing.Point(40, 203);
+            this.dropLoadAddBg.Margin = new System.Windows.Forms.Padding(40, 20, 40, 40);
+            this.dropLoadAddBg.Name = "dropLoadAddBg";
+            this.dropLoadAddBg.Size = new System.Drawing.Size(234, 123);
+            this.dropLoadAddBg.TabIndex = 3;
+            // 
+            // dropLoadFilesAdd
+            // 
+            this.dropLoadFilesAdd.AllowDrop = true;
+            this.dropLoadFilesAdd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dropLoadFilesAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dropLoadFilesAdd.ForeColor = System.Drawing.Color.White;
+            this.dropLoadFilesAdd.Location = new System.Drawing.Point(0, 0);
+            this.dropLoadFilesAdd.Name = "dropLoadFilesAdd";
+            this.dropLoadFilesAdd.Size = new System.Drawing.Size(234, 123);
+            this.dropLoadFilesAdd.TabIndex = 1;
+            this.dropLoadFilesAdd.Text = "Drop Here To Load\r\n(Add To Existing Files)";
+            this.dropLoadFilesAdd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.dropLoadFilesAdd.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesAdd_DragDrop);
+            this.dropLoadFilesAdd.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesAdd_DragEnter);
+            // 
+            // dropLoadClearBg
+            // 
+            this.dropLoadClearBg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dropLoadClearBg.Controls.Add(this.dropLoadFilesClear);
+            this.dropLoadClearBg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dropLoadClearBg.Location = new System.Drawing.Point(40, 40);
+            this.dropLoadClearBg.Margin = new System.Windows.Forms.Padding(40, 40, 40, 20);
+            this.dropLoadClearBg.Name = "dropLoadClearBg";
+            this.dropLoadClearBg.Size = new System.Drawing.Size(234, 123);
+            this.dropLoadClearBg.TabIndex = 2;
+            // 
+            // dropLoadFilesClear
+            // 
+            this.dropLoadFilesClear.AllowDrop = true;
+            this.dropLoadFilesClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dropLoadFilesClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dropLoadFilesClear.ForeColor = System.Drawing.Color.White;
+            this.dropLoadFilesClear.Location = new System.Drawing.Point(0, 0);
+            this.dropLoadFilesClear.Name = "dropLoadFilesClear";
+            this.dropLoadFilesClear.Size = new System.Drawing.Size(234, 123);
+            this.dropLoadFilesClear.TabIndex = 0;
+            this.dropLoadFilesClear.Text = "Drop Here To Load\r\n(Clear Existing Files)";
+            this.dropLoadFilesClear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.dropLoadFilesClear.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragDrop);
+            this.dropLoadFilesClear.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragEnter);
             // 
             // MainForm
             // 
@@ -2189,6 +2277,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
+            this.Controls.Add(this.dropPanel);
             this.Controls.Add(this.busyControlsPanel);
             this.Controls.Add(this.progressCircle);
             this.Controls.Add(this.tabList);
@@ -2207,6 +2296,7 @@
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.inputPanel.ResumeLayout(false);
             this.inputPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.tabList.ResumeLayout(false);
             this.fileListPage.ResumeLayout(false);
             this.streamListPage.ResumeLayout(false);
@@ -2266,7 +2356,10 @@
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
+            this.dropPanel.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.dropLoadAddBg.ResumeLayout(false);
+            this.dropLoadClearBg.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2434,6 +2527,12 @@
         private System.Windows.Forms.TextBox encScaleW;
         private System.Windows.Forms.ComboBox fileListMode;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Panel dropPanel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label dropLoadFilesClear;
+        private System.Windows.Forms.Label dropLoadFilesAdd;
+        private System.Windows.Forms.Panel dropLoadAddBg;
+        private System.Windows.Forms.Panel dropLoadClearBg;
     }
 }
 

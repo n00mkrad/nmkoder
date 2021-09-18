@@ -32,7 +32,7 @@ namespace Nmkoder.Media
         {
             Process process = OsUtils.NewProcess(true);
             process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y {argsIn} -i {path.Wrap()} {argsOut}";
-            return await GetInfoAsync(path, process, lineFilter, false);
+            return await GetInfoAsync(path, process, lineFilter);
         }
 
         public static async Task<string> GetFfprobeInfoAsync(string path, FfprobeMode mode, string lineFilter = "", int streamIndex = -1, bool stripKeyName = true)
@@ -40,15 +40,39 @@ namespace Nmkoder.Media
             Process process = OsUtils.NewProcess(true);
             string showFormat = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowFormat ? "-show_format" : "";
             string showStreams = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowStreams ? "-show_streams" : "";
-            string streamSelect = (streamIndex >= 0) ? $"-select_streams {streamIndex}" : "";
-            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffprobe -v quiet {showFormat} {showStreams} {streamSelect} {path.Wrap()}";
-            return await GetInfoAsync(path, process, lineFilter, stripKeyName);
+            //string streamSelect = (streamIndex >= 0) ? $"-select_streams {streamIndex}" : "";
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffprobe -v quiet {showFormat} {showStreams} {path.Wrap()}";
+
+            string output = await GetInfoAsync(path, process, lineFilter, streamIndex, stripKeyName);
+
+            return output;
         }
 
-        static async Task<string> GetInfoAsync(string path, Process process, string lineFilter, bool stripKeyName = true)
+        static async Task<string> GetInfoAsync(string path, Process process, string lineFilter) // for ffmpeg
         {
             string output = await GetOutputCached(path, process);
 
+            if (!string.IsNullOrWhiteSpace(lineFilter.Trim()))
+                output = string.Join("\n", output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToArray());
+
+            return output;
+        }
+
+        static async Task<string> GetInfoAsync(string path, Process process, string lineFilter, int streamIndex = -1, bool stripKeyName = true) // for ffprobe
+        {
+            string output = await GetOutputCached(path, process);
+
+            try
+            {
+                if (streamIndex >= 0)
+                    output = output.Split("[/STREAM]")[streamIndex];
+            }
+            catch
+            {
+                Logger.Log($"output.Split(\"[/STREAM]\")[{streamIndex}] failed!");
+                return "";
+            }
+            
             if (!string.IsNullOrWhiteSpace(lineFilter.Trim()))
             {
                 if (stripKeyName)
@@ -62,7 +86,6 @@ namespace Nmkoder.Media
                     output = string.Join("\n", output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToArray());
                 }
             }
-                
 
             return output;
         }

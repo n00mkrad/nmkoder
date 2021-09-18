@@ -152,8 +152,10 @@ namespace Nmkoder.Media
                 return true;
 
             // If codec was not listed above, manually check if it's compatible by trying to encode it:
-            string ffmpegCheck = await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c:s srt -t 0 -f null -");
-            return ffmpegCheck.Contains($"encoding currently only possible from text to text or bitmap to bitmap");
+            //string ffmpegCheck = await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c:s srt -t 0 -f null -");
+            //return ffmpegCheck.Contains($"encoding currently only possible from text to text or bitmap to bitmap");
+
+            return false;
         }
 
         public static string GetPadFilter(int px = 2)

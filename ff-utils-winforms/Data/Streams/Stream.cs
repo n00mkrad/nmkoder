@@ -2,7 +2,7 @@
 {
     class Stream
     {
-        public enum StreamType { Video, Audio, Subtitle, Data, Unknown }
+        public enum StreamType { Video, Audio, Subtitle, Data, Attachment, Unknown }
         public StreamType Type;
         public int Index;
         public string Codec;

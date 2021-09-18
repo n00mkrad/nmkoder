@@ -252,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CodecInfo.cs" />
+    <Compile Include="Data\Streams\AttachmentStream.cs" />
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />

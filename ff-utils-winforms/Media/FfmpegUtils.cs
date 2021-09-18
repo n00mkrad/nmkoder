@@ -112,7 +112,16 @@ namespace Nmkoder.Media
                             continue;
                         }
 
-
+                        if (streamStr.Contains(": Attachment:"))
+                        {
+                            string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                            string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
+                            AttachmentStream aStream = new AttachmentStream(codec, codecLong);
+                            aStream.Index = idx;
+                            Logger.Log($"Added attachment stream to list: {aStream}", true);
+                            streamList.Add(aStream);
+                            continue;
+                        }
 
                         Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, Type = Stream.StreamType.Unknown };
                         streamList.Add(stream);

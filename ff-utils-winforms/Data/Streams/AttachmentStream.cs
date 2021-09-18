@@ -1,10 +1,10 @@
 ﻿namespace Nmkoder.Data.Streams
 {
-    class DataStream : Stream
+    class AttachmentStream : Stream
     {
-        public DataStream(string codec, string codecLong)
+        public AttachmentStream(string codec, string codecLong)
         {
-            base.Type = StreamType.Data;
+            base.Type = StreamType.Attachment;
             Codec = codec;
             CodecLong = codecLong;
         }

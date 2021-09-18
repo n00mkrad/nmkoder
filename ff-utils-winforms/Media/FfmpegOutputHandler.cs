@@ -28,7 +28,7 @@ namespace Nmkoder.Media
 
             bool replaceLastLine = currentLogMode == LogMode.OnlyLastLine;
 
-            if (line.StartsWith("frame="))
+            if (line.Contains("time=") && (line.StartsWith("frame=") || line.StartsWith("size=")))
                 line = FormatUtils.BeautifyFfmpegStats(line);
 
             Logger.Log(line, hidden, replaceLastLine, "ffmpeg");

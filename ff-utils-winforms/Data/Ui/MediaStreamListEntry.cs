@@ -44,8 +44,12 @@ namespace Nmkoder.Data.Ui
 
             if (Stream.Type == Stream.StreamType.Data)
             {
-                DataStream ds = (DataStream)Stream;
                 return $"{str} Data ({codec})";
+            }
+
+            if (Stream.Type == Stream.StreamType.Attachment)
+            {
+                return $"{str} Attachment ({codec})";
             }
 
             if (Stream.Type == Stream.StreamType.Unknown)

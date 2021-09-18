@@ -31,7 +31,6 @@ namespace Nmkoder.Forms
         public TextBox encVidFpsBox;
         public TextBox encScaleBoxW { get { return encScaleW; } }
         public TextBox encScaleBoxH { get { return encScaleH; } }
-        public HTAlt.WinForms.HTButton encScaleLinkButton { get { return encScaleLinkBtn; } }
         public ComboBox encCropModeBox { get { return encCropMode; } }
         // Quick Convert - Audio
         public ComboBox encAudEnc;
@@ -64,61 +63,5 @@ namespace Nmkoder.Forms
             encAudChannels.SelectedIndex = 1;
             encCropMode.SelectedIndex = 0;
         }
-
-        private void encScaleLinkBtn_Click(object sender, EventArgs e)
-        {
-            QuickConvertUi.scaleLink = !QuickConvertUi.scaleLink;
-            encScaleLinkBtn.ButtonImage = (QuickConvertUi.scaleLink) ? Resources.baseline_link_white_24dp : Resources.baseline_unlink_white_24dp;
-        }
-
-        bool ignoreScaleValueChanged;
-
-        // private void encScaleW_ValueChanged(object sender, EventArgs e)
-        // {
-        //     if (ignoreScaleValueChanged || MediaInfo.current == null || MediaInfo.current.VideoStreams.Count < 1 || MediaInfo.current.VideoStreams[0].Resolution.IsEmpty)
-        //         return;
-        // 
-        //     int w = ((int)encScaleW.Value).RoundMod(2);
-        // 
-        //     if(w < 32)
-        //     {
-        //         ignoreScaleValueChanged = true;
-        //         encScaleW.Value = MediaInfo.current.VideoStreams[0].Resolution.Width;
-        //         ignoreScaleValueChanged = false;
-        //         return;
-        //     }
-        // 
-        //     if (!QuickConvertUi.scaleLink)
-        //         return;
-        // 
-        //     float wFactor = (float)w / (float)MediaInfo.current.VideoStreams[0].Resolution.Width;
-        //     ignoreScaleValueChanged = true;
-        //     encScaleH.Value = (MediaInfo.current.VideoStreams[0].Resolution.Height * wFactor).RoundToInt();
-        //     ignoreScaleValueChanged = false;
-        // }
-        // 
-        // private void encScaleH_ValueChanged(object sender, EventArgs e)
-        // {
-        //     if (!QuickConvertUi.scaleLink || ignoreScaleValueChanged || MediaInfo.current == null || MediaInfo.current.VideoStreams.Count < 1 || MediaInfo.current.VideoStreams[0].Resolution.IsEmpty)
-        //         return;
-        // 
-        //     int h = ((int)encScaleH.Value).RoundMod(2);
-        // 
-        //     if (h < 32)
-        //     {
-        //         ignoreScaleValueChanged = true;
-        //         encScaleH.Value = MediaInfo.current.VideoStreams[0].Resolution.Height;
-        //         ignoreScaleValueChanged = false;
-        //         return;
-        //     }
-        // 
-        //     if (!QuickConvertUi.scaleLink)
-        //         return;
-        // 
-        //     float hFactor = (float)encScaleH.Value / (float)MediaInfo.current.VideoStreams[0].Resolution.Height;
-        //     ignoreScaleValueChanged = true;
-        //     encScaleW.Value = (MediaInfo.current.VideoStreams[0].Resolution.Width * hFactor).RoundToInt();
-        //     ignoreScaleValueChanged = false;
-        // }
     }
 }

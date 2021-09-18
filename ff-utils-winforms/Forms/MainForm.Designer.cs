@@ -61,7 +61,6 @@
             this.encScaleH = new System.Windows.Forms.TextBox();
             this.encScaleW = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.encScaleLinkBtn = new HTAlt.WinForms.HTButton();
             this.encCropMode = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
             this.encVidQuality = new System.Windows.Forms.NumericUpDown();
@@ -617,7 +616,6 @@
             this.encVid.Controls.Add(this.encScaleH);
             this.encVid.Controls.Add(this.encScaleW);
             this.encVid.Controls.Add(this.label29);
-            this.encVid.Controls.Add(this.encScaleLinkBtn);
             this.encVid.Controls.Add(this.encCropMode);
             this.encVid.Controls.Add(this.label27);
             this.encVid.Controls.Add(this.encVidQuality);
@@ -670,24 +668,6 @@
             this.label29.Size = new System.Drawing.Size(13, 15);
             this.label29.TabIndex = 58;
             this.label29.Text = "x";
-            // 
-            // encScaleLinkBtn
-            // 
-            this.encScaleLinkBtn.AutoColor = false;
-            this.encScaleLinkBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.encScaleLinkBtn.ButtonImage = global::Nmkoder.Properties.Resources.baseline_link_white_24dp;
-            this.encScaleLinkBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.encScaleLinkBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.encScaleLinkBtn.DrawImage = true;
-            this.encScaleLinkBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.encScaleLinkBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.encScaleLinkBtn.Location = new System.Drawing.Point(483, 158);
-            this.encScaleLinkBtn.Name = "encScaleLinkBtn";
-            this.encScaleLinkBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.encScaleLinkBtn.Size = new System.Drawing.Size(23, 23);
-            this.encScaleLinkBtn.TabIndex = 57;
-            this.encScaleLinkBtn.Visible = false;
-            this.encScaleLinkBtn.Click += new System.EventHandler(this.encScaleLinkBtn_Click);
             // 
             // encCropMode
             // 
@@ -2519,7 +2499,6 @@
         private System.Windows.Forms.Button addTracksFromFileBtn;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label29;
-        private HTAlt.WinForms.HTButton encScaleLinkBtn;
         private System.Windows.Forms.ComboBox encCropMode;
         private System.Windows.Forms.Label label27;
         private Cyotek.Windows.Forms.TabListPage settingsPage;

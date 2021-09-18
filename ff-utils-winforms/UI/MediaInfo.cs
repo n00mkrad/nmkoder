@@ -87,12 +87,6 @@ namespace Nmkoder.UI
             CheckedListBox box = Program.mainForm.streamListBox;
             int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
 
-            if (uniqueFileCount > 0 && RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
-            {
-                //RunTask.currentFileListMode = RunTask.FileListMode.MultiFileInput; // Disable batch processing when using multiple input files
-                Logger.Log($"Using multiple files as input for one output file - Batch Processing is disabled until you load a new set of files.");
-            }
-
             if (!mediaFile.Initialized)
             {
                 if (!silent)

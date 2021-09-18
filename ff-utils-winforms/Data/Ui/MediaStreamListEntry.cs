@@ -48,6 +48,11 @@ namespace Nmkoder.Data.Ui
                 return $"{str} Data ({codec})";
             }
 
+            if (Stream.Type == Stream.StreamType.Unknown)
+            {
+                return $"{str} Unknown ({codec})";
+            }
+
             return str;
         }
 

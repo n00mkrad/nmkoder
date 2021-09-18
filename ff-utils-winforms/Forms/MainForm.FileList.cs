@@ -41,7 +41,7 @@ namespace Nmkoder.Forms
 
             Text = $"NMKODER [{(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput ? "MFM" : "BPM")}]";
 
-            SaveConfig();
+            SaveUiConfig();
             RefreshFileListUi();
 
             if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)

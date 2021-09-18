@@ -197,6 +197,13 @@
             this.dropLoadFilesAdd = new System.Windows.Forms.Label();
             this.dropLoadClearBg = new System.Windows.Forms.Panel();
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
+            this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
+            this.settingsGeneralTab = new System.Windows.Forms.TabPage();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.settingsContainersTab = new System.Windows.Forms.TabPage();
+            this.label64 = new System.Windows.Forms.Label();
+            this.mp4Faststart = new System.Windows.Forms.CheckBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -236,11 +243,15 @@
             this.delayPage.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage20.SuspendLayout();
+            this.settingsPage.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
             this.dropPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.dropLoadAddBg.SuspendLayout();
             this.dropLoadClearBg.SuspendLayout();
+            this.htTabControl1.SuspendLayout();
+            this.settingsGeneralTab.SuspendLayout();
+            this.settingsContainersTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -348,7 +359,7 @@
             this.taskMode.Size = new System.Drawing.Size(302, 21);
             this.taskMode.TabIndex = 26;
             this.taskMode.Visible = false;
-            this.taskMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
+            this.taskMode.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // inputDropPanel
             // 
@@ -721,7 +732,7 @@
             this.encVidQuality.Name = "encVidQuality";
             this.encVidQuality.Size = new System.Drawing.Size(250, 23);
             this.encVidQuality.TabIndex = 52;
-            this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveConfig);
+            this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // label61
             // 
@@ -756,7 +767,7 @@
             this.encVidColors.Name = "encVidColors";
             this.encVidColors.Size = new System.Drawing.Size(250, 23);
             this.encVidColors.TabIndex = 48;
-            this.encVidColors.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
+            this.encVidColors.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encVidPreset
             // 
@@ -769,7 +780,7 @@
             this.encVidPreset.Name = "encVidPreset";
             this.encVidPreset.Size = new System.Drawing.Size(250, 23);
             this.encVidPreset.TabIndex = 47;
-            this.encVidPreset.SelectedIndexChanged += new System.EventHandler(this.SaveConfig);
+            this.encVidPreset.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encVidCodec
             // 
@@ -896,7 +907,7 @@
             this.encAudBitrate.Name = "encAudBitrate";
             this.encAudBitrate.Size = new System.Drawing.Size(250, 23);
             this.encAudBitrate.TabIndex = 51;
-            this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveConfig);
+            this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encAudCodec
             // 
@@ -2089,6 +2100,7 @@
             // 
             // settingsPage
             // 
+            this.settingsPage.Controls.Add(this.htTabControl1);
             this.settingsPage.Name = "settingsPage";
             this.settingsPage.Size = new System.Drawing.Size(682, 382);
             this.settingsPage.Text = "Settings";
@@ -2264,6 +2276,103 @@
             this.dropLoadFilesClear.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragDrop);
             this.dropLoadFilesClear.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragEnter);
             // 
+            // htTabControl1
+            // 
+            this.htTabControl1.AllowDrop = true;
+            this.htTabControl1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
+            this.htTabControl1.BorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.htTabControl1.Controls.Add(this.settingsGeneralTab);
+            this.htTabControl1.Controls.Add(this.settingsContainersTab);
+            this.htTabControl1.DisableClose = true;
+            this.htTabControl1.DisableDragging = true;
+            this.htTabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.htTabControl1.HoverTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(82)))), ((int)(((byte)(176)))), ((int)(((byte)(239)))));
+            this.htTabControl1.HoverTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(151)))), ((int)(((byte)(234)))));
+            this.htTabControl1.HoverUnselectedTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            this.htTabControl1.Location = new System.Drawing.Point(3, 3);
+            this.htTabControl1.Name = "htTabControl1";
+            this.htTabControl1.Padding = new System.Drawing.Point(14, 4);
+            this.htTabControl1.SelectedIndex = 0;
+            this.htTabControl1.SelectedTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(151)))), ((int)(((byte)(234)))));
+            this.htTabControl1.SelectedTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.htTabControl1.Size = new System.Drawing.Size(676, 319);
+            this.htTabControl1.TabIndex = 1;
+            this.htTabControl1.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.htTabControl1.UnderBorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(67)))), ((int)(((byte)(70)))));
+            this.htTabControl1.UnselectedBorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(70)))));
+            this.htTabControl1.UnselectedTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(70)))));
+            this.htTabControl1.UpDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(70)))));
+            this.htTabControl1.UpDownTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(112)))));
+            // 
+            // settingsGeneralTab
+            // 
+            this.settingsGeneralTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.settingsGeneralTab.Controls.Add(this.comboBox4);
+            this.settingsGeneralTab.Controls.Add(this.label43);
+            this.settingsGeneralTab.Location = new System.Drawing.Point(4, 27);
+            this.settingsGeneralTab.Name = "settingsGeneralTab";
+            this.settingsGeneralTab.Padding = new System.Windows.Forms.Padding(3);
+            this.settingsGeneralTab.Size = new System.Drawing.Size(668, 288);
+            this.settingsGeneralTab.TabIndex = 0;
+            this.settingsGeneralTab.Text = "General";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox4.ForeColor = System.Drawing.Color.White;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(220, 7);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(250, 23);
+            this.comboBox4.TabIndex = 45;
+            this.comboBox4.Visible = false;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.ForeColor = System.Drawing.Color.White;
+            this.label43.Location = new System.Drawing.Point(5, 10);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(98, 15);
+            this.label43.TabIndex = 17;
+            this.label43.Text = "Codec (Encoder):";
+            this.label43.Visible = false;
+            // 
+            // settingsContainersTab
+            // 
+            this.settingsContainersTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.settingsContainersTab.Controls.Add(this.mp4Faststart);
+            this.settingsContainersTab.Controls.Add(this.label64);
+            this.settingsContainersTab.Location = new System.Drawing.Point(4, 27);
+            this.settingsContainersTab.Name = "settingsContainersTab";
+            this.settingsContainersTab.Padding = new System.Windows.Forms.Padding(3);
+            this.settingsContainersTab.Size = new System.Drawing.Size(668, 288);
+            this.settingsContainersTab.TabIndex = 1;
+            this.settingsContainersTab.Text = "Containers";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.ForeColor = System.Drawing.Color.White;
+            this.label64.Location = new System.Drawing.Point(5, 10);
+            this.label64.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(119, 15);
+            this.label64.TabIndex = 47;
+            this.label64.Text = "MP4: Web Optimized";
+            // 
+            // mp4Faststart
+            // 
+            this.mp4Faststart.AutoSize = true;
+            this.mp4Faststart.Location = new System.Drawing.Point(220, 11);
+            this.mp4Faststart.Name = "mp4Faststart";
+            this.mp4Faststart.Size = new System.Drawing.Size(15, 14);
+            this.mp4Faststart.TabIndex = 50;
+            this.mp4Faststart.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2285,6 +2394,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NMKD\'s NMKoDer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.inputPanel.ResumeLayout(false);
@@ -2348,11 +2458,17 @@
             this.tabControl3.ResumeLayout(false);
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
+            this.settingsPage.ResumeLayout(false);
             this.busyControlsPanel.ResumeLayout(false);
             this.dropPanel.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.dropLoadAddBg.ResumeLayout(false);
             this.dropLoadClearBg.ResumeLayout(false);
+            this.htTabControl1.ResumeLayout(false);
+            this.settingsGeneralTab.ResumeLayout(false);
+            this.settingsGeneralTab.PerformLayout();
+            this.settingsContainersTab.ResumeLayout(false);
+            this.settingsContainersTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2526,6 +2642,13 @@
         private System.Windows.Forms.Panel dropLoadAddBg;
         private System.Windows.Forms.Panel dropLoadClearBg;
         private System.Windows.Forms.TextBox encCustomArgsOut;
+        private HTAlt.WinForms.HTTabControl htTabControl1;
+        private System.Windows.Forms.TabPage settingsGeneralTab;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TabPage settingsContainersTab;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.CheckBox mp4Faststart;
     }
 }
 

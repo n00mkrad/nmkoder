@@ -252,8 +252,9 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
-            if (key == Key.metaMode)                return WriteDefault(key, "1");
-
+            //if (key == Key.mp4Faststart) Logger.Log($"WriteDefault(key, \"True\")");
+            if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
+            if (key == Key.metaMode)                    return WriteDefault(key, "1");
 
             if (type == Type.Int || type == Type.Float) return WriteDefault(key, "0");     // Write default int/float (0)
             if (type == Type.Bool)                      return WriteDefault(key, "False");     // Write default bool (False)
@@ -276,7 +277,8 @@ namespace Nmkoder.IO
         {
             autoCropSamples,
             cmdDebugMode,
-            metaMode
+            metaMode,
+            mp4Faststart
         }
     }
 }

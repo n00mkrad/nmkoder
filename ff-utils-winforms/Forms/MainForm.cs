@@ -79,14 +79,14 @@ namespace Nmkoder.Forms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             QuickConvert.Init();
-            LoadConfig();
+            LoadUiConfig();
             encVidCodec_SelectedIndexChanged(null, null);
             encAudioCodec_SelectedIndexChanged(null, null);
             encSubCodec_SelectedIndexChanged(null, null);
             initialized = true;
         }
 
-        void LoadConfig()
+        void LoadUiConfig()
         {
             ConfigParser.LoadComboxIndex(fileListMode);
             ConfigParser.LoadComboxIndex(taskMode);
@@ -97,7 +97,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(metaMode);
         }
 
-        void SaveConfig(object sender = null, EventArgs e = null)
+        void SaveUiConfig(object sender = null, EventArgs e = null)
         {
             if (!initialized)
                 return;
@@ -205,13 +205,13 @@ namespace Nmkoder.Forms
 
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
             QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);
         }
 
         private void containers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
             QuickConvertUi.ValidateContainer();
         }
 
@@ -225,13 +225,13 @@ namespace Nmkoder.Forms
 
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
             QuickConvertUi.AudEncoderSelected(encAudEnc.SelectedIndex);
         }
 
         private void encSubCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
         }
 
         private void thumbnail_Click(object sender, EventArgs e)
@@ -251,7 +251,7 @@ namespace Nmkoder.Forms
 
         private void metaMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
         }
 
         private void tabList_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,6 +261,11 @@ namespace Nmkoder.Forms
 
             if (tabList.SelectedPage == streamListPage)
                 RefreshStreamListUi();
+
+            if (tabList.SelectedPage == settingsPage)
+                LoadConfig();
+            else
+                SaveConfig();
         }
 
         #region File Drop Panel

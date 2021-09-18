@@ -52,9 +52,10 @@
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
             this.streamDetails = new System.Windows.Forms.TextBox();
             this.quickConvertPage = new Cyotek.Windows.Forms.TabListPage();
+            this.encCustomArgsOut = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.outputPath = new System.Windows.Forms.TextBox();
-            this.encCustomArgs = new System.Windows.Forms.TextBox();
+            this.encCustomArgsIn = new System.Windows.Forms.TextBox();
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
@@ -525,14 +526,26 @@
             // 
             // quickConvertPage
             // 
+            this.quickConvertPage.Controls.Add(this.encCustomArgsOut);
             this.quickConvertPage.Controls.Add(this.label30);
             this.quickConvertPage.Controls.Add(this.outputPath);
-            this.quickConvertPage.Controls.Add(this.encCustomArgs);
+            this.quickConvertPage.Controls.Add(this.encCustomArgsIn);
             this.quickConvertPage.Controls.Add(this.containers);
             this.quickConvertPage.Controls.Add(this.quickEncTabControl);
             this.quickConvertPage.Name = "quickConvertPage";
             this.quickConvertPage.Size = new System.Drawing.Size(682, 382);
             this.quickConvertPage.Text = "Quick Convert";
+            // 
+            // encCustomArgsOut
+            // 
+            this.encCustomArgsOut.AllowDrop = true;
+            this.encCustomArgsOut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encCustomArgsOut.ForeColor = System.Drawing.Color.White;
+            this.encCustomArgsOut.Location = new System.Drawing.Point(353, 328);
+            this.encCustomArgsOut.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encCustomArgsOut.Name = "encCustomArgsOut";
+            this.encCustomArgsOut.Size = new System.Drawing.Size(209, 20);
+            this.encCustomArgsOut.TabIndex = 54;
             // 
             // label30
             // 
@@ -541,9 +554,9 @@
             this.label30.Location = new System.Drawing.Point(14, 331);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(98, 13);
+            this.label30.Size = new System.Drawing.Size(168, 13);
             this.label30.TabIndex = 52;
-            this.label30.Text = "Custom Arguments:";
+            this.label30.Text = "Custom Arguments (Input/Output):";
             // 
             // outputPath
             // 
@@ -556,16 +569,16 @@
             this.outputPath.Size = new System.Drawing.Size(555, 20);
             this.outputPath.TabIndex = 45;
             // 
-            // encCustomArgs
+            // encCustomArgsIn
             // 
-            this.encCustomArgs.AllowDrop = true;
-            this.encCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.encCustomArgs.Location = new System.Drawing.Point(227, 328);
-            this.encCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
-            this.encCustomArgs.Name = "encCustomArgs";
-            this.encCustomArgs.Size = new System.Drawing.Size(250, 20);
-            this.encCustomArgs.TabIndex = 50;
+            this.encCustomArgsIn.AllowDrop = true;
+            this.encCustomArgsIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encCustomArgsIn.ForeColor = System.Drawing.Color.White;
+            this.encCustomArgsIn.Location = new System.Drawing.Point(227, 328);
+            this.encCustomArgsIn.MinimumSize = new System.Drawing.Size(4, 21);
+            this.encCustomArgsIn.Name = "encCustomArgsIn";
+            this.encCustomArgsIn.Size = new System.Drawing.Size(120, 20);
+            this.encCustomArgsIn.TabIndex = 50;
             // 
             // containers
             // 
@@ -601,7 +614,7 @@
             this.quickEncTabControl.SelectedIndex = 0;
             this.quickEncTabControl.SelectedTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(151)))), ((int)(((byte)(234)))));
             this.quickEncTabControl.SelectedTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.quickEncTabControl.Size = new System.Drawing.Size(676, 267);
+            this.quickEncTabControl.Size = new System.Drawing.Size(676, 319);
             this.quickEncTabControl.TabIndex = 0;
             this.quickEncTabControl.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.quickEncTabControl.UnderBorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(67)))), ((int)(((byte)(70)))));
@@ -632,7 +645,7 @@
             this.encVid.Location = new System.Drawing.Point(4, 27);
             this.encVid.Name = "encVid";
             this.encVid.Padding = new System.Windows.Forms.Padding(3);
-            this.encVid.Size = new System.Drawing.Size(668, 236);
+            this.encVid.Size = new System.Drawing.Size(668, 288);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
             // 
@@ -838,7 +851,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(668, 236);
+            this.tabPage2.Size = new System.Drawing.Size(668, 288);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Audio";
             // 
@@ -930,7 +943,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(668, 236);
+            this.tabPage1.Size = new System.Drawing.Size(668, 288);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Subtitles";
             // 
@@ -990,7 +1003,7 @@
             this.encMetaTab.Location = new System.Drawing.Point(4, 27);
             this.encMetaTab.Name = "encMetaTab";
             this.encMetaTab.Padding = new System.Windows.Forms.Padding(3);
-            this.encMetaTab.Size = new System.Drawing.Size(668, 236);
+            this.encMetaTab.Size = new System.Drawing.Size(668, 288);
             this.encMetaTab.TabIndex = 3;
             this.encMetaTab.Text = "Metadata";
             // 
@@ -1000,7 +1013,7 @@
             this.panel3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel3.Location = new System.Drawing.Point(6, 107);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(656, 199);
+            this.panel3.Size = new System.Drawing.Size(656, 175);
             this.panel3.TabIndex = 7;
             // 
             // metadataGrid
@@ -1020,7 +1033,7 @@
             this.metadataGrid.Name = "metadataGrid";
             this.metadataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.metadataGrid.RowHeadersWidth = 51;
-            this.metadataGrid.Size = new System.Drawing.Size(656, 199);
+            this.metadataGrid.Size = new System.Drawing.Size(656, 175);
             this.metadataGrid.TabIndex = 1;
             // 
             // panel2
@@ -2470,7 +2483,7 @@
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.TextBox encCustomArgs;
+        private System.Windows.Forms.TextBox encCustomArgsIn;
         private System.Windows.Forms.NumericUpDown encAudBitrate;
         private System.Windows.Forms.NumericUpDown encVidQuality;
         private System.Windows.Forms.ComboBox encSubCodec;
@@ -2512,6 +2525,7 @@
         private System.Windows.Forms.Label dropLoadFilesAdd;
         private System.Windows.Forms.Panel dropLoadAddBg;
         private System.Windows.Forms.Panel dropLoadClearBg;
+        private System.Windows.Forms.TextBox encCustomArgsOut;
     }
 }
 

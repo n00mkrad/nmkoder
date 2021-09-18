@@ -266,7 +266,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void LoadMetadataGrid()
         {
-            if (MediaInfo.current == null || !MediaInfo.streamListLoaded)
+            if (MediaInfo.current == null)
                 return;
 
             string currMap = MediaInfo.GetMapArgs();

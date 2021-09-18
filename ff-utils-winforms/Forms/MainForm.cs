@@ -50,7 +50,6 @@ namespace Nmkoder.Forms
 
             metaGrid = metadataGrid;
             outputBox = outputPath;
-            customArgsBox = encCustomArgs;
 
             fileListBox = fileList;
             streamListBox = streamList;

@@ -22,7 +22,6 @@ namespace Nmkoder.UI
     class MediaInfo
     {
         public static MediaFile current;
-        public static bool streamListLoaded;
 
         public static async Task HandleFiles (string[] paths, bool clearExisting)
         {

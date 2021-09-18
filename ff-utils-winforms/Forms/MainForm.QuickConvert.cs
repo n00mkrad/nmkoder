@@ -42,7 +42,8 @@ namespace Nmkoder.Forms
         // Quick Convert - Other
         public DataGridView metaGrid;
         public TextBox outputBox;
-        public TextBox customArgsBox;
+        public TextBox customArgsInBox { get { return encCustomArgsIn; } }
+        public TextBox customArgsOutBox { get { return encCustomArgsOut; } }
 
         public void InitQuickConvert ()
         {

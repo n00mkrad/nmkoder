@@ -69,7 +69,7 @@ namespace Nmkoder.Media
             }
             catch
             {
-                Logger.Log($"output.Split(\"[/STREAM]\")[{streamIndex}] failed!");
+                Logger.Log($"output.Split(\"[/STREAM]\")[{streamIndex}] failed! Can't access index {streamIndex} because array only has {output.Split("[/STREAM]").Length} items.", true);
                 return "";
             }
             

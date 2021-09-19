@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Nmkoder.Data
         public enum AudioCodec { Copy, StripAudio, Aac, Opus };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
 
-        public static string GetArgs(VideoCodec c, Dictionary<string, string> args)
+        public static string GetArgs(VideoCodec c, Dictionary<string, string> args, MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
 
@@ -58,10 +59,20 @@ namespace Nmkoder.Data
                 string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
                 string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} -pix_fmt {pixFmt}";
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.svtAv1KeyIntSecs, 8));
+                return $"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}";
             }
 
             return "";
+        }
+
+        private static string GetKeyIntArg (MediaFile mediaFile, int intervalSeconds, string arg = "-g")
+        {
+            if (mediaFile == null || mediaFile.VideoStreams.Count < 1)
+                return "";
+
+            int keyInt = ((float)(mediaFile?.VideoStreams.FirstOrDefault().Rate.GetFloat() * intervalSeconds)).RoundToInt();
+            return keyInt >= 24 ? $"{arg} {keyInt}" : "";
         }
 
         public static string GetArgs(AudioCodec c, Dictionary<string, string> args)

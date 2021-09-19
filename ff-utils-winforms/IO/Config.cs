@@ -278,7 +278,8 @@ namespace Nmkoder.IO
             autoCropSamples,
             cmdDebugMode,
             metaMode,
-            mp4Faststart
+            mp4Faststart,
+            svtAv1KeyIntSecs
         }
     }
 }

@@ -165,10 +165,10 @@ namespace Nmkoder.Media
 
         public static async Task<string> GetCurrentAutoCrop (bool print)
         {
-            string msg = "Detecting crop... This can take several minutes for long videos.";
+            string msg = "Detecting crop... This can take a while for long videos.";
             Logger.Log(msg, !print);
             NmkdStopwatch sw = new NmkdStopwatch();
-            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 6);
+            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 8);
             string path = MediaInfo.current.File.FullName;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);

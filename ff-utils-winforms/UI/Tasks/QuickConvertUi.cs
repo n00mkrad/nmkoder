@@ -393,9 +393,7 @@ namespace Nmkoder.UI.Tasks
                 filters.Add(GetScaleFilter(scaleW, scaleH));
 
             if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
-            {
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(true));
-            }
 
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";

@@ -51,7 +51,7 @@ namespace Nmkoder.Media
                 return;
             }
 
-            if (line.Contains("not currently supported in container"))
+            if (line.Contains("not currently supported in container") || line.Contains("Unsupported codec id"))
             {
                 RunTask.Cancel($"Error: {line}\n\nIt looks like you are trying to copy a stream into a container that doesn't support this codec.");
                 return;

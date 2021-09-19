@@ -31,7 +31,7 @@ namespace Nmkoder.Media
             return output.SplitIntoLines().Length;
         }
 
-        public static async Task<List<Stream>> GetStreams (string path, bool progressBar, int streamCount)
+        public static async Task<List<Stream>> GetStreams(string path, bool progressBar, int streamCount)
         {
             List<Stream> streamList = new List<Stream>();
 
@@ -126,13 +126,13 @@ namespace Nmkoder.Media
                         Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, Type = Stream.StreamType.Unknown };
                         streamList.Add(stream);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Logger.Log($"Error scanning stream: {e.Message}\n{e.StackTrace}");
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"GetStreams Exception: {e.Message}\n{e.StackTrace}", true);
             }
@@ -143,7 +143,7 @@ namespace Nmkoder.Media
             return streamList;
         }
 
-        public static async Task<bool> IsSubtitleBitmapBased (string path, int streamIndex, string codec = "")
+        public static async Task<bool> IsSubtitleBitmapBased(string path, int streamIndex, string codec = "")
         {
             if (codec == "ssa" || codec == "ass" || codec == "mov_text" || codec == "srt" || codec == "subrip" || codec == "text" || codec == "webvtt")
                 return false;
@@ -163,10 +163,10 @@ namespace Nmkoder.Media
             return $"pad=width=ceil(iw/{px})*{px}:height=ceil(ih/{px})*{px}:color=black@0";
         }
 
-        public static async Task<string> GetCurrentAutoCrop (bool print)
+        public static async Task<string> GetCurrentAutoCrop(bool quiet)
         {
             string msg = "Detecting crop... This can take a while for long videos.";
-            Logger.Log(msg, !print);
+            Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 8);
             string path = MediaInfo.current.File.FullName;
@@ -177,6 +177,9 @@ namespace Nmkoder.Media
 
             for (int i = 0; i < sampleCount; i++)
             {
+                if (!quiet)
+                    Program.mainForm.SetProgress(FormatUtils.RatioInt(i + 1, sampleCount));
+
                 int t = interval * (i + 1) - (interval > 1 ? 1 : 0);
 
                 string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -ss {t}", "-an -sn -sn -vf cropdetect -vframes 3 -f null - 2>&1 1>nul | findstr crop=", "");
@@ -188,11 +191,11 @@ namespace Nmkoder.Media
             var mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string[] cropVals = mostCommon.Split(':');
             bool repl = Logger.GetLastLine().Contains(msg);
-            Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", !print, print && repl);
+            Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", quiet, !quiet && repl);
             return $"crop={mostCommon}";
         }
 
-        public static Size SizeFromString (string str, char delimiter = ':')
+        public static Size SizeFromString(string str, char delimiter = ':')
         {
             try
             {

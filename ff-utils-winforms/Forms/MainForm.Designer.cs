@@ -125,6 +125,7 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
             this.currentActionLabel = new System.Windows.Forms.Label();
+            this.qInfo = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -539,6 +540,7 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.qInfo);
             this.encVid.Controls.Add(this.encScaleH);
             this.encVid.Controls.Add(this.encScaleW);
             this.encVid.Controls.Add(this.label29);
@@ -1426,6 +1428,16 @@
             this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
             this.currentActionLabel.TabIndex = 40;
             // 
+            // qInfo
+            // 
+            this.qInfo.AutoSize = true;
+            this.qInfo.ForeColor = System.Drawing.Color.Silver;
+            this.qInfo.Location = new System.Drawing.Point(477, 40);
+            this.qInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.qInfo.Name = "qInfo";
+            this.qInfo.Size = new System.Drawing.Size(0, 15);
+            this.qInfo.TabIndex = 61;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1590,6 +1602,7 @@
         private System.Windows.Forms.Label label2;
         private HTAlt.WinForms.HTButton utilsFramesToVidSelBtn;
         private System.Windows.Forms.Label currentActionLabel;
+        private System.Windows.Forms.Label qInfo;
     }
 }
 

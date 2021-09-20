@@ -22,7 +22,6 @@ namespace Nmkoder.Data
         public CodecArgs(string arguments, List<string> forcedFilters)
         {
             Arguments = arguments;
-
             ForcedFilters = forcedFilters;
         }
     }

@@ -18,13 +18,14 @@ namespace Nmkoder.Data
         public int QMin;
         public int QMax;
         public int QDefault = -1;
+        public string QInfo = "";
 
         public CodecInfo()
         {
             
         }
 
-        public CodecInfo(string name, string frName, string[] presets, int presetDef, string[] fmts, int fmtDef, int qMin, int qMax, int qDef)
+        public CodecInfo(string name, string frName, string[] presets, int presetDef, string[] fmts, int fmtDef, int qMin, int qMax, int qDef, string qInfo = "")
         {
             Name = name;
             FriendlyName = frName;
@@ -35,6 +36,7 @@ namespace Nmkoder.Data
             QMin = qMin;
             QMax = qMax;
             QDefault = qDef;
+            QInfo = qInfo;
         }
     }
 }

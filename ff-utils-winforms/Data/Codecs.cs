@@ -19,7 +19,6 @@ namespace Nmkoder.Data
         public static CodecArgs GetArgs(VideoCodec c, Dictionary<string, string> encArgs, MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
-            CodecArgs codecArgs = new CodecArgs();
 
             if (c == VideoCodec.StripVideo)
             {
@@ -179,7 +178,8 @@ namespace Nmkoder.Data
                 string frName = "H.264 / AVC (x264)";
                 string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 18);
+                string qInfo = "CRF (0-51 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 18, qInfo);
             }
 
             if (c == VideoCodec.H265)
@@ -187,7 +187,8 @@ namespace Nmkoder.Data
                 string frName = "H.265 / HEVC (x265)";
                 string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 22);
+                string qInfo = "CRF (0-51 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 22, qInfo);
             }
 
             if (c == VideoCodec.H264Nvenc)
@@ -195,7 +196,8 @@ namespace Nmkoder.Data
                 string frName = "H.264 / AVC (NVIDIA NVENC)";
                 string[] presets = new string[] { "p5", "p4", "p3", "p2", "p1" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
-                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 18);
+                string qInfo = "CRF (0-51 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 18, qInfo);
             }
 
             if (c == VideoCodec.H265Nvenc)
@@ -203,7 +205,8 @@ namespace Nmkoder.Data
                 string frName = "H.265 / HEVC (NVIDIA NVENC)";
                 string[] presets = new string[] { "p7", "p6", "p5", "p4", "p3", "p2", "p1" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
-                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 22);
+                string qInfo = "CRF (0-51 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 22, qInfo);
             }
 
             if (c == VideoCodec.Vp9)
@@ -211,7 +214,8 @@ namespace Nmkoder.Data
                 string frName = "VP9 (vpx-vp9)";
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 63, 28);
+                string qInfo = "CRF (0-63 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 63, 28, qInfo);
             }
 
             if (c == VideoCodec.Av1)
@@ -219,7 +223,8 @@ namespace Nmkoder.Data
                 string frName = "AV1 (svt-av1)";
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 6, colors, 1, 0, 50, 26);
+                string qInfo = "CRF (0-50 - Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 6, colors, 1, 0, 50, 26, qInfo);
             }
 
             if (c == VideoCodec.Gif)
@@ -227,7 +232,8 @@ namespace Nmkoder.Data
                 string frName = "GIF";
                 string[] presets = new string[] { };
                 string[] colors = new string[] { };
-                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 16, 256, 128);
+                string qInfo = "Color Palette Size (Higher is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 16, 256, 128, qInfo);
             }
 
             return new CodecInfo();

@@ -82,6 +82,7 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.encScaleBoxW.Enabled = Program.mainForm.encScaleBoxH.Enabled = enc;
             Program.mainForm.encCropModeBox.Enabled = enc;
 
+            Program.mainForm.qInfoLabel.Text = info.QInfo;
             LoadQualityLevel(info);
             LoadPresets(info);
             LoadColorFormats(info);

@@ -23,12 +23,13 @@ namespace Nmkoder.Forms
     partial class MainForm
     {
         // Quick Convert - Video
-        public ComboBox containerBox;
-        public ComboBox encVidCodecsBox;
-        public NumericUpDown encVidQualityBox;
-        public ComboBox encVidPresetBox;
-        public ComboBox encVidColorsBox;
-        public TextBox encVidFpsBox;
+        public ComboBox containerBox { get { return containers; } }
+        public ComboBox encVidCodecsBox { get { return encVidCodec; } }
+        public NumericUpDown encVidQualityBox { get { return encVidQuality; } }
+        public Label qInfoLabel { get { return qInfo; } }
+        public ComboBox encVidPresetBox { get { return encVidPreset; } }
+        public ComboBox encVidColorsBox { get { return encVidColors; } }
+        public TextBox encVidFpsBox { get { return encVidFps; } }
         public TextBox encScaleBoxW { get { return encScaleW; } }
         public TextBox encScaleBoxH { get { return encScaleH; } }
         public ComboBox encCropModeBox { get { return encCropMode; } }
@@ -47,13 +48,6 @@ namespace Nmkoder.Forms
 
         public void InitQuickConvert ()
         {
-            containerBox = containers;
-            encVidCodecsBox = encVidCodec;
-            encVidQualityBox = encVidQuality;
-            encVidPresetBox = encVidPreset;
-            encVidColorsBox = encVidColors;
-            encVidFpsBox = encVidFps;
-
             encAudEnc = encAudCodec;
             encAudBr = encAudBitrate;
             encAudCh = encAudChannels;

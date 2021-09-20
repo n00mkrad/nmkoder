@@ -404,7 +404,7 @@ namespace Nmkoder.UI.Tasks
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(false));
 
             if (filters.Count > 0)
-                return $"-vf {string.Join(",", filters)}";
+                return $"-vf {string.Join(",", filters.Where(x => x.Trim().Length > 2))}";
             else
                 return "";
         }

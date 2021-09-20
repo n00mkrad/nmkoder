@@ -12,21 +12,24 @@ namespace Nmkoder.Data
 {
     class Containers
     {
-        public enum Container { Mp4, Mkv, Webm, Mov, M4a, Ogg };
+        public enum Container { Mp4, Mkv, Webm, Mov, Gif, M4a, Ogg };
 
         public static VC[] GetSupportedVideoCodecs (Container c)
         {
             if (c == Container.Mp4)
-                return new VC[] { VC.H264, VC.H265, VC.Av1 };
+                return new VC[] { VC.H264, VC.H265, VC.H264Nvenc, VC.H265Nvenc, VC.Av1 };
 
             if (c == Container.Mkv)
-                return new VC[] { VC.H264, VC.H265, VC.Vp9, VC.Av1 };
+                return new VC[] { VC.H264, VC.H265, VC.H264Nvenc, VC.H265Nvenc, VC.Vp9, VC.Av1 };
 
             if (c == Container.Webm)
                 return new VC[] { VC.Vp9, VC.Av1 };
 
             if (c == Container.Mov)
-                return new VC[] { VC.H264, VC.H265 };
+                return new VC[] { VC.H264, VC.H265, VC.H264Nvenc, VC.H265Nvenc };
+
+            if (c == Container.Gif)
+                return new VC[] { VC.Gif };
 
             return new VC[0];
         }
@@ -34,16 +37,16 @@ namespace Nmkoder.Data
         public static AC[] GetSupportedAudioCodecs(Container c)
         {
             if (c == Container.Mp4)
-                return new AC[] { AC.Aac, AC.Opus };
+                return new AC[] { AC.Aac, AC.Mp3 };
 
             if (c == Container.Mkv)
-                return new AC[] { AC.Aac, AC.Opus };
+                return new AC[] { AC.Aac, AC.Opus, AC.Mp3, AC.Flac };
 
             if (c == Container.Webm)
                 return new AC[] { AC.Opus };
 
             if (c == Container.Mov)
-                return new AC[] { AC.Aac };
+                return new AC[] { AC.Aac, AC.Mp3 };
 
             if (c == Container.M4a)
                 return new AC[] { AC.Aac };
@@ -105,6 +108,9 @@ namespace Nmkoder.Data
 
             if (ContainerSupports(Container.Mov, cv) && ContainerSupports(Container.Mov, ca) && ContainerSupports(Container.Mov, cs))
                 return Container.Mov;
+
+            if (ContainerSupports(Container.Gif, cv) && ContainerSupports(Container.Gif, ca) && ContainerSupports(Container.Gif, cs))
+                return Container.Gif;
 
             return Container.Mkv;
         }

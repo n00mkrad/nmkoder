@@ -368,9 +368,12 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static async Task<string> GetVideoFilterArgs(Codecs.VideoCodec vCodec)
+        public static async Task<string> GetVideoFilterArgs(Codecs.VideoCodec vCodec, CodecArgs codecArgs = null)
         {
             List<string> filters = new List<string>();
+
+            if (codecArgs != null && codecArgs.ForcedFilters != null)
+                filters.AddRange(codecArgs.ForcedFilters);
 
             if (MediaInfo.current.VideoStreams.Count < 1 || (vCodec == Codecs.VideoCodec.Copy || vCodec == Codecs.VideoCodec.StripVideo))
                 return "";

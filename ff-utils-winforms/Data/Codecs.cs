@@ -12,58 +12,81 @@ namespace Nmkoder.Data
     {
         //public enum CodecType { Video, AnimImage, Image, Audio }
 
-        public enum VideoCodec { Copy, StripVideo, H264, H265, Vp9, Av1 };
-        public enum AudioCodec { Copy, StripAudio, Aac, Opus };
+        public enum VideoCodec { Copy, StripVideo, H264, H265, H264Nvenc, H265Nvenc, Vp9, Av1, Gif };
+        public enum AudioCodec { Copy, StripAudio, Aac, Opus, Mp3, Flac };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
 
-        public static string GetArgs(VideoCodec c, Dictionary<string, string> args, MediaFile mediaFile = null)
+        public static CodecArgs GetArgs(VideoCodec c, Dictionary<string, string> encArgs, MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
+            CodecArgs codecArgs = new CodecArgs();
 
             if (c == VideoCodec.StripVideo)
             {
-                return $"-vn";
+                return new CodecArgs($"-vn");
             }
 
             if (c == VideoCodec.Copy)
             {
-                return $"-c:v copy";
+                return new CodecArgs($"-c:v copy");
             }
 
             if (c == VideoCodec.H264)
             {
-                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
-                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libx264 -crf {q} -preset {preset} -pix_fmt {pixFmt}";
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($"-c:v libx264 -crf {q} -preset {preset} -pix_fmt {pixFmt}");
             }
 
             if (c == VideoCodec.H265)
             {
-                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
-                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libx265 -crf {q} -preset {preset} -pix_fmt {pixFmt}";
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($"-c:v libx265 -crf {q} -preset {preset} -pix_fmt {pixFmt}");
+            }
+
+            if (c == VideoCodec.H264Nvenc)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($"-c:v h264_nvenc -b:v 0 {(q.GetInt() > 0 ? $"-cq {q}" : "-tune lossless")} -preset {preset} -pix_fmt {pixFmt}");
+            }
+
+            if (c == VideoCodec.H265Nvenc)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($"-c:v hevc_nvenc -b:v 0 {(q.GetInt() > 0 ? $"-cq {q}" : "-tune lossless")} -preset {preset} -pix_fmt {pixFmt}");
             }
 
             if (c == VideoCodec.Vp9)
             {
-                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
-                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return $"-c:v libvpx-vp9 -crf {q} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} -pix_fmt {pixFmt}";
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($"-c:v libvpx-vp9 -crf {q} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} -pix_fmt {pixFmt}");
             }
 
             if (c == VideoCodec.Av1)
             {
-                string q = args.ContainsKey("q") ? args["q"] : info.Presets[info.QDefault];
-                string preset = args.ContainsKey("preset") ? args["preset"] : info.Presets[info.PresetDef];
-                string pixFmt = args.ContainsKey("pixFmt") ? args["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.svtAv1KeyIntSecs, 8));
-                return $"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}";
+                return new CodecArgs($"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}");
             }
 
-            return "";
+            if (c == VideoCodec.Gif)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                return new CodecArgs($"-f gif -gifflags -offsetting", $"split[s0][s1];[s0]palettegen={q}[p];[s1][p]paletteuse=dither=floyd_steinberg");
+            }
+
+            return new CodecArgs();
         }
 
         private static string GetKeyIntArg (MediaFile mediaFile, int intervalSeconds, string arg = "-g")
@@ -101,35 +124,38 @@ namespace Nmkoder.Data
                 return $"-c:a libopus -b:a {bitrate}k -ac {channels}";
             }
 
+            if (c == AudioCodec.Mp3)
+            {
+                string bitrate = args.ContainsKey("bitrate") ? args["bitrate"] : "320k";
+                string channels = args.ContainsKey("ac") ? args["ac"] : "2";
+                return $"-c:a libmp3lame -b:a {bitrate}k -ac {channels}";
+            }
+
+            if (c == AudioCodec.Flac)
+            {
+                string channels = args.ContainsKey("ac") ? args["ac"] : "2";
+                return $"-c:a flac -ac {channels}";
+            }
+
             return "";
         }
 
         public static string GetArgs(SubtitleCodec c)
         {
             if (c == SubtitleCodec.StripSubs)
-            {
                 return $"-sn";
-            }
 
             if (c == SubtitleCodec.Copy)
-            {
                 return $"-c:s copy";
-            }
 
             if (c == SubtitleCodec.MovText)
-            {
                 return $"-c:s mov_text";
-            }
 
             if (c == SubtitleCodec.Srt)
-            {
                 return $"-c:s srt";
-            }
 
             if (c == SubtitleCodec.WebVtt)
-            {
                 return $"-c:s webvtt";
-            }
 
             return "";
         }
@@ -151,17 +177,33 @@ namespace Nmkoder.Data
             if (c == VideoCodec.H264)
             {
                 string frName = "H.264 / AVC (x264)";
-                string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
+                string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 18);
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 18);
             }
 
             if (c == VideoCodec.H265)
             {
                 string frName = "H.265 / HEVC (x265)";
-                string[] presets = new string[] { "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow" };
+                string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
-                return new CodecInfo(c.ToString(), frName, presets, 4, colors, 0, 0, 51, 22);
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 22);
+            }
+
+            if (c == VideoCodec.H264Nvenc)
+            {
+                string frName = "H.264 / AVC (NVIDIA NVENC)";
+                string[] presets = new string[] { "p5", "p4", "p3", "p2", "p1" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 18);
+            }
+
+            if (c == VideoCodec.H265Nvenc)
+            {
+                string frName = "H.265 / HEVC (NVIDIA NVENC)";
+                string[] presets = new string[] { "p7", "p6", "p5", "p4", "p3", "p2", "p1" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 22);
             }
 
             if (c == VideoCodec.Vp9)
@@ -178,6 +220,14 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 return new CodecInfo(c.ToString(), frName, presets, 6, colors, 1, 0, 50, 26);
+            }
+
+            if (c == VideoCodec.Gif)
+            {
+                string frName = "GIF";
+                string[] presets = new string[] { };
+                string[] colors = new string[] { };
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 16, 256, 128);
             }
 
             return new CodecInfo();
@@ -207,6 +257,18 @@ namespace Nmkoder.Data
             {
                 string frName = "Opus";
                 return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 96 };
+            }
+
+            if (c == AudioCodec.Mp3)
+            {
+                string frName = "MP3";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 320 };
+            }
+
+            if (c == AudioCodec.Flac)
+            {
+                string frName = "FLAC (Free Lossless Audio Coding)";
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = -1 };
             }
 
             return new CodecInfo();

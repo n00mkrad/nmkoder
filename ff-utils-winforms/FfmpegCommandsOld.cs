@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Nmkoder
 {
-    class FFmpegCommands
+    class FfmpegCommandsOld
     {
         static string yuv420p = "-pix_fmt yuv420p";
         static string faststart = "-movflags +faststart";

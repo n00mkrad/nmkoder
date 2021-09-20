@@ -153,6 +153,26 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_addImgs {
+            get {
+                object obj = ResourceManager.GetObject("icon_addImgs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_addImgs2 {
+            get {
+                object obj = ResourceManager.GetObject("icon_addImgs2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_arrow_down {
             get {
                 object obj = ResourceManager.GetObject("icon_arrow_down", resourceCulture);
@@ -176,6 +196,66 @@ namespace Nmkoder.Properties {
         internal static System.Drawing.Bitmap icon_clear {
             get {
                 object obj = ResourceManager.GetObject("icon_clear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_compare {
+            get {
+                object obj = ResourceManager.GetObject("icon_compare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_delaySync {
+            get {
+                object obj = ResourceManager.GetObject("icon_delaySync", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_imgStack {
+            get {
+                object obj = ResourceManager.GetObject("icon_imgStack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_imgStack2 {
+            get {
+                object obj = ResourceManager.GetObject("icon_imgStack2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_loop {
+            get {
+                object obj = ResourceManager.GetObject("icon_loop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_speed {
+            get {
+                object obj = ResourceManager.GetObject("icon_speed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

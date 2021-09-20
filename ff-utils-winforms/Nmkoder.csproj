@@ -288,7 +288,7 @@
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
-    <Compile Include="FFmpegCommands.cs" />
+    <Compile Include="FfmpegCommandsOld.cs" />
     <Compile Include="FFmpegStrings.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -307,7 +307,6 @@
     <Compile Include="Media\FfmpegExtract.cs" />
     <Compile Include="Media\FfmpegOutputHandler.cs" />
     <Compile Include="Media\FfmpegUtils.cs" />
-    <Compile Include="Media\FfmpegUtilsOld.cs" />
     <Compile Include="Media\GetFrameCountCached.cs" />
     <Compile Include="Media\GetMediaResolutionCached.cs" />
     <Compile Include="Media\GetVideoInfo.cs" />
@@ -318,6 +317,7 @@
     <Compile Include="UI\MediaInfo.cs" />
     <Compile Include="UI\Tasks\QuickConvert.cs" />
     <Compile Include="UI\Tasks\QuickConvertUi.cs" />
+    <Compile Include="UI\Tasks\Utilities.cs" />
     <Compile Include="UI\ThumbnailView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
@@ -337,6 +337,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Forms\MainForm.Utils.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -355,6 +358,14 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\icon_imgStack2.png" />
+    <None Include="Resources\icon_speed.png" />
+    <None Include="Resources\icon_loop.png" />
+    <None Include="Resources\icon_imgStack.png" />
+    <None Include="Resources\icon_delaySync.png" />
+    <None Include="Resources\icon_compare.png" />
+    <None Include="Resources\icon_addImgs2.png" />
+    <None Include="Resources\icon_addImgs.png" />
     <None Include="Resources\icon_clear.png" />
     <None Include="Resources\icon_arrow_up.png" />
     <None Include="Resources\icon_arrow_down.png" />

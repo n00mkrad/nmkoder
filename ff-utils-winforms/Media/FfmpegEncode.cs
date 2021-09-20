@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using static Nmkoder.Media.AvProcess;
-using Utils = Nmkoder.Media.FfmpegUtilsOld;
 
 namespace Nmkoder.Media
 {

@@ -152,6 +152,9 @@ namespace Nmkoder.Forms
             if(tabList.SelectedPage == quickConvertPage)
                 return RunTask.TaskType.Convert;
 
+            if (tabList.SelectedPage == utilsPage)
+                return GetUtilsTaskType();
+
             return RunTask.TaskType.None;
         }
 

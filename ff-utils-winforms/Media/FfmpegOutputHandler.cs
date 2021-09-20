@@ -69,9 +69,15 @@ namespace Nmkoder.Media
                 return;
             }
 
-            if (line.Contains("*codec*not supported*"))
+            if (line.MatchesWildcard("*codec*not supported*"))
             {
                 RunTask.Cancel($"Error: {line}\n\nTry using a different codec.");
+                return;
+            }
+
+            if (line.Contains("GIF muxer supports only a single video GIF stream"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nYou tried to mux a non-GIF stream into a GIF file.");
                 return;
             }
         }

@@ -60,6 +60,7 @@ namespace Nmkoder.Forms
             else
                 await MediaInfo.LoadFirstFile(((MediaFile)fileList.SelectedItem).File.FullName);
 
+            QuickConvertUi.LoadMetadataGrid();
             addTracksFromFileBtn.Enabled = true;
         }
 

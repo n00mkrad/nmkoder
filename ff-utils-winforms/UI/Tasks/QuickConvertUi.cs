@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Streams;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -291,22 +293,24 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Add($"File", MediaInfo.current.Title, MediaInfo.current.Language);
 
-            for (int i = 0; i < MediaInfo.current.VideoStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(c.VideoStreams[i].Index))
-                    grid.Rows.Add($"Video Track {i + 1}", c.VideoStreams[i].Title, c.VideoStreams[i].Language);
+            List<VideoStream> vStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
+            List<AudioStream> aStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
+            List<SubtitleStream> sStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
 
-            for (int i = 0; i < MediaInfo.current.AudioStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.AudioStreams[i].Index))
-                    grid.Rows.Add($"Audio Track {i + 1}", MediaInfo.current.AudioStreams[i].Title, c.AudioStreams[i].Language);
+            for (int i = 0; i < vStreams.Count; i++)
+                if (Program.mainForm.streamListBox.GetItemChecked(vStreams[i].Index))
+                    grid.Rows.Add($"Video Track {i + 1}", vStreams[i].Title, vStreams[i].Language);
 
-            for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(MediaInfo.current.SubtitleStreams[i].Index))
-                    grid.Rows.Add($"Subtitle Track {i + 1}", MediaInfo.current.SubtitleStreams[i].Title, c.SubtitleStreams[i].Language);
+            for (int i = 0; i < aStreams.Count; i++)
+                if (Program.mainForm.streamListBox.GetItemChecked(aStreams[i].Index))
+                    grid.Rows.Add($"Audio Track {i + 1}", aStreams[i].Title, aStreams[i].Language);
+
+            for (int i = 0; i < sStreams.Count; i++)
+                if (Program.mainForm.streamListBox.GetItemChecked(sStreams[i].Index))
+                    grid.Rows.Add($"Subtitle Track {i + 1}", sStreams[i].Title, sStreams[i].Language);
 
             grid.Columns[0].ReadOnly = true;
-            grid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[0].AutoSizeMode = grid.Columns[1].AutoSizeMode = grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grid.Columns[0].FillWeight = 15;
             grid.Columns[1].FillWeight = 75;
             grid.Columns[2].FillWeight = 10;

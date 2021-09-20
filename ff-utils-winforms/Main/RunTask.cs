@@ -76,7 +76,7 @@ namespace Nmkoder.Main
                 return;
             }
 
-            Program.mainForm.ClearCurrentFile();
+            MediaInfo.ClearCurrentFile();
             System.Windows.Forms.ListBox fileList = Program.mainForm.fileListBox;
 
             object[] taskFileList = new object[fileList.Items.Count];
@@ -87,9 +87,9 @@ namespace Nmkoder.Main
             for (int i = 0; i < taskFileList.Length; i++)
             {
                 MediaFile mf = (MediaFile)taskFileList[i];
-                Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.File.Name}.");
-                Program.mainForm.ClearCurrentFile();
-                await MediaInfo.LoadFirstFile(mf.File.FullName, false, false); // Load file info
+                Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.Name}.");
+                MediaInfo.ClearCurrentFile();
+                await MediaInfo.LoadFirstFile(mf.Path, false, false); // Load file info
                 await Start(batchTask); // Run task
                 fileList.Items.RemoveAt(0);
             }

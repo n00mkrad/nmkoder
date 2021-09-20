@@ -19,6 +19,8 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
+        public TextBox streamDetailsBox { get { return streamDetails; } }
+
         public void RefreshStreamListUi()
         {
             string note = "Stream selection is not available in Batch Processing Mode.";

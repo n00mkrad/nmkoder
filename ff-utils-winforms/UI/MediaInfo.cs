@@ -28,7 +28,7 @@ namespace Nmkoder.UI
             if (clearExisting)
             {
                 ThumbnailView.ClearUi();
-                Program.mainForm.ClearCurrentFile();
+                ClearCurrentFile();
                 Logger.ClearLogBox();
             }
 
@@ -40,11 +40,23 @@ namespace Nmkoder.UI
                 await LoadFirstFile(paths[0]);
         }
 
+        public static void ClearCurrentFile ()
+        {
+            current = null;
+            Program.mainForm.outputBox.Text = "";
+            Program.mainForm.streamListBox.Items.Clear();
+            Program.mainForm.streamDetailsBox.Text = "";
+            Program.mainForm.formatInfoLabel.Text = "";
+            Program.mainForm.metaGrid.Columns.Clear();
+            Program.mainForm.metaGrid.Rows.Clear();
+            ThumbnailView.ClearUi();
+        }
+
         public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
         {
             MediaFile mediaFile = new MediaFile(path);
             int streamCount = await FfmpegUtils.GetStreamCount(path);
-            Logger.Log($"Scanning '{mediaFile.File.Name}' (Streams: {streamCount})...");
+            Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
             PrintFoundStreams(mediaFile);
             current = mediaFile;
@@ -53,11 +65,11 @@ namespace Nmkoder.UI
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(current.DurationMs);
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Ext.ToUpper()} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.SizeKb * 1024)}";
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.Size * 1024)}";
             Program.mainForm.streamListBox.Items.Clear();
             await AddStreamsToList(current, switchToTrackList);
 
-            Program.mainForm.outputBox.Text = current.File.FullName;
+            Program.mainForm.outputBox.Text = current.Path;
             QuickConvertUi.ValidatePath();
             // Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
             QuickConvertUi.InitFile();
@@ -78,18 +90,18 @@ namespace Nmkoder.UI
             if (foundTracks.Count > 0)
                 Logger.Log($"Found {string.Join(", ", foundTracks)}.");
             else
-                Logger.Log($"Found no media streams in '{mediaFile.File.Name}'!");
+                Logger.Log($"Found no media streams in '{mediaFile.Name}'!");
         }
 
         public static async Task AddStreamsToList (MediaFile mediaFile, bool switchToList, bool silent = false)
         {
             CheckedListBox box = Program.mainForm.streamListBox;
-            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.File.FullName) select x).Distinct().Count();
+            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.Path) select x).Distinct().Count();
 
             if (!mediaFile.Initialized)
             {
                 if (!silent)
-                    Logger.Log($"Scanning '{mediaFile.File.Name}'...");
+                    Logger.Log($"Scanning '{mediaFile.Name}'...");
 
                 await mediaFile.Initialize();
 
@@ -162,7 +174,7 @@ namespace Nmkoder.UI
             foreach(MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
             {
                 if (entry.Stream.Index == 0)
-                    files.Add($"-i {entry.MediaFile.File.FullName.Wrap()}");
+                    files.Add($"-i {entry.MediaFile.Path.Wrap()}");
             }
 
             return string.Join(" ", files);

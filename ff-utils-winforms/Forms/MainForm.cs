@@ -196,16 +196,6 @@ namespace Nmkoder.Forms
             MediaInfo.HandleFiles(files, true);
         }
 
-        public void ClearCurrentFile ()
-        {
-            MediaInfo.current = null;
-            outputPath.Text = "";
-            streamList.Items.Clear();
-            streamDetails.Text = "";
-            formatInfo.Text = "";
-            ThumbnailView.ClearUi();
-        }
-
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveUiConfig();

@@ -13,7 +13,7 @@ namespace Nmkoder.UI
         public static void RefreshList ()
         {
             foreach (MediaFile mediaFile in currentFiles)
-                Program.mainForm.fileListBox.Items.Add(mediaFile.File.Name);
+                Program.mainForm.fileListBox.Items.Add(mediaFile.Name);
         }
 
         public static void LoadFiles (string[] paths, bool clearExisting)

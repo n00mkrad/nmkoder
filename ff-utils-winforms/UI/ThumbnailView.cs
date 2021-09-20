@@ -50,9 +50,9 @@ namespace Nmkoder.UI
             {
                 if (!IoUtils.IsPathDirectory(path))     // If path is video - Extract frames
                 {
-                    string imgPath = Path.Combine(Paths.GetThumbsPath(), "thumb0-s0.jpg");
+                    string imgPath = Path.Combine(Paths.GetThumbsPath(), $"thumb0-s0.{format}");
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
-                    await LoadThumbnailsOnce();
+                    await LoadThumbnailsOnce(format);
 
                     int duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
 
@@ -74,15 +74,12 @@ namespace Nmkoder.UI
                     img1.Save(Path.Combine(Paths.GetThumbsPath(), $"thumb0.jpg"), ImageFormat.Jpeg);
                     Random rnd = new Random();
                     List<FileInfo> picks = frames.Skip(1).OrderBy(x => rnd.Next()).Take(randThumbs * 2).ToList();
-                    Logger.Log(string.Join(", ", picks.Select(x => (x.Length / 1024).ToString())));
-                    picks = picks.OrderBy(f => f.Length).Take(randThumbs).ToList(); // Delete smaller half of thumbs
-                    Logger.Log(string.Join(", ", picks.Select(x => (x.Length / 1024).ToString())));
+                    picks = picks.OrderBy(f => f.Length).Skip(randThumbs).ToList(); // Delete smaller half of thumbs
 
                     int idx = 1;
 
                     foreach (FileInfo pick in picks)
                     {
-                        Logger.Log($"Saving thumb " + pick.Name);
                         IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.{format}"), ImageFormat.Jpeg);
                         idx++;
                     }
@@ -96,7 +93,7 @@ namespace Nmkoder.UI
             //await SlideshowLoop();
 
             if (IoUtils.GetAmountOfFiles(Paths.GetThumbsPath(), false, $"*.{format}") > 0)
-                await LoadThumbnailsOnce();
+                await LoadThumbnailsOnce(format);
             else
                 Fail();
         }
@@ -107,15 +104,24 @@ namespace Nmkoder.UI
             Program.mainForm.thumbLabel.Text = $"Failed to extract thumbnails.";
         }
 
-        public static async Task LoadThumbnailsOnce()
+        public static async Task LoadThumbnailsOnce(string format)
         {
-            string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, "*.*p*");
-            Image[] thumbs = files.Select(x => IoUtils.GetImage(x)).Where(x => x != null).ToArray();
-            string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
-            currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
-            currThumbIndex = currThumbs.Count > 1 ? 1 : 0;
-            busy = false;
-            ShowThumb();
+            try
+            {
+                Logger.Log($"LoadThumbnailsOnce({format})", true);
+                string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, $"*.{format}");
+                Image[] thumbs = files.Select(x => IoUtils.GetImage(x)).Where(x => x != null).ToArray();
+                string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
+                currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
+                currThumbIndex = currThumbs.Count > 1 ? 1 : 0;
+                busy = false;
+                Logger.Log($"Loaded {currThumbs.Count} thumbnail images", true);
+                ShowThumb();
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"LoadThumbnailsOnce Exception: {e.Message}\n{e.StackTrace}", true);
+            }
         }
 
         public static void ThumbnailClick ()
@@ -128,6 +134,9 @@ namespace Nmkoder.UI
 
         public static void ShowThumb(bool next = false)
         {
+            if (currThumbs == null || currThumbs.Count < 1)
+                return;
+
             Program.mainForm.thumbnailBox.Enabled = true;
 
             if (next)
@@ -138,22 +147,31 @@ namespace Nmkoder.UI
                     currThumbIndex = 0;
             }
 
-            int s = currThumbs.ElementAt(currThumbIndex).Key.Split("-s")[1].GetInt();
-            string time = TimeSpan.FromSeconds(s).ToString(@"hh\:mm\:ss");
+            bool hasTime = currThumbs.ElementAt(currThumbIndex).Key.Contains("-s");
+
+            if (hasTime)
+            {
+                int s = currThumbs.ElementAt(currThumbIndex).Key.Split("-s")[1].GetInt();
+                string time = TimeSpan.FromSeconds(s).ToString(@"hh\:mm\:ss");
+                Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}).{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
+            }
+            else
+            {
+                Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count}.{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
+            }
 
             Program.mainForm.thumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
-            Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}).{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
         }
 
         public static async Task SlideshowLoop (int interval = 2)
         {
             Logger.Log($"Slideshow.RunFromPath - imgsDir = {Paths.GetThumbsPath()}", true);
-            string inputFile = MediaInfo.current.File.FullName;
+            string inputFile = MediaInfo.current.Path;
             long inputFileSize = new FileInfo(inputFile).Length;
 
             for (int i = 0; true; i++)
             {
-                if (inputFile != MediaInfo.current.File.FullName || inputFileSize != new FileInfo(inputFile).Length)
+                if (inputFile != MediaInfo.current.Path || inputFileSize != new FileInfo(inputFile).Length)
                     return;
 
                 string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, "*.*p*");

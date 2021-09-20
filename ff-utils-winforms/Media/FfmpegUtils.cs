@@ -38,7 +38,7 @@ namespace Nmkoder.Media
             try
             {
                 string output = await GetFfmpegInfoAsync(path, "Stream #0:");
-                string[] streams = output.SplitIntoLines();
+                string[] streams = output.SplitIntoLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
                 foreach (string streamStr in streams)
                 {
@@ -169,7 +169,7 @@ namespace Nmkoder.Media
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 8);
-            string path = MediaInfo.current.File.FullName;
+            string path = MediaInfo.current.Path;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();

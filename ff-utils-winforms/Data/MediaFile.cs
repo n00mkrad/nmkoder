@@ -15,14 +15,18 @@ namespace Nmkoder.Data
 {
     class MediaFile
     {
-        public FileInfo File;
-        public string Ext;
+        public bool isDirectory;
+        private FileInfo File;
+        private DirectoryInfo Directory;
+        public string Name;
+        public string Path;
+        public string Format;
         public string Title;
         public string Language;
         public long DurationMs;
         public int StreamCount;
         public int TotalKbits;
-        public long SizeKb;
+        public long Size;
         public List<Stream> AllStreams = new List<Stream>();
         public List<VideoStream> VideoStreams = new List<VideoStream>();
         public List<AudioStream> AudioStreams = new List<AudioStream>();
@@ -32,24 +36,36 @@ namespace Nmkoder.Data
 
         public MediaFile (string path)
         {
-            File = new FileInfo(path);
-            Ext = File.Extension.Split('.').Last();
+            if (IoUtils.IsPathDirectory(path))
+            {
+                isDirectory = true;
+                Directory = new DirectoryInfo(path);
+                Name = Directory.Name;
+                Path = Directory.FullName;
+                Format = "Folder";
+            }
+            else
+            {
+                File = new FileInfo(path);
+                Name = File.Name;
+                Path = File.FullName;
+                Format = File.Extension.Remove(".").ToUpper();
+            }
+
+            Size = GetSize();
         }
 
-        public async Task Initialize (string path = null, bool progressBar = true)
+        public async Task Initialize (bool progressBar = true)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(path))
-                    path = File.FullName;
-
-                await LoadFormatInfo(path);
-                AllStreams = await FfmpegUtils.GetStreams(path, progressBar, StreamCount);
+                await LoadFormatInfo(Path);
+                AllStreams = await FfmpegUtils.GetStreams(Path, progressBar, StreamCount);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();
                 DataStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Data).Select(x => (DataStream)x).ToList();
-                Logger.Log($"Loaded and sorted streams for {File.Name}", true);
+                Logger.Log($"Loaded and sorted streams for {Name}", true);
             }
             catch (Exception e)
             {
@@ -66,12 +82,35 @@ namespace Nmkoder.Data
             DurationMs = FfmpegCommands.GetDurationMs(path);
             StreamCount = await FfmpegUtils.GetStreamCount(path);
             TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
-            SizeKb = File.Length / 1024;
+        }
+
+        public string GetName ()
+        {
+            if (isDirectory)
+                return Directory.Name;
+            else
+                return File.Name;
+        }
+
+        public string GetPath ()
+        {
+            if (isDirectory)
+                return Directory.FullName;
+            else
+                return File.FullName;
+        }
+
+        public long GetSize ()
+        {
+            if (isDirectory)
+                return IoUtils.GetDirSize(GetPath(), true);
+            else
+                return File.Length;
         }
 
         public override string ToString()
         {
-            return $"{File.Name} ({FormatUtils.Bytes(File.Length)})";
+            return $"{GetName()} ({FormatUtils.Bytes(Size)})";
         }
     }
 }

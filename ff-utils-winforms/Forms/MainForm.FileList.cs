@@ -34,7 +34,7 @@ namespace Nmkoder.Forms
 
             if (oldMode == RunTask.FileListMode.MultiFileInput && newMode == RunTask.FileListMode.BatchProcess)
             {
-                ClearCurrentFile();
+                MediaInfo.ClearCurrentFile();
             }
 
             RunTask.currentFileListMode = newMode;
@@ -47,7 +47,7 @@ namespace Nmkoder.Forms
             if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
-                    await MediaInfo.LoadFirstFile(((MediaFile)fileList.Items[0]).File.FullName);
+                    await MediaInfo.LoadFirstFile(((MediaFile)fileList.Items[0]).Path);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Nmkoder.Forms
             if (AreAnyTracksLoaded())
                 await MediaInfo.AddStreamsToList((MediaFile)fileList.SelectedItem, true);
             else
-                await MediaInfo.LoadFirstFile(((MediaFile)fileList.SelectedItem).File.FullName);
+                await MediaInfo.LoadFirstFile(((MediaFile)fileList.SelectedItem).Path);
 
             QuickConvertUi.LoadMetadataGrid();
             addTracksFromFileBtn.Enabled = true;

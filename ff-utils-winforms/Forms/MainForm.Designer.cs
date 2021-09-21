@@ -59,6 +59,7 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.qInfo = new System.Windows.Forms.Label();
             this.encScaleH = new System.Windows.Forms.TextBox();
             this.encScaleW = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
@@ -125,7 +126,7 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
             this.currentActionLabel = new System.Windows.Forms.Label();
-            this.qInfo = new System.Windows.Forms.Label();
+            this.presetInfo = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -540,6 +541,7 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.presetInfo);
             this.encVid.Controls.Add(this.qInfo);
             this.encVid.Controls.Add(this.encScaleH);
             this.encVid.Controls.Add(this.encScaleW);
@@ -563,6 +565,16 @@
             this.encVid.Size = new System.Drawing.Size(668, 288);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // qInfo
+            // 
+            this.qInfo.AutoSize = true;
+            this.qInfo.ForeColor = System.Drawing.Color.Silver;
+            this.qInfo.Location = new System.Drawing.Point(477, 40);
+            this.qInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.qInfo.Name = "qInfo";
+            this.qInfo.Size = new System.Drawing.Size(0, 15);
+            this.qInfo.TabIndex = 61;
             // 
             // encScaleH
             // 
@@ -1428,15 +1440,15 @@
             this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
             this.currentActionLabel.TabIndex = 40;
             // 
-            // qInfo
+            // presetInfo
             // 
-            this.qInfo.AutoSize = true;
-            this.qInfo.ForeColor = System.Drawing.Color.Silver;
-            this.qInfo.Location = new System.Drawing.Point(477, 40);
-            this.qInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.qInfo.Name = "qInfo";
-            this.qInfo.Size = new System.Drawing.Size(0, 15);
-            this.qInfo.TabIndex = 61;
+            this.presetInfo.AutoSize = true;
+            this.presetInfo.ForeColor = System.Drawing.Color.Silver;
+            this.presetInfo.Location = new System.Drawing.Point(477, 70);
+            this.presetInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.presetInfo.Name = "presetInfo";
+            this.presetInfo.Size = new System.Drawing.Size(0, 15);
+            this.presetInfo.TabIndex = 62;
             // 
             // MainForm
             // 
@@ -1603,6 +1615,7 @@
         private HTAlt.WinForms.HTButton utilsFramesToVidSelBtn;
         private System.Windows.Forms.Label currentActionLabel;
         private System.Windows.Forms.Label qInfo;
+        private System.Windows.Forms.Label presetInfo;
     }
 }
 

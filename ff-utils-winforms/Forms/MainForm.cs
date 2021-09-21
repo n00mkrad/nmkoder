@@ -147,7 +147,7 @@ namespace Nmkoder.Forms
             Program.busy = state;
         }
 
-        public Main.RunTask.TaskType GetCurrentTaskType()
+        public RunTask.TaskType GetCurrentTaskType()
         {
             if(tabList.SelectedPage == quickConvertPage)
                 return RunTask.TaskType.Convert;
@@ -161,19 +161,6 @@ namespace Nmkoder.Forms
         private void DragEnterHandler(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
-        }
-
-        private async void DragDropHandler(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            await Task.Delay(100);
-            //if (mainTabControl.SelectedTab == extractFramesPage) await ExtractFrames(files);
-            //if (mainTabControl.SelectedTab == framesToVideoPage) await FramesToVideo(files);
-            //if (mainTabControl.SelectedTab == loopPage) await Loop(files);
-            //if (mainTabControl.SelectedTab == speedPage) await ChangeSpeed(files);
-            //if (mainTabControl.SelectedTab == comparisonPage) await CreateComparison(files);
-            //if (mainTabControl.SelectedTab == encPage) await Encode(files);
-            //if (mainTabControl.SelectedTab == delayPage) await Delay(files);
         }
 
         private void inputPanel_DragEnter(object sender, DragEventArgs e)

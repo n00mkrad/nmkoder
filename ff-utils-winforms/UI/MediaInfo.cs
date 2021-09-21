@@ -71,7 +71,6 @@ namespace Nmkoder.UI
 
             Program.mainForm.outputBox.Text = current.Path;
             QuickConvertUi.ValidatePath();
-            // Program.mainForm.encVidFpsBox.Text = current.VideoStreams.FirstOrDefault()?.Rate.ToString();
             QuickConvertUi.InitFile();
 
             if(generateThumbs)

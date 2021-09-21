@@ -28,6 +28,7 @@ namespace Nmkoder.Forms
         public NumericUpDown encVidQualityBox { get { return encVidQuality; } }
         public Label qInfoLabel { get { return qInfo; } }
         public ComboBox encVidPresetBox { get { return encVidPreset; } }
+        public Label presetInfoLabel { get { return presetInfo; } }
         public ComboBox encVidColorsBox { get { return encVidColors; } }
         public TextBox encVidFpsBox { get { return encVidFps; } }
         public TextBox encScaleBoxW { get { return encScaleW; } }

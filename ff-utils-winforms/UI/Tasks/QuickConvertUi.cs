@@ -83,6 +83,7 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.encCropModeBox.Enabled = enc;
 
             Program.mainForm.qInfoLabel.Text = info.QInfo;
+            Program.mainForm.presetInfoLabel.Text = info.PInfo;
             LoadQualityLevel(info);
             LoadPresets(info);
             LoadColorFormats(info);
@@ -187,8 +188,10 @@ namespace Nmkoder.UI.Tasks
             if (MediaInfo.current == null)
                 return;
 
-            string ext = Program.mainForm.containerBox.Text.ToLower();
-            Program.mainForm.outputBox.Text = IoUtils.GetAvailableFilename(Path.ChangeExtension(MediaInfo.current.Path, ext));
+            //string ext = Program.mainForm.containerBox.Text.ToLower();
+
+            if(File.Exists(Program.mainForm.outputBox.Text))
+                Program.mainForm.outputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.outputBox.Text);
         }
 
         #region Get Current Codec

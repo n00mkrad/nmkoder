@@ -319,10 +319,12 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetMetadataArgs()
         {
+            bool attachments = MediaInfo.current.AttachmentStreams.Count > 0;
+            string stripStr = attachments ? ":s:t 0:s:t" : " -1"; // If there are attachments, only copy the attachment metadata, otherwise none
             int cfg = Config.GetInt(Config.Key.metaMode);
 
             if (cfg == 2) // 2 = Strip All
-                return "-map_metadata -1";
+                return $"-map_metadata{stripStr}"; 
 
             bool map = cfg == 0;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             DataGridView grid = Program.mainForm.metaGrid;
@@ -356,7 +358,7 @@ namespace Nmkoder.UI.Tasks
                 }
             }
 
-            return $"-map_metadata {(map ? "0" : "-1")} {string.Join(" ", args)}";
+            return $"-map_metadata{(map ? " 0" : stripStr)} {string.Join(" ", args)}";
         }
 
         #endregion

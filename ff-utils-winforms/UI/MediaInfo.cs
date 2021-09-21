@@ -65,7 +65,7 @@ namespace Nmkoder.UI
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(current.DurationMs);
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.Size * 1024)}";
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.Size)}";
             Program.mainForm.streamListBox.Items.Clear();
             await AddStreamsToList(current, switchToTrackList);
 
@@ -86,6 +86,7 @@ namespace Nmkoder.UI
             if (mediaFile.AudioStreams.Count > 0) foundTracks.Add($"{mediaFile.AudioStreams.Count} audio track{(mediaFile.AudioStreams.Count == 1 ? "" : "s")}");
             if (mediaFile.SubtitleStreams.Count > 0) foundTracks.Add($"{mediaFile.SubtitleStreams.Count} subtitle track{(mediaFile.SubtitleStreams.Count == 1 ? "" : "s")}");
             if (mediaFile.DataStreams.Count > 0) foundTracks.Add($"{mediaFile.DataStreams.Count} data track{(mediaFile.DataStreams.Count == 1 ? "" : "s")}");
+            if (mediaFile.AttachmentStreams.Count > 0) foundTracks.Add($"{mediaFile.AttachmentStreams.Count} attachment{(mediaFile.AttachmentStreams.Count == 1 ? "" : "s")}");
 
             if (foundTracks.Count > 0)
                 Logger.Log($"Found {string.Join(", ", foundTracks)}.");

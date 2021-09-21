@@ -23,6 +23,7 @@ namespace Nmkoder.Media
 
         public static async Task<int> GetStreamCount(string path)
         {
+            Logger.Log($"GetStreamCount({path})", true);
             string output = await GetFfmpegInfoAsync(path, "Stream #0:");
 
             if (string.IsNullOrWhiteSpace(output.Trim()))
@@ -193,6 +194,22 @@ namespace Nmkoder.Media
             bool repl = Logger.GetLastLine().Contains(msg);
             Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", quiet, !quiet && repl);
             return $"crop={mostCommon}";
+        }
+
+        public static void CreateConcatFile(string inputFilesDir, string outputPath, string[] validExtensions = null)
+        {
+            string concatFileContent = "";
+            string[] files = IoUtils.GetFilesSorted(inputFilesDir);
+
+            foreach (string file in files)
+            {
+                if (validExtensions != null && !validExtensions.Contains(Path.GetExtension(file).ToLower()))
+                    continue;
+
+                concatFileContent += $"file '{file.Replace(@"\", "/")}'\n";
+            }
+
+            File.WriteAllText(outputPath, concatFileContent);
         }
 
         public static Size SizeFromString(string str, char delimiter = ':')

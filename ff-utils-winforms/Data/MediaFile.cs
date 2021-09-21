@@ -32,6 +32,7 @@ namespace Nmkoder.Data
         public List<AudioStream> AudioStreams = new List<AudioStream>();
         public List<SubtitleStream> SubtitleStreams = new List<SubtitleStream>();
         public List<DataStream> DataStreams = new List<DataStream>();
+        public List<AttachmentStream> AttachmentStreams = new List<AttachmentStream>();
         public bool Initialized = false;
 
         public MediaFile (string path)
@@ -65,6 +66,7 @@ namespace Nmkoder.Data
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();
                 DataStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Data).Select(x => (DataStream)x).ToList();
+                AttachmentStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Attachment).Select(x => (AttachmentStream)x).ToList();
                 Logger.Log($"Loaded and sorted streams for {Name}", true);
             }
             catch (Exception e)

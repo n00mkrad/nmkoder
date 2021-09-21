@@ -179,7 +179,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 string qInfo = "CRF (0-51 - Lower is better)";
-                string pInfo = "Slower means better compression";
+                string pInfo = "Slower = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 18, qInfo, pInfo);
             }
 
@@ -189,7 +189,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 string qInfo = "CRF (0-51 - Lower is better)";
-                string pInfo = "Slower = better compression";
+                string pInfo = "Slower = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 22, qInfo, pInfo);
             }
 
@@ -199,7 +199,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "p5", "p4", "p3", "p2", "p1" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
                 string qInfo = "CRF (0-51 - Lower is better)";
-                string pInfo = "Higher number = better compression";
+                string pInfo = "Higher = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 18, qInfo, pInfo);
             }
 
@@ -209,7 +209,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "p7", "p6", "p5", "p4", "p3", "p2", "p1" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
                 string qInfo = "CRF (0-51 - Lower is better)";
-                string pInfo = "Higher number = better compression";
+                string pInfo = "Higher = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 0, 51, 22, qInfo, pInfo);
             }
 
@@ -219,7 +219,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
                 string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
                 string qInfo = "CRF (0-63 - Lower is better)";
-                string pInfo = "Lower number = better compression";
+                string pInfo = "Lower = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 63, 28, qInfo, pInfo);
             }
 
@@ -229,7 +229,7 @@ namespace Nmkoder.Data
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 string qInfo = "CRF (0-50 - Lower is better)";
-                string pInfo = "Lower number = better compression";
+                string pInfo = "Lower = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 6, colors, 1, 0, 50, 26, qInfo, pInfo);
             }
 

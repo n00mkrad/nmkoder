@@ -59,6 +59,7 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.presetInfo = new System.Windows.Forms.Label();
             this.qInfo = new System.Windows.Forms.Label();
             this.encScaleH = new System.Windows.Forms.TextBox();
             this.encScaleW = new System.Windows.Forms.TextBox();
@@ -126,7 +127,8 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
             this.currentActionLabel = new System.Windows.Forms.Label();
-            this.presetInfo = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -541,6 +543,8 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.label4);
+            this.encVid.Controls.Add(this.label3);
             this.encVid.Controls.Add(this.presetInfo);
             this.encVid.Controls.Add(this.qInfo);
             this.encVid.Controls.Add(this.encScaleH);
@@ -566,6 +570,16 @@
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
             // 
+            // presetInfo
+            // 
+            this.presetInfo.AutoSize = true;
+            this.presetInfo.ForeColor = System.Drawing.Color.Silver;
+            this.presetInfo.Location = new System.Drawing.Point(477, 70);
+            this.presetInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.presetInfo.Name = "presetInfo";
+            this.presetInfo.Size = new System.Drawing.Size(0, 15);
+            this.presetInfo.TabIndex = 62;
+            // 
             // qInfo
             // 
             this.qInfo.AutoSize = true;
@@ -586,6 +600,8 @@
             this.encScaleH.Name = "encScaleH";
             this.encScaleH.Size = new System.Drawing.Size(110, 23);
             this.encScaleH.TabIndex = 60;
+            this.toolTip.SetToolTip(this.encScaleH, "Examples:\r\n\"720\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the width.\r\n" +
+        "");
             // 
             // encScaleW
             // 
@@ -597,6 +613,8 @@
             this.encScaleW.Name = "encScaleW";
             this.encScaleW.Size = new System.Drawing.Size(110, 23);
             this.encScaleW.TabIndex = 59;
+            this.toolTip.SetToolTip(this.encScaleW, "Examples:\r\n\"1280\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the height." +
+        "");
             // 
             // label29
             // 
@@ -648,6 +666,7 @@
             this.encVidQuality.Name = "encVidQuality";
             this.encVidQuality.Size = new System.Drawing.Size(250, 23);
             this.encVidQuality.TabIndex = 52;
+            this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality level (CRF/CQ)");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // label61
@@ -671,6 +690,8 @@
             this.encVidFps.Name = "encVidFps";
             this.encVidFps.Size = new System.Drawing.Size(250, 23);
             this.encVidFps.TabIndex = 49;
+            this.toolTip.SetToolTip(this.encVidFps, "This allows you to resample the frame rate without changing the video speed or lo" +
+        "sing audio sync.");
             // 
             // encVidColors
             // 
@@ -683,6 +704,8 @@
             this.encVidColors.Name = "encVidColors";
             this.encVidColors.Size = new System.Drawing.Size(250, 23);
             this.encVidColors.TabIndex = 48;
+            this.toolTip.SetToolTip(this.encVidColors, "Allows encoding without color subsampling (YUV444) or 10-bit encoding.\r\nKeep in m" +
+        "ind that anything that\'s not YUV420P will not work on every media player!");
             this.encVidColors.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encVidPreset
@@ -696,6 +719,8 @@
             this.encVidPreset.Name = "encVidPreset";
             this.encVidPreset.Size = new System.Drawing.Size(250, 23);
             this.encVidPreset.TabIndex = 47;
+            this.toolTip.SetToolTip(this.encVidPreset, "This determines how fast or slow the encoding will be.\r\nThe slower it is, the bet" +
+        "ter the video compression (quality per filesize/bitrate) is.");
             this.encVidPreset.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encVidCodec
@@ -709,6 +734,7 @@
             this.encVidCodec.Name = "encVidCodec";
             this.encVidCodec.Size = new System.Drawing.Size(250, 23);
             this.encVidCodec.TabIndex = 45;
+            this.toolTip.SetToolTip(this.encVidCodec, "Select which video codec and encoder to use.");
             this.encVidCodec.SelectedIndexChanged += new System.EventHandler(this.encVidCodec_SelectedIndexChanged);
             // 
             // label51
@@ -1440,15 +1466,27 @@
             this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
             this.currentActionLabel.TabIndex = 40;
             // 
-            // presetInfo
+            // label3
             // 
-            this.presetInfo.AutoSize = true;
-            this.presetInfo.ForeColor = System.Drawing.Color.Silver;
-            this.presetInfo.Location = new System.Drawing.Point(477, 70);
-            this.presetInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.presetInfo.Name = "presetInfo";
-            this.presetInfo.Size = new System.Drawing.Size(0, 15);
-            this.presetInfo.TabIndex = 62;
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(477, 160);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 15);
+            this.label3.TabIndex = 63;
+            this.label3.Text = "Unchanged if left empty.";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Silver;
+            this.label4.Location = new System.Drawing.Point(477, 130);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 15);
+            this.label4.TabIndex = 64;
+            this.label4.Text = "Unchanged if left empty.";
             // 
             // MainForm
             // 
@@ -1616,6 +1654,8 @@
         private System.Windows.Forms.Label currentActionLabel;
         private System.Windows.Forms.Label qInfo;
         private System.Windows.Forms.Label presetInfo;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }
 

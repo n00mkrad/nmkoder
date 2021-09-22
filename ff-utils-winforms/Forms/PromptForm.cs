@@ -20,6 +20,7 @@ namespace Nmkoder.Forms
             Text = title;
             msgLabel.Text = message;
             textBox.Text = defaultText;
+            AcceptButton = confirmBtn;
         }
 
         private void PromptForm_Load(object sender, EventArgs e)

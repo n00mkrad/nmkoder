@@ -90,12 +90,22 @@ namespace Nmkoder.UI
                 Logger.Log("GetThumbnails Error: " + e.Message, true);
             }
 
+            RemoveInvalidImages();
             //await SlideshowLoop();
 
             if (IoUtils.GetAmountOfFiles(Paths.GetThumbsPath(), false, $"*.{format}") > 0)
                 await LoadThumbnailsOnce(format);
             else
                 Fail();
+        }
+
+        static void RemoveInvalidImages ()
+        {
+            foreach(string imgFile in IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false))
+            {
+                try { int x = IoUtils.GetImage(imgFile).Width; }
+                catch { IoUtils.TryDeleteIfExists(imgFile); }
+            }
         }
 
         static void Fail ()

@@ -59,6 +59,8 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.presetInfo = new System.Windows.Forms.Label();
             this.qInfo = new System.Windows.Forms.Label();
             this.encScaleH = new System.Windows.Forms.TextBox();
@@ -98,6 +100,9 @@
             this.label14 = new System.Windows.Forms.Label();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.utilsBitratesPanel = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.utilsBitratesSelBtn = new HTAlt.WinForms.HTButton();
             this.utilsFramesToVidPanel = new System.Windows.Forms.Panel();
             this.utilsFramesToVidConfBtn = new HTAlt.WinForms.HTButton();
             this.label2 = new System.Windows.Forms.Label();
@@ -125,10 +130,8 @@
             this.dropLoadFilesAdd = new System.Windows.Forms.Label();
             this.dropLoadClearBg = new System.Windows.Forms.Panel();
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
-            this.runBtn = new System.Windows.Forms.Button();
             this.currentActionLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.runBtn = new System.Windows.Forms.Button();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -147,6 +150,7 @@
             this.panel2.SuspendLayout();
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.utilsBitratesPanel.SuspendLayout();
             this.utilsFramesToVidPanel.SuspendLayout();
             this.utilsVidToFramesPanel.SuspendLayout();
             this.settingsPage.SuspendLayout();
@@ -570,6 +574,28 @@
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Silver;
+            this.label4.Location = new System.Drawing.Point(477, 130);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 15);
+            this.label4.TabIndex = 64;
+            this.label4.Text = "Unchanged if left empty.";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(477, 160);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 15);
+            this.label3.TabIndex = 63;
+            this.label3.Text = "Unchanged if left empty.";
+            // 
             // presetInfo
             // 
             this.presetInfo.AutoSize = true;
@@ -598,7 +624,7 @@
             this.encScaleH.Location = new System.Drawing.Point(360, 157);
             this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleH.Name = "encScaleH";
-            this.encScaleH.Size = new System.Drawing.Size(110, 23);
+            this.encScaleH.Size = new System.Drawing.Size(70, 23);
             this.encScaleH.TabIndex = 60;
             this.toolTip.SetToolTip(this.encScaleH, "Examples:\r\n\"720\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the width.\r\n" +
         "");
@@ -611,7 +637,7 @@
             this.encScaleW.Location = new System.Drawing.Point(220, 157);
             this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleW.Name = "encScaleW";
-            this.encScaleW.Size = new System.Drawing.Size(110, 23);
+            this.encScaleW.Size = new System.Drawing.Size(70, 23);
             this.encScaleW.TabIndex = 59;
             this.toolTip.SetToolTip(this.encScaleW, "Examples:\r\n\"1280\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the height." +
         "");
@@ -664,7 +690,7 @@
             0,
             0});
             this.encVidQuality.Name = "encVidQuality";
-            this.encVidQuality.Size = new System.Drawing.Size(250, 23);
+            this.encVidQuality.Size = new System.Drawing.Size(160, 23);
             this.encVidQuality.TabIndex = 52;
             this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality level (CRF/CQ)");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
@@ -688,7 +714,7 @@
             this.encVidFps.Location = new System.Drawing.Point(220, 127);
             this.encVidFps.MinimumSize = new System.Drawing.Size(4, 21);
             this.encVidFps.Name = "encVidFps";
-            this.encVidFps.Size = new System.Drawing.Size(250, 23);
+            this.encVidFps.Size = new System.Drawing.Size(160, 23);
             this.encVidFps.TabIndex = 49;
             this.toolTip.SetToolTip(this.encVidFps, "This allows you to resample the frame rate without changing the video speed or lo" +
         "sing audio sync.");
@@ -847,7 +873,7 @@
             0,
             0});
             this.encAudBitrate.Name = "encAudBitrate";
-            this.encAudBitrate.Size = new System.Drawing.Size(250, 23);
+            this.encAudBitrate.Size = new System.Drawing.Size(160, 23);
             this.encAudBitrate.TabIndex = 51;
             this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
@@ -1051,6 +1077,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsFramesToVidPanel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsVidToFramesPanel, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1062,6 +1089,46 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(682, 382);
             this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // utilsBitratesPanel
+            // 
+            this.utilsBitratesPanel.Controls.Add(this.label5);
+            this.utilsBitratesPanel.Controls.Add(this.utilsBitratesSelBtn);
+            this.utilsBitratesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.utilsBitratesPanel.Location = new System.Drawing.Point(454, 0);
+            this.utilsBitratesPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.utilsBitratesPanel.Name = "utilsBitratesPanel";
+            this.utilsBitratesPanel.Size = new System.Drawing.Size(228, 127);
+            this.utilsBitratesPanel.TabIndex = 3;
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Margin = new System.Windows.Forms.Padding(4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(219, 20);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Read Bitrates And Stream Sizes";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // utilsBitratesSelBtn
+            // 
+            this.utilsBitratesSelBtn.AutoColor = false;
+            this.utilsBitratesSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_analyze;
+            this.utilsBitratesSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsBitratesSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsBitratesSelBtn.DrawImage = true;
+            this.utilsBitratesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsBitratesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.utilsBitratesSelBtn.Location = new System.Drawing.Point(50, 31);
+            this.utilsBitratesSelBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.utilsBitratesSelBtn.Name = "utilsBitratesSelBtn";
+            this.utilsBitratesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.utilsBitratesSelBtn.Size = new System.Drawing.Size(127, 65);
+            this.utilsBitratesSelBtn.TabIndex = 0;
+            this.utilsBitratesSelBtn.Click += new System.EventHandler(this.utilsBitratesSelBtn_Click);
             // 
             // utilsFramesToVidPanel
             // 
@@ -1438,6 +1505,16 @@
             this.dropLoadFilesClear.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragDrop);
             this.dropLoadFilesClear.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragEnter);
             // 
+            // currentActionLabel
+            // 
+            this.currentActionLabel.AutoSize = true;
+            this.currentActionLabel.ForeColor = System.Drawing.Color.White;
+            this.currentActionLabel.Location = new System.Drawing.Point(13, 524);
+            this.currentActionLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.currentActionLabel.Name = "currentActionLabel";
+            this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
+            this.currentActionLabel.TabIndex = 40;
+            // 
             // runBtn
             // 
             this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -1455,38 +1532,6 @@
             this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
-            // 
-            // currentActionLabel
-            // 
-            this.currentActionLabel.AutoSize = true;
-            this.currentActionLabel.ForeColor = System.Drawing.Color.White;
-            this.currentActionLabel.Location = new System.Drawing.Point(13, 524);
-            this.currentActionLabel.Margin = new System.Windows.Forms.Padding(4);
-            this.currentActionLabel.Name = "currentActionLabel";
-            this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
-            this.currentActionLabel.TabIndex = 40;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Silver;
-            this.label3.Location = new System.Drawing.Point(477, 160);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 15);
-            this.label3.TabIndex = 63;
-            this.label3.Text = "Unchanged if left empty.";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Silver;
-            this.label4.Location = new System.Drawing.Point(477, 130);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(138, 15);
-            this.label4.TabIndex = 64;
-            this.label4.Text = "Unchanged if left empty.";
             // 
             // MainForm
             // 
@@ -1538,6 +1583,7 @@
             this.panel2.PerformLayout();
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.utilsBitratesPanel.ResumeLayout(false);
             this.utilsFramesToVidPanel.ResumeLayout(false);
             this.utilsVidToFramesPanel.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
@@ -1656,6 +1702,9 @@
         private System.Windows.Forms.Label presetInfo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel utilsBitratesPanel;
+        private System.Windows.Forms.Label label5;
+        private HTAlt.WinForms.HTButton utilsBitratesSelBtn;
     }
 }
 

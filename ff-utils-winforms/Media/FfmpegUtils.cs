@@ -196,6 +196,21 @@ namespace Nmkoder.Media
             return $"crop={mostCommon}";
         }
 
+        public struct StreamSizeInfo { public float Kbps; public long Bytes; }
+
+        public static async Task<StreamSizeInfo> GetStreamSizeBytes(string path, int streamIndex = 0)
+        {
+            string[] outputLines = (await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c copy -f matroska NUL 2>&1 1>nul | findstr /L \"time video\"")).SplitIntoLines();
+            string sizeLine = outputLines[outputLines.Length - 1];
+            string bitrateLine = outputLines[outputLines.Length - 2];
+
+            List<int> sizes = sizeLine.Split("headers:")[0].Split("kB").Select(x => x.GetInt()).ToList();
+            long bytes = (long)sizes.Max() * 1024;
+            float bitrate = bitrateLine.Split("bitrate=")[1].Split("kbits/s")[0].GetFloat();
+
+            return new StreamSizeInfo() { Bytes = bytes, Kbps = bitrate };
+        }
+
         public static int CreateConcatFile(string inputFilesDir, string outputPath, string[] validExtensions = null)
         {
             if (IoUtils.GetAmountOfFiles(inputFilesDir, false) < 1)

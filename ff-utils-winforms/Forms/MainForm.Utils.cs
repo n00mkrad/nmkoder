@@ -42,10 +42,17 @@ namespace Nmkoder.Forms
             UpdatePanels();
         }
 
+        private void utilsBitratesSelBtn_Click(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.ReadBitrates;
+            UpdatePanels();
+        }
+
         private void UpdatePanels ()
         {
             utilsVidToFramesPanel.BorderStyle = (currentTask == RunTask.TaskType.VideoToFrames) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsFramesToVidPanel.BorderStyle = (currentTask == RunTask.TaskType.FramesToVideo) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.ReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -130,17 +130,14 @@
   <data name="icon_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="baseline_image_white_48dp-4x-25pcAlpha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\baseline_image_white_48dp-4x-25pcAlpha.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="baseline_image_white_48dp-4x-25pcAlphaPad" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\baseline_image_white_48dp-4x-25pcAlphaPad.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_loop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_loop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_compare" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_compare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_delaySync" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_delaySync.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="play-32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dragdrop2-white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dragdrop2-white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,8 +151,11 @@
   <data name="icon_addImgs2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_addImgs2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dragdrop2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dragdrop2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_imgStack2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_imgStack2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_compare" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_compare.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_imgStack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_imgStack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,28 +163,31 @@
   <data name="icon_addImgs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_addImgs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="play_32px_div" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play-32px-div.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_speed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_speed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="baseline_pause_white_48dp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\baseline_pause_white_48dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="play_32px_div" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\play-32px-div.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_loop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_loop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_arrow_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_arrow_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="play-32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\play-32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="dragdrop2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragdrop2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="baseline_unlink_white_24dp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\baseline_unlink_white_24dp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="baseline_image_white_48dp-4x-25pcAlpha" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\baseline_image_white_48dp-4x-25pcAlpha.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_delaySync" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_delaySync.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_imgStack2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_imgStack2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_analyze" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_analyze.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

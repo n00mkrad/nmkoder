@@ -7,6 +7,8 @@ using Nmkoder.Data;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
+using Nmkoder.Utils;
+using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -30,6 +32,22 @@ namespace Nmkoder.UI.Tasks
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.ExtractFrames, true);
+
+            Program.mainForm.SetWorking(false);
+        }
+
+        public static async Task RunReadBitrates()
+        {
+            Program.mainForm.SetWorking(true);
+            Logger.Log("Analyzing streams... This can take a few minutes on slower hard drives.");
+
+            foreach(Stream s in MediaInfo.current.AllStreams)
+            {
+                FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(MediaInfo.current.TruePath, s.Index);
+                string percent = FormatUtils.RatioInt(info.Bytes, MediaInfo.current.Size).ToString("0.0");
+                string br = info.Kbps > 1 ? FormatUtils.Bitrate(info.Kbps.RoundToInt()) : info.Kbps.ToString("0.0") + " kbps";
+                Logger.Log($"Stream #{s.Index} ({s.Type}) - Bitrate: {br} - Size: {FormatUtils.Bytes(info.Bytes)} ({percent}%)");
+            }
 
             Program.mainForm.SetWorking(false);
         }

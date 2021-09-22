@@ -173,6 +173,16 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_analyze {
+            get {
+                object obj = ResourceManager.GetObject("icon_analyze", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_arrow_down {
             get {
                 object obj = ResourceManager.GetObject("icon_arrow_down", resourceCulture);

@@ -624,7 +624,7 @@
             this.encScaleH.Location = new System.Drawing.Point(360, 157);
             this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleH.Name = "encScaleH";
-            this.encScaleH.Size = new System.Drawing.Size(70, 23);
+            this.encScaleH.Size = new System.Drawing.Size(110, 23);
             this.encScaleH.TabIndex = 60;
             this.toolTip.SetToolTip(this.encScaleH, "Examples:\r\n\"720\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the width.\r\n" +
         "");
@@ -637,7 +637,7 @@
             this.encScaleW.Location = new System.Drawing.Point(220, 157);
             this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleW.Name = "encScaleW";
-            this.encScaleW.Size = new System.Drawing.Size(70, 23);
+            this.encScaleW.Size = new System.Drawing.Size(110, 23);
             this.encScaleW.TabIndex = 59;
             this.toolTip.SetToolTip(this.encScaleW, "Examples:\r\n\"1280\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the height." +
         "");
@@ -690,7 +690,7 @@
             0,
             0});
             this.encVidQuality.Name = "encVidQuality";
-            this.encVidQuality.Size = new System.Drawing.Size(160, 23);
+            this.encVidQuality.Size = new System.Drawing.Size(250, 23);
             this.encVidQuality.TabIndex = 52;
             this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality level (CRF/CQ)");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
@@ -714,7 +714,7 @@
             this.encVidFps.Location = new System.Drawing.Point(220, 127);
             this.encVidFps.MinimumSize = new System.Drawing.Size(4, 21);
             this.encVidFps.Name = "encVidFps";
-            this.encVidFps.Size = new System.Drawing.Size(160, 23);
+            this.encVidFps.Size = new System.Drawing.Size(250, 23);
             this.encVidFps.TabIndex = 49;
             this.toolTip.SetToolTip(this.encVidFps, "This allows you to resample the frame rate without changing the video speed or lo" +
         "sing audio sync.");
@@ -873,7 +873,7 @@
             0,
             0});
             this.encAudBitrate.Name = "encAudBitrate";
-            this.encAudBitrate.Size = new System.Drawing.Size(160, 23);
+            this.encAudBitrate.Size = new System.Drawing.Size(250, 23);
             this.encAudBitrate.TabIndex = 51;
             this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 

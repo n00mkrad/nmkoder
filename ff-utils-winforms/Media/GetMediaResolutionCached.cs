@@ -13,25 +13,23 @@ namespace Nmkoder.Media
 
         public static async Task<Size> GetSizeAsync(string path)
         {
-            Logger.Log($"Getting media resolution ({path})", true);
-
             long filesize = IoUtils.GetFilesize(path);
             QueryInfo hash = new QueryInfo(path, filesize);
 
             if (filesize > 0 && CacheContains(hash))
             {
-                Logger.Log($"Cache contains this hash, using cached value.", true);
-                return GetFromCache(hash);
+                Size s = GetFromCache(hash);
+                Logger.Log($"GetMediaResolutionCached: Returned cached resolution ({s}).", true);
+                return s;
             }
             else
             {
-                Logger.Log($"Hash not cached, reading resolution.", true);
+                Logger.Log($"GetMediaResolutionCached: Resolution not cached, reading resolution.", true);
             }
 
             Size size;
             size = await IoUtils.GetVideoOrFramesRes(path);
 
-            Logger.Log($"Adding hash with value {size} to cache.", true);
             cache.Add(hash, size);
 
             return size;

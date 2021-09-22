@@ -45,7 +45,6 @@ namespace Nmkoder.Extensions
             }
             catch (Exception e)
             {
-                Logger.Log("Failed to parse \"" + str + "\" to int: " + e.Message, true);
                 return 0;
             }
         }

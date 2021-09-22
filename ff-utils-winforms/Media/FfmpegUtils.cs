@@ -206,7 +206,7 @@ namespace Nmkoder.Media
 
         public static async Task<StreamSizeInfo> GetStreamSizeBytes(string path, int streamIndex = 0)
         {
-            string[] outputLines = (await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c copy -f matroska NUL 2>&1 1>nul | findstr /L \"time video\"")).SplitIntoLines();
+            string[] outputLines = (await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c copy -f matroska NUL 2>&1 1>nul | findstr /L \"time video\"")).SplitIntoLines().Where(x => !x.Contains("FINDSTR")).ToArray();
             string sizeLine = outputLines[outputLines.Length - 1];
             string bitrateLine = outputLines[outputLines.Length - 2];
 

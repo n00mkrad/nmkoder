@@ -54,14 +54,16 @@ namespace Nmkoder.Forms
             this.textBox.Location = new System.Drawing.Point(16, 57);
             this.textBox.MinimumSize = new System.Drawing.Size(4, 23);
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(315, 23);
+            this.textBox.Size = new System.Drawing.Size(315, 21);
             this.textBox.TabIndex = 55;
             // 
             // confirmBtn
             // 
+            this.confirmBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.confirmBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.confirmBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.confirmBtn.Location = new System.Drawing.Point(16, 126);
+            this.confirmBtn.Location = new System.Drawing.Point(16, 106);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(316, 23);
             this.confirmBtn.TabIndex = 56;
@@ -74,7 +76,7 @@ namespace Nmkoder.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(344, 161);
+            this.ClientSize = new System.Drawing.Size(344, 141);
             this.Controls.Add(this.confirmBtn);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.msgLabel);

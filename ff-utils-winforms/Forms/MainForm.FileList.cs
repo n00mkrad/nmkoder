@@ -71,7 +71,8 @@ namespace Nmkoder.Forms
 
         private void fileListCleanBtn_Click(object sender, EventArgs e)
         {
-            fileList.Items.RemoveAt(fileList.SelectedIndex);
+            if(fileList.SelectedIndex >= 0 && fileList.SelectedIndex < fileList.Items.Count)
+                fileList.Items.RemoveAt(fileList.SelectedIndex);
         }
 
         private void fileListMoveUpBtn_Click(object sender, EventArgs e)

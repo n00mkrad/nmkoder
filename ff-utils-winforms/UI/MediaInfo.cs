@@ -32,12 +32,19 @@ namespace Nmkoder.UI
                 Logger.ClearLogBox();
             }
 
-            Program.mainForm.mainTabList.SelectedIndex = 0;
+            bool runInstantly = RunTask.RunInstantly();
+
+            if(!runInstantly)
+                Program.mainForm.mainTabList.SelectedIndex = 0;
+
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
             FileList.LoadFiles(paths, clearExisting);
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
                 await LoadFirstFile((MediaFile)Program.mainForm.fileListBox.Items[0]);
+
+            if (runInstantly)
+                Program.mainForm.runBtn_Click();
         }
 
         public static void ClearCurrentFile()
@@ -130,7 +137,7 @@ namespace Nmkoder.UI
                 }
             }
 
-            if (switchToList)
+            if (switchToList && !RunTask.RunInstantly())
                 Program.mainForm.mainTabList.SelectedIndex = 1;
         }
 

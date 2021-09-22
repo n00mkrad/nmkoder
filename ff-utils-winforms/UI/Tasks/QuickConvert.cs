@@ -20,21 +20,30 @@ namespace Nmkoder.UI.Tasks
         public static async Task Run ()
         {
             Program.mainForm.SetWorking(true);
-
-            string inFiles = MediaInfo.GetInputFilesString();
-            string outPath = Program.mainForm.outputBox.Text.Trim();
-            string map = MediaInfo.GetMapArgs();
-            CodecArgs codecArgs = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi(), MediaInfo.current);
-            string v = codecArgs.Arguments;
-            string vf = await GetVideoFilterArgs(GetCurrentCodecV(), codecArgs);
-            string a = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
-            string s = Codecs.GetArgs(GetCurrentCodecS());
-            string meta = GetMetadataArgs();
-            string custIn = Program.mainForm.customArgsInBox.Text.Trim();
-            string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
-            string muxing = GetMuxingArgsFromUi();
-
-            string args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+            string args = "";
+            
+            try
+            {
+                string inFiles = MediaInfo.GetInputFilesString();
+                string outPath = Program.mainForm.outputBox.Text.Trim();
+                string map = MediaInfo.GetMapArgs();
+                CodecArgs codecArgs = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi(), MediaInfo.current);
+                string v = codecArgs.Arguments;
+                string vf = await GetVideoFilterArgs(GetCurrentCodecV(), codecArgs);
+                string a = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
+                string s = Codecs.GetArgs(GetCurrentCodecS());
+                string meta = GetMetadataArgs();
+                string custIn = Program.mainForm.customArgsInBox.Text.Trim();
+                string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
+                string muxing = GetMuxingArgsFromUi();
+                args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"Error creating FFmpeg command: {e.Message}\n{e.StackTrace}");
+                return;
+            }
+            
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.Encode, true);

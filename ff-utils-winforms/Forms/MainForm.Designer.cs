@@ -240,9 +240,11 @@
             this.thumbInfo.Name = "thumbInfo";
             this.thumbInfo.Size = new System.Drawing.Size(304, 13);
             this.thumbInfo.TabIndex = 29;
+            this.thumbInfo.Text = "No Thumbnails Loaded.";
             // 
             // thumbnail
             // 
+            this.thumbnail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.thumbnail.Enabled = false;
             this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
             this.thumbnail.Location = new System.Drawing.Point(7, 133);
@@ -263,12 +265,11 @@
             this.taskMode.FormattingEnabled = true;
             this.taskMode.Items.AddRange(new object[] {
             "Load File On Drop, Start Manually",
-            "Run Action Right After Dropping File"});
+            "Run Selected Action Right After Dropping File"});
             this.taskMode.Location = new System.Drawing.Point(6, 362);
             this.taskMode.Name = "taskMode";
             this.taskMode.Size = new System.Drawing.Size(302, 21);
             this.taskMode.TabIndex = 26;
-            this.taskMode.Visible = false;
             this.taskMode.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // inputDropPanel
@@ -430,7 +431,7 @@
             this.streamListPage.Controls.Add(this.streamList);
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
-            this.streamListPage.Text = "Media Info (Track List)";
+            this.streamListPage.Text = "Track List";
             // 
             // streamDetails
             // 

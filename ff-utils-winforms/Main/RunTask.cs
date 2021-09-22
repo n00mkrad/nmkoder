@@ -48,6 +48,12 @@ namespace Nmkoder.Main
 
             TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
 
+            if (currentFileListMode == FileListMode.MultiFileInput && MediaInfo.current == null)
+            {
+                MessageBox.Show("No input file loaded! Please load one first (File List).", "Error");
+                return;
+            }
+
             if (taskType == TaskType.None)
             {
                 MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
@@ -100,6 +106,11 @@ namespace Nmkoder.Main
             runningBatch = false;
 
             Logger.Log($"Queue: Completed {taskFileList.Length} tasks.");
+        }
+
+        public static bool RunInstantly ()
+        {
+            return Config.GetInt("taskMode") == 1;
         }
     }
 }

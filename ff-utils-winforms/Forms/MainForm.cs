@@ -195,7 +195,7 @@ namespace Nmkoder.Forms
             QuickConvertUi.ValidateContainer();
         }
 
-        private void runBtn_Click(object sender, EventArgs e)
+        public void runBtn_Click(object sender = null, EventArgs e = null)
         {
             if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
                 RunTask.Start();
@@ -236,13 +236,16 @@ namespace Nmkoder.Forms
 
         private void tabList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(tabList.SelectedPage == fileListPage)
+            var sel = tabList.SelectedPage;
+            runBtn.Enabled = sel == quickConvertPage || sel == utilsPage;
+
+            if (sel == fileListPage)
                 RefreshFileListUi();
 
-            if (tabList.SelectedPage == streamListPage)
+            if (sel == streamListPage)
                 RefreshStreamListUi();
 
-            if (tabList.SelectedPage == settingsPage)
+            if (sel == settingsPage)
                 LoadConfig();
             else
                 SaveConfig();

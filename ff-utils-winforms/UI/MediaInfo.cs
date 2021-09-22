@@ -23,7 +23,7 @@ namespace Nmkoder.UI
     {
         public static MediaFile current;
 
-        public static async Task HandleFiles (string[] paths, bool clearExisting)
+        public static async Task HandleFiles(string[] paths, bool clearExisting)
         {
             if (clearExisting)
             {
@@ -36,11 +36,11 @@ namespace Nmkoder.UI
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
             FileList.LoadFiles(paths, clearExisting);
 
-            if(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
-                await LoadFirstFile(paths[0]);
+            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
+                await LoadFirstFile((MediaFile)Program.mainForm.fileListBox.Items[0]);
         }
 
-        public static void ClearCurrentFile ()
+        public static void ClearCurrentFile()
         {
             current = null;
             Program.mainForm.outputBox.Text = "";
@@ -55,7 +55,12 @@ namespace Nmkoder.UI
         public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
         {
             MediaFile mediaFile = new MediaFile(path);
-            int streamCount = await FfmpegUtils.GetStreamCount(path);
+            await LoadFirstFile(mediaFile, switchToTrackList, generateThumbs);
+        }
+
+        public static async Task LoadFirstFile(MediaFile mediaFile, bool switchToTrackList = true, bool generateThumbs = true)
+        {
+            int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.TruePath);
             Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
             PrintFoundStreams(mediaFile);
@@ -69,12 +74,12 @@ namespace Nmkoder.UI
             Program.mainForm.streamListBox.Items.Clear();
             await AddStreamsToList(current, switchToTrackList);
 
-            Program.mainForm.outputBox.Text = current.Path;
+            Program.mainForm.outputBox.Text = current.SourcePath;
             QuickConvertUi.ValidatePath();
             QuickConvertUi.InitFile();
 
-            if(generateThumbs)
-                Task.Run(() => ThumbnailView.GenerateThumbs(path)); // Generate thumbs in background
+            if (generateThumbs)
+                Task.Run(() => ThumbnailView.GenerateThumbs(mediaFile.SourcePath)); // Generate thumbs in background
         }
 
         private static void PrintFoundStreams(MediaFile mediaFile)
@@ -93,10 +98,10 @@ namespace Nmkoder.UI
                 Logger.Log($"Found no media streams in '{mediaFile.Name}'!");
         }
 
-        public static async Task AddStreamsToList (MediaFile mediaFile, bool switchToList, bool silent = false)
+        public static async Task AddStreamsToList(MediaFile mediaFile, bool switchToList, bool silent = false)
         {
             CheckedListBox box = Program.mainForm.streamListBox;
-            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.Path) select x).Distinct().Count();
+            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath) select x).Distinct().Count();
 
             if (!mediaFile.Initialized)
             {
@@ -105,7 +110,7 @@ namespace Nmkoder.UI
 
                 await mediaFile.Initialize();
 
-                if(!silent)
+                if (!silent)
                     PrintFoundStreams(mediaFile);
             }
 
@@ -125,11 +130,11 @@ namespace Nmkoder.UI
                 }
             }
 
-            if(switchToList)
+            if (switchToList)
                 Program.mainForm.mainTabList.SelectedIndex = 1;
         }
 
-        public static string GetStreamDetails(Stream stream)
+        public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)
         {
             if (stream == null)
                 return "";
@@ -137,7 +142,7 @@ namespace Nmkoder.UI
             List<string> lines = new List<string>();
             lines.Add($"Codec: {stream.CodecLong}");
 
-            if(stream.Type == Stream.StreamType.Video)
+            if (stream.Type == Stream.StreamType.Video)
             {
                 VideoStream v = (VideoStream)stream;
                 lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title : "None")}");
@@ -167,20 +172,35 @@ namespace Nmkoder.UI
             return string.Join(Environment.NewLine, lines);
         }
 
-        public static string GetInputFiles()
+        public static List<string> GetInputFiles()
         {
-            List<string> files = new List<string>();
+            List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath).ToList();
+            List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
 
-            foreach(MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
-            {
-                if (entry.Stream.Index == 0)
-                    files.Add($"-i {entry.MediaFile.Path.Wrap()}");
-            }
-
-            return string.Join(" ", files);
+            Logger.Log($"Input Files: {string.Join(", ", pathsUnique)}", true);
+            return pathsUnique;
         }
 
-        public static string GetMapArgs ()
+        public static string GetInputFilesString()
+        {
+            List<string> args = new List<string>();
+
+            foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
+            {
+                if (entry.MediaFile.IsDirectory)
+                    args.Add($"-safe 0 -f concat -r {entry.MediaFile.InputRate} -i {entry.MediaFile.TruePath.Wrap()}");
+                else
+                    args.Add($"-i {entry.MediaFile.TruePath.Wrap()}");
+            }
+
+            //List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath).ToList();
+            //List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
+            //List<string> args = GetInputFiles().Select(x => $"{x.GetConcStr(10)} -i {x.Wrap()}").ToList();
+            Logger.Log($"Input Args: {string.Join(" -i ", args)}", true);
+            return string.Join(" -i ", args);
+        }
+
+        public static string GetMapArgs()
         {
             List<string> args = new List<string>();
             List<string> files = new List<string>();

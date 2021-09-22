@@ -37,7 +37,7 @@ namespace Nmkoder.Forms
                 return;
 
             MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
-            streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream);
+            streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
         private void streamList_Leave(object sender, EventArgs e)

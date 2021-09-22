@@ -42,5 +42,12 @@ namespace Nmkoder.Data
 			Directory.CreateDirectory(path);
 			return path;
 		}
+
+		public static string GetFrameSeqPath()
+		{
+			string path = Path.Combine(GetDataPath(), "frameSequences");
+			Directory.CreateDirectory(path);
+			return path;
+		}
 	}
 }

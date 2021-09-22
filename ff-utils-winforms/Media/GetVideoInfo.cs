@@ -31,7 +31,8 @@ namespace Nmkoder.Media
         public static async Task<string> GetFfmpegOutputAsync(string path, string argsIn, string argsOut, string lineFilter = "")
         {
             Process process = OsUtils.NewProcess(true);
-            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffmpeg.exe -hide_banner -y {argsIn} -i {path.Wrap()} {argsOut}";
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & " +
+                $"ffmpeg.exe -hide_banner -y {argsIn} {path.GetConcStr()} -i {path.Wrap()} {argsOut}";
             return await GetInfoAsync(path, process, lineFilter);
         }
 
@@ -41,7 +42,8 @@ namespace Nmkoder.Media
             string showFormat = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowFormat ? "-show_format" : "";
             string showStreams = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowStreams ? "-show_streams" : "";
             //string streamSelect = (streamIndex >= 0) ? $"-select_streams {streamIndex}" : "";
-            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & ffprobe -v quiet {showFormat} {showStreams} {path.Wrap()}";
+            process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & " +
+                $"ffprobe -v quiet {path.GetConcStr()} {showFormat} {showStreams} {path.Wrap()}";
 
             string output = await GetInfoAsync(path, process, lineFilter, streamIndex, stripKeyName);
 

@@ -36,7 +36,7 @@ namespace Nmkoder.Extensions
 
         public static int GetInt(this string str)
         {
-            if (str.Length < 1 || str == null)
+            if (str == null || str.Length < 1)
                 return 0;
 
             try
@@ -228,6 +228,17 @@ namespace Nmkoder.Extensions
         public static string ToStringShort(this Size s, string separator = "x")
         {
             return $"{s.Width}{separator}{s.Height}";
+        }
+
+        public static bool IsConcatFile(this string filePath)
+        {
+            return Path.GetExtension(filePath).ToLower() == ".concat";
+        }
+
+        public static string GetConcStr (this string filePath, int rate = -1)
+        {
+            string rateStr = rate >= 0 ? $"-r {rate} " : "";
+            return filePath.IsConcatFile() ? $"{rateStr}-safe 0 -f concat" : "";
         }
     }
 }

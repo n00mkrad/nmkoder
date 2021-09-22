@@ -137,10 +137,10 @@ namespace Nmkoder.Media
             }
         }
 
-        public static Size GetSize(string inputFile)
+        public static Size GetSize(string filePath)
         {
-            Logger.Log($"GetSize('{inputFile}')", true, false, "ffmpeg");
-            string args = $" -v panic -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {inputFile.Wrap()}";
+            Logger.Log($"GetSize('{filePath}')", true, false, "ffmpeg");
+            string args = $" -v panic {filePath.GetConcStr()} -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {filePath.Wrap()}";
             string[] outputLines = GetFfprobeOutput(args).SplitIntoLines();
 
             foreach(string line in outputLines)
@@ -179,9 +179,9 @@ namespace Nmkoder.Media
             return frameCountRounded;
         }
 
-        static async Task<int> ReadFrameCountFfprobeAsync(string inputFile)
+        static async Task<int> ReadFrameCountFfprobeAsync(string filePath)
         {
-            string args = $" -v panic -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {inputFile.Wrap()}";
+            string args = $" -v panic {filePath.GetConcStr()} -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {filePath.Wrap()}";
             string info = GetFfprobeOutput(args);
             string[] entries = info.SplitIntoLines();
 
@@ -198,9 +198,9 @@ namespace Nmkoder.Media
             return -1;
         }
 
-        static async Task<int> ReadFrameCountFfmpegAsync (string inputFile)
+        static async Task<int> ReadFrameCountFfmpegAsync (string filePath)
         {
-            string args = $" -loglevel panic -stats -i {inputFile.Wrap()} -map 0:v:0 -c copy -f null - ";
+            string args = $" -loglevel panic -stats {filePath.GetConcStr()} -i {filePath.Wrap()} -map 0:v:0 -c copy -f null - ";
             string info = await GetFfmpegOutputAsync(args, true, true);
             try
             {
@@ -227,39 +227,6 @@ namespace Nmkoder.Media
             string args = $"-loglevel error -f lavfi -i color=black:s=540x540 -vframes 1 -an -c:v {enc} -f null -";
             string output = await GetFfmpegOutputAsync(args);
             return !output.ToLower().Contains("error");
-        }
-
-        public static string GetAudioCodec(string path, int streamIndex = -1)
-        {
-            Logger.Log($"GetAudioCodec('{Path.GetFileName(path)}', {streamIndex})", true, false, "ffmpeg");
-            string stream = (streamIndex < 0) ? "a" : $"{streamIndex}";
-            string args = $"-v panic -show_streams -select_streams {stream} -show_entries stream=codec_name {path.Wrap()}";
-            string info = GetFfprobeOutput(args);
-            string[] entries = info.SplitIntoLines();
-
-            foreach (string entry in entries)
-            {
-                if (entry.Contains("codec_name="))
-                    return entry.Split('=')[1];
-            }
-            return "";
-        }
-
-        public static List<string> GetAudioCodecs(string path, int streamIndex = -1)
-        {
-            Logger.Log($"GetAudioCodecs('{Path.GetFileName(path)}', {streamIndex})", true, false, "ffmpeg");
-            List<string> codecNames = new List<string>();
-            string args = $"-loglevel panic -select_streams a -show_entries stream=codec_name {path.Wrap()}";
-            string info = GetFfprobeOutput(args);
-            string[] entries = info.SplitIntoLines();
-
-            foreach (string entry in entries)
-            {
-                if (entry.Contains("codec_name="))
-                    codecNames.Add(entry.Remove("codec_name=").Trim());
-            }
-
-            return codecNames;
         }
 
         public static void DeleteSource(string path)

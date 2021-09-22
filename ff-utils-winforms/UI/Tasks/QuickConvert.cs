@@ -21,7 +21,7 @@ namespace Nmkoder.UI.Tasks
         {
             Program.mainForm.SetWorking(true);
 
-            string inFiles = MediaInfo.GetInputFiles();
+            string inFiles = MediaInfo.GetInputFilesString();
             string outPath = Program.mainForm.outputBox.Text.Trim();
             string map = MediaInfo.GetMapArgs();
             CodecArgs codecArgs = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi(), MediaInfo.current);

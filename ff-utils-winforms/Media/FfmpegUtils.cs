@@ -32,7 +32,7 @@ namespace Nmkoder.Media
             return output.SplitIntoLines().Length;
         }
 
-        public static async Task<List<Stream>> GetStreams(string path, bool progressBar, int streamCount)
+        public static async Task<List<Stream>> GetStreams(string path, bool progressBar, int streamCount, Fraction defaultFps)
         {
             List<Stream> streamList = new List<Stream>();
 
@@ -62,7 +62,7 @@ namespace Nmkoder.Media
                             Size res = await GetMediaResolutionCached.GetSizeAsync(path);
                             Size sar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "sample_aspect_ratio", idx));
                             Size dar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "display_aspect_ratio", idx));
-                            Fraction fps = await IoUtils.GetVideoFramerate(path);
+                            Fraction fps = path.IsConcatFile() ? defaultFps : await IoUtils.GetVideoFramerate(path);
                             //int frames = await GetFrameCountCached.GetFrameCountAsync(path);
                             VideoStream vStream = new VideoStream(lang, title, codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                             vStream.Index = idx;
@@ -170,7 +170,7 @@ namespace Nmkoder.Media
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 8);
-            string path = MediaInfo.current.Path;
+            string path = MediaInfo.current.TruePath;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();
@@ -196,20 +196,28 @@ namespace Nmkoder.Media
             return $"crop={mostCommon}";
         }
 
-        public static void CreateConcatFile(string inputFilesDir, string outputPath, string[] validExtensions = null)
+        public static int CreateConcatFile(string inputFilesDir, string outputPath, string[] validExtensions = null)
         {
+            if (IoUtils.GetAmountOfFiles(inputFilesDir, false) < 1)
+                return 0;
+
+            Directory.CreateDirectory(outputPath.GetParentDir());
+            validExtensions = validExtensions.Select(x => x.Remove(".").ToLower()).ToArray(); // Ignore "." in extensions
             string concatFileContent = "";
             string[] files = IoUtils.GetFilesSorted(inputFilesDir);
+            int fileCount = 0;
 
             foreach (string file in files)
             {
-                if (validExtensions != null && !validExtensions.Contains(Path.GetExtension(file).ToLower()))
+                if (validExtensions != null && !validExtensions.Contains(Path.GetExtension(file).Remove(".").ToLower()))
                     continue;
 
+                fileCount++;
                 concatFileContent += $"file '{file.Replace(@"\", "/")}'\n";
             }
 
             File.WriteAllText(outputPath, concatFileContent);
+            return fileCount;
         }
 
         public static Size SizeFromString(string str, char delimiter = ':')

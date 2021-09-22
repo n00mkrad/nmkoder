@@ -253,6 +253,7 @@
   <ItemGroup>
     <Compile Include="Data\CodecInfo.cs" />
     <Compile Include="Data\CodecArgs.cs" />
+    <Compile Include="Data\Formats.cs" />
     <Compile Include="Data\Streams\AttachmentStream.cs" />
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
@@ -285,6 +286,12 @@
     </Compile>
     <Compile Include="Forms\MainForm.StreamList.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PromptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PromptForm.Designer.cs">
+      <DependentUpon>PromptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
@@ -327,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PromptForm.resx">
+      <DependentUpon>PromptForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

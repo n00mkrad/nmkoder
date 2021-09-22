@@ -1,9 +1,12 @@
 ﻿using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
+using Nmkoder.IO;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.Data.Ui
 {
@@ -23,7 +26,16 @@ namespace Nmkoder.Data.Ui
             {
                 VideoStream vs = (VideoStream)Stream;
                 string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
-                return $"{str} Video ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS";
+                string fileCountStr = "";
+
+                if (MediaFile.IsDirectory)
+                {
+                    List<string> exts = File.ReadAllLines(MediaFile.TruePath).Select(x => x.Remove("file '").Remove("'").Split('.').LastOrDefault()).ToList();
+                    int formatsCount = exts.Select(x => x).Distinct().Count();
+                    fileCountStr = formatsCount > 1 ? $" ({MediaFile.FileCount} Files, {formatsCount} Formats)" : $" ({MediaFile.FileCount} Files)";
+                }
+
+                return $"{str} Video ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS{fileCountStr}";
             }
 
             if (Stream.Type == Stream.StreamType.Audio)

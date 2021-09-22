@@ -22,6 +22,7 @@ namespace Nmkoder
             Config.Init();
             IoUtils.DeleteContentsOfDir(Paths.GetLogPath());
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
+            IoUtils.DeleteContentsOfDir(Paths.GetFrameSeqPath());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

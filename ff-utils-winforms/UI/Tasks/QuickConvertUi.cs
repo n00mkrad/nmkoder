@@ -392,7 +392,7 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string filename = MediaInfo.current.Path.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
+                string filename = MediaInfo.current.TruePath.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
                 filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
 
@@ -408,8 +408,10 @@ namespace Nmkoder.UI.Tasks
             if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(false));
 
+            filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
+
             if (filters.Count > 0)
-                return $"-vf {string.Join(",", filters.Where(x => x.Trim().Length > 2))}";
+                return $"-vf {string.Join(",", filters)}";
             else
                 return "";
         }

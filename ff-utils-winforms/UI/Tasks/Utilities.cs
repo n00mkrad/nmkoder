@@ -19,14 +19,14 @@ namespace Nmkoder.UI.Tasks
         {
             Program.mainForm.SetWorking(true);
 
-            string frameFolderPath = Path.ChangeExtension(MediaInfo.current.Path, null) + "-frames";
+            string frameFolderPath = Path.ChangeExtension(MediaInfo.current.SourcePath, null) + "-frames";
             Directory.CreateDirectory(frameFolderPath);
 
             string imgArgs = GetImgArgs(frameFormat.ToString());
             string custIn = Program.mainForm.customArgsInBox.Text.Trim();
             string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
 
-            string args = $"{custIn} -i {MediaInfo.current.Path.Wrap()} {imgArgs} {custOut} \"{frameFolderPath}/%08d.{frameFormat.ToString().ToLower()}\"";
+            string args = $"{custIn} -i {MediaInfo.current.TruePath.Wrap()} {imgArgs} {custOut} \"{frameFolderPath}/%08d.{frameFormat.ToString().ToLower()}\"";
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.ExtractFrames, true);

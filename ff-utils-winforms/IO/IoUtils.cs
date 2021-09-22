@@ -898,5 +898,12 @@ namespace Nmkoder.IO
 
 			return renamedPath;
 		}
+
+		public static string[] GetUniqueExtensions (string path, bool recursive = false)
+        {
+			FileInfo[] fileInfos = GetFileInfosSorted(path, recursive);
+			List<string> exts = fileInfos.Select(x => x.Extension).ToList();
+			return exts.Select(x => x).Distinct().ToArray();
+		}
     }
 }

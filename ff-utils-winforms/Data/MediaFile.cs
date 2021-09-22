@@ -56,7 +56,7 @@ namespace Nmkoder.Data
                 if (FileCount < 1)
                     return;
 
-                PromptForm form = new PromptForm("Enter Frame Rate", "Please enter a frame rate to use for this sequence.", "30");
+                PromptForm form = new PromptForm("Enter Frame Rate", $"Please enter a frame rate to use for the image sequence '{Name.Trunc(30)}'.", "30");
                 form.ShowDialog();
                 InputRate = new Fraction(form.EnteredText);
             }

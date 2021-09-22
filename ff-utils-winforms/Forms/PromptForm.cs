@@ -33,6 +33,7 @@ namespace Nmkoder.Forms
             EnteredText = textBox.Text.Trim();
             DialogResult = DialogResult.OK;
             Close();
+            Program.mainForm.BringToFront();
         }
     }
 }

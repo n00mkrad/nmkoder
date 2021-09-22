@@ -40,7 +40,7 @@ namespace Nmkoder.Forms
             this.msgLabel.Location = new System.Drawing.Point(13, 13);
             this.msgLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.msgLabel.Name = "msgLabel";
-            this.msgLabel.Size = new System.Drawing.Size(318, 15);
+            this.msgLabel.Size = new System.Drawing.Size(318, 30);
             this.msgLabel.TabIndex = 18;
             this.msgLabel.Text = "The Text Here";
             this.msgLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -51,7 +51,7 @@ namespace Nmkoder.Forms
             this.textBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox.ForeColor = System.Drawing.Color.White;
-            this.textBox.Location = new System.Drawing.Point(16, 42);
+            this.textBox.Location = new System.Drawing.Point(16, 57);
             this.textBox.MinimumSize = new System.Drawing.Size(4, 23);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(315, 23);

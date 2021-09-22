@@ -43,23 +43,23 @@ namespace Nmkoder.UI
         {
             LoadUi();
             Directory.CreateDirectory(Paths.GetThumbsPath());
-            string format = "jpg";
+            //string format = "jpg";
             int randThumbs = 4;
 
             try
             {
                 if (!IoUtils.IsPathDirectory(path))     // If path is video - Extract frames
                 {
-                    string imgPath = Path.Combine(Paths.GetThumbsPath(), $"thumb0-s0.{format}");
+                    string imgPath = Path.Combine(Paths.GetThumbsPath(), $"thumb0-s0.jpg");
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
-                    await LoadThumbnailsOnce(format);
+                    await LoadThumbnailsOnce();
 
                     int duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
 
-                    if(duration > randThumbs)   // Only generate random thumbs if duration is long enough
+                    if (duration > randThumbs)   // Only generate random thumbs if duration is long enough
                     {
                         await FfmpegExtract.ExtractThumbs(path, Paths.GetThumbsPath(), randThumbs * 2);
-                        FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, $"*.{format}");
+                        FileInfo[] thumbs = IoUtils.GetFileInfosSorted(Paths.GetThumbsPath(), false, $"*.*");
 
                         var smallerHalf = thumbs.Skip(1).OrderBy(f => f.Length).Take(randThumbs).ToList(); // Get smaller half of thumbs
 
@@ -70,8 +70,7 @@ namespace Nmkoder.UI
                 else     // Path is frame folder - Copy frames
                 {
                     FileInfo[] frames = IoUtils.GetFileInfosSorted(path, false, "*.*");
-                    Image img1 = IoUtils.GetImage(frames[0].FullName);
-                    img1.Save(Path.Combine(Paths.GetThumbsPath(), $"thumb0.jpg"), ImageFormat.Jpeg);
+                    frames[0].CopyTo(Path.Combine(Paths.GetThumbsPath(), $"thumb0{frames[0].Extension}"));
                     Random rnd = new Random();
                     List<FileInfo> picks = frames.Skip(1).OrderBy(x => rnd.Next()).Take(randThumbs * 2).ToList();
                     picks = picks.OrderBy(f => f.Length).Skip(randThumbs).ToList(); // Delete smaller half of thumbs
@@ -80,7 +79,9 @@ namespace Nmkoder.UI
 
                     foreach (FileInfo pick in picks)
                     {
-                        IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.{format}"), ImageFormat.Jpeg);
+
+                        pick.CopyTo(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}{pick.Extension}"));
+                        //IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.{format}"), ImageFormat.Jpeg);
                         idx++;
                     }
                 }
@@ -93,28 +94,28 @@ namespace Nmkoder.UI
             RemoveInvalidImages();
             //await SlideshowLoop();
 
-            if (IoUtils.GetAmountOfFiles(Paths.GetThumbsPath(), false, $"*.{format}") > 0)
-                await LoadThumbnailsOnce(format);
+            if (IoUtils.GetAmountOfFiles(Paths.GetThumbsPath(), false, $"*.*p*") > 0)
+                await LoadThumbnailsOnce();
             else
                 Fail();
         }
 
-        static void RemoveInvalidImages ()
+        static void RemoveInvalidImages()
         {
-            foreach(string imgFile in IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false))
+            foreach (string imgFile in IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false))
             {
                 try { int x = IoUtils.GetImage(imgFile).Width; }
                 catch { IoUtils.TryDeleteIfExists(imgFile); }
             }
         }
 
-        static void Fail ()
+        static void Fail()
         {
             Program.mainForm.thumbnailBox.Image = placeholderImg;
             Program.mainForm.thumbLabel.Text = $"Failed to extract thumbnails.";
         }
 
-        public static async Task LoadThumbnailsOnce(string format)
+        public static async Task LoadThumbnailsOnce(string format = "*")
         {
             try
             {
@@ -128,13 +129,13 @@ namespace Nmkoder.UI
                 Logger.Log($"Loaded {currThumbs.Count} thumbnail images", true);
                 ShowThumb();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"LoadThumbnailsOnce Exception: {e.Message}\n{e.StackTrace}", true);
             }
         }
 
-        public static void ThumbnailClick ()
+        public static void ThumbnailClick()
         {
             if (busy || Program.mainForm.thumbnailBox.Image == placeholderImg || Program.mainForm.thumbnailBox.Image == loadingImg)
                 return;
@@ -173,7 +174,7 @@ namespace Nmkoder.UI
             Program.mainForm.thumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
         }
 
-        public static async Task SlideshowLoop (int interval = 2)
+        public static async Task SlideshowLoop(int interval = 2)
         {
             Logger.Log($"Slideshow.RunFromPath - imgsDir = {Paths.GetThumbsPath()}", true);
             string inputFile = MediaInfo.current.SourcePath;
@@ -197,7 +198,7 @@ namespace Nmkoder.UI
 
                 long newHash = files.Select(x => new FileInfo(x).Length).Sum();
 
-                if(newHash != currHash) // Only reload images if hash (sum of all thumb filesizes) mismatches
+                if (newHash != currHash) // Only reload images if hash (sum of all thumb filesizes) mismatches
                 {
                     try
                     {
@@ -210,7 +211,7 @@ namespace Nmkoder.UI
                         string[] filenames = files.Select(x => Path.GetFileName(x)).ToArray();
                         currThumbs = Enumerable.Range(0, filenames.Length).ToDictionary(idx => filenames[idx], idx => thumbs[idx]);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Logger.Log($"Slideshow Error - Failed to load extracted thumbs: {e.Message}", true);
                     }

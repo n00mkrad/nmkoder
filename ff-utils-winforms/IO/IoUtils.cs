@@ -22,7 +22,7 @@ namespace Nmkoder.IO
     class IoUtils
     {
 
-		public static Image GetImage(string path, bool allowMagickFallback = true, bool log = true)
+		public static Image GetImage(string path, bool log = true)
 		{
 			try
 			{

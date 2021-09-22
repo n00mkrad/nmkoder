@@ -183,19 +183,23 @@ namespace Nmkoder.Media
 
                 int t = interval * (i + 1) - (interval > 1 ? 1 : 0);
 
-                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -ss {t}", "-an -sn -sn -vf cropdetect -vframes 3 -f null - 2>&1 1>nul | findstr crop=", "");
+                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -ss {t}", "-an -sn -sn -vf cropdetect=round=2 -vframes 2 -f null - 2>&1 1>nul | findstr crop=", "");
 
                 foreach (string l in output.SplitIntoLines().Where(x => x.MatchesWildcard("*:*:*:*")))
                     detectedCrops.Add(l.Split(" crop=").Last());
             }
 
-            var mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
-            string[] cropVals = mostCommon.Split(':');
+            detectedCrops = detectedCrops.OrderByDescending(x => (x.Split(':')[0].GetInt() * x.Split(':')[1].GetInt())).ToList();
+            string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
+            string largest = detectedCrops.First();
+            int commonCertainty = (((float)detectedCrops.CountOccurences(mostCommon) / (float)detectedCrops.Count) * 100f).RoundToInt();
+            string chosen = commonCertainty > 85 ? mostCommon : largest; // Use most common if it's >85% common, otherwise use largest to be safe (thanks Nolan)
+            Logger.Log($"GetCurrentAutoCrop - Largest: {largest} - Smallest: {detectedCrops.Last()} - Most Common: {mostCommon} ({commonCertainty}%) - Chosen: {chosen} [T = {sw}]", true);
+            string[] cropVals = chosen.Split(':');
             bool repl = Logger.GetLastLine().Contains(msg);
-            Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", quiet, !quiet && repl);
-            Logger.Log($"Certainty: {detectedCrops.CountOccurences(mostCommon)}/{detectedCrops.Count}");
+            Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]})", quiet, !quiet && repl);
 
-            return $"crop={mostCommon}";
+            return $"crop={chosen}";
         }
 
         public struct StreamSizeInfo { public float Kbps; public long Bytes; }

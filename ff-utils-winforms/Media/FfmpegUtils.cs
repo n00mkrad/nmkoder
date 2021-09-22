@@ -169,7 +169,7 @@ namespace Nmkoder.Media
             string msg = "Detecting crop... This can take a while for long videos.";
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
-            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 8);
+            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 10);
             string path = MediaInfo.current.TruePath;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
@@ -193,6 +193,8 @@ namespace Nmkoder.Media
             string[] cropVals = mostCommon.Split(':');
             bool repl = Logger.GetLastLine().Contains(msg);
             Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]}) (Took {sw})", quiet, !quiet && repl);
+            Logger.Log($"Certainty: {detectedCrops.CountOccurences(mostCommon)}/{detectedCrops.Count}");
+
             return $"crop={mostCommon}";
         }
 

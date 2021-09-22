@@ -184,9 +184,15 @@ namespace Nmkoder.UI
         public static string GetInputFilesString()
         {
             List<string> args = new List<string>();
+            List<string> addedFiles = new List<string>();
 
             foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
             {
+                if (addedFiles.Contains(entry.MediaFile.SourcePath))
+                    continue;
+
+                addedFiles.Add(entry.MediaFile.SourcePath);
+
                 if (entry.MediaFile.IsDirectory)
                     args.Add($"-safe 0 -f concat -r {entry.MediaFile.InputRate} -i {entry.MediaFile.TruePath.Wrap()}");
                 else
@@ -196,8 +202,8 @@ namespace Nmkoder.UI
             //List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath).ToList();
             //List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
             //List<string> args = GetInputFiles().Select(x => $"{x.GetConcStr(10)} -i {x.Wrap()}").ToList();
-            Logger.Log($"Input Args: {string.Join(" -i ", args)}", true);
-            return string.Join(" -i ", args);
+            Logger.Log($"Input Args: {string.Join(" ", args)}", true);
+            return string.Join(" ", args);
         }
 
         public static string GetMapArgs()

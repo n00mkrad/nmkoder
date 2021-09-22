@@ -240,5 +240,16 @@ namespace Nmkoder.Extensions
             string rateStr = rate >= 0 ? $"-r {rate} " : "";
             return filePath.IsConcatFile() ? $"{rateStr}-safe 0 -f concat" : "";
         }
+
+        public static int CountOccurences (this List<string> list, string stringToLookFor)
+        {
+            int count = 0;
+
+            foreach (string s in list)
+                if (s == stringToLookFor)
+                    count++;
+
+            return count;
+        }
     }
 }

@@ -149,7 +149,7 @@ namespace Nmkoder.Media
             if (codec == "ssa" || codec == "ass" || codec == "mov_text" || codec == "srt" || codec == "subrip" || codec == "text" || codec == "webvtt")
                 return false;
 
-            if (codec == "dvdsub" || codec == "pgssub" || codec == "hdmv_pgs_subtitle")
+            if (codec == "dvdsub" || codec == "dvd_subtitle" || codec == "pgssub" || codec == "hdmv_pgs_subtitle")
                 return true;
 
             // If codec was not listed above, manually check if it's compatible by trying to encode it:

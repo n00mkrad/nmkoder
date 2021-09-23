@@ -56,7 +56,9 @@ namespace Nmkoder.Main
 
             if (taskType == TaskType.None)
             {
-                MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+                if(!RunInstantly())
+                    MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+
                 return;
             }
 

@@ -54,11 +54,6 @@ namespace Nmkoder.UI.Tasks
                 Logger.Log($"Stream #{s.Index} ({s.Type}) - Bitrate: {br} - Size: {FormatUtils.Bytes(info.Bytes)} ({percent}%)");
             }
 
-            foreach(Stream s in MediaInfo.current.AllStreams)
-            {
-                
-            }
-
             Program.mainForm.SetWorking(false);
         }
 

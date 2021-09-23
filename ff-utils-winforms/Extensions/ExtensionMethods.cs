@@ -43,7 +43,7 @@ namespace Nmkoder.Extensions
             {
                 return int.Parse(str.TrimNumbers());
             }
-            catch (Exception e)
+            catch
             {
                 return 0;
             }

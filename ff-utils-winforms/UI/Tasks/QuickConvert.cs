@@ -24,14 +24,17 @@ namespace Nmkoder.UI.Tasks
             
             try
             {
+                Codecs.VideoCodec vCodec = GetCurrentCodecV();
+                Codecs.AudioCodec aCodec = GetCurrentCodecA();
+                Codecs.SubtitleCodec sCodec = GetCurrentCodecS();
                 string inFiles = MediaInfo.GetInputFilesString();
-                string outPath = Program.mainForm.outputBox.Text.Trim();
+                string outPath = GetOutPath(vCodec);
                 string map = MediaInfo.GetMapArgs();
-                CodecArgs codecArgs = Codecs.GetArgs(GetCurrentCodecV(), GetVideoArgsFromUi(), MediaInfo.current);
+                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), MediaInfo.current);
                 string v = codecArgs.Arguments;
-                string vf = await GetVideoFilterArgs(GetCurrentCodecV(), codecArgs);
-                string a = Codecs.GetArgs(GetCurrentCodecA(), GetAudioArgsFromUi());
-                string s = Codecs.GetArgs(GetCurrentCodecS());
+                string vf = await GetVideoFilterArgs(vCodec, codecArgs);
+                string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
+                string s = Codecs.GetArgs(sCodec);
                 string meta = GetMetadataArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();

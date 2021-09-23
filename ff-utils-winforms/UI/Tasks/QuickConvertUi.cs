@@ -73,15 +73,14 @@ namespace Nmkoder.UI.Tasks
         {
             Codecs.VideoCodec c = (Codecs.VideoCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
-
+            Program.mainForm.containerBox.Visible = !Codecs.IsFixedFormat(c); // Disable container selection for fixed formats (GIF, PNG etc)
             bool enc = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
-            Program.mainForm.encVidQualityBox.Enabled = enc;
-            Program.mainForm.encVidPresetBox.Enabled = enc;
-            Program.mainForm.encVidColorsBox.Enabled = enc;
+            Program.mainForm.encVidQualityBox.Enabled = enc && info.QMin != info.QMax;
+            Program.mainForm.encVidPresetBox.Enabled = enc && info.Presets.Length > 0;
+            Program.mainForm.encVidColorsBox.Enabled = enc && info.ColorFormats.Length > 0;
             Program.mainForm.encVidFpsBox.Enabled = enc;
             Program.mainForm.encScaleBoxW.Enabled = Program.mainForm.encScaleBoxH.Enabled = enc;
             Program.mainForm.encCropModeBox.Enabled = enc;
-
             Program.mainForm.qInfoLabel.Text = info.QInfo;
             Program.mainForm.presetInfoLabel.Text = info.PInfo;
             LoadQualityLevel(info);
@@ -178,7 +177,8 @@ namespace Nmkoder.UI.Tasks
             }
 
             Containers.Container current = (Containers.Container)form.containerBox.SelectedIndex;
-            string path = Path.ChangeExtension(form.outputBox.Text.Trim(), current.ToString().ToLower());
+            bool noExt = Codecs.IsFixedFormat(vCodec);
+            string path = Path.ChangeExtension(form.outputBox.Text.Trim(), noExt ? null : current.ToString().ToLower());
             Program.mainForm.outputBox.Text = path;
             ValidatePath();
         }
@@ -437,6 +437,22 @@ namespace Nmkoder.UI.Tasks
                 Logger.Log($"Info: Scaling using percentages enforces the original aspect ratio. You cannot use different percentages for width and height.");
 
             return $"scale={argW}:{argH}{forceDiv},setsar=1:1";
+        }
+
+        public static string GetOutPath (Codecs.VideoCodec c)
+        {
+            string uiPath = Program.mainForm.outputBox.Text.Trim();
+
+            if (Codecs.IsSequence(c))
+            {
+                Directory.CreateDirectory(uiPath);
+                string ext = Program.mainForm.encVidCodecsBox.Text.Split(' ')[0].ToLower();
+                return Path.Combine(uiPath, $"%8d.{ext}");
+            }
+            else
+            {
+                return uiPath;
+            }
         }
 
         #endregion

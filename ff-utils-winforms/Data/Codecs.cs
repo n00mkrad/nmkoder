@@ -12,7 +12,7 @@ namespace Nmkoder.Data
     {
         //public enum CodecType { Video, AnimImage, Image, Audio }
 
-        public enum VideoCodec { Copy, StripVideo, H264, H265, H264Nvenc, H265Nvenc, Vp9, Av1, Gif };
+        public enum VideoCodec { Copy, StripVideo, H264, H265, H264Nvenc, H265Nvenc, Vp9, Av1, Gif, Png, Jpg };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus, Mp3, Flac };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
 
@@ -83,6 +83,17 @@ namespace Nmkoder.Data
             {
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 return new CodecArgs($"-f gif -gifflags -offsetting", $"split[s0][s1];[s0]palettegen={q}[p];[s1][p]paletteuse=dither=floyd_steinberg");
+            }
+
+            if (c == VideoCodec.Png)
+            {
+                return new CodecArgs($"-c:v png -compression_level 3");
+            }
+
+            if (c == VideoCodec.Jpg)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                return new CodecArgs($"-c:v mjpeg -qmin 1 -q:v {q}");
             }
 
             return new CodecArgs();
@@ -242,6 +253,23 @@ namespace Nmkoder.Data
                 return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 16, 256, 128, qInfo);
             }
 
+            if (c == VideoCodec.Png)
+            {
+                string frName = "PNG (Image Sequence)";
+                string[] presets = new string[] { };
+                string[] colors = new string[] { "rgb", "rgba" };
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 1, 0, 0, 0);
+            }
+
+            if (c == VideoCodec.Jpg)
+            {
+                string frName = "JPEG (Image Sequence)";
+                string[] presets = new string[] { };
+                string[] colors = new string[] { "yuvj420p", "yuvj444p" };
+                string qInfo = "JPEG Quality (Lower is better)";
+                return new CodecInfo(c.ToString(), frName, presets, 0, colors, 0, 1, 31, 3, qInfo);
+            }
+
             return new CodecInfo();
         }
 
@@ -319,6 +347,16 @@ namespace Nmkoder.Data
             }
 
             return new CodecInfo();
+        }
+
+        public static bool IsFixedFormat(VideoCodec c)
+        {
+            return c == VideoCodec.Gif || c == VideoCodec.Png || c == VideoCodec.Jpg;
+        }
+
+        public static bool IsSequence(VideoCodec c)
+        {
+            return c == VideoCodec.Png || c == VideoCodec.Jpg;
         }
     }
 }

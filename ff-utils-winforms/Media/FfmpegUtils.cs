@@ -189,6 +189,12 @@ namespace Nmkoder.Media
                     detectedCrops.Add(l.Split(" crop=").Last());
             }
 
+            if(detectedCrops.Count < 1)
+            {
+                Logger.Log($"Couldn't detect crop - The video might be too short for automatic crop detection.");
+                return "";
+            }
+
             detectedCrops = detectedCrops.OrderByDescending(x => (x.Split(':')[0].GetInt() * x.Split(':')[1].GetInt())).ToList();
             string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string largest = detectedCrops.First();

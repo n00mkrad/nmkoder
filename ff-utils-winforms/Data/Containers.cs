@@ -74,14 +74,14 @@ namespace Nmkoder.Data
         public static bool ContainerSupports(Container c, VC cv)
         {
             bool s = cv == VC.Copy || cv == VC.StripVideo || GetSupportedVideoCodecs(c).Contains(cv);
-            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", true);
+            //Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", true);
             return s;
         }
 
         public static bool ContainerSupports(Container c, AC ca)
         {
             bool s = ca == AC.Copy || ca == AC.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
-            Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", true);
+            //Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", true);
             return s;
         }
 

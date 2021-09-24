@@ -351,10 +351,10 @@ namespace Nmkoder.UI.Tasks
                 else
                 {
                     if (track.ToLower().Contains("video"))
-                        args.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:v:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("audio"))
-                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:a:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("subtitle"))
                         args.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");

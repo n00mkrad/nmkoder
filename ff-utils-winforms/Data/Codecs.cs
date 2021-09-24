@@ -246,7 +246,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Gif)
             {
-                string frName = "GIF";
+                string frName = "GIF [Animated GIF]";
                 string[] presets = new string[] { };
                 string[] colors = new string[] { };
                 string qInfo = "Color Palette Size (Higher is better)";
@@ -255,7 +255,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Png)
             {
-                string frName = "PNG (Image Sequence)";
+                string frName = "PNG [Image Sequence]";
                 string[] presets = new string[] { };
                 string[] colors = new string[] { "rgb", "rgba" };
                 return new CodecInfo(c.ToString(), frName, presets, 0, colors, 1, 0, 0, 0);
@@ -263,7 +263,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Jpg)
             {
-                string frName = "JPEG (Image Sequence)";
+                string frName = "JPEG [Image Sequence]";
                 string[] presets = new string[] { };
                 string[] colors = new string[] { "yuvj420p", "yuvj444p" };
                 string qInfo = "JPEG Quality (Lower is better)";

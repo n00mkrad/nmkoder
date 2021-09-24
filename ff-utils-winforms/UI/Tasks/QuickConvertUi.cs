@@ -315,8 +315,8 @@ namespace Nmkoder.UI.Tasks
 
             grid.Columns[0].ReadOnly = true;
             grid.Columns[0].AutoSizeMode = grid.Columns[1].AutoSizeMode = grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grid.Columns[0].FillWeight = 15;
-            grid.Columns[1].FillWeight = 75;
+            grid.Columns[0].FillWeight = 20;
+            grid.Columns[1].FillWeight = 70;
             grid.Columns[2].FillWeight = 10;
         }
 

@@ -95,6 +95,7 @@ namespace Nmkoder.UI.Tasks
             CodecInfo info = Codecs.GetCodecInfo(c);
 
             Program.mainForm.encAudCh.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
+            Program.mainForm.encAudBr.Enabled = info.QDefault >= 0;
             LoadAudBitrate(info);
             ValidateContainer();
         }

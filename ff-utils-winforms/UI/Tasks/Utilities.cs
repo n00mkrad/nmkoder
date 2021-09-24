@@ -7,6 +7,7 @@ using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using Nmkoder.Media;
 using Nmkoder.Utils;
 using Stream = Nmkoder.Data.Streams.Stream;
@@ -44,7 +45,7 @@ namespace Nmkoder.UI.Tasks
 
             foreach(MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
             {
-                if (!Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
+                if (RunTask.canceled || !Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
                     continue;
 
                 Stream s = entry.Stream;

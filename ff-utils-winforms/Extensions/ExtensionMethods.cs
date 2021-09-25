@@ -39,9 +39,14 @@ namespace Nmkoder.Extensions
             if (str == null || str.Length < 1)
                 return 0;
 
+            str = str.Trim();
+
             try
             {
-                return int.Parse(str.TrimNumbers());
+                if(str.Length >= 2 && str[0] == '-' && str[1] != '-')
+                    return int.Parse("-" + str.TrimNumbers());
+                else
+                    return int.Parse(str.TrimNumbers());
             }
             catch
             {

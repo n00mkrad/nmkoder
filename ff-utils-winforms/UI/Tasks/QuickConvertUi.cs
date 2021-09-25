@@ -332,6 +332,9 @@ namespace Nmkoder.UI.Tasks
 
             bool map = cfg == 0;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             DataGridView grid = Program.mainForm.metaGrid;
+            int defaultAudio = Program.mainForm.trackListDefaultAudioBox.SelectedIndex;
+            int defaultSubs = Program.mainForm.trackListDefaultSubsBox.SelectedIndex - 1;
+            Logger.Log($"Default Audio Stream: #{defaultAudio} - Default Subtitle Stream: #{defaultSubs}");
             List<string> args = new List<string>();
 
             foreach (DataGridViewRow row in grid.Rows)
@@ -355,10 +358,10 @@ namespace Nmkoder.UI.Tasks
                         args.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:v:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("audio"))
-                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:a:{idx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:a:{idx} language=\"{lang}\" -disposition:a:{idx} {(defaultAudio == idx ? "default" : "0")}");
 
                     if (track.ToLower().Contains("subtitle"))
-                        args.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
+                        args.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\" -disposition:s:{idx} {(defaultSubs == idx ? "default" : "0")}");
                 }
             }
 

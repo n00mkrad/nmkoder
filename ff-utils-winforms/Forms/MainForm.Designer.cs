@@ -132,6 +132,10 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
+            this.trackListDefaultAudio = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.trackListDefaultSubs = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -195,11 +199,12 @@
             this.streamList.ForeColor = System.Drawing.Color.White;
             this.streamList.FormattingEnabled = true;
             this.streamList.IntegralHeight = false;
-            this.streamList.Location = new System.Drawing.Point(3, 30);
+            this.streamList.Location = new System.Drawing.Point(3, 57);
             this.streamList.Name = "streamList";
             this.streamList.ScrollAlwaysVisible = true;
-            this.streamList.Size = new System.Drawing.Size(679, 243);
+            this.streamList.Size = new System.Drawing.Size(679, 216);
             this.streamList.TabIndex = 27;
+            this.streamList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.streamList_ItemCheck);
             this.streamList.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
             this.streamList.Leave += new System.EventHandler(this.streamList_Leave);
             this.streamList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
@@ -426,6 +431,10 @@
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.label7);
+            this.streamListPage.Controls.Add(this.trackListDefaultSubs);
+            this.streamListPage.Controls.Add(this.label6);
+            this.streamListPage.Controls.Add(this.trackListDefaultAudio);
             this.streamListPage.Controls.Add(this.streamDetails);
             this.streamListPage.Controls.Add(this.formatInfo);
             this.streamListPage.Controls.Add(this.streamList);
@@ -439,11 +448,12 @@
             this.streamDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.streamDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.streamDetails.ForeColor = System.Drawing.Color.White;
-            this.streamDetails.Location = new System.Drawing.Point(7, 279);
+            this.streamDetails.Location = new System.Drawing.Point(3, 279);
+            this.streamDetails.Margin = new System.Windows.Forms.Padding(0);
             this.streamDetails.Multiline = true;
             this.streamDetails.Name = "streamDetails";
             this.streamDetails.ReadOnly = true;
-            this.streamDetails.Size = new System.Drawing.Size(669, 100);
+            this.streamDetails.Size = new System.Drawing.Size(679, 100);
             this.streamDetails.TabIndex = 29;
             // 
             // quickConvertPage
@@ -991,9 +1001,9 @@
             // 
             this.panel3.Controls.Add(this.metadataGrid);
             this.panel3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel3.Location = new System.Drawing.Point(6, 107);
+            this.panel3.Location = new System.Drawing.Point(6, 77);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(656, 175);
+            this.panel3.Size = new System.Drawing.Size(656, 205);
             this.panel3.TabIndex = 7;
             // 
             // metadataGrid
@@ -1013,7 +1023,7 @@
             this.metadataGrid.Name = "metadataGrid";
             this.metadataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.metadataGrid.RowHeadersWidth = 51;
-            this.metadataGrid.Size = new System.Drawing.Size(656, 175);
+            this.metadataGrid.Size = new System.Drawing.Size(656, 205);
             this.metadataGrid.TabIndex = 1;
             // 
             // panel2
@@ -1023,7 +1033,7 @@
             this.panel2.Controls.Add(this.label14);
             this.panel2.Location = new System.Drawing.Point(6, 6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(656, 95);
+            this.panel2.Size = new System.Drawing.Size(656, 65);
             this.panel2.TabIndex = 6;
             // 
             // metaMode
@@ -1037,7 +1047,7 @@
             "Copy All From Input, Edit Titles/Languages",
             "Apply Titles/Languages, Strip Rest",
             "Strip All Metadata Including Titles/Languages"});
-            this.metaMode.Location = new System.Drawing.Point(220, 67);
+            this.metaMode.Location = new System.Drawing.Point(220, 37);
             this.metaMode.Name = "metaMode";
             this.metaMode.Size = new System.Drawing.Size(433, 23);
             this.metaMode.TabIndex = 49;
@@ -1047,7 +1057,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(4, 70);
+            this.label21.Location = new System.Drawing.Point(4, 40);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(143, 15);
@@ -1060,10 +1070,10 @@
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
             this.label14.Location = new System.Drawing.Point(3, 3);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(373, 30);
+            this.label14.Size = new System.Drawing.Size(616, 15);
             this.label14.TabIndex = 0;
-            this.label14.Text = "Here you can edit the title and language tag (ISO 639-2) of each track.\r\nTo edit " +
-    "a cell, double click it or press F2 while it\'s selected.";
+            this.label14.Text = "Here you can edit the title and language tag (ISO 639-2) of each track. Double cl" +
+    "ick or press F2 to edit a selected cell.";
             // 
             // utilsPage
             // 
@@ -1535,6 +1545,52 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // trackListDefaultAudio
+            // 
+            this.trackListDefaultAudio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.trackListDefaultAudio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.trackListDefaultAudio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListDefaultAudio.ForeColor = System.Drawing.Color.White;
+            this.trackListDefaultAudio.FormattingEnabled = true;
+            this.trackListDefaultAudio.Location = new System.Drawing.Point(116, 30);
+            this.trackListDefaultAudio.Name = "trackListDefaultAudio";
+            this.trackListDefaultAudio.Size = new System.Drawing.Size(210, 21);
+            this.trackListDefaultAudio.TabIndex = 45;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(4, 34);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(105, 13);
+            this.label6.TabIndex = 46;
+            this.label6.Text = "Default Audio Track:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(349, 34);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 13);
+            this.label7.TabIndex = 48;
+            this.label7.Text = "Default Subtitle Track:";
+            // 
+            // trackListDefaultSubs
+            // 
+            this.trackListDefaultSubs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.trackListDefaultSubs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.trackListDefaultSubs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListDefaultSubs.ForeColor = System.Drawing.Color.White;
+            this.trackListDefaultSubs.FormattingEnabled = true;
+            this.trackListDefaultSubs.Location = new System.Drawing.Point(469, 30);
+            this.trackListDefaultSubs.Name = "trackListDefaultSubs";
+            this.trackListDefaultSubs.Size = new System.Drawing.Size(210, 21);
+            this.trackListDefaultSubs.TabIndex = 47;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1707,6 +1763,10 @@
         private System.Windows.Forms.Panel utilsBitratesPanel;
         private System.Windows.Forms.Label label5;
         private HTAlt.WinForms.HTButton utilsBitratesSelBtn;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox trackListDefaultAudio;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox trackListDefaultSubs;
     }
 }
 

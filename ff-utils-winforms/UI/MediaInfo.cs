@@ -129,6 +129,7 @@ namespace Nmkoder.UI
                 {
                     box.Items.Add(new MediaStreamListEntry(mediaFile, s, uniqueFileCount));
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
+                    Program.mainForm.ignoreNextStreamListItemCheck = true;
                     box.SetItemChecked(box.Items.Count - 1, check);
                 }
                 catch (Exception e)
@@ -139,6 +140,8 @@ namespace Nmkoder.UI
 
             if (switchToList && !RunTask.RunInstantly())
                 Program.mainForm.mainTabList.SelectedIndex = 1;
+
+            Program.mainForm.UpdateDefaultStreamsUi();
         }
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)

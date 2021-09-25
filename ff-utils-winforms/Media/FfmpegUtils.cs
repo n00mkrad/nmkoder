@@ -183,7 +183,7 @@ namespace Nmkoder.Media
 
                 int t = interval * (i + 1) - (interval > 1 ? 1 : 0);
 
-                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -ss {t}", "-an -sn -sn -vf cropdetect=round=2 -vframes 2 -f null - 2>&1 1>nul | findstr crop=", "");
+                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -r 10 -ss {t}", "-an -sn -sn -vf cropdetect=round=2 -vframes 6 -r 1/10 -f null - 2>&1 1>nul | findstr crop=", "");
 
                 foreach (string l in output.SplitIntoLines().Where(x => x.MatchesWildcard("*:*:*:*")))
                     detectedCrops.Add(l.Split(" crop=").Last());
@@ -195,7 +195,7 @@ namespace Nmkoder.Media
                 return "";
             }
 
-            detectedCrops = detectedCrops.OrderByDescending(x => (x.Split(':')[0].GetInt() * x.Split(':')[1].GetInt())).ToList();
+            detectedCrops = detectedCrops.Where(x => (x.Split(':')[0].GetInt() > 0) && (x.Split(':')[1].GetInt() > 0)).OrderByDescending(x => (x.Split(':')[0].GetInt() * x.Split(':')[1].GetInt())).ToList();
             string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string largest = detectedCrops.First();
             int commonCertainty = (((float)detectedCrops.CountOccurences(mostCommon) / (float)detectedCrops.Count) * 100f).RoundToInt();

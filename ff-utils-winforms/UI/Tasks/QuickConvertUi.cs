@@ -6,6 +6,7 @@ using Nmkoder.Forms;
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.Media;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,8 +22,6 @@ namespace Nmkoder.UI.Tasks
     partial class QuickConvertUi : QuickConvert
     {
         private static MainForm form;
-        public static bool scaleLink = true;
-
 
         public static void Init()
         {
@@ -44,15 +43,17 @@ namespace Nmkoder.UI.Tasks
             ConfigParser.LoadComboxIndex(form.encSubEnc);
 
             foreach (string c in Enum.GetNames(typeof(Containers.Container)))   // Load containers
-                form.containerBox.Items.Add(c.ToUpper());
+                form.ffmpegContainerBox.Items.Add(c.ToUpper());
 
-            ConfigParser.LoadComboxIndex(form.containerBox);
+            ConfigParser.LoadComboxIndex(form.ffmpegContainerBox);
         }
 
-        public static void InitFile()
+        public static void InitFile(string path)
         {
             try
             {
+                Program.mainForm.ffmpegOutputBox.Text = path;
+
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
                     Program.mainForm.encScaleBoxW.Text = Program.mainForm.encScaleBoxH.Text = "";
@@ -65,7 +66,7 @@ namespace Nmkoder.UI.Tasks
             }
             catch (Exception e)
             {
-                Logger.Log($"Failed to initialized media file: {e.Message}\n{e.StackTrace}");
+                Logger.Log($"Failed to initialize media file: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -73,7 +74,7 @@ namespace Nmkoder.UI.Tasks
         {
             Codecs.VideoCodec c = (Codecs.VideoCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
-            Program.mainForm.containerBox.Visible = !Codecs.IsFixedFormat(c); // Disable container selection for fixed formats (GIF, PNG etc)
+            Program.mainForm.ffmpegContainerBox.Visible = !Codecs.IsFixedFormat(c); // Disable container selection for fixed formats (GIF, PNG etc)
             bool enc = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
             Program.mainForm.encVidQualityBox.Enabled = enc && info.QMin != info.QMax;
             Program.mainForm.encVidPresetBox.Enabled = enc && info.Presets.Length > 0;
@@ -112,7 +113,7 @@ namespace Nmkoder.UI.Tasks
             form.encVidQualityBox.Minimum = info.QMin;
 
             if (info.QDefault >= 0)
-                form.encVidQualityBox.Text = info.QDefault.ToString();
+                form.encVidQualityBox.Value = info.QDefault;
             else
                 form.encVidQualityBox.Text = "";
         }
@@ -157,14 +158,14 @@ namespace Nmkoder.UI.Tasks
 
         public static void ValidateContainer()
         {
-            if (form.containerBox.SelectedIndex < 0)
+            if (form.ffmpegContainerBox.SelectedIndex < 0)
                 return;
 
             Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
             Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
             Codecs.SubtitleCodec sCodec = (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
 
-            Containers.Container c = (Containers.Container)form.containerBox.SelectedIndex;
+            Containers.Container c = (Containers.Container)form.ffmpegContainerBox.SelectedIndex;
 
             if (!(Containers.ContainerSupports(c, vCodec) && Containers.ContainerSupports(c, aCodec) && Containers.ContainerSupports(c, sCodec)))
             {
@@ -172,15 +173,15 @@ namespace Nmkoder.UI.Tasks
 
                 //Logger.Log($"{c.ToString().ToUpper()} doesn't support one of the selected codecs - Auto-selected {supported.ToString().ToUpper()} instead.");
 
-                for (int i = 0; i < form.containerBox.Items.Count; i++)
-                    if (form.containerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-                        form.containerBox.SelectedIndex = i;
+                for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
+                    if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
+                        form.ffmpegContainerBox.SelectedIndex = i;
             }
 
-            Containers.Container current = (Containers.Container)form.containerBox.SelectedIndex;
+            Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
             bool noExt = Codecs.IsFixedFormat(vCodec);
-            string path = Path.ChangeExtension(form.outputBox.Text.Trim(), noExt ? null : current.ToString().ToLower());
-            Program.mainForm.outputBox.Text = path;
+            string path = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), noExt ? null : current.ToString().ToLower());
+            Program.mainForm.ffmpegOutputBox.Text = path;
             ValidatePath();
         }
 
@@ -191,8 +192,8 @@ namespace Nmkoder.UI.Tasks
 
             //string ext = Program.mainForm.containerBox.Text.ToLower();
 
-            if(File.Exists(Program.mainForm.outputBox.Text))
-                Program.mainForm.outputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.outputBox.Text);
+            if(File.Exists(Program.mainForm.ffmpegOutputBox.Text))
+                Program.mainForm.ffmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.ffmpegOutputBox.Text);
         }
 
         #region Get Current Codec
@@ -237,7 +238,7 @@ namespace Nmkoder.UI.Tasks
         {
             if (ch == null || ch < 1)
             {
-                Logger.Log($"SetAudioChannelsCombox: ch is null or < 1 - returning", true);
+                Logger.Log($"InitAudioChannels: ch is null or < 1 - returning", true);
                 form.encAudCh.SelectedIndex = 1;
                 return;
             }
@@ -373,7 +374,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetMuxingArgsFromUi()
         {
-            Containers.Container c = (Containers.Container)Program.mainForm.containerBox.SelectedIndex;
+            Containers.Container c = (Containers.Container)Program.mainForm.ffmpegContainerBox.SelectedIndex;
             return Containers.GetMuxingArgs(c);
         }
 
@@ -406,7 +407,7 @@ namespace Nmkoder.UI.Tasks
             string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
-                filters.Add(GetScaleFilter(scaleW, scaleH));
+                filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
             if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(false));
@@ -419,32 +420,9 @@ namespace Nmkoder.UI.Tasks
                 return "";
         }
 
-        private static string GetScaleFilter(string w, string h, bool logWarnings = true)
-        {
-            string argW = w.Replace("w", "iw").Replace("h", "ih");
-            string argH = h.Replace("w", "iw").Replace("h", "ih");
-
-            if (w.EndsWith("%"))
-                argW = $"iw*{((float)w.GetInt() / 100).ToStringDot()}";
-            else if (string.IsNullOrWhiteSpace(w))
-                argW = "-2";
-
-            if (h.EndsWith("%"))
-                argH = $"ih*{((float)h.GetInt() / 100).ToStringDot()}";
-            else if (string.IsNullOrWhiteSpace(h))
-                argH = "-2";
-
-            string forceDiv = (argW.Contains("*") || argH.Contains("*")) ? ":force_original_aspect_ratio=increase:force_divisible_by=2" : "";
-
-            if (logWarnings && forceDiv.Length > 0 && (argW.Contains("*") && argH.Contains("*")))
-                Logger.Log($"Info: Scaling using percentages enforces the original aspect ratio. You cannot use different percentages for width and height.");
-
-            return $"scale={argW}:{argH}{forceDiv},setsar=1:1";
-        }
-
         public static string GetOutPath (Codecs.VideoCodec c)
         {
-            string uiPath = Program.mainForm.outputBox.Text.Trim();
+            string uiPath = Program.mainForm.ffmpegOutputBox.Text.Trim();
 
             if (Codecs.IsSequence(c))
             {
@@ -463,24 +441,7 @@ namespace Nmkoder.UI.Tasks
         public static Fraction GetUiFps()
         {
             TextBox fpsBox = Program.mainForm.encVidFpsBox;
-
-            if (Program.mainForm.encVidFpsBox.Text.Contains("/"))   // Parse fraction
-            {
-                string[] split = fpsBox.Text.Split('/');
-                Fraction frac = new Fraction(split[0].GetInt(), split[1].GetInt());
-
-                if (!fpsBox.ReadOnly)
-                    return frac;
-            }
-            else    // Parse float
-            {
-                fpsBox.Text = fpsBox.Text.TrimNumbers(true);
-
-                if (!fpsBox.ReadOnly)
-                    return new Fraction(fpsBox.GetFloat());
-            }
-
-            return new Fraction();
+            return MiscUtils.GetFpsFromString(fpsBox.Text);
         }
     }
 }

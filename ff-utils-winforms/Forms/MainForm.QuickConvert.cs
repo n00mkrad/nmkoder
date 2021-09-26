@@ -23,7 +23,7 @@ namespace Nmkoder.Forms
     partial class MainForm
     {
         // Quick Convert - Video
-        public ComboBox containerBox { get { return containers; } }
+        public ComboBox ffmpegContainerBox { get { return containers; } }
         public ComboBox encVidCodecsBox { get { return encVidCodec; } }
         public NumericUpDown encVidQualityBox { get { return encVidQuality; } }
         public Label qInfoLabel { get { return qInfo; } }
@@ -43,7 +43,7 @@ namespace Nmkoder.Forms
         public ComboBox encSubBurnBox;
         // Quick Convert - Other
         public DataGridView metaGrid;
-        public TextBox outputBox;
+        public TextBox ffmpegOutputBox;
         public TextBox customArgsInBox { get { return encCustomArgsIn; } }
         public TextBox customArgsOutBox { get { return encCustomArgsOut; } }
 
@@ -58,6 +58,18 @@ namespace Nmkoder.Forms
 
             encAudChannels.SelectedIndex = 1;
             encCropMode.SelectedIndex = 0;
+        }
+
+        private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveUiConfig();
+            QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);
+        }
+
+        private void containers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveUiConfig();
+            QuickConvertUi.ValidateContainer();
         }
     }
 }

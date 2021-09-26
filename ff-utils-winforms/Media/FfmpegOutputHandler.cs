@@ -19,7 +19,7 @@ namespace Nmkoder.Media
             if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
                 return;
 
-            lastOutputFfmpeg = lastOutputFfmpeg + "\n" + line;
+            lastOutputAv1an = lastOutputAv1an + "\n" + line;
 
             bool hidden = currentLogMode == LogMode.Hidden;
 

@@ -275,6 +275,9 @@
     <Compile Include="Forms\DragDropForm.Designer.cs">
       <DependentUpon>DragDropForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainForm.Av1an.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\MainForm.FileList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +312,7 @@
     <Compile Include="IO\IoUtils.cs" />
     <Compile Include="IO\Logger.cs" />
     <Compile Include="Main\RunTask.cs" />
+    <Compile Include="Media\Av1anOutputHandler.cs" />
     <Compile Include="Media\AvProcess.cs" />
     <Compile Include="Media\FfmpegCommands.cs" />
     <Compile Include="Media\FfmpegEncode.cs" />
@@ -323,11 +327,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\FileList.cs" />
     <Compile Include="UI\MediaInfo.cs" />
+    <Compile Include="UI\Tasks\Av1an.cs" />
+    <Compile Include="UI\Tasks\Av1anUi.cs" />
     <Compile Include="UI\Tasks\QuickConvert.cs" />
     <Compile Include="UI\Tasks\QuickConvertUi.cs" />
     <Compile Include="UI\Tasks\Utilities.cs" />
     <Compile Include="UI\ThumbnailView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
+    <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
     <EmbeddedResource Include="Forms\DragDropForm.resx">
       <DependentUpon>DragDropForm.cs</DependentUpon>

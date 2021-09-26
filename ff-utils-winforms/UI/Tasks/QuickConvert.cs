@@ -12,6 +12,9 @@ namespace Nmkoder.UI.Tasks
 {
     class QuickConvert
     {
+        public enum Backend { Ffmpeg, Av1an }
+        public Backend currentBackend = Backend.Ffmpeg;
+
         public static void Init()
         {
             QuickConvertUi.Init();

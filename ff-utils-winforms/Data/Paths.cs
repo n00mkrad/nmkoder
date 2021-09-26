@@ -49,5 +49,12 @@ namespace Nmkoder.Data
 			Directory.CreateDirectory(path);
 			return path;
 		}
+
+		public static string GetAv1anTempPath()
+		{
+			string path = Path.Combine(GetDataPath(), "av1anTemp");
+			Directory.CreateDirectory(path);
+			return path;
+		}
 	}
 }

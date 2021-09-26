@@ -14,7 +14,7 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { Null, None, Convert, VideoToFrames, FramesToVideo, ReadBitrates };
+        public enum TaskType { Null, None, Convert, Av1an, VideoToFrames, FramesToVideo, ReadBitrates };
         //public static TaskType currentTask;
 
         public enum FileListMode { MultiFileInput, BatchProcess };
@@ -66,6 +66,9 @@ namespace Nmkoder.Main
 
             if (taskType == TaskType.Convert)
                 await QuickConvert.Run();
+
+            if (taskType == TaskType.Av1an)
+                await Av1an.Run();
 
             if (taskType == TaskType.VideoToFrames)
                 await Utilities.RunVideoToFrames();

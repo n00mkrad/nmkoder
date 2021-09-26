@@ -12,6 +12,7 @@ namespace Nmkoder.Data
     {
         //public enum CodecType { Video, AnimImage, Image, Audio }
 
+        public enum Av1anCodec { AomAv1, SvtAv1, VpxVp9 };
         public enum VideoCodec { Copy, StripVideo, H264, H265, H264Nvenc, H265Nvenc, Vp9, Av1, Gif, Png, Jpg };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus, Mp3, Flac };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
@@ -75,7 +76,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.svtAv1KeyIntSecs, 8));
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8));
                 return new CodecArgs($"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}");
             }
 
@@ -99,13 +100,47 @@ namespace Nmkoder.Data
             return new CodecArgs();
         }
 
-        private static string GetKeyIntArg (MediaFile mediaFile, int intervalSeconds, string arg = "-g")
+        public static CodecArgs GetArgs(Av1anCodec c, Dictionary<string, string> encArgs, MediaFile mediaFile = null)
+        {
+            CodecInfo info = GetCodecInfo(c);
+
+            if (c == Av1anCodec.AomAv1)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 \" --pix-format {pixFmt}");
+            }
+
+            if (c == Av1anCodec.SvtAv1)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
+                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} \" --pix-format {pixFmt}");
+            }
+
+            if (c == Av1anCodec.VpxVp9)
+            {
+                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
+                return new CodecArgs($" -e vpx --force -v \"  \" --pix-format {pixFmt}");
+            }
+
+            return new CodecArgs();
+        }
+
+        private static string GetKeyIntArg (MediaFile mediaFile, int intervalSeconds, string arg = "-g ")
         {
             if (mediaFile == null || mediaFile.VideoStreams.Count < 1)
                 return "";
 
             int keyInt = ((float)(mediaFile?.VideoStreams.FirstOrDefault().Rate.GetFloat() * intervalSeconds)).RoundToInt();
-            return keyInt >= 24 ? $"{arg} {keyInt}" : "";
+            return keyInt >= 24 ? $"{arg}{keyInt}" : "";
         }
 
         public static string GetArgs(AudioCodec c, Dictionary<string, string> args)
@@ -168,6 +203,42 @@ namespace Nmkoder.Data
                 return $"-c:s webvtt";
 
             return "";
+        }
+
+        public static CodecInfo GetCodecInfo(Av1anCodec c)
+        {
+
+            if (c == Av1anCodec.AomAv1)
+            {
+                string frName = "AV1 (AOMEnc)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6" };
+                string[] colors = new string[] { "yuv420p", "yuv420p10le" };
+                string qInfo = "CRF (0-63 - Lower is better)";
+                string pInfo = "Lower = Better compression";
+                return new CodecInfo(c.ToString(), frName, presets, 5, colors, 1, 0, 63, 20, qInfo, pInfo);
+            }
+
+            if (c == Av1anCodec.SvtAv1)
+            {
+                string frName = "AV1 (SVT-AV1)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+                string[] colors = new string[] { "yuv420p", "yuv420p10le" };
+                string qInfo = "CRF (0-50 - Lower is better)";
+                string pInfo = "Lower = Better compression";
+                return new CodecInfo(c.ToString(), frName, presets, 5, colors, 1, 0, 50, 20, qInfo, pInfo);
+            }
+
+            if (c == Av1anCodec.VpxVp9)
+            {
+                string frName = "VP9 (VPX-VP9)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
+                string[] colors = new string[] { "yuv420p", "yuv420p10le" };
+                string qInfo = "CRF (0-63 - Lower is better)";
+                string pInfo = "Lower = Better compression";
+                return new CodecInfo(c.ToString(), frName, presets, 2, colors, 1, 0, 63, 24, qInfo, pInfo);
+            }
+
+            return new CodecInfo();
         }
 
         public static CodecInfo GetCodecInfo (VideoCodec c)

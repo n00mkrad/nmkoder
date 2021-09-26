@@ -49,7 +49,7 @@ namespace Nmkoder.Forms
             InitQuickConvert();
 
             metaGrid = metadataGrid;
-            outputBox = outputPath;
+            ffmpegOutputBox = outputPath;
 
             fileListBox = fileList;
             streamListBox = streamList;
@@ -79,6 +79,7 @@ namespace Nmkoder.Forms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             QuickConvert.Init();
+            Av1an.Init();
             LoadUiConfig();
             encVidCodec_SelectedIndexChanged(null, null);
             encAudioCodec_SelectedIndexChanged(null, null);
@@ -90,11 +91,16 @@ namespace Nmkoder.Forms
         {
             ConfigParser.LoadComboxIndex(fileListMode);
             ConfigParser.LoadComboxIndex(taskMode);
+            // Quick Convert
             ConfigParser.LoadComboxIndex(containers);
             ConfigParser.LoadComboxIndex(encVidCodec);
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadComboxIndex(encSubCodec);
             ConfigParser.LoadComboxIndex(metaMode);
+            // Av1an
+            ConfigParser.LoadComboxIndex(av1anContainer);
+            ConfigParser.LoadComboxIndex(av1anCodec);
+            ConfigParser.LoadComboxIndex(av1anAudCodec);
         }
 
         void SaveUiConfig(object sender = null, EventArgs e = null)
@@ -104,11 +110,16 @@ namespace Nmkoder.Forms
 
             ConfigParser.SaveComboxIndex(fileListMode);
             ConfigParser.SaveComboxIndex(taskMode);
+            // Quick Convert
             ConfigParser.SaveComboxIndex(containers);
             ConfigParser.SaveComboxIndex(encVidCodec);
             ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveComboxIndex(encSubCodec);
             ConfigParser.SaveComboxIndex(metaMode);
+            // Av1an
+            ConfigParser.SaveComboxIndex(av1anContainer);
+            ConfigParser.SaveComboxIndex(av1anCodec);
+            ConfigParser.SaveComboxIndex(av1anAudCodec);
         }
 
         public bool IsInFocus() { return (ActiveForm == this); }
@@ -152,6 +163,9 @@ namespace Nmkoder.Forms
             if(tabList.SelectedPage == quickConvertPage)
                 return RunTask.TaskType.Convert;
 
+            if (tabList.SelectedPage == av1anPage)
+                return RunTask.TaskType.Av1an;
+
             if (tabList.SelectedPage == utilsPage)
                 return GetUtilsTaskType();
 
@@ -181,18 +195,6 @@ namespace Nmkoder.Forms
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             MediaInfo.HandleFiles(files, true);
-        }
-
-        private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SaveUiConfig();
-            QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);
-        }
-
-        private void containers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SaveUiConfig();
-            QuickConvertUi.ValidateContainer();
         }
 
         public void runBtn_Click(object sender = null, EventArgs e = null)
@@ -237,7 +239,7 @@ namespace Nmkoder.Forms
         private void tabList_SelectedIndexChanged(object sender, EventArgs e)
         {
             var sel = tabList.SelectedPage;
-            runBtn.Enabled = sel == quickConvertPage || sel == utilsPage;
+            runBtn.Enabled = sel == quickConvertPage || sel == utilsPage || sel == av1anPage;
 
             if (sel == fileListPage)
                 RefreshFileListUi();

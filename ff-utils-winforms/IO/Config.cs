@@ -279,7 +279,7 @@ namespace Nmkoder.IO
             cmdDebugMode,
             metaMode,
             mp4Faststart,
-            svtAv1KeyIntSecs
+            av1KeyIntSecs
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Nmkoder.UI
         public static void ClearCurrentFile()
         {
             current = null;
-            Program.mainForm.outputBox.Text = "";
+            Program.mainForm.ffmpegOutputBox.Text = "";
             Program.mainForm.streamListBox.Items.Clear();
             Program.mainForm.streamDetailsBox.Text = "";
             Program.mainForm.formatInfoLabel.Text = "";
@@ -81,9 +81,10 @@ namespace Nmkoder.UI
             Program.mainForm.streamListBox.Items.Clear();
             await AddStreamsToList(current, switchToTrackList);
 
-            Program.mainForm.outputBox.Text = current.SourcePath;
-            QuickConvertUi.ValidatePath();
-            QuickConvertUi.InitFile();
+            //QuickConvertUi.ValidatePath();
+            QuickConvertUi.InitFile(current.SourcePath);
+            //Av1anUi.ValidatePath();
+            Av1anUi.InitFile(current.SourcePath);
 
             if (generateThumbs)
                 Task.Run(() => ThumbnailView.GenerateThumbs(mediaFile.SourcePath)); // Generate thumbs in background

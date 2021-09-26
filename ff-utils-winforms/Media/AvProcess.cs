@@ -5,6 +5,7 @@ using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.OS;
 using Nmkoder.UI;
+using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Diagnostics;
@@ -21,7 +22,8 @@ namespace Nmkoder.Media
         public enum TaskType { ExtractFrames, ExtractOther, Encode, GetInfo, Merge, Other };
         public static TaskType lastTask = TaskType.Other;
 
-        public static string lastOutputFfmpeg;
+        public static string lastOutputAv1an;
+        public static string lastTempDirAv1an;
 
         public enum LogMode { Visible, OnlyLastLine, Hidden }
         public static LogMode currentLogMode;
@@ -43,6 +45,8 @@ namespace Nmkoder.Media
             }
         }
 
+        #region FFmpeg
+
         public static async Task RunFfmpeg(string args, LogMode logMode, TaskType taskType = TaskType.Other, bool progressBar = false)
         {
             await RunFfmpeg(args, "", logMode, defLogLevel, taskType, progressBar);
@@ -61,7 +65,7 @@ namespace Nmkoder.Media
         public static async Task RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, TaskType taskType = TaskType.Other, bool progressBar = false)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
-            lastOutputFfmpeg = "";
+            lastOutputAv1an = "";
             currentLogMode = logMode;
             showProgressBar = progressBar;
             Process ffmpeg = OsUtils.NewProcess(!show);
@@ -109,18 +113,18 @@ namespace Nmkoder.Media
         {
             timeSinceLastOutput.Restart();
             if (Program.busy) setBusy = false;
-            lastOutputFfmpeg = "";
+            lastOutputAv1an = "";
             showProgressBar = progressBar;
             Process ffmpeg = OsUtils.NewProcess(true);
             lastAvProcess = ffmpeg;
             ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe -hide_banner -y -stats {args}";
             Logger.Log($"ffmpeg {args}", true, false, "ffmpeg");
             if (setBusy) Program.mainForm.SetWorking(true);
-            lastOutputFfmpeg = await OsUtils.GetOutputAsync(ffmpeg);
+            lastOutputAv1an = await OsUtils.GetOutputAsync(ffmpeg);
             while (!ffmpeg.HasExited) await Task.Delay(50);
             while (timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
             if (setBusy) Program.mainForm.SetWorking(false);
-            return lastOutputFfmpeg;
+            return lastOutputAv1an;
         }
 
         public static string GetFfprobeOutput(string args)
@@ -161,6 +165,65 @@ namespace Nmkoder.Media
                 Logger.Log($"Failed to get ffmpeg progress: {e.Message}", true);
             }
         }
+
+        #endregion
+
+        #region av1an
+
+        public static async Task RunAv1an(string args, LogMode logMode, bool progressBar = false)
+        {
+            await RunAv1an(args, "", logMode, progressBar);
+        }
+
+        public static async Task RunAv1an(string args, string workingDir, LogMode logMode, bool progressBar = false)
+        {
+            string dir = Path.Combine(GetDir(), "av1an");
+            IoUtils.TryDeleteIfExists(Paths.GetAv1anTempPath());
+            string tempDir = Path.Combine(Paths.GetAv1anTempPath(), ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString());
+            Directory.CreateDirectory(tempDir);
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            lastTempDirAv1an = tempDir;
+            lastOutputAv1an = "";
+            currentLogMode = logMode;
+            showProgressBar = progressBar;
+            Process av1an = OsUtils.NewProcess(!show);
+            timeSinceLastOutput.Restart();
+            lastAvProcess = av1an;
+
+            string beforeArgs = $"--temp {tempDir.Wrap()}";
+
+            av1an.StartInfo.Arguments = $"{GetCmdArg()} cd /D {dir.Wrap()} & av1an.exe {beforeArgs} {args}";
+
+            if (logMode != LogMode.Hidden) Logger.Log("Running av1an...", false);
+            Logger.Log($"av1an {beforeArgs} {args}", true, false, "av1an");
+
+            if (!show)
+            {
+                av1an.OutputDataReceived += (sender, outLine) => { Av1anOutputHandler.LogOutput(outLine.Data, "av1an", showProgressBar); };
+                av1an.ErrorDataReceived += (sender, outLine) => { Av1anOutputHandler.LogOutput(outLine.Data, "av1an", showProgressBar); };
+            }
+
+            Task.Run(() => Av1anOutputHandler.ParseProgressLoop());
+            av1an.Start();
+            av1an.PriorityClass = ProcessPriorityClass.BelowNormal;
+
+            if (!show)
+            {
+                av1an.BeginOutputReadLine();
+                av1an.BeginErrorReadLine();
+            }
+
+            while (!av1an.HasExited)
+                await Task.Delay(1);
+
+            if (progressBar)
+                Program.mainForm.SetProgress(0);
+
+            //if (Directory.Exists(tempDir))
+            //    Av1anUi.AskDeleteTempFolder(tempDir);
+        }
+
+        #endregion
 
         static string GetDir()
         {

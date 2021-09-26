@@ -334,7 +334,6 @@ namespace Nmkoder.UI.Tasks
             DataGridView grid = Program.mainForm.metaGrid;
             int defaultAudio = Program.mainForm.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = Program.mainForm.trackListDefaultSubsBox.SelectedIndex - 1;
-            Logger.Log($"Default Audio Stream: #{defaultAudio} - Default Subtitle Stream: #{defaultSubs}");
             List<string> args = new List<string>();
 
             foreach (DataGridViewRow row in grid.Rows)

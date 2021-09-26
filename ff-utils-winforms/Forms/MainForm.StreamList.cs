@@ -70,7 +70,7 @@ namespace Nmkoder.Forms
             List<MediaStreamListEntry> a = streamList.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).ToList();
             List<MediaStreamListEntry> s = streamList.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Subtitle).ToList();
 
-            trackListDefaultAudio.Enabled = a != null && v.Count > 0;
+            trackListDefaultAudio.Enabled = a != null && a.Count > 0;
             trackListDefaultSubs.Enabled = s != null && s.Count > 0;
 
             trackListDefaultAudio.Items.Clear();

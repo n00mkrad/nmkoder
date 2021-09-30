@@ -18,6 +18,7 @@ using Nmkoder.UI.Tasks;
 using Nmkoder.Main;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
+using Nmkoder.Utils;
 
 namespace Nmkoder.Forms
 {
@@ -84,6 +85,7 @@ namespace Nmkoder.Forms
             encVidCodec_SelectedIndexChanged(null, null);
             encAudioCodec_SelectedIndexChanged(null, null);
             encSubCodec_SelectedIndexChanged(null, null);
+            av1anAudCodec_SelectedIndexChanged(null, null);
             initialized = true;
         }
 
@@ -97,10 +99,8 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadComboxIndex(encSubCodec);
             ConfigParser.LoadComboxIndex(metaMode);
-            // Av1an
-            ConfigParser.LoadComboxIndex(av1anContainer);
-            ConfigParser.LoadComboxIndex(av1anCodec);
-            ConfigParser.LoadComboxIndex(av1anAudCodec);
+
+            LoadConfigAv1an();
         }
 
         void SaveUiConfig(object sender = null, EventArgs e = null)
@@ -116,10 +116,6 @@ namespace Nmkoder.Forms
             ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveComboxIndex(encSubCodec);
             ConfigParser.SaveComboxIndex(metaMode);
-            // Av1an
-            ConfigParser.SaveComboxIndex(av1anContainer);
-            ConfigParser.SaveComboxIndex(av1anCodec);
-            ConfigParser.SaveComboxIndex(av1anAudCodec);
         }
 
         public bool IsInFocus() { return (ActiveForm == this); }
@@ -289,114 +285,5 @@ namespace Nmkoder.Forms
         }
 
         #endregion
-
-        //async Task ExtractFrames(string[] files)
-        //{
-        //    if (extractFramesTabcontrol.SelectedIndex == 0)
-        //    {
-        //        foreach (string file in files)
-        //            await FFmpegCommands.VideoToFrames(file, tonemapHdrCbox2.Checked, extractAllDelSrcCbox.Checked);
-        //    }
-        //    if (extractFramesTabcontrol.SelectedIndex == 1)
-        //    {
-        //        int frameNum = frameNumTbox.GetInt();
-        //        foreach (string file in files)
-        //            await FFmpegCommands.ExtractSingleFrame(file, frameNum, tonemapHdrCbox2.Checked, extractSingleDelSrcCbox.Checked);
-        //    }
-        //}
-        //
-        //async Task FramesToVideo(string[] dirs)
-        //{
-        //    foreach (string dir in dirs)
-        //    {
-        //        if (!IOUtils.IsPathDirectory(dir))
-        //        {
-        //            Program.Print("Please drop a folder containing frames, not single files!");
-        //            continue;
-        //        }
-        //
-        //        string concatFile = Path.Combine(IOUtils.GetTempPath(), "concat-temp.ini");
-        //        string[] paths = IOUtils.GetFilesSorted(dir);
-        //        string concatFileContent = "";
-        //        foreach (string path in paths)
-        //            concatFileContent += $"file '{path}'\n";
-        //        File.WriteAllText(concatFile, concatFileContent);
-        //
-        //        if (createVidTabControl.SelectedTab == framesToVidTab) // Create MP4
-        //        {
-        //            bool h265 = createMp4Enc.SelectedIndex == 1;
-        //            int crf = createMp4Crf.GetInt();
-        //            float fps = createMp4Fps.GetFloat();
-        //            await FFmpegCommands.FramesToMp4Concat(concatFile, dir + ".mp4", h265, crf, fps);
-        //        }
-        //        if (createVidTabControl.SelectedTab == framesToGifTab) // Create GIF
-        //        {
-        //            bool optimize = createGifOpti.Checked;
-        //            float fps = createGifFps.GetFloat();
-        //            await FFmpegCommands.FramesToGifConcat(concatFile, dir + ".gif", optimize, fps);
-        //        }
-        //        if (createVidTabControl.SelectedTab == framesToApngTab) // Create APNG
-        //        {
-        //            bool optimize = createApngOpti.Checked;
-        //            float fps = createApngFps.GetFloat();
-        //            await FFmpegCommands.FramesToApngConcat(concatFile, dir + ".png", optimize, fps);
-        //        }
-        //
-        //        //await Task.Delay(10);
-        //    }
-        //}
-        //
-        //async Task Loop(string[] files)
-        //{
-        //    if (loopTabControl.SelectedIndex == 0) // Lossless
-        //    {
-        //        int times = loopTimesLossless.GetInt();
-        //        foreach (string file in files)
-        //            await FFmpegCommands.LoopVideo(file, times, false);
-        //    }
-        //}
-        //
-        //async Task Encode(string[] files)
-        //{
-        //    foreach (string file in files)
-        //    {
-        //        if(encodeTabControl.SelectedTab == encVidTab)
-        //            EncodeTabHelper.Encode(file, encContainer, encVidCodec, encFpsBox, encAudCodec, encAudioCh, encVidCrf, encAudBitrate, encDelSrc);
-        //        if (encodeTabControl.SelectedTab == encGifTab)
-        //            EncodeTabHelper.VideoToGif(file, vidToGifOptimize, vidToGifFps);
-        //        if (encodeTabControl.SelectedTab == encApngTab)
-        //            EncodeTabHelper.VideoToApng(file, vidToApngOptimize, vidToApngFps);
-        //    }
-        //
-        //}
-        //
-        //
-        //async Task ChangeSpeed(string[] files)
-        //{
-        //    if (speedTabControl.SelectedIndex == 0) // Lossless
-        //    {
-        //        int times = changeSpeedCombox.GetInt();
-        //        foreach (string file in files)
-        //            await FFmpegCommands.ChangeSpeed(file, times, changeSpeedAudio.Checked);
-        //    }
-        //}
-        //
-        //async Task CreateComparison(string[] files)
-        //{
-        //    if (files.Length < 2)
-        //    {
-        //        Program.Print("Please drop two video files!");
-        //        return;
-        //    }
-        //
-        //    await ComparisonHelper.CreateComparison(files, comparisonLayout.SelectedIndex == 1, comparisonType.SelectedIndex == 1, comparisonCrf.GetInt());
-        //}
-        //
-        //async Task Delay(string[] files)
-        //{
-        //    FFmpegCommands.Track track = (delayTrackCombox.SelectedIndex == 0) ? FFmpegCommands.Track.Audio : FFmpegCommands.Track.Video;
-        //    foreach (string file in files)
-        //        await FFmpegCommands.Delay(file, track, delayAmount.Text.GetFloat(), false);
-        //}
     }
 }

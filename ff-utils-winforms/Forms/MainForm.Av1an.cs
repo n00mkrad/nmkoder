@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Extensions;
+using Nmkoder.IO;
 using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
@@ -23,6 +24,7 @@ namespace Nmkoder.Forms
         public TextBox av1anScaleBoxW { get { return av1anScaleW; } }
         public TextBox av1anScaleBoxH { get { return av1anScaleH; } }
         public ComboBox av1anCropBox { get { return av1anCrop; } }
+        public TextBox av1anCustomEncArgsBox { get { return av1anCustomEncArgs; } }
 
 
         public ComboBox av1anAudCodecBox { get { return av1anAudCodec; } }
@@ -31,6 +33,10 @@ namespace Nmkoder.Forms
 
         public TextBox av1anOutputPathBox { get { return av1anOutputPath; } }
         public TextBox av1anCustomArgsBox { get { return av1anCustomArgs; } }
+
+        public ComboBox av1anOptsSplitModeBox { get { return av1anOptsSplitMode; } }
+        public ComboBox av1anOptsChunkModeBox { get { return av1anOptsChunkMode; } }
+        public NumericUpDown av1anOptsWorkerCountUpDown { get { return av1anOptsWorkerCount; } }
 
         private void av1anCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -56,8 +62,35 @@ namespace Nmkoder.Forms
 
         private void av1anContainer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveUiConfig();
+            SaveConfigAv1an();
             QuickConvertUi.ValidateContainer();
+        }
+
+        public void LoadConfigAv1an ()
+        {
+            ConfigParser.LoadComboxIndex(av1anContainer);
+            ConfigParser.LoadComboxIndex(av1anCodec);
+            ConfigParser.LoadComboxIndex(av1anAudCodec);
+            ConfigParser.LoadComboxIndex(av1anOptsChunkMode);
+            ConfigParser.LoadGuiElement(av1anOptsWorkerCount, false);
+        }
+
+        public void SaveConfigAv1an (object sender = null, EventArgs e = null)
+        {
+            if (!initialized)
+                return;
+
+            ConfigParser.SaveComboxIndex(av1anContainer);
+            ConfigParser.SaveComboxIndex(av1anCodec);
+            ConfigParser.SaveComboxIndex(av1anAudCodec);
+            ConfigParser.SaveComboxIndex(av1anOptsChunkMode);
+            ConfigParser.SaveGuiElement(av1anOptsWorkerCount);
+        }
+
+        private void av1anAudCodec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveConfigAv1an();
+            Av1anUi.AudEncoderSelected(av1anAudCodec.SelectedIndex);
         }
     }
 }

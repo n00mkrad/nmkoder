@@ -109,6 +109,8 @@
             this.av1anContainer = new System.Windows.Forms.ComboBox();
             this.av1anTabControl = new HTAlt.WinForms.HTTabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.av1anCustomEncArgs = new System.Windows.Forms.TextBox();
+            this.label36 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.av1anFps = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -137,6 +139,13 @@
             this.av1anAudCodec = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.av1anOptsWorkerCount = new System.Windows.Forms.NumericUpDown();
+            this.label35 = new System.Windows.Forms.Label();
+            this.av1anOptsChunkMode = new System.Windows.Forms.ComboBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.av1anOptsSplitMode = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
@@ -193,6 +202,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).BeginInit();
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
@@ -1229,6 +1240,7 @@
             this.av1anTabControl.BorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.av1anTabControl.Controls.Add(this.tabPage3);
             this.av1anTabControl.Controls.Add(this.tabPage4);
+            this.av1anTabControl.Controls.Add(this.tabPage5);
             this.av1anTabControl.DisableClose = true;
             this.av1anTabControl.DisableDragging = true;
             this.av1anTabControl.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1253,6 +1265,8 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage3.Controls.Add(this.av1anCustomEncArgs);
+            this.tabPage3.Controls.Add(this.label36);
             this.tabPage3.Controls.Add(this.label9);
             this.tabPage3.Controls.Add(this.av1anFps);
             this.tabPage3.Controls.Add(this.label19);
@@ -1280,6 +1294,28 @@
             this.tabPage3.Size = new System.Drawing.Size(668, 288);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Video";
+            // 
+            // av1anCustomEncArgs
+            // 
+            this.av1anCustomEncArgs.AllowDrop = true;
+            this.av1anCustomEncArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anCustomEncArgs.ForeColor = System.Drawing.Color.White;
+            this.av1anCustomEncArgs.Location = new System.Drawing.Point(220, 217);
+            this.av1anCustomEncArgs.MinimumSize = new System.Drawing.Size(4, 21);
+            this.av1anCustomEncArgs.Name = "av1anCustomEncArgs";
+            this.av1anCustomEncArgs.Size = new System.Drawing.Size(250, 23);
+            this.av1anCustomEncArgs.TabIndex = 69;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.ForeColor = System.Drawing.Color.White;
+            this.label36.Location = new System.Drawing.Point(7, 220);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(157, 15);
+            this.label36.TabIndex = 68;
+            this.label36.Text = "Custom Encoder Arguments";
             // 
             // label9
             // 
@@ -1605,6 +1641,7 @@
             this.av1anAudCodec.Name = "av1anAudCodec";
             this.av1anAudCodec.Size = new System.Drawing.Size(250, 23);
             this.av1anAudCodec.TabIndex = 49;
+            this.av1anAudCodec.SelectedIndexChanged += new System.EventHandler(this.av1anAudCodec_SelectedIndexChanged);
             // 
             // label28
             // 
@@ -1627,6 +1664,102 @@
             this.label31.Size = new System.Drawing.Size(98, 15);
             this.label31.TabIndex = 47;
             this.label31.Text = "Codec (Encoder):";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage5.Controls.Add(this.av1anOptsWorkerCount);
+            this.tabPage5.Controls.Add(this.label35);
+            this.tabPage5.Controls.Add(this.av1anOptsChunkMode);
+            this.tabPage5.Controls.Add(this.label34);
+            this.tabPage5.Controls.Add(this.av1anOptsSplitMode);
+            this.tabPage5.Controls.Add(this.label32);
+            this.tabPage5.Location = new System.Drawing.Point(4, 27);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(668, 288);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "Av1an Options";
+            // 
+            // av1anOptsWorkerCount
+            // 
+            this.av1anOptsWorkerCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsWorkerCount.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 70);
+            this.av1anOptsWorkerCount.Maximum = new decimal(new int[] {
+            48,
+            0,
+            0,
+            0});
+            this.av1anOptsWorkerCount.Name = "av1anOptsWorkerCount";
+            this.av1anOptsWorkerCount.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsWorkerCount.TabIndex = 53;
+            this.toolTip.SetToolTip(this.av1anOptsWorkerCount, "Set the video quality level (CRF/CQ)");
+            this.av1anOptsWorkerCount.ValueChanged += new System.EventHandler(this.SaveConfigAv1an);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.ForeColor = System.Drawing.Color.White;
+            this.label35.Location = new System.Drawing.Point(7, 70);
+            this.label35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(113, 15);
+            this.label35.TabIndex = 50;
+            this.label35.Text = "Amount Of Workers";
+            // 
+            // av1anOptsChunkMode
+            // 
+            this.av1anOptsChunkMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsChunkMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsChunkMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsChunkMode.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsChunkMode.FormattingEnabled = true;
+            this.av1anOptsChunkMode.Location = new System.Drawing.Point(220, 37);
+            this.av1anOptsChunkMode.Name = "av1anOptsChunkMode";
+            this.av1anOptsChunkMode.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsChunkMode.TabIndex = 49;
+            this.toolTip.SetToolTip(this.av1anOptsChunkMode, "Select which video codec and encoder to use.");
+            this.av1anOptsChunkMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.ForeColor = System.Drawing.Color.White;
+            this.label34.Location = new System.Drawing.Point(5, 40);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(148, 15);
+            this.label34.TabIndex = 48;
+            this.label34.Text = "Chunk Generation Method";
+            // 
+            // av1anOptsSplitMode
+            // 
+            this.av1anOptsSplitMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsSplitMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsSplitMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsSplitMode.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsSplitMode.FormattingEnabled = true;
+            this.av1anOptsSplitMode.Items.AddRange(new object[] {
+            "None",
+            "Scene Detection"});
+            this.av1anOptsSplitMode.Location = new System.Drawing.Point(220, 7);
+            this.av1anOptsSplitMode.Name = "av1anOptsSplitMode";
+            this.av1anOptsSplitMode.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsSplitMode.TabIndex = 47;
+            this.toolTip.SetToolTip(this.av1anOptsSplitMode, "Select which video codec and encoder to use.");
+            this.av1anOptsSplitMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.ForeColor = System.Drawing.Color.White;
+            this.label32.Location = new System.Drawing.Point(5, 10);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(96, 15);
+            this.label32.TabIndex = 46;
+            this.label32.Text = "Splitting Method";
             // 
             // utilsPage
             // 
@@ -2155,6 +2288,9 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).EndInit();
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
@@ -2318,6 +2454,15 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox av1anFps;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.ComboBox av1anOptsChunkMode;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.ComboBox av1anOptsSplitMode;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.NumericUpDown av1anOptsWorkerCount;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox av1anCustomEncArgs;
+        private System.Windows.Forms.Label label36;
     }
 }
 

@@ -96,7 +96,7 @@ namespace Nmkoder.UI.Tasks
             CodecInfo info = Codecs.GetCodecInfo(c);
 
             Program.mainForm.encAudCh.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
-            Program.mainForm.encAudBr.Enabled = info.QDefault >= 0;
+            Program.mainForm.encAudQualUpDown.Enabled = info.QDefault >= 0;
             LoadAudBitrate(info);
             ValidateContainer();
         }
@@ -148,10 +148,18 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadAudBitrate(CodecInfo info)
         {
+            int channels = form.encAudCh.Text.Split(' ')[0].GetInt();
+
             if (info.QDefault >= 0)
-                form.encAudBr.Text = info.QDefault.ToString();
+            {
+                form.encAudQualUpDown.Value = (info.QDefault * MiscUtils.GetAudioBitrateMultiplier(channels)).RoundToInt();
+                form.encAudQualUpDown.Text = form.encAudQualUpDown.Value.ToString();
+            }
             else
-                form.encAudBr.Text = "";
+            {
+                form.encAudQualUpDown.Value = 0;
+                form.encAudQualUpDown.Text = "";
+            }
         }
 
         #endregion
@@ -227,7 +235,7 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetAudioArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("bitrate", form.encAudBr.Text.ToLower());
+            dict.Add("bitrate", form.encAudQualUpDown.Text.ToLower());
             dict.Add("ac", form.encAudCh.Text.Split(' ')[0].Trim());
             return dict;
         }
@@ -238,7 +246,6 @@ namespace Nmkoder.UI.Tasks
         {
             if (ch == null || ch < 1)
             {
-                Logger.Log($"InitAudioChannels: ch is null or < 1 - returning", true);
                 form.encAudCh.SelectedIndex = 1;
                 return;
             }
@@ -299,20 +306,20 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Add($"File", MediaInfo.current.Title, MediaInfo.current.Language);
 
-            List<VideoStream> vStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
-            List<AudioStream> aStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
-            List<SubtitleStream> sStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
+            var checkStreamEntries = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
+            List<VideoStream> vStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
+
+            List<AudioStream> aStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
+            
+            List<SubtitleStream> sStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
 
             for (int i = 0; i < vStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(vStreams[i].Index))
                     grid.Rows.Add($"Video Track {i + 1}", vStreams[i].Title, vStreams[i].Language);
 
             for (int i = 0; i < aStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(aStreams[i].Index))
                     grid.Rows.Add($"Audio Track {i + 1}", aStreams[i].Title, aStreams[i].Language);
 
             for (int i = 0; i < sStreams.Count; i++)
-                if (Program.mainForm.streamListBox.GetItemChecked(sStreams[i].Index))
                     grid.Rows.Add($"Subtitle Track {i + 1}", sStreams[i].Title, sStreams[i].Language);
 
             grid.Columns[0].ReadOnly = true;
@@ -396,7 +403,7 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string filename = MediaInfo.current.TruePath.Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
+                string filename = FormatUtils.GetFilterPath(MediaInfo.current.TruePath);
                 filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
 

@@ -14,6 +14,7 @@ namespace Nmkoder.Media
     class Av1anOutputHandler
     {
         static int currentQueueSize;
+        public static Task currentLogReaderTask;
 
         public static void LogOutput(string line, string logFilename, bool showProgressBar)
         {
@@ -65,14 +66,23 @@ namespace Nmkoder.Media
         public static async Task ParseProgressLoop()
         {
             string dir = AvProcess.lastTempDirAv1an;
-
             string logFile = Path.Combine(dir, "log.log");
 
+            await Task.Delay(3000);
+
             while (!File.Exists(logFile))
-                await Task.Delay(1000);
+            {
+                for (int i = 100; i > 0; i--)
+                {
+                    if (!Program.busy) return;
+                    await Task.Delay(10);
+                }
+            }
 
             while (File.Exists(logFile))
             {
+                if (!Program.busy) return;
+
                 try
                 {
                     var stream = File.Open(logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -83,12 +93,23 @@ namespace Nmkoder.Media
                     int ratio = FormatUtils.RatioInt(encodedChunks, currentQueueSize);
                     Program.mainForm.SetProgress(ratio);
                     Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).", false, Logger.GetLastLine().Contains("Encoded"));
-                    await Task.Delay(2000);
+
+                    for (int i = 100; i > 0; i--)
+                    {
+                        if (!Program.busy) return;
+                        await Task.Delay(10);
+                    }
                 }
                 catch (Exception e)
                 {
                     Logger.Log($"Failed to get av1an progress from log file: {e.Message}\n{e.StackTrace}", true);
-                    await Task.Delay(1000);
+
+
+                    for (int i = 100; i > 0; i--)
+                    {
+                        if (!Program.busy) return;
+                        await Task.Delay(10);
+                    }
                 }
             }
         }

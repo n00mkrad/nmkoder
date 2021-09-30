@@ -100,35 +100,35 @@ namespace Nmkoder.Data
             return new CodecArgs();
         }
 
-        public static CodecArgs GetArgs(Av1anCodec c, Dictionary<string, string> encArgs, MediaFile mediaFile = null)
+        public static CodecArgs GetArgs(Av1anCodec c, Dictionary<string, string> encArgs, bool vmaf, string custom = "", MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
 
             if (c == Av1anCodec.AomAv1)
             {
-                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
-                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.SvtAv1)
             {
-                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
-                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.VpxVp9)
             {
-                string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
-                return new CodecArgs($" -e vpx --force -v \"  \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e vpx --force -v \" --cpu-used={preset} {custom} \" --pix-format {pixFmt}");
             }
 
             return new CodecArgs();
@@ -361,13 +361,13 @@ namespace Nmkoder.Data
             if (c == AudioCodec.Aac)
             {
                 string frName = "AAC (Advanced Audio Coding)";
-                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 128 };
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 144 };
             }
 
             if (c == AudioCodec.Opus)
             {
                 string frName = "Opus";
-                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 96 };
+                return new CodecInfo { Name = c.ToString(), FriendlyName = frName, QDefault = 128 };
             }
 
             if (c == AudioCodec.Mp3)

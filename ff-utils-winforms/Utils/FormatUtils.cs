@@ -196,5 +196,10 @@ namespace Nmkoder.Utils
             else
                 return codec.ToTitleCase();
         }
+
+        public static string GetFilterPath(string path)
+        {
+            return path.Replace("/", @"\").Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
+        }
     }
 }

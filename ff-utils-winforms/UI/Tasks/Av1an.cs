@@ -13,6 +13,7 @@ namespace Nmkoder.UI.Tasks
     class Av1an
     {
         public enum QualityMode { Crf, TargetVmaf }
+        public enum ChunkMethod { Hybrid, Lsmash, Ffms2, Segment, Select }
 
         public static void Init()
         {
@@ -28,16 +29,29 @@ namespace Nmkoder.UI.Tasks
             {
                 Codecs.Av1anCodec vCodec = GetCurrentCodecV();
                 Codecs.AudioCodec aCodec = GetCurrentCodecA();
+                bool vmaf = IsUsingVmaf();
                 string inPath = MediaInfo.current.TruePath;
                 string outPath = GetOutPath();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), MediaInfo.current);
-                string v = codecArgs.Arguments;
-                string vf = await GetVideoFilterArgs(vCodec, codecArgs);
-                string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
                 string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
-                string muxing = GetMuxingArgsFromUi();
+                string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
+                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), vmaf, custEnc, MediaInfo.current);
+                string v = codecArgs.Arguments;
+                string vf = await GetVideoFilterArgs(codecArgs);
+                string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
+                string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
+                string sm = GetSplittingMethod();
+                string cm = GetChunkGenMethod();
                 IoUtils.TryDeleteIfExists(outPath);
-                args = $"-i {inPath.Wrap()} {v} -f \" {vf} \" -a \" {a} \" {cust} -o {outPath.Wrap()} -w 4";
+
+                args = $"--verbose -i {inPath.Wrap()} --split-method {sm} -m {cm} {v} -f \" {vf} \" -a \" {a} \" {cust} -o {outPath.Wrap()} -w {w}";
+
+                if (vmaf)
+                {
+                    int q = (int)Program.mainForm.av1anQualityUpDown.Value;
+                    string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
+                    args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
+                }
+               
                 Logger.Log("av1an " + args);
             }
             catch (Exception e)
@@ -51,6 +65,11 @@ namespace Nmkoder.UI.Tasks
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);
 
             Program.mainForm.SetWorking(false);
+        }
+
+        public static int GetDefaultWorkerCount ()
+        {
+            return (int)Math.Ceiling((double)Environment.ProcessorCount * 0.4f);
         }
     }
 }

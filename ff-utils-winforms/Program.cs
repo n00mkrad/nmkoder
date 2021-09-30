@@ -28,7 +28,6 @@ namespace Nmkoder
             Application.SetCompatibleTextRenderingDefault(false);
             Console.WriteLine(Environment.CurrentDirectory);
             Application.Run(new MainForm());
-            
         }
     }
 }

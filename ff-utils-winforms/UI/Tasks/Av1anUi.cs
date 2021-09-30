@@ -32,20 +32,31 @@ namespace Nmkoder.UI.Tasks
 
             ConfigParser.LoadComboxIndex(form.av1anCodecBox);
 
+
             foreach (Av1an.QualityMode qm in Enum.GetValues(typeof(Av1an.QualityMode)))  // Load quality modes
                 form.av1anQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetVmaf", "Target VMAF"));
 
-            ConfigParser.LoadComboxIndex(form.av1anQualModeBox);
+            form.av1anQualModeBox.SelectedIndex = 0;
 
-            // foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
-            //     form.encAudEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
-            // 
-            // ConfigParser.LoadComboxIndex(form.encAudEnc);
+
+            form.av1anOptsSplitModeBox.SelectedIndex = 1;
+
+
+            foreach (Av1an.ChunkMethod cm in Enum.GetValues(typeof(Av1an.ChunkMethod)))  // Load chunk modes
+                form.av1anOptsChunkModeBox.Items.Add(cm);
+
+
+            foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
+                form.av1anAudCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+            
+            ConfigParser.LoadComboxIndex(form.av1anAudCodecBox);
+
+
+            form.av1anAudChannelsBox.SelectedIndex = 1;
+
 
             form.av1anContainerBox.Items.Add(Containers.Container.Mkv.ToString().ToUpper());
             form.av1anContainerBox.Items.Add(Containers.Container.Webm.ToString().ToUpper());
-
-            ConfigParser.LoadComboxIndex(form.av1anContainerBox);
         }
 
         public static void InitFile(string path)
@@ -72,15 +83,14 @@ namespace Nmkoder.UI.Tasks
         {
             if (ch == null || ch < 1)
             {
-                Logger.Log($"InitAudioChannels: ch is null or < 1 - returning", true);
-                form.encAudCh.SelectedIndex = 1;
+                form.av1anAudChannelsBox.SelectedIndex = 1;
                 return;
             }
 
-            for (int i = 0; i < form.encAudCh.Items.Count; i++)
+            for (int i = 0; i < form.av1anAudChannelsBox.Items.Count; i++)
             {
-                if (form.encAudCh.Items[i].ToString().Split(' ').First().GetInt() == ch)
-                    form.encAudCh.SelectedIndex = i;
+                if (form.av1anAudChannelsBox.Items[i].ToString().Split(' ').First().GetInt() == ch)
+                    form.av1anAudChannelsBox.SelectedIndex = i;
             }
         }
 
@@ -95,10 +105,40 @@ namespace Nmkoder.UI.Tasks
             LoadColorFormats(info);
         }
 
+        public static void AudEncoderSelected(int index)
+        {
+            Codecs.AudioCodec c = (Codecs.AudioCodec)index;
+            CodecInfo info = Codecs.GetCodecInfo(c);
+
+            Program.mainForm.av1anAudChannelsBox.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
+            Program.mainForm.av1anAudQualUpDown.Enabled = info.QDefault >= 0;
+            LoadAudBitrate(info);
+            ValidateContainer();
+        }
+
+        static void LoadAudBitrate(CodecInfo info)
+        {
+            int channels = form.av1anAudChannelsBox.Text.Split(' ')[0].GetInt();
+
+            if (info.QDefault >= 0)
+            {
+                form.av1anAudQualUpDown.Value = (info.QDefault * MiscUtils.GetAudioBitrateMultiplier(channels)).RoundToInt();
+                form.av1anAudQualUpDown.Text = form.av1anAudQualUpDown.Value.ToString();
+            }
+            else
+            {
+                form.av1anAudQualUpDown.Value = 0;
+                form.av1anAudQualUpDown.Text = "";
+            }
+        }
+
         #region Load Info After Selecting Encoder
 
         static void LoadQualityLevel(CodecInfo info)
         {
+            if (IsUsingVmaf())
+                return;
+
             if (info.QMax > 0)
                 form.av1anQualityUpDown.Maximum = info.QMax;
             else
@@ -171,13 +211,7 @@ namespace Nmkoder.UI.Tasks
 
         #region Get Args
 
-        public static string GetMuxingArgsFromUi()
-        {
-            Containers.Container c = (Containers.Container)Program.mainForm.ffmpegContainerBox.SelectedIndex;
-            return Containers.GetMuxingArgs(c);
-        }
-
-        public static async Task<string> GetVideoFilterArgs(Codecs.Av1anCodec vCodec, CodecArgs codecArgs = null)
+        public static async Task<string> GetVideoFilterArgs(CodecArgs codecArgs = null)
         {
             List<string> filters = new List<string>();
 
@@ -211,6 +245,28 @@ namespace Nmkoder.UI.Tasks
                 return $"-vf {string.Join(",", filters)}";
             else
                 return "";
+        }
+
+        public static string GetSplittingMethod()
+        {
+            if (Program.mainForm.av1anOptsSplitModeBox.SelectedIndex == 0)
+                return $"none";
+            else
+                return $"av-scenechange";
+        }
+
+        public static string GetChunkGenMethod()
+        {
+            switch (Program.mainForm.av1anOptsChunkModeBox.SelectedIndex)
+            {
+                case 0: return "hybrid";
+                case 1: return "lsmash";
+                case 3: return "ffms2";
+                case 4: return "segment";
+                case 5: return "select";
+            }
+
+            return "";
         }
 
         public static string GetOutPath()
@@ -265,6 +321,11 @@ namespace Nmkoder.UI.Tasks
 
             if (dialog == DialogResult.No)
                 IoUtils.TryDeleteIfExists(dir);
+        }
+
+        public static bool IsUsingVmaf ()
+        {
+            return Program.mainForm.av1anQualModeBox.SelectedIndex == 1;
         }
     }
 }

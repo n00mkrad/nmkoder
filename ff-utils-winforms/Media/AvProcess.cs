@@ -192,7 +192,16 @@ namespace Nmkoder.Media
 
             string beforeArgs = $"--temp {tempDir.Wrap()}";
 
-            av1an.StartInfo.Arguments = $"{GetCmdArg()} cd /D {dir.Wrap()} & av1an.exe {beforeArgs} {args}";
+            try
+            {
+                av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + @".\vsynth;";
+                av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + @".\enc;";
+                av1an.StartInfo.Arguments = $"{GetCmdArg()} cd /D {dir.Wrap()} & av1an.exe {beforeArgs} {args}";
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"{e.Message}");
+            }
 
             if (logMode != LogMode.Hidden) Logger.Log("Running av1an...", false);
             Logger.Log($"av1an {beforeArgs} {args}", true, false, "av1an");

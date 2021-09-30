@@ -3,6 +3,7 @@ using Nmkoder;
 using Nmkoder.Data;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -252,7 +253,7 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
-            //if (key == Key.mp4Faststart) Logger.Log($"WriteDefault(key, \"True\")");
+            if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
             if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
             if (key == Key.metaMode)                    return WriteDefault(key, "1");
 
@@ -276,6 +277,7 @@ namespace Nmkoder.IO
         public enum Key
         {
             autoCropSamples,
+            av1anOptsWorkerCount,
             cmdDebugMode,
             metaMode,
             mp4Faststart,

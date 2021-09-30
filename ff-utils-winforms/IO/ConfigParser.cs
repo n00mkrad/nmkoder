@@ -64,9 +64,12 @@ namespace Nmkoder.IO
 			checkbox.Checked = Config.GetBool(checkbox.Name);
 		}
 
-		public static void LoadGuiElement(NumericUpDown upDown)
+		public static void LoadGuiElement(NumericUpDown upDown, bool allowFloat = true)
 		{
-			upDown.Value = Convert.ToDecimal(Config.GetFloat(upDown.Name));
+			if(allowFloat)
+				upDown.Value = Convert.ToDecimal(Config.GetFloat(upDown.Name));
+			else
+				upDown.Value = Convert.ToDecimal(Config.GetInt(upDown.Name));
 		}
 
 		public static void LoadComboxIndex(ComboBox comboBox)

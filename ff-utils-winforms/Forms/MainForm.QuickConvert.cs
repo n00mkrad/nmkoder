@@ -36,7 +36,7 @@ namespace Nmkoder.Forms
         public ComboBox encCropModeBox { get { return encCropMode; } }
         // Quick Convert - Audio
         public ComboBox encAudEnc;
-        public NumericUpDown encAudBr;
+        public NumericUpDown encAudQualUpDown;
         public ComboBox encAudCh;
         // Quick Convert - Subs
         public ComboBox encSubEnc;
@@ -50,7 +50,7 @@ namespace Nmkoder.Forms
         public void InitQuickConvert ()
         {
             encAudEnc = encAudCodec;
-            encAudBr = encAudBitrate;
+            encAudQualUpDown = encAudBitrate;
             encAudCh = encAudChannels;
 
             encSubEnc = encSubCodec;

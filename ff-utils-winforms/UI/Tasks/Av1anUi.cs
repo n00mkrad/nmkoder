@@ -63,11 +63,11 @@ namespace Nmkoder.UI.Tasks
         {
             try
             {
-                Program.mainForm.av1anOutputPathBox.Text = path;
+                form.av1anOutputPathBox.Text = path;
 
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
-                    Program.mainForm.av1anScaleBoxW.Text = Program.mainForm.av1anScaleBoxH.Text = "";
+                    form.av1anScaleBoxW.Text = form.av1anScaleBoxH.Text = "";
                     InitAudioChannels(TrackList.current.AudioStreams.FirstOrDefault()?.Channels);
                 }
 
@@ -98,8 +98,11 @@ namespace Nmkoder.UI.Tasks
         {
             Codecs.Av1anCodec c = (Codecs.Av1anCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
-            Program.mainForm.qInfoLabel.Text = info.QInfo;
-            Program.mainForm.presetInfoLabel.Text = info.PInfo;
+            form.qInfoLabel.Text = info.QInfo;
+            form.presetInfoLabel.Text = info.PInfo;
+            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c != Codecs.Av1anCodec.VpxVp9; // Disable grain synth for VP9 since only AV1 has it
+            form.av1anGrainSynthDenoiseBox.Enabled = c == Codecs.Av1anCodec.AomAv1; // Only AOM has an option to enable or disable denoising...
+            form.av1anGrainSynthDenoiseBox.Checked = c == Codecs.Av1anCodec.SvtAv1; // ...SVT always has it enabled
             LoadQualityLevel(info);
             LoadPresets(info);
             LoadColorFormats(info);
@@ -110,8 +113,8 @@ namespace Nmkoder.UI.Tasks
             Codecs.AudioCodec c = (Codecs.AudioCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
 
-            Program.mainForm.av1anAudChannelsBox.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
-            Program.mainForm.av1anAudQualUpDown.Enabled = info.QDefault >= 0;
+            form.av1anAudChannelsBox.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
+            form.av1anAudQualUpDown.Enabled = info.QDefault >= 0;
             LoadAudBitrate(info);
             ValidateContainer();
         }
@@ -198,6 +201,8 @@ namespace Nmkoder.UI.Tasks
             dict.Add("q", form.av1anQualityUpDown.Value.ToString());
             dict.Add("preset", form.av1anPresetBox.Text.ToLower());
             dict.Add("pixFmt", form.av1anColorsBox.Text.ToLower());
+            dict.Add("grainSynthStrength", form.av1anGrainSynthStrengthUpDown.Value.ToString());
+            dict.Add("grainSynthDenoise", form.av1anGrainSynthDenoiseBox.Checked.ToString());
             return dict;
         }
 
@@ -230,13 +235,13 @@ namespace Nmkoder.UI.Tasks
             if ((vs.Resolution.Width % 2 != 0) || (vs.Resolution.Height % 2 != 0)) // Check Filter: Pad for mod2
                 filters.Add(FfmpegUtils.GetPadFilter(2));
 
-            string scaleW = Program.mainForm.av1anScaleBoxW.Text.Trim().ToLower();
-            string scaleH = Program.mainForm.av1anScaleBoxH.Text.Trim().ToLower();
+            string scaleW = form.av1anScaleBoxW.Text.Trim().ToLower();
+            string scaleH = form.av1anScaleBoxH.Text.Trim().ToLower();
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
-            if (Program.mainForm.av1anCropBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
+            if (form.av1anCropBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(false));
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
@@ -249,7 +254,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetSplittingMethod()
         {
-            if (Program.mainForm.av1anOptsSplitModeBox.SelectedIndex == 0)
+            if (form.av1anOptsSplitModeBox.SelectedIndex == 0)
                 return $"none";
             else
                 return $"av-scenechange";
@@ -257,7 +262,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetChunkGenMethod()
         {
-            switch (Program.mainForm.av1anOptsChunkModeBox.SelectedIndex)
+            switch (form.av1anOptsChunkModeBox.SelectedIndex)
             {
                 case 0: return "hybrid";
                 case 1: return "lsmash";
@@ -271,7 +276,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetOutPath()
         {
-            return Program.mainForm.av1anOutputPathBox.Text.Trim();
+            return form.av1anOutputPathBox.Text.Trim();
         }
 
         #endregion
@@ -296,7 +301,7 @@ namespace Nmkoder.UI.Tasks
 
             Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.av1anContainerBox.Text);
             string path = Path.ChangeExtension(form.av1anOutputPathBox.Text.Trim(), current.ToString().ToLower());
-            Program.mainForm.av1anOutputPathBox.Text = path;
+            form.av1anOutputPathBox.Text = path;
             ValidatePath();
         }
 
@@ -305,13 +310,13 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
-            if (File.Exists(Program.mainForm.av1anOutputPathBox.Text))
-                Program.mainForm.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.av1anOutputPathBox.Text);
+            if (File.Exists(form.av1anOutputPathBox.Text))
+                form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(form.av1anOutputPathBox.Text);
         }
 
         public static Fraction GetUiFps()
         {
-            TextBox fpsBox = Program.mainForm.av1anFpsBox;
+            TextBox fpsBox = form.av1anFpsBox;
             return MiscUtils.GetFpsFromString(fpsBox.Text);
         }
 
@@ -325,7 +330,7 @@ namespace Nmkoder.UI.Tasks
 
         public static bool IsUsingVmaf ()
         {
-            return Program.mainForm.av1anQualModeBox.SelectedIndex == 1;
+            return form.av1anQualModeBox.SelectedIndex == 1;
         }
     }
 }

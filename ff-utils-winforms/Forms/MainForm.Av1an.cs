@@ -25,6 +25,8 @@ namespace Nmkoder.Forms
         public TextBox av1anScaleBoxH { get { return av1anScaleH; } }
         public ComboBox av1anCropBox { get { return av1anCrop; } }
         public TextBox av1anCustomEncArgsBox { get { return av1anCustomEncArgs; } }
+        public NumericUpDown av1anGrainSynthStrengthUpDown { get { return av1anGrainSynthStrength; } }
+        public CheckBox av1anGrainSynthDenoiseBox { get { return av1anGrainSynthDenoise; } }
 
 
         public ComboBox av1anAudCodecBox { get { return av1anAudCodec; } }

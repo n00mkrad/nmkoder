@@ -180,6 +180,9 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
+            this.av1anGrainSynthStrength = new System.Windows.Forms.NumericUpDown();
+            this.av1anGrainSynthDenoise = new System.Windows.Forms.CheckBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -218,6 +221,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.dropLoadAddBg.SuspendLayout();
             this.dropLoadClearBg.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -1178,9 +1182,7 @@
             // 
             // av1anPage
             // 
-            this.av1anPage.Controls.Add(this.label8);
             this.av1anPage.Controls.Add(this.av1anOutputPath);
-            this.av1anPage.Controls.Add(this.av1anCustomArgs);
             this.av1anPage.Controls.Add(this.av1anContainer);
             this.av1anPage.Controls.Add(this.av1anTabControl);
             this.av1anPage.Name = "av1anPage";
@@ -1191,10 +1193,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(14, 331);
+            this.label8.Location = new System.Drawing.Point(5, 100);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 13);
+            this.label8.Size = new System.Drawing.Size(111, 15);
             this.label8.TabIndex = 57;
             this.label8.Text = "Custom Arguments";
             // 
@@ -1214,10 +1216,10 @@
             this.av1anCustomArgs.AllowDrop = true;
             this.av1anCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.av1anCustomArgs.Location = new System.Drawing.Point(227, 328);
+            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 97);
             this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomArgs.Name = "av1anCustomArgs";
-            this.av1anCustomArgs.Size = new System.Drawing.Size(335, 20);
+            this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
             this.av1anCustomArgs.TabIndex = 56;
             // 
             // av1anContainer
@@ -1253,7 +1255,7 @@
             this.av1anTabControl.SelectedIndex = 0;
             this.av1anTabControl.SelectedTabButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(151)))), ((int)(((byte)(234)))));
             this.av1anTabControl.SelectedTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.av1anTabControl.Size = new System.Drawing.Size(676, 319);
+            this.av1anTabControl.Size = new System.Drawing.Size(676, 349);
             this.av1anTabControl.TabIndex = 53;
             this.av1anTabControl.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.av1anTabControl.UnderBorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(67)))), ((int)(((byte)(70)))));
@@ -1265,6 +1267,9 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage3.Controls.Add(this.av1anGrainSynthDenoise);
+            this.tabPage3.Controls.Add(this.av1anGrainSynthStrength);
+            this.tabPage3.Controls.Add(this.label37);
             this.tabPage3.Controls.Add(this.av1anCustomEncArgs);
             this.tabPage3.Controls.Add(this.label36);
             this.tabPage3.Controls.Add(this.label9);
@@ -1291,7 +1296,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 27);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(668, 288);
+            this.tabPage3.Size = new System.Drawing.Size(668, 318);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Video";
             // 
@@ -1300,7 +1305,7 @@
             this.av1anCustomEncArgs.AllowDrop = true;
             this.av1anCustomEncArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anCustomEncArgs.ForeColor = System.Drawing.Color.White;
-            this.av1anCustomEncArgs.Location = new System.Drawing.Point(220, 217);
+            this.av1anCustomEncArgs.Location = new System.Drawing.Point(220, 247);
             this.av1anCustomEncArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomEncArgs.Name = "av1anCustomEncArgs";
             this.av1anCustomEncArgs.Size = new System.Drawing.Size(250, 23);
@@ -1310,7 +1315,7 @@
             // 
             this.label36.AutoSize = true;
             this.label36.ForeColor = System.Drawing.Color.White;
-            this.label36.Location = new System.Drawing.Point(7, 220);
+            this.label36.Location = new System.Drawing.Point(7, 250);
             this.label36.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(157, 15);
@@ -1321,7 +1326,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.ForeColor = System.Drawing.Color.Silver;
-            this.label9.Location = new System.Drawing.Point(477, 130);
+            this.label9.Location = new System.Drawing.Point(477, 160);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(138, 15);
@@ -1333,7 +1338,7 @@
             this.av1anFps.AllowDrop = true;
             this.av1anFps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anFps.ForeColor = System.Drawing.Color.White;
-            this.av1anFps.Location = new System.Drawing.Point(220, 127);
+            this.av1anFps.Location = new System.Drawing.Point(220, 157);
             this.av1anFps.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anFps.Name = "av1anFps";
             this.av1anFps.Size = new System.Drawing.Size(250, 23);
@@ -1345,7 +1350,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.ForeColor = System.Drawing.Color.White;
-            this.label19.Location = new System.Drawing.Point(7, 130);
+            this.label19.Location = new System.Drawing.Point(7, 160);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(69, 15);
@@ -1370,7 +1375,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.Color.Silver;
-            this.label12.Location = new System.Drawing.Point(477, 160);
+            this.label12.Location = new System.Drawing.Point(477, 190);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(138, 15);
@@ -1402,7 +1407,7 @@
             this.av1anScaleH.AllowDrop = true;
             this.av1anScaleH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anScaleH.ForeColor = System.Drawing.Color.White;
-            this.av1anScaleH.Location = new System.Drawing.Point(360, 157);
+            this.av1anScaleH.Location = new System.Drawing.Point(360, 187);
             this.av1anScaleH.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anScaleH.Name = "av1anScaleH";
             this.av1anScaleH.Size = new System.Drawing.Size(110, 23);
@@ -1415,7 +1420,7 @@
             this.av1anScaleW.AllowDrop = true;
             this.av1anScaleW.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anScaleW.ForeColor = System.Drawing.Color.White;
-            this.av1anScaleW.Location = new System.Drawing.Point(220, 157);
+            this.av1anScaleW.Location = new System.Drawing.Point(220, 187);
             this.av1anScaleW.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anScaleW.Name = "av1anScaleW";
             this.av1anScaleW.Size = new System.Drawing.Size(110, 23);
@@ -1427,7 +1432,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(339, 160);
+            this.label16.Location = new System.Drawing.Point(339, 190);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(13, 15);
@@ -1444,7 +1449,7 @@
             this.av1anCrop.Items.AddRange(new object[] {
             "Disable",
             "Automatic"});
-            this.av1anCrop.Location = new System.Drawing.Point(220, 187);
+            this.av1anCrop.Location = new System.Drawing.Point(220, 217);
             this.av1anCrop.Name = "av1anCrop";
             this.av1anCrop.Size = new System.Drawing.Size(250, 23);
             this.av1anCrop.TabIndex = 54;
@@ -1453,7 +1458,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(7, 190);
+            this.label17.Location = new System.Drawing.Point(7, 220);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(36, 15);
@@ -1479,7 +1484,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(7, 160);
+            this.label18.Location = new System.Drawing.Point(7, 190);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(42, 15);
@@ -1535,9 +1540,9 @@
             this.label20.Location = new System.Drawing.Point(7, 100);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(133, 15);
+            this.label20.Size = new System.Drawing.Size(80, 15);
             this.label20.TabIndex = 20;
-            this.label20.Text = "Color Space (Bit Depth):";
+            this.label20.Text = "Color Format:";
             // 
             // label22
             // 
@@ -1584,7 +1589,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 27);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(668, 288);
+            this.tabPage4.Size = new System.Drawing.Size(668, 238);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Audio";
             // 
@@ -1668,7 +1673,9 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage5.Controls.Add(this.label8);
             this.tabPage5.Controls.Add(this.av1anOptsWorkerCount);
+            this.tabPage5.Controls.Add(this.av1anCustomArgs);
             this.tabPage5.Controls.Add(this.label35);
             this.tabPage5.Controls.Add(this.av1anOptsChunkMode);
             this.tabPage5.Controls.Add(this.label34);
@@ -1677,7 +1684,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(668, 288);
+            this.tabPage5.Size = new System.Drawing.Size(668, 238);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Av1an Options";
             // 
@@ -2241,6 +2248,44 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.ForeColor = System.Drawing.Color.White;
+            this.label37.Location = new System.Drawing.Point(7, 130);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(138, 15);
+            this.label37.TabIndex = 70;
+            this.label37.Text = "Grain Synthesis Strength:";
+            // 
+            // av1anGrainSynthStrength
+            // 
+            this.av1anGrainSynthStrength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anGrainSynthStrength.ForeColor = System.Drawing.Color.White;
+            this.av1anGrainSynthStrength.Location = new System.Drawing.Point(220, 128);
+            this.av1anGrainSynthStrength.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.av1anGrainSynthStrength.Name = "av1anGrainSynthStrength";
+            this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 23);
+            this.av1anGrainSynthStrength.TabIndex = 71;
+            this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Set the video quality level (CRF/CQ)");
+            // 
+            // av1anGrainSynthDenoise
+            // 
+            this.av1anGrainSynthDenoise.AutoSize = true;
+            this.av1anGrainSynthDenoise.ForeColor = System.Drawing.Color.White;
+            this.av1anGrainSynthDenoise.Location = new System.Drawing.Point(402, 131);
+            this.av1anGrainSynthDenoise.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.av1anGrainSynthDenoise.Name = "av1anGrainSynthDenoise";
+            this.av1anGrainSynthDenoise.Size = new System.Drawing.Size(68, 19);
+            this.av1anGrainSynthDenoise.TabIndex = 72;
+            this.av1anGrainSynthDenoise.Text = "Denoise";
+            this.av1anGrainSynthDenoise.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2317,6 +2362,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.dropLoadAddBg.ResumeLayout(false);
             this.dropLoadClearBg.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2473,6 +2519,9 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox av1anCustomEncArgs;
         private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.CheckBox av1anGrainSynthDenoise;
+        private System.Windows.Forms.NumericUpDown av1anGrainSynthStrength;
+        private System.Windows.Forms.Label label37;
     }
 }
 

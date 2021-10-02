@@ -110,7 +110,9 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
+                string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
+                string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain}  {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.SvtAv1)
@@ -118,7 +120,8 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} {custom} \" --pix-format {pixFmt}");
+                string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
+                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --film-grain {grain} {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.VpxVp9)

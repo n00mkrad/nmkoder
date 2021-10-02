@@ -57,7 +57,7 @@ namespace Nmkoder.UI.Tasks
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
                     Program.mainForm.encScaleBoxW.Text = Program.mainForm.encScaleBoxH.Text = "";
-                    InitAudioChannels(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                    InitAudioChannels(TrackList.current.AudioStreams.FirstOrDefault()?.Channels);
                     InitBurnCombox();
                     LoadMetadataGrid();
                 }
@@ -195,7 +195,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void ValidatePath()
         {
-            if (MediaInfo.current == null)
+            if (TrackList.current == null)
                 return;
 
             //string ext = Program.mainForm.containerBox.Text.ToLower();
@@ -264,9 +264,9 @@ namespace Nmkoder.UI.Tasks
             burnBox.Items.Clear();
             burnBox.Items.Add("Disabled");
 
-            for (int i = 0; i < MediaInfo.current.SubtitleStreams.Count; i++)
+            for (int i = 0; i < TrackList.current.SubtitleStreams.Count; i++)
             {
-                string lang = MediaInfo.current.SubtitleStreams[i].Language.Trim();
+                string lang = TrackList.current.SubtitleStreams[i].Language.Trim();
                 burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
             }
 
@@ -281,10 +281,10 @@ namespace Nmkoder.UI.Tasks
 
         public static void LoadMetadataGrid()
         {
-            if (MediaInfo.current == null)
+            if (TrackList.current == null)
                 return;
 
-            string currMap = MediaInfo.GetMapArgs();
+            string currMap = TrackList.GetMapArgs();
 
             if (currMap == lastMap)
                 return;
@@ -292,7 +292,7 @@ namespace Nmkoder.UI.Tasks
             lastMap = currMap;
 
             DataGridView grid = Program.mainForm.metaGrid;
-            MediaFile c = MediaInfo.current;
+            MediaFile c = TrackList.current;
 
             if (grid.Columns.Count != 3)
             {
@@ -304,7 +304,7 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Clear();
 
-            grid.Rows.Add($"File", MediaInfo.current.Title, MediaInfo.current.Language);
+            grid.Rows.Add($"File", TrackList.current.Title, TrackList.current.Language);
 
             var checkStreamEntries = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
             List<VideoStream> vStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
@@ -331,7 +331,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetMetadataArgs()
         {
-            bool attachments = MediaInfo.current.AttachmentStreams.Count > 0;
+            bool attachments = TrackList.current.AttachmentStreams.Count > 0;
             string stripStr = attachments ? ":s:t 0:s:t" : " -1"; // If there are attachments, only copy the attachment metadata, otherwise none
             int cfg = Config.GetInt(Config.Key.metaMode);
 
@@ -392,10 +392,10 @@ namespace Nmkoder.UI.Tasks
             if (codecArgs != null && codecArgs.ForcedFilters != null)
                 filters.AddRange(codecArgs.ForcedFilters);
 
-            if (MediaInfo.current.VideoStreams.Count < 1 || (vCodec == Codecs.VideoCodec.Copy || vCodec == Codecs.VideoCodec.StripVideo))
+            if (TrackList.current.VideoStreams.Count < 1 || (vCodec == Codecs.VideoCodec.Copy || vCodec == Codecs.VideoCodec.StripVideo))
                 return "";
 
-            VideoStream vs = MediaInfo.current.VideoStreams.First();
+            VideoStream vs = TrackList.current.VideoStreams.First();
             Fraction fps = GetUiFps();
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
@@ -403,7 +403,7 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string filename = FormatUtils.GetFilterPath(MediaInfo.current.TruePath);
+                string filename = FormatUtils.GetFilterPath(TrackList.current.TruePath);
                 filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
 

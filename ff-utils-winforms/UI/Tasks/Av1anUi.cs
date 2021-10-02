@@ -68,7 +68,7 @@ namespace Nmkoder.UI.Tasks
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
                     Program.mainForm.av1anScaleBoxW.Text = Program.mainForm.av1anScaleBoxH.Text = "";
-                    InitAudioChannels(MediaInfo.current.AudioStreams.FirstOrDefault()?.Channels);
+                    InitAudioChannels(TrackList.current.AudioStreams.FirstOrDefault()?.Channels);
                 }
 
                 ValidateContainer();
@@ -218,10 +218,10 @@ namespace Nmkoder.UI.Tasks
             if (codecArgs != null && codecArgs.ForcedFilters != null)
                 filters.AddRange(codecArgs.ForcedFilters);
 
-            if (MediaInfo.current.VideoStreams.Count < 1)
+            if (TrackList.current.VideoStreams.Count < 1)
                 return "";
 
-            VideoStream vs = MediaInfo.current.VideoStreams.First();
+            VideoStream vs = TrackList.current.VideoStreams.First();
             Fraction fps = GetUiFps();
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
@@ -302,7 +302,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void ValidatePath()
         {
-            if (MediaInfo.current == null)
+            if (TrackList.current == null)
                 return;
 
             if (File.Exists(Program.mainForm.av1anOutputPathBox.Text))

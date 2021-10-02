@@ -144,10 +144,10 @@ namespace Nmkoder.Media
         {
             try
             {
-                if (MediaInfo.current == null)
+                if (TrackList.current == null)
                     return;
 
-                long currInDuration = MediaInfo.current.DurationMs;
+                long currInDuration = TrackList.current.DurationMs;
 
                 if (currInDuration < 1)
                 {

@@ -23,14 +23,14 @@ namespace Nmkoder.UI.Tasks
         {
             Program.mainForm.SetWorking(true);
 
-            string frameFolderPath = Path.ChangeExtension(MediaInfo.current.SourcePath, null) + "-frames";
+            string frameFolderPath = Path.ChangeExtension(TrackList.current.SourcePath, null) + "-frames";
             Directory.CreateDirectory(frameFolderPath);
 
             string imgArgs = GetImgArgs(frameFormat.ToString());
             string custIn = Program.mainForm.customArgsInBox.Text.Trim();
             string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
 
-            string args = $"{custIn} -i {MediaInfo.current.TruePath.Wrap()} {imgArgs} {custOut} \"{frameFolderPath}/%08d.{frameFormat.ToString().ToLower()}\"";
+            string args = $"{custIn} -i {TrackList.current.TruePath.Wrap()} {imgArgs} {custOut} \"{frameFolderPath}/%08d.{frameFormat.ToString().ToLower()}\"";
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.ExtractFrames, true);
@@ -49,8 +49,8 @@ namespace Nmkoder.UI.Tasks
                     continue;
 
                 Stream s = entry.Stream;
-                FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(MediaInfo.current.TruePath, s.Index);
-                string percent = FormatUtils.RatioInt(info.Bytes, MediaInfo.current.Size).ToString("0.0");
+                FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(TrackList.current.TruePath, s.Index);
+                string percent = FormatUtils.RatioInt(info.Bytes, TrackList.current.Size).ToString("0.0");
                 string br = info.Kbps > 1 ? FormatUtils.Bitrate(info.Kbps.RoundToInt()) : info.Kbps.ToString("0.0") + " kbps";
                 Logger.Log($"Stream #{s.Index} ({s.Type}) - Bitrate: {br} - Size: {FormatUtils.Bytes(info.Bytes)} ({percent}%)");
             }

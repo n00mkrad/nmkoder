@@ -42,7 +42,7 @@ namespace Nmkoder.Forms
                 return;
 
             MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
-            streamDetails.Text = MediaInfo.GetStreamDetails(entry.Stream, entry.MediaFile);
+            streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
         public bool ignoreNextStreamListItemCheck;

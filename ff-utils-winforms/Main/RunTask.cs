@@ -48,7 +48,7 @@ namespace Nmkoder.Main
 
             TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
 
-            if (currentFileListMode == FileListMode.MultiFileInput && MediaInfo.current == null)
+            if (currentFileListMode == FileListMode.MultiFileInput && TrackList.current == null)
             {
                 MessageBox.Show("No input file loaded! Please load one first (File List).", "Error");
                 return;
@@ -90,7 +90,7 @@ namespace Nmkoder.Main
                 return;
             }
 
-            MediaInfo.ClearCurrentFile();
+            TrackList.ClearCurrentFile();
             System.Windows.Forms.ListBox fileList = Program.mainForm.fileListBox;
 
             object[] taskFileList = new object[fileList.Items.Count];
@@ -102,8 +102,8 @@ namespace Nmkoder.Main
             {
                 MediaFile mf = (MediaFile)taskFileList[i];
                 Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.Name}.");
-                MediaInfo.ClearCurrentFile();
-                await MediaInfo.LoadFirstFile(mf, false, false); // Load file info
+                TrackList.ClearCurrentFile();
+                await TrackList.LoadFirstFile(mf, false, false); // Load file info
                 await Start(batchTask); // Run task
                 fileList.Items.RemoveAt(0);
             }

@@ -190,7 +190,7 @@ namespace Nmkoder.Forms
         private void inputPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MediaInfo.HandleFiles(files, true);
+            TrackList.HandleFiles(files, true);
         }
 
         public void runBtn_Click(object sender = null, EventArgs e = null)
@@ -269,14 +269,14 @@ namespace Nmkoder.Forms
         {
             dropPanel.Visible = false;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MediaInfo.HandleFiles(files, true);
+            TrackList.HandleFiles(files, true);
         }
 
         private void dropLoadFilesAdd_DragDrop(object sender, DragEventArgs e)
         {
             dropPanel.Visible = false;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            MediaInfo.HandleFiles(files, false);
+            TrackList.HandleFiles(files, false);
         }
 
         private void dropPanel_DragLeave(object sender, EventArgs e)

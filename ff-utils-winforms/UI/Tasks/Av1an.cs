@@ -30,11 +30,11 @@ namespace Nmkoder.UI.Tasks
                 Codecs.Av1anCodec vCodec = GetCurrentCodecV();
                 Codecs.AudioCodec aCodec = GetCurrentCodecA();
                 bool vmaf = IsUsingVmaf();
-                string inPath = MediaInfo.current.TruePath;
+                string inPath = TrackList.current.TruePath;
                 string outPath = GetOutPath();
                 string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                 string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), vmaf, custEnc, MediaInfo.current);
+                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), vmaf, custEnc, TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(codecArgs);
                 string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());

@@ -170,7 +170,7 @@ namespace Nmkoder.Media
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 10);
-            string path = MediaInfo.current.TruePath;
+            string path = TrackList.current.TruePath;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();

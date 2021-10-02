@@ -30,10 +30,10 @@ namespace Nmkoder.UI.Tasks
                 Codecs.VideoCodec vCodec = GetCurrentCodecV();
                 Codecs.AudioCodec aCodec = GetCurrentCodecA();
                 Codecs.SubtitleCodec sCodec = GetCurrentCodecS();
-                string inFiles = MediaInfo.GetInputFilesString();
+                string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
-                string map = MediaInfo.GetMapArgs();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), MediaInfo.current);
+                string map = TrackList.GetMapArgs();
+                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(vCodec, codecArgs);
                 string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());

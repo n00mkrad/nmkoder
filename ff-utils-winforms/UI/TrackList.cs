@@ -19,7 +19,7 @@ using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.UI
 {
-    class MediaInfo
+    class TrackList
     {
         public static MediaFile current;
 

@@ -110,7 +110,7 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist=12 --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.SvtAv1)
@@ -129,7 +129,7 @@ namespace Nmkoder.Data
                 bool is420 = pixFmt.Contains("444") || pixFmt.Contains("422");
                 int b = pixFmt.Split('p').LastOrDefault().GetInt();
                 int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
-                return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist=12 --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
             }
 
             return new CodecArgs();
@@ -211,7 +211,7 @@ namespace Nmkoder.Data
 
             if (c == Av1anCodec.AomAv1)
             {
-                string frName = "AV1 (AOMEnc)";
+                string frName = "AV1 (AOM)";
                 string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 string qInfo = "CRF (0-63 - Lower is better)";

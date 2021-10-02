@@ -1687,7 +1687,12 @@
             this.av1anOptsWorkerCount.ForeColor = System.Drawing.Color.White;
             this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 70);
             this.av1anOptsWorkerCount.Maximum = new decimal(new int[] {
-            48,
+            24,
+            0,
+            0,
+            0});
+            this.av1anOptsWorkerCount.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -1695,6 +1700,11 @@
             this.av1anOptsWorkerCount.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsWorkerCount.TabIndex = 53;
             this.toolTip.SetToolTip(this.av1anOptsWorkerCount, "Set the video quality level (CRF/CQ)");
+            this.av1anOptsWorkerCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.av1anOptsWorkerCount.ValueChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // label35

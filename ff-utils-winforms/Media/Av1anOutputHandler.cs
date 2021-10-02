@@ -90,7 +90,7 @@ namespace Nmkoder.Media
                     string contents = sr.ReadToEnd();
                     string[] logLines = contents.SplitIntoLines();
                     int encodedChunks = logLines.Where(x => x.Contains("Done: ")).Count();
-                    int ratio = FormatUtils.RatioInt(encodedChunks, currentQueueSize);
+                    int ratio = FormatUtils.RatioInt(encodedChunks + 1, currentQueueSize);
                     Program.mainForm.SetProgress(ratio);
                     Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).", false, Logger.GetLastLine().Contains("Encoded"));
 

@@ -59,22 +59,6 @@ namespace Nmkoder.Forms
             thumbLabel = thumbInfo;
 
             CheckForIllegalCrossThreadCalls = false;
-
-            //InitCombox(createMp4Enc, 0);
-            //InitCombox(createMp4Crf, 1);
-            //InitCombox(createMp4Fps, 2);
-            //InitCombox(loopTimesLossless, 0);
-            //InitCombox(encContainer, 0);
-            //InitCombox(encVidCodec, 1);
-            //InitCombox(encVidCrf, 1);
-            //InitCombox(encAudCodec, 1);
-            //InitCombox(encAudBitrate, 4);
-            //InitCombox(encAudioCh, 0);
-            //InitCombox(changeSpeedCombox, 0);
-            //InitCombox(comparisonLayout, 0);
-            //InitCombox(comparisonType, 0);
-            //InitCombox(comparisonCrf, 1);
-            //InitCombox(delayTrackCombox, 0);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)

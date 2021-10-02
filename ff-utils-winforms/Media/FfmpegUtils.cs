@@ -76,6 +76,7 @@ namespace Nmkoder.Media
                             string lang = await GetFfprobeInfoAsync(path, showStreams, "TAG:language", idx);
                             string title = await GetFfprobeInfoAsync(path, showStreams, "TAG:title", idx);
                             string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
+                            if(codec.ToLower() == "dts") codec = await GetFfprobeInfoAsync(path, showStreams, "profile", idx);
                             string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
                             int kbits = (await GetFfprobeInfoAsync(path, showStreams, "bit_rate", idx)).GetInt() / 1024;
                             int sampleRate = (await GetFfprobeInfoAsync(path, showStreams, "sample_rate", idx)).GetInt();

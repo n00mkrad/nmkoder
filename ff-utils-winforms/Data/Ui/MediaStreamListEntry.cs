@@ -43,7 +43,8 @@ namespace Nmkoder.Data.Ui
                 AudioStream @as = (AudioStream)Stream;
                 string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
                 string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
-                return $"{str} Audio ({codecStr}){title}- {@as.Layout.ToTitleCase()}";
+                string lang = string.IsNullOrWhiteSpace(@as.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(@as.Language, 4).Trunc(maxChars)} ";
+                return $"{str} Audio ({codecStr}){title}- {@as.Layout.ToTitleCase()}{lang}";
             }
 
             if (Stream.Type == Stream.StreamType.Subtitle)

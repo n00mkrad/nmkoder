@@ -239,7 +239,7 @@ namespace Nmkoder.Data
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 string qInfo = "CRF (0-63 - Lower is better)";
                 string pInfo = "Lower = Better compression";
-                return new CodecInfo(c.ToString(), frName, presets, 2, colors, 1, 0, 63, 24, qInfo, pInfo);
+                return new CodecInfo(c.ToString(), frName, presets, 2, colors, 0, 0, 63, 24, qInfo, pInfo);
             }
 
             return new CodecInfo();

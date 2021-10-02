@@ -103,14 +103,14 @@ namespace Nmkoder.Data
         public static CodecArgs GetArgs(Av1anCodec c, Dictionary<string, string> encArgs, bool vmaf, string custom = "", MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
+            string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 10), "");
 
             if (c == Av1anCodec.AomAv1)
             {
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
-                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist=12 --kf-max-dist={g} --threads=4 {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.SvtAv1)
@@ -118,7 +118,6 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
                 return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} {custom} \" --pix-format {pixFmt}");
             }
 
@@ -127,8 +126,9 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8), "");
-                return new CodecArgs($" -e vpx --force -v \" --cpu-used={preset} {custom} \" --pix-format {pixFmt}");
+                int p = (pixFmt.Contains("444") || pixFmt.Contains("422")) ? 3 : 2;
+                int b = pixFmt.Split('p').LastOrDefault().GetInt();
+                return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist=12 --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
             }
 
             return new CodecArgs();

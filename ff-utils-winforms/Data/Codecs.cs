@@ -126,8 +126,9 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                int p = (pixFmt.Contains("444") || pixFmt.Contains("422")) ? 3 : 2;
+                bool is420 = pixFmt.Contains("444") || pixFmt.Contains("422");
                 int b = pixFmt.Split('p').LastOrDefault().GetInt();
+                int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
                 return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist=12 --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
             }
 

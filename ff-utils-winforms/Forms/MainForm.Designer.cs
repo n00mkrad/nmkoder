@@ -156,14 +156,6 @@
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.utilsBitratesSelBtn = new HTAlt.WinForms.HTButton();
-            this.utilsFramesToVidPanel = new System.Windows.Forms.Panel();
-            this.utilsFramesToVidConfBtn = new HTAlt.WinForms.HTButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.utilsFramesToVidSelBtn = new HTAlt.WinForms.HTButton();
-            this.utilsVidToFramesPanel = new System.Windows.Forms.Panel();
-            this.utilsVidToFramesConfBtn = new HTAlt.WinForms.HTButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.utilsVidToFramesSelBtn = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.settingsGeneralTab = new System.Windows.Forms.TabPage();
@@ -213,8 +205,6 @@
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
-            this.utilsFramesToVidPanel.SuspendLayout();
-            this.utilsVidToFramesPanel.SuspendLayout();
             this.settingsPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.settingsGeneralTab.SuspendLayout();
@@ -1014,7 +1004,7 @@
             this.encAudChannels.Size = new System.Drawing.Size(250, 23);
             this.encAudChannels.TabIndex = 52;
             // 
-            // encAudBitrate
+            // encAudQuality
             // 
             this.encAudQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.encAudQuality.ForeColor = System.Drawing.Color.White;
@@ -1024,7 +1014,7 @@
             0,
             0,
             0});
-            this.encAudQuality.Name = "encAudBitrate";
+            this.encAudQuality.Name = "encAudQuality";
             this.encAudQuality.Size = new System.Drawing.Size(250, 23);
             this.encAudQuality.TabIndex = 51;
             this.encAudQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
@@ -1865,9 +1855,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.utilsFramesToVidPanel, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.utilsVidToFramesPanel, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1883,11 +1871,12 @@
             this.utilsBitratesPanel.Controls.Add(this.label5);
             this.utilsBitratesPanel.Controls.Add(this.utilsBitratesSelBtn);
             this.utilsBitratesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.utilsBitratesPanel.Location = new System.Drawing.Point(454, 0);
+            this.utilsBitratesPanel.Location = new System.Drawing.Point(0, 0);
             this.utilsBitratesPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsBitratesPanel.Name = "utilsBitratesPanel";
-            this.utilsBitratesPanel.Size = new System.Drawing.Size(228, 127);
+            this.utilsBitratesPanel.Size = new System.Drawing.Size(227, 127);
             this.utilsBitratesPanel.TabIndex = 3;
+            this.utilsBitratesPanel.Click += new System.EventHandler(this.SelectReadBitrates);
             // 
             // label5
             // 
@@ -1910,131 +1899,13 @@
             this.utilsBitratesSelBtn.DrawImage = true;
             this.utilsBitratesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.utilsBitratesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsBitratesSelBtn.Location = new System.Drawing.Point(50, 31);
-            this.utilsBitratesSelBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.utilsBitratesSelBtn.Location = new System.Drawing.Point(70, 31);
+            this.utilsBitratesSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
             this.utilsBitratesSelBtn.Name = "utilsBitratesSelBtn";
             this.utilsBitratesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.utilsBitratesSelBtn.Size = new System.Drawing.Size(127, 65);
+            this.utilsBitratesSelBtn.Size = new System.Drawing.Size(87, 65);
             this.utilsBitratesSelBtn.TabIndex = 0;
-            this.utilsBitratesSelBtn.Click += new System.EventHandler(this.utilsBitratesSelBtn_Click);
-            // 
-            // utilsFramesToVidPanel
-            // 
-            this.utilsFramesToVidPanel.Controls.Add(this.utilsFramesToVidConfBtn);
-            this.utilsFramesToVidPanel.Controls.Add(this.label2);
-            this.utilsFramesToVidPanel.Controls.Add(this.utilsFramesToVidSelBtn);
-            this.utilsFramesToVidPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.utilsFramesToVidPanel.Location = new System.Drawing.Point(227, 0);
-            this.utilsFramesToVidPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.utilsFramesToVidPanel.Name = "utilsFramesToVidPanel";
-            this.utilsFramesToVidPanel.Size = new System.Drawing.Size(227, 127);
-            this.utilsFramesToVidPanel.TabIndex = 2;
-            // 
-            // utilsFramesToVidConfBtn
-            // 
-            this.utilsFramesToVidConfBtn.AutoColor = true;
-            this.utilsFramesToVidConfBtn.ButtonImage = null;
-            this.utilsFramesToVidConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsFramesToVidConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsFramesToVidConfBtn.DrawImage = true;
-            this.utilsFramesToVidConfBtn.ForeColor = System.Drawing.Color.White;
-            this.utilsFramesToVidConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsFramesToVidConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsFramesToVidConfBtn.Location = new System.Drawing.Point(30, 102);
-            this.utilsFramesToVidConfBtn.Margin = new System.Windows.Forms.Padding(30, 3, 30, 3);
-            this.utilsFramesToVidConfBtn.Name = "utilsFramesToVidConfBtn";
-            this.utilsFramesToVidConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.utilsFramesToVidConfBtn.Size = new System.Drawing.Size(167, 22);
-            this.utilsFramesToVidConfBtn.TabIndex = 18;
-            this.utilsFramesToVidConfBtn.Text = "Configure";
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Margin = new System.Windows.Forms.Padding(4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(219, 20);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Create Video From Frames";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // utilsFramesToVidSelBtn
-            // 
-            this.utilsFramesToVidSelBtn.AutoColor = false;
-            this.utilsFramesToVidSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_imgStack2;
-            this.utilsFramesToVidSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsFramesToVidSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsFramesToVidSelBtn.DrawImage = true;
-            this.utilsFramesToVidSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsFramesToVidSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsFramesToVidSelBtn.Location = new System.Drawing.Point(50, 31);
-            this.utilsFramesToVidSelBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
-            this.utilsFramesToVidSelBtn.Name = "utilsFramesToVidSelBtn";
-            this.utilsFramesToVidSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.utilsFramesToVidSelBtn.Size = new System.Drawing.Size(127, 65);
-            this.utilsFramesToVidSelBtn.TabIndex = 0;
-            this.utilsFramesToVidSelBtn.Click += new System.EventHandler(this.utilsFramesToVidSelBtn_Click);
-            // 
-            // utilsVidToFramesPanel
-            // 
-            this.utilsVidToFramesPanel.Controls.Add(this.utilsVidToFramesConfBtn);
-            this.utilsVidToFramesPanel.Controls.Add(this.label1);
-            this.utilsVidToFramesPanel.Controls.Add(this.utilsVidToFramesSelBtn);
-            this.utilsVidToFramesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.utilsVidToFramesPanel.Location = new System.Drawing.Point(0, 0);
-            this.utilsVidToFramesPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.utilsVidToFramesPanel.Name = "utilsVidToFramesPanel";
-            this.utilsVidToFramesPanel.Size = new System.Drawing.Size(227, 127);
-            this.utilsVidToFramesPanel.TabIndex = 1;
-            // 
-            // utilsVidToFramesConfBtn
-            // 
-            this.utilsVidToFramesConfBtn.AutoColor = true;
-            this.utilsVidToFramesConfBtn.ButtonImage = null;
-            this.utilsVidToFramesConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsVidToFramesConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsVidToFramesConfBtn.DrawImage = true;
-            this.utilsVidToFramesConfBtn.ForeColor = System.Drawing.Color.White;
-            this.utilsVidToFramesConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsVidToFramesConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsVidToFramesConfBtn.Location = new System.Drawing.Point(30, 102);
-            this.utilsVidToFramesConfBtn.Margin = new System.Windows.Forms.Padding(30, 3, 30, 3);
-            this.utilsVidToFramesConfBtn.Name = "utilsVidToFramesConfBtn";
-            this.utilsVidToFramesConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.utilsVidToFramesConfBtn.Size = new System.Drawing.Size(167, 22);
-            this.utilsVidToFramesConfBtn.TabIndex = 18;
-            this.utilsVidToFramesConfBtn.Text = "Configure";
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(4, 4);
-            this.label1.Margin = new System.Windows.Forms.Padding(4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(215, 20);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Extract Frames From Video";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // utilsVidToFramesSelBtn
-            // 
-            this.utilsVidToFramesSelBtn.AutoColor = false;
-            this.utilsVidToFramesSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_imgStack;
-            this.utilsVidToFramesSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsVidToFramesSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsVidToFramesSelBtn.DrawImage = true;
-            this.utilsVidToFramesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsVidToFramesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsVidToFramesSelBtn.Location = new System.Drawing.Point(50, 31);
-            this.utilsVidToFramesSelBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
-            this.utilsVidToFramesSelBtn.Name = "utilsVidToFramesSelBtn";
-            this.utilsVidToFramesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.utilsVidToFramesSelBtn.Size = new System.Drawing.Size(127, 65);
-            this.utilsVidToFramesSelBtn.TabIndex = 0;
-            this.utilsVidToFramesSelBtn.Click += new System.EventHandler(this.utilsVidToFramesSelBtn_Click);
+            this.utilsBitratesSelBtn.Click += new System.EventHandler(this.SelectReadBitrates);
             // 
             // settingsPage
             // 
@@ -2387,8 +2258,6 @@
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
-            this.utilsFramesToVidPanel.ResumeLayout(false);
-            this.utilsVidToFramesPanel.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.htTabControl1.ResumeLayout(false);
             this.settingsGeneralTab.ResumeLayout(false);
@@ -2492,14 +2361,6 @@
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.CheckBox mp4Faststart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Panel utilsVidToFramesPanel;
-        private System.Windows.Forms.Label label1;
-        private HTAlt.WinForms.HTButton utilsVidToFramesSelBtn;
-        private HTAlt.WinForms.HTButton utilsVidToFramesConfBtn;
-        private System.Windows.Forms.Panel utilsFramesToVidPanel;
-        private HTAlt.WinForms.HTButton utilsFramesToVidConfBtn;
-        private System.Windows.Forms.Label label2;
-        private HTAlt.WinForms.HTButton utilsFramesToVidSelBtn;
         private System.Windows.Forms.Label currentActionLabel;
         private System.Windows.Forms.Label qInfo;
         private System.Windows.Forms.Label presetInfo;

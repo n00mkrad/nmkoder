@@ -30,29 +30,15 @@ namespace Nmkoder.Forms
             return currentTask;
         }
 
-        private void utilsVidToFramesSelBtn_Click(object sender, EventArgs e)
+        private void SelectReadBitrates(object sender, EventArgs e)
         {
-            currentTask = RunTask.TaskType.VideoToFrames;
-            UpdatePanels();
-        }
-
-        private void utilsFramesToVidSelBtn_Click(object sender, EventArgs e)
-        {
-            currentTask = RunTask.TaskType.FramesToVideo;
-            UpdatePanels();
-        }
-
-        private void utilsBitratesSelBtn_Click(object sender, EventArgs e)
-        {
-            currentTask = RunTask.TaskType.ReadBitrates;
+            currentTask = RunTask.TaskType.UtilReadBitrates;
             UpdatePanels();
         }
 
         private void UpdatePanels ()
         {
-            utilsVidToFramesPanel.BorderStyle = (currentTask == RunTask.TaskType.VideoToFrames) ? BorderStyle.FixedSingle : BorderStyle.None;
-            utilsFramesToVidPanel.BorderStyle = (currentTask == RunTask.TaskType.FramesToVideo) ? BorderStyle.FixedSingle : BorderStyle.None;
-            utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.ReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -35,12 +35,12 @@ namespace Nmkoder.Forms
         public TextBox encScaleBoxH { get { return encScaleH; } }
         public ComboBox encCropModeBox { get { return encCropMode; } }
         // Quick Convert - Audio
-        public ComboBox encAudEnc;
-        public NumericUpDown encAudQualUpDown;
-        public ComboBox encAudCh;
+        public ComboBox encAudCodecBox { get { return encAudCodec; } }
+        public NumericUpDown encAudQualUpDown { get { return encAudQuality; } }
+        public ComboBox encAudChannelsBox { get { return encAudChannels; } }
         // Quick Convert - Subs
-        public ComboBox encSubEnc;
-        public ComboBox encSubBurnBox;
+        public ComboBox encSubCodecBox { get { return encSubCodec; } }
+        public ComboBox encSubBurnBox { get { return encSubBurn; } }
         // Quick Convert - Other
         public DataGridView metaGrid;
         public TextBox ffmpegOutputBox;
@@ -49,13 +49,6 @@ namespace Nmkoder.Forms
 
         public void InitQuickConvert ()
         {
-            encAudEnc = encAudCodec;
-            encAudQualUpDown = encAudBitrate;
-            encAudCh = encAudChannels;
-
-            encSubEnc = encSubCodec;
-            encSubBurnBox = encSubBurn;
-
             encAudChannels.SelectedIndex = 1;
             encCropMode.SelectedIndex = 0;
         }

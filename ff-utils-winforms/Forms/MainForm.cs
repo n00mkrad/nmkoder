@@ -48,6 +48,7 @@ namespace Nmkoder.Forms
             mainTabList = tabList;
 
             InitQuickConvert();
+            InitAv1an();
 
             metaGrid = metadataGrid;
             ffmpegOutputBox = outputPath;
@@ -191,7 +192,7 @@ namespace Nmkoder.Forms
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveUiConfig();
-            QuickConvertUi.AudEncoderSelected(encAudEnc.SelectedIndex);
+            QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
         }
 
         private void encSubCodec_SelectedIndexChanged(object sender, EventArgs e)

@@ -51,10 +51,6 @@ namespace Nmkoder.UI.Tasks
             
             ConfigParser.LoadComboxIndex(form.av1anAudCodecBox);
 
-
-            form.av1anAudChannelsBox.SelectedIndex = 1;
-
-
             form.av1anContainerBox.Items.Add(Containers.Container.Mkv.ToString().ToUpper());
             form.av1anContainerBox.Items.Add(Containers.Container.Webm.ToString().ToUpper());
         }
@@ -262,16 +258,18 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetChunkGenMethod()
         {
-            switch (form.av1anOptsChunkModeBox.SelectedIndex)
-            {
-                case 0: return "hybrid";
-                case 1: return "lsmash";
-                case 3: return "ffms2";
-                case 4: return "segment";
-                case 5: return "select";
-            }
+            return form.av1anOptsChunkModeBox.Text.ToLower().Trim();
 
-            return "";
+            // switch (form.av1anOptsChunkModeBox.SelectedIndex)
+            // {
+            //     case 0: return "hybrid";
+            //     case 1: return "lsmash";
+            //     case 2: return "ffms2";
+            //     case 3: return "segment";
+            //     case 4: return "select";
+            // }
+            // 
+            // return "";
         }
 
         public static string GetOutPath()

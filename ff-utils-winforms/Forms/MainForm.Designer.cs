@@ -88,7 +88,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.encAudChannels = new System.Windows.Forms.ComboBox();
-            this.encAudBitrate = new System.Windows.Forms.NumericUpDown();
+            this.encAudQuality = new System.Windows.Forms.NumericUpDown();
             this.encAudCodec = new System.Windows.Forms.ComboBox();
             this.label53 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
@@ -195,7 +195,7 @@
             this.encVid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.encMetaTab.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -975,7 +975,7 @@
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tabPage2.Controls.Add(this.label11);
             this.tabPage2.Controls.Add(this.encAudChannels);
-            this.tabPage2.Controls.Add(this.encAudBitrate);
+            this.tabPage2.Controls.Add(this.encAudQuality);
             this.tabPage2.Controls.Add(this.encAudCodec);
             this.tabPage2.Controls.Add(this.label53);
             this.tabPage2.Controls.Add(this.label58);
@@ -1016,18 +1016,18 @@
             // 
             // encAudBitrate
             // 
-            this.encAudBitrate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encAudBitrate.ForeColor = System.Drawing.Color.White;
-            this.encAudBitrate.Location = new System.Drawing.Point(220, 38);
-            this.encAudBitrate.Maximum = new decimal(new int[] {
+            this.encAudQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudQuality.ForeColor = System.Drawing.Color.White;
+            this.encAudQuality.Location = new System.Drawing.Point(220, 38);
+            this.encAudQuality.Maximum = new decimal(new int[] {
             6400,
             0,
             0,
             0});
-            this.encAudBitrate.Name = "encAudBitrate";
-            this.encAudBitrate.Size = new System.Drawing.Size(250, 23);
-            this.encAudBitrate.TabIndex = 51;
-            this.encAudBitrate.ValueChanged += new System.EventHandler(this.SaveUiConfig);
+            this.encAudQuality.Name = "encAudBitrate";
+            this.encAudQuality.Size = new System.Drawing.Size(250, 23);
+            this.encAudQuality.TabIndex = 51;
+            this.encAudQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // encAudCodec
             // 
@@ -2363,7 +2363,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.encAudBitrate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.encMetaTab.ResumeLayout(false);
@@ -2442,7 +2442,7 @@
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.TextBox encCustomArgsIn;
-        private System.Windows.Forms.NumericUpDown encAudBitrate;
+        private System.Windows.Forms.NumericUpDown encAudQuality;
         private System.Windows.Forms.NumericUpDown encVidQuality;
         private System.Windows.Forms.ComboBox encSubCodec;
         private System.Windows.Forms.Label label10;

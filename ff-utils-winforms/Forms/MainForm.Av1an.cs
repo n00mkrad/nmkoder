@@ -40,6 +40,12 @@ namespace Nmkoder.Forms
         public ComboBox av1anOptsChunkModeBox { get { return av1anOptsChunkMode; } }
         public NumericUpDown av1anOptsWorkerCountUpDown { get { return av1anOptsWorkerCount; } }
 
+        public void InitAv1an ()
+        {
+            av1anAudChannels.SelectedIndex = 1;
+            av1anCrop.SelectedIndex = 0;
+        }
+
         private void av1anCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             Av1anUi.VidEncoderSelected(av1anCodec.SelectedIndex);

@@ -33,14 +33,14 @@ namespace Nmkoder.UI.Tasks
             ConfigParser.LoadComboxIndex(form.encVidCodecsBox);
 
             foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
-                form.encAudEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+                form.encAudCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
 
-            ConfigParser.LoadComboxIndex(form.encAudEnc);
+            ConfigParser.LoadComboxIndex(form.encAudCodecBox);
 
             foreach (Codecs.SubtitleCodec c in Enum.GetValues(typeof(Codecs.SubtitleCodec)))  // Load audio codecs
-                form.encSubEnc.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+                form.encSubCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
 
-            ConfigParser.LoadComboxIndex(form.encSubEnc);
+            ConfigParser.LoadComboxIndex(form.encSubCodecBox);
 
             foreach (string c in Enum.GetNames(typeof(Containers.Container)))   // Load containers
                 form.ffmpegContainerBox.Items.Add(c.ToUpper());
@@ -95,7 +95,7 @@ namespace Nmkoder.UI.Tasks
             Codecs.AudioCodec c = (Codecs.AudioCodec)index;
             CodecInfo info = Codecs.GetCodecInfo(c);
 
-            Program.mainForm.encAudCh.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
+            Program.mainForm.encAudChannelsBox.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
             Program.mainForm.encAudQualUpDown.Enabled = info.QDefault >= 0;
             LoadAudBitrate(info);
             ValidateContainer();
@@ -148,7 +148,7 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadAudBitrate(CodecInfo info)
         {
-            int channels = form.encAudCh.Text.Split(' ')[0].GetInt();
+            int channels = form.encAudChannelsBox.Text.Split(' ')[0].GetInt();
 
             if (info.QDefault >= 0)
             {
@@ -170,8 +170,8 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             Codecs.VideoCodec vCodec = (Codecs.VideoCodec)form.encVidCodecsBox.SelectedIndex;
-            Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
-            Codecs.SubtitleCodec sCodec = (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
+            Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.encAudCodecBox.SelectedIndex;
+            Codecs.SubtitleCodec sCodec = (Codecs.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
 
             Containers.Container c = (Containers.Container)form.ffmpegContainerBox.SelectedIndex;
 
@@ -213,12 +213,12 @@ namespace Nmkoder.UI.Tasks
 
         public static Codecs.AudioCodec GetCurrentCodecA()
         {
-            return (Codecs.AudioCodec)form.encAudEnc.SelectedIndex;
+            return (Codecs.AudioCodec)form.encAudCodecBox.SelectedIndex;
         }
 
         public static Codecs.SubtitleCodec GetCurrentCodecS()
         {
-            return (Codecs.SubtitleCodec)form.encSubEnc.SelectedIndex;
+            return (Codecs.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
         }
 
         #endregion
@@ -236,7 +236,7 @@ namespace Nmkoder.UI.Tasks
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("bitrate", form.encAudQualUpDown.Text.ToLower());
-            dict.Add("ac", form.encAudCh.Text.Split(' ')[0].Trim());
+            dict.Add("ac", form.encAudChannelsBox.Text.Split(' ')[0].Trim());
             return dict;
         }
 
@@ -246,14 +246,14 @@ namespace Nmkoder.UI.Tasks
         {
             if (ch == null || ch < 1)
             {
-                form.encAudCh.SelectedIndex = 1;
+                form.encAudChannelsBox.SelectedIndex = 1;
                 return;
             }
 
-            for (int i = 0; i < form.encAudCh.Items.Count; i++)
+            for (int i = 0; i < form.encAudChannelsBox.Items.Count; i++)
             {
-                if (form.encAudCh.Items[i].ToString().Split(' ').First().GetInt() == ch)
-                    form.encAudCh.SelectedIndex = i;
+                if (form.encAudChannelsBox.Items[i].ToString().Split(' ').First().GetInt() == ch)
+                    form.encAudChannelsBox.SelectedIndex = i;
             }
         }
 

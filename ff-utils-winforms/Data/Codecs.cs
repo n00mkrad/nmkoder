@@ -130,8 +130,9 @@ namespace Nmkoder.Data
                 string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                bool is420 = pixFmt.Contains("444") || pixFmt.Contains("422");
+                bool is420 = !(pixFmt.Contains("444") || pixFmt.Contains("422"));
                 int b = pixFmt.Split('p').LastOrDefault().GetInt();
+                b = (b > 0) ? b : 8; // Make bit depth default to 8 if it was detected as 0 (e.g. when using yuv420p which does not explicitly specify 8-bit)
                 int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
                 return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
             }
@@ -243,8 +244,8 @@ namespace Nmkoder.Data
 
             if (c == Av1anCodec.VpxVp9)
             {
-                string frName = "VP9 (VPX-VP9)";
-                string[] presets = new string[] { "0", "1", "2", "3", "4", "5" };
+                string frName = "VP9 (VPX)";
+                string[] presets = new string[] { "0", "1", "2", "3", "4", "5", "6" };
                 string[] colors = new string[] { "yuv420p", "yuv420p10le" };
                 string qInfo = "CRF (0-63 - Lower is better)";
                 string pInfo = "Lower = Better compression";

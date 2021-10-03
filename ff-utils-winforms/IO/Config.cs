@@ -253,6 +253,7 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
+            if (key == Key.av1anOptsChunkMode)          return WriteDefault(key, $"1");
             if (key == Key.defaultKeyIntSecs)           return WriteDefault(key, $"10");
             if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
             if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
@@ -278,6 +279,7 @@ namespace Nmkoder.IO
         public enum Key
         {
             autoCropSamples,
+            av1anOptsChunkMode,
             av1anOptsWorkerCount,
             cmdDebugMode,
             defaultKeyIntSecs,

@@ -76,7 +76,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 10));
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
                 return new CodecArgs($"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}");
             }
 
@@ -103,7 +103,7 @@ namespace Nmkoder.Data
         public static CodecArgs GetArgs(Av1anCodec c, Dictionary<string, string> encArgs, bool vmaf, string custom = "", MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
-            string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 10), "");
+            string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs), "");
 
             if (c == Av1anCodec.AomAv1)
             {

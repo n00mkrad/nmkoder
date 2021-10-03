@@ -253,6 +253,7 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
+            if (key == Key.defaultKeyIntSecs)           return WriteDefault(key, $"10");
             if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
             if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
             if (key == Key.metaMode)                    return WriteDefault(key, "1");
@@ -279,9 +280,9 @@ namespace Nmkoder.IO
             autoCropSamples,
             av1anOptsWorkerCount,
             cmdDebugMode,
+            defaultKeyIntSecs,
             metaMode,
-            mp4Faststart,
-            av1KeyIntSecs
+            mp4Faststart
         }
     }
 }

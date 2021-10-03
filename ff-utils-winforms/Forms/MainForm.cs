@@ -104,8 +104,11 @@ namespace Nmkoder.Forms
 
         public bool IsInFocus() { return (ActiveForm == this); }
 
-        public void SetProgress(int percent)
+        public void SetProgress(int percent, bool ignoreIfNotBusy = true)
         {
+            if (ignoreIfNotBusy && !Program.busy)
+                return;
+
             percent = percent.Clamp(0, 100);
             TaskbarManager.Instance.SetProgressValue(percent, 100);
             progBar.Value = percent;

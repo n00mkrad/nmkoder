@@ -36,9 +36,27 @@ namespace Nmkoder.Forms
             UpdatePanels();
         }
 
+        private void SelectGetMetrics(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.UtilGetMetrics;
+            UpdatePanels();
+        }
+
+        private void utilsMetricsConfBtn_Click(object sender, EventArgs e)
+        {
+            Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm(UtilGetMetrics.runVmaf, false, false);
+            form.ShowDialog();
+            UtilGetMetrics.runVmaf = form.CheckedBoxes[0];
+            UtilGetMetrics.runSsim = form.CheckedBoxes[1];
+            UtilGetMetrics.runPsnr = form.CheckedBoxes[2];
+            UtilGetMetrics.vidLq = form.VideoLq;
+            UtilGetMetrics.vidHq = form.VideoHq;
+        }
+
         private void UpdatePanels ()
         {
             utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsMetricsPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilGetMetrics) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Nmkoder.Data.Streams
 {
-    class Stream
+    public class Stream
     {
         public enum StreamType { Video, Audio, Subtitle, Data, Attachment, Unknown }
         public StreamType Type;

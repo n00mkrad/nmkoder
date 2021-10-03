@@ -1,6 +1,6 @@
 ﻿namespace Nmkoder.Data.Streams
 {
-    class AudioStream : Stream
+    public class AudioStream : Stream
     {
         public string Language;
         public string Title;

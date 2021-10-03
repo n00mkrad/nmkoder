@@ -14,7 +14,7 @@ using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.Data
 {
-    class MediaFile
+    public class MediaFile
     {
         public bool IsDirectory;
         private FileInfo File;

@@ -63,9 +63,9 @@ namespace Nmkoder.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.confirmBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.confirmBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.confirmBtn.Location = new System.Drawing.Point(16, 106);
+            this.confirmBtn.Location = new System.Drawing.Point(12, 106);
             this.confirmBtn.Name = "confirmBtn";
-            this.confirmBtn.Size = new System.Drawing.Size(316, 23);
+            this.confirmBtn.Size = new System.Drawing.Size(320, 23);
             this.confirmBtn.TabIndex = 56;
             this.confirmBtn.Text = "OK";
             this.confirmBtn.UseVisualStyleBackColor = false;

@@ -245,6 +245,11 @@ namespace Nmkoder.Extensions
             return filePath.IsConcatFile() ? $"{rateStr}-safe 0 -f concat" : "";
         }
 
+        public static string GetFfmpegInputArg(this string filePath)
+        {
+            return "-i " + (filePath.IsConcatFile() ? filePath.GetConcStr() : "") + filePath.Wrap();
+        }
+
         public static int CountOccurences (this List<string> list, string stringToLookFor)
         {
             int count = 0;

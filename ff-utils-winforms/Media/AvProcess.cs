@@ -22,6 +22,7 @@ namespace Nmkoder.Media
         public enum TaskType { ExtractFrames, ExtractOther, Encode, GetInfo, Merge, Other };
         public static TaskType lastTask = TaskType.Other;
 
+        public static string lastOutputFfmpeg;
         public static string lastOutputAv1an;
         public static string lastTempDirAv1an;
 
@@ -65,7 +66,7 @@ namespace Nmkoder.Media
         public static async Task RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, TaskType taskType = TaskType.Other, bool progressBar = false)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
-            lastOutputAv1an = "";
+            lastOutputFfmpeg = "";
             currentLogMode = logMode;
             showProgressBar = progressBar;
             Process ffmpeg = OsUtils.NewProcess(!show);
@@ -113,18 +114,18 @@ namespace Nmkoder.Media
         {
             timeSinceLastOutput.Restart();
             if (Program.busy) setBusy = false;
-            lastOutputAv1an = "";
+            lastOutputFfmpeg = "";
             showProgressBar = progressBar;
             Process ffmpeg = OsUtils.NewProcess(true);
             lastAvProcess = ffmpeg;
             ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe -hide_banner -y -stats {args}";
             Logger.Log($"ffmpeg {args}", true, false, "ffmpeg");
             if (setBusy) Program.mainForm.SetWorking(true);
-            lastOutputAv1an = await OsUtils.GetOutputAsync(ffmpeg);
+            lastOutputFfmpeg = await OsUtils.GetOutputAsync(ffmpeg);
             while (!ffmpeg.HasExited) await Task.Delay(50);
             while (timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
             if (setBusy) Program.mainForm.SetWorking(false);
-            return lastOutputAv1an;
+            return lastOutputFfmpeg;
         }
 
         public static string GetFfprobeOutput(string args)

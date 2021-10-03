@@ -1,6 +1,6 @@
 ﻿namespace Nmkoder.Data.Streams
 {
-    class DataStream : Stream
+    public class DataStream : Stream
     {
         public DataStream(string codec, string codecLong)
         {

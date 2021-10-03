@@ -2,7 +2,7 @@
 
 namespace Nmkoder.Data.Streams
 {
-    class SubtitleStream : Stream
+    public class SubtitleStream : Stream
     {
         public string Language;
         public string Title;

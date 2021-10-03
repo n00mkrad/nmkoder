@@ -290,6 +290,12 @@
     <Compile Include="Forms\PromptForm.Designer.cs">
       <DependentUpon>PromptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Utils\UtilsMetricsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Utils\UtilsMetricsForm.Designer.cs">
+      <DependentUpon>UtilsMetricsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
@@ -320,12 +326,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\FileList.cs" />
+    <Compile Include="UI\Tasks\UtilReadBitrates.cs" />
+    <Compile Include="UI\Tasks\UtilsGetMetrics.cs" />
     <Compile Include="UI\TrackList.cs" />
     <Compile Include="UI\Tasks\Av1an.cs" />
     <Compile Include="UI\Tasks\Av1anUi.cs" />
     <Compile Include="UI\Tasks\QuickConvert.cs" />
     <Compile Include="UI\Tasks\QuickConvertUi.cs" />
-    <Compile Include="UI\Tasks\Utilities.cs" />
     <Compile Include="UI\ThumbnailView.cs" />
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
@@ -335,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PromptForm.resx">
       <DependentUpon>PromptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Utils\UtilsMetricsForm.resx">
+      <DependentUpon>UtilsMetricsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -367,6 +377,7 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\icon_metrics.png" />
     <None Include="Resources\icon_analyze.png" />
     <None Include="Resources\icon_imgStack2.png" />
     <None Include="Resources\icon_speed.png" />

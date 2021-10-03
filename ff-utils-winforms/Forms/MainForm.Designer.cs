@@ -156,6 +156,10 @@
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.utilsBitratesSelBtn = new HTAlt.WinForms.HTButton();
+            this.utilsMetricsPanel = new System.Windows.Forms.Panel();
+            this.utilsMetricsConfBtn = new HTAlt.WinForms.HTButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.settingsGeneralTab = new System.Windows.Forms.TabPage();
@@ -205,6 +209,7 @@
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
+            this.utilsMetricsPanel.SuspendLayout();
             this.settingsPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.settingsGeneralTab.SuspendLayout();
@@ -1856,6 +1861,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.utilsMetricsPanel, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1897,6 +1903,7 @@
             this.utilsBitratesSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
             this.utilsBitratesSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
             this.utilsBitratesSelBtn.DrawImage = true;
+            this.utilsBitratesSelBtn.Enabled = false;
             this.utilsBitratesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
             this.utilsBitratesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
             this.utilsBitratesSelBtn.Location = new System.Drawing.Point(70, 31);
@@ -1905,7 +1912,67 @@
             this.utilsBitratesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.utilsBitratesSelBtn.Size = new System.Drawing.Size(87, 65);
             this.utilsBitratesSelBtn.TabIndex = 0;
-            this.utilsBitratesSelBtn.Click += new System.EventHandler(this.SelectReadBitrates);
+            // 
+            // utilsMetricsPanel
+            // 
+            this.utilsMetricsPanel.Controls.Add(this.utilsMetricsConfBtn);
+            this.utilsMetricsPanel.Controls.Add(this.label1);
+            this.utilsMetricsPanel.Controls.Add(this.utilsMetricsSelBtn);
+            this.utilsMetricsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.utilsMetricsPanel.Location = new System.Drawing.Point(227, 0);
+            this.utilsMetricsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.utilsMetricsPanel.Name = "utilsMetricsPanel";
+            this.utilsMetricsPanel.Size = new System.Drawing.Size(227, 127);
+            this.utilsMetricsPanel.TabIndex = 4;
+            this.utilsMetricsPanel.Click += new System.EventHandler(this.SelectGetMetrics);
+            // 
+            // utilsMetricsConfBtn
+            // 
+            this.utilsMetricsConfBtn.AutoColor = true;
+            this.utilsMetricsConfBtn.ButtonImage = null;
+            this.utilsMetricsConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsMetricsConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsMetricsConfBtn.DrawImage = false;
+            this.utilsMetricsConfBtn.ForeColor = System.Drawing.Color.White;
+            this.utilsMetricsConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsMetricsConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.utilsMetricsConfBtn.Location = new System.Drawing.Point(50, 100);
+            this.utilsMetricsConfBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.utilsMetricsConfBtn.Name = "utilsMetricsConfBtn";
+            this.utilsMetricsConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.utilsMetricsConfBtn.Size = new System.Drawing.Size(127, 23);
+            this.utilsMetricsConfBtn.TabIndex = 18;
+            this.utilsMetricsConfBtn.Text = "Configure";
+            this.utilsMetricsConfBtn.Click += new System.EventHandler(this.utilsMetricsConfBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(4, 4);
+            this.label1.Margin = new System.Windows.Forms.Padding(4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(219, 20);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Get Metrics (VMAF, SSIM, PSNR)";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // utilsMetricsSelBtn
+            // 
+            this.utilsMetricsSelBtn.AutoColor = false;
+            this.utilsMetricsSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_metrics;
+            this.utilsMetricsSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsMetricsSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsMetricsSelBtn.DrawImage = true;
+            this.utilsMetricsSelBtn.Enabled = false;
+            this.utilsMetricsSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsMetricsSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.utilsMetricsSelBtn.Location = new System.Drawing.Point(70, 31);
+            this.utilsMetricsSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.utilsMetricsSelBtn.Name = "utilsMetricsSelBtn";
+            this.utilsMetricsSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.utilsMetricsSelBtn.Size = new System.Drawing.Size(87, 65);
+            this.utilsMetricsSelBtn.TabIndex = 0;
             // 
             // settingsPage
             // 
@@ -2258,6 +2325,7 @@
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
+            this.utilsMetricsPanel.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.htTabControl1.ResumeLayout(false);
             this.settingsGeneralTab.ResumeLayout(false);
@@ -2422,6 +2490,10 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Button trackListMoveUpBtn;
         private System.Windows.Forms.Button trackListMoveDownBtn;
+        private System.Windows.Forms.Panel utilsMetricsPanel;
+        private System.Windows.Forms.Label label1;
+        private HTAlt.WinForms.HTButton utilsMetricsSelBtn;
+        private HTAlt.WinForms.HTButton utilsMetricsConfBtn;
     }
 }
 

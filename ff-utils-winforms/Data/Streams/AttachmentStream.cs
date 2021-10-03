@@ -1,6 +1,6 @@
 ﻿namespace Nmkoder.Data.Streams
 {
-    class AttachmentStream : Stream
+    public class AttachmentStream : Stream
     {
         public AttachmentStream(string codec, string codecLong)
         {

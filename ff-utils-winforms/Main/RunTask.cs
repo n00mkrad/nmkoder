@@ -14,7 +14,7 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates };
+        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics };
         //public static TaskType currentTask;
 
         public enum FileListMode { MultiFileInput, BatchProcess };
@@ -48,7 +48,9 @@ namespace Nmkoder.Main
 
             TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
 
-            if (currentFileListMode == FileListMode.MultiFileInput && TrackList.current == null)
+            bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates;
+
+            if (loadedFileRequired && (currentFileListMode == FileListMode.MultiFileInput && TrackList.current == null))
             {
                 MessageBox.Show("No input file loaded! Please load one first (File List).", "Error");
                 return;
@@ -71,7 +73,10 @@ namespace Nmkoder.Main
                 await Av1an.Run();
 
             if (taskType == TaskType.UtilReadBitrates)
-                await Utilities.RunReadBitrates();
+                await UtilReadBitrates.Run();
+
+            if (taskType == TaskType.UtilGetMetrics)
+                await UtilGetMetrics.Run();
 
             Logger.Log($"Done.");
             Program.mainForm.SetProgress(0);

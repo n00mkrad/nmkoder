@@ -2,7 +2,7 @@
 
 namespace Nmkoder.Data.Streams
 {
-    class VideoStream : Stream
+    public class VideoStream : Stream
     {
         public string ColorSpace;
         public int Kbits;

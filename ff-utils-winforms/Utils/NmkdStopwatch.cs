@@ -7,16 +7,12 @@ namespace Nmkoder.Utils
     class NmkdStopwatch
     {
         public Stopwatch sw = new Stopwatch(); 
+        public long ElapsedMs { get { return sw.ElapsedMilliseconds; } }
 
         public NmkdStopwatch (bool startOnCreation = true)
         {
             if (startOnCreation)
                 sw.Restart();
-        }
-
-        public long GetElapsedMs ()
-        {
-            return sw.ElapsedMilliseconds;
         }
 
         public override string ToString()

@@ -3,6 +3,7 @@ using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.Utils;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -65,6 +66,7 @@ namespace Nmkoder.Media
 
         public static async Task ParseProgressLoop()
         {
+            int workers = Config.GetInt(Config.Key.av1anOptsWorkerCount);
             string dir = AvProcess.lastTempDirAv1an;
             string logFile = Path.Combine(dir, "log.log");
 
@@ -79,6 +81,10 @@ namespace Nmkoder.Media
                 }
             }
 
+            NmkdStopwatch sw = new NmkdStopwatch();
+
+            Dictionary<int, int> etas = new Dictionary<int, int>();
+
             while (File.Exists(logFile))
             {
                 if (!Program.busy) return;
@@ -90,9 +96,26 @@ namespace Nmkoder.Media
                     string contents = sr.ReadToEnd();
                     string[] logLines = contents.SplitIntoLines();
                     int encodedChunks = logLines.Where(x => x.Contains("Done: ")).Count();
+
                     int ratio = FormatUtils.RatioInt(encodedChunks, currentQueueSize);
                     Program.mainForm.SetProgress(ratio);
-                    Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).", false, Logger.GetLastLine().Contains("Encoded"));
+
+                    int etaSecs = 0;
+
+                    if (etas.ContainsKey(encodedChunks))
+                    {
+                        etaSecs = etas[encodedChunks];
+                    }
+                    else
+                    {
+                        float secsPerChunk = ((float)sw.ElapsedMs / 1000) / encodedChunks;
+                        etaSecs = ((currentQueueSize - encodedChunks) * secsPerChunk).RoundToInt();
+                        etas[encodedChunks] = etaSecs;
+                    }
+                    
+                    string etaStr = encodedChunks > workers ? $" ETA: <{FormatUtils.Time(new TimeSpan(0, 0, etaSecs), false)}" : "";
+
+                    Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).{etaStr}", false, Logger.GetLastLine().Contains("Encoded"));
 
                     for (int i = 100; i > 0; i--)
                     {

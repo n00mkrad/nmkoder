@@ -151,6 +151,7 @@ namespace Nmkoder.Forms
             //RefreshIndex();
             streamList.SetSelected(newIndex, true);
             streamList.SetItemChecked(newIndex, isChecked);
+            UpdateDefaultStreamsUi();
         }
     }
 }

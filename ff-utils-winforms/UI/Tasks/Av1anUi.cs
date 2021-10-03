@@ -100,7 +100,7 @@ namespace Nmkoder.UI.Tasks
             CodecInfo info = Codecs.GetCodecInfo(c);
             form.qInfoLabel.Text = info.QInfo;
             form.presetInfoLabel.Text = info.PInfo;
-            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c != Codecs.Av1anCodec.VpxVp9; // Disable grain synth for VP9 since only AV1 has it
+            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c == Codecs.Av1anCodec.AomAv1 || c == Codecs.Av1anCodec.SvtAv1; // Only AV1 has grain synth
             form.av1anGrainSynthDenoiseBox.Enabled = c == Codecs.Av1anCodec.AomAv1; // Only AOM has an option to enable or disable denoising...
             form.av1anGrainSynthDenoiseBox.Checked = c == Codecs.Av1anCodec.SvtAv1; // ...SVT always has it enabled
             LoadQualityLevel(info);

@@ -12,7 +12,7 @@ namespace Nmkoder.Data
     {
         //public enum CodecType { Video, AnimImage, Image, Audio }
 
-        public enum Av1anCodec { AomAv1, SvtAv1, VpxVp9 };
+        public enum Av1anCodec { AomAv1, SvtAv1, VpxVp9, X265 };
         public enum VideoCodec { Copy, StripVideo, H264, H265, H264Nvenc, H265Nvenc, Vp9, Av1, Gif, Png, Jpg };
         public enum AudioCodec { Copy, StripAudio, Aac, Opus, Mp3, Flac };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
@@ -135,6 +135,14 @@ namespace Nmkoder.Data
                 return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {custom} \" --pix-format {pixFmt}");
             }
 
+            if (c == Av1anCodec.X265)
+            {
+                string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
+                string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
+                string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads 1 {custom} \" --pix-format {pixFmt}");
+            }
+
             return new CodecArgs();
         }
 
@@ -240,6 +248,16 @@ namespace Nmkoder.Data
                 string qInfo = "CRF (0-63 - Lower is better)";
                 string pInfo = "Lower = Better compression";
                 return new CodecInfo(c.ToString(), frName, presets, 2, colors, 0, 0, 63, 24, qInfo, pInfo);
+            }
+
+            if (c == Av1anCodec.X265)
+            {
+                string frName = "H.265 / HEVC (x265)";
+                string[] presets = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
+                string[] colors = new string[] { "yuv420p", "yuv444p", "yuv420p10le", "yuv444p10le" };
+                string qInfo = "CRF (0-51 - Lower is better)";
+                string pInfo = "Slower = Better compression";
+                return new CodecInfo(c.ToString(), frName, presets, 3, colors, 0, 0, 51, 22, qInfo, pInfo);
             }
 
             return new CodecInfo();

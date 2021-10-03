@@ -269,5 +269,10 @@ namespace Nmkoder.Forms
         }
 
         #endregion
+
+        private void dropPanel_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            
+        }
     }
 }

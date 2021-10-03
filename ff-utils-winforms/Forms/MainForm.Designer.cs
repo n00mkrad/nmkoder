@@ -103,12 +103,13 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.av1anPage = new Cyotek.Windows.Forms.TabListPage();
-            this.label8 = new System.Windows.Forms.Label();
             this.av1anOutputPath = new System.Windows.Forms.TextBox();
-            this.av1anCustomArgs = new System.Windows.Forms.TextBox();
             this.av1anContainer = new System.Windows.Forms.ComboBox();
             this.av1anTabControl = new HTAlt.WinForms.HTTabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.av1anGrainSynthDenoise = new System.Windows.Forms.CheckBox();
+            this.av1anGrainSynthStrength = new System.Windows.Forms.NumericUpDown();
+            this.label37 = new System.Windows.Forms.Label();
             this.av1anCustomEncArgs = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -140,7 +141,9 @@
             this.label28 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
             this.av1anOptsWorkerCount = new System.Windows.Forms.NumericUpDown();
+            this.av1anCustomArgs = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.av1anOptsChunkMode = new System.Windows.Forms.ComboBox();
             this.label34 = new System.Windows.Forms.Label();
@@ -180,9 +183,6 @@
             this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
-            this.label37 = new System.Windows.Forms.Label();
-            this.av1anGrainSynthStrength = new System.Windows.Forms.NumericUpDown();
-            this.av1anGrainSynthDenoise = new System.Windows.Forms.CheckBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -202,6 +202,7 @@
             this.av1anPage.SuspendLayout();
             this.av1anTabControl.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).BeginInit();
@@ -221,7 +222,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.dropLoadAddBg.SuspendLayout();
             this.dropLoadClearBg.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -1189,17 +1189,6 @@
             this.av1anPage.Size = new System.Drawing.Size(682, 382);
             this.av1anPage.Text = "AV1AN";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(5, 100);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 15);
-            this.label8.TabIndex = 57;
-            this.label8.Text = "Custom Arguments";
-            // 
             // av1anOutputPath
             // 
             this.av1anOutputPath.AllowDrop = true;
@@ -1210,17 +1199,6 @@
             this.av1anOutputPath.Name = "av1anOutputPath";
             this.av1anOutputPath.Size = new System.Drawing.Size(555, 20);
             this.av1anOutputPath.TabIndex = 55;
-            // 
-            // av1anCustomArgs
-            // 
-            this.av1anCustomArgs.AllowDrop = true;
-            this.av1anCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 97);
-            this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
-            this.av1anCustomArgs.Name = "av1anCustomArgs";
-            this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
-            this.av1anCustomArgs.TabIndex = 56;
             // 
             // av1anContainer
             // 
@@ -1299,6 +1277,44 @@
             this.tabPage3.Size = new System.Drawing.Size(668, 318);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Video";
+            // 
+            // av1anGrainSynthDenoise
+            // 
+            this.av1anGrainSynthDenoise.AutoSize = true;
+            this.av1anGrainSynthDenoise.ForeColor = System.Drawing.Color.White;
+            this.av1anGrainSynthDenoise.Location = new System.Drawing.Point(402, 131);
+            this.av1anGrainSynthDenoise.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.av1anGrainSynthDenoise.Name = "av1anGrainSynthDenoise";
+            this.av1anGrainSynthDenoise.Size = new System.Drawing.Size(68, 19);
+            this.av1anGrainSynthDenoise.TabIndex = 72;
+            this.av1anGrainSynthDenoise.Text = "Denoise";
+            this.av1anGrainSynthDenoise.UseVisualStyleBackColor = true;
+            // 
+            // av1anGrainSynthStrength
+            // 
+            this.av1anGrainSynthStrength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anGrainSynthStrength.ForeColor = System.Drawing.Color.White;
+            this.av1anGrainSynthStrength.Location = new System.Drawing.Point(220, 128);
+            this.av1anGrainSynthStrength.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.av1anGrainSynthStrength.Name = "av1anGrainSynthStrength";
+            this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 23);
+            this.av1anGrainSynthStrength.TabIndex = 71;
+            this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Set the video quality level (CRF/CQ)");
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.ForeColor = System.Drawing.Color.White;
+            this.label37.Location = new System.Drawing.Point(7, 130);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(138, 15);
+            this.label37.TabIndex = 70;
+            this.label37.Text = "Grain Synthesis Strength:";
             // 
             // av1anCustomEncArgs
             // 
@@ -1589,7 +1605,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 27);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(668, 238);
+            this.tabPage4.Size = new System.Drawing.Size(668, 318);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Audio";
             // 
@@ -1684,9 +1700,20 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(668, 238);
+            this.tabPage5.Size = new System.Drawing.Size(668, 318);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Av1an Options";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(5, 100);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(111, 15);
+            this.label8.TabIndex = 57;
+            this.label8.Text = "Custom Arguments";
             // 
             // av1anOptsWorkerCount
             // 
@@ -1713,6 +1740,17 @@
             0,
             0});
             this.av1anOptsWorkerCount.ValueChanged += new System.EventHandler(this.SaveConfigAv1an);
+            // 
+            // av1anCustomArgs
+            // 
+            this.av1anCustomArgs.AllowDrop = true;
+            this.av1anCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anCustomArgs.ForeColor = System.Drawing.Color.White;
+            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 97);
+            this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
+            this.av1anCustomArgs.Name = "av1anCustomArgs";
+            this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
+            this.av1anCustomArgs.TabIndex = 56;
             // 
             // label35
             // 
@@ -2151,6 +2189,7 @@
             this.dropPanel.TabIndex = 30;
             this.dropPanel.Visible = false;
             this.dropPanel.DragLeave += new System.EventHandler(this.dropPanel_DragLeave);
+            this.dropPanel.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.dropPanel_QueryContinueDrag);
             // 
             // tableLayoutPanel1
             // 
@@ -2248,44 +2287,6 @@
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.ForeColor = System.Drawing.Color.White;
-            this.label37.Location = new System.Drawing.Point(7, 130);
-            this.label37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(138, 15);
-            this.label37.TabIndex = 70;
-            this.label37.Text = "Grain Synthesis Strength:";
-            // 
-            // av1anGrainSynthStrength
-            // 
-            this.av1anGrainSynthStrength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anGrainSynthStrength.ForeColor = System.Drawing.Color.White;
-            this.av1anGrainSynthStrength.Location = new System.Drawing.Point(220, 128);
-            this.av1anGrainSynthStrength.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.av1anGrainSynthStrength.Name = "av1anGrainSynthStrength";
-            this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 23);
-            this.av1anGrainSynthStrength.TabIndex = 71;
-            this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Set the video quality level (CRF/CQ)");
-            // 
-            // av1anGrainSynthDenoise
-            // 
-            this.av1anGrainSynthDenoise.AutoSize = true;
-            this.av1anGrainSynthDenoise.ForeColor = System.Drawing.Color.White;
-            this.av1anGrainSynthDenoise.Location = new System.Drawing.Point(402, 131);
-            this.av1anGrainSynthDenoise.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            this.av1anGrainSynthDenoise.Name = "av1anGrainSynthDenoise";
-            this.av1anGrainSynthDenoise.Size = new System.Drawing.Size(68, 19);
-            this.av1anGrainSynthDenoise.TabIndex = 72;
-            this.av1anGrainSynthDenoise.Text = "Denoise";
-            this.av1anGrainSynthDenoise.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2339,6 +2340,7 @@
             this.av1anTabControl.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -2362,7 +2364,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.dropLoadAddBg.ResumeLayout(false);
             this.dropLoadClearBg.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

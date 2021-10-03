@@ -68,7 +68,8 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                return new CodecArgs($"-c:v libvpx-vp9 -crf {q} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} -pix_fmt {pixFmt}");
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
+                return new CodecArgs($"-c:v libvpx-vp9 -crf {q} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} {g} -pix_fmt {pixFmt}");
             }
 
             if (c == VideoCodec.Av1)

@@ -76,7 +76,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.Presets[info.QDefault];
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 8));
+                string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.av1KeyIntSecs, 10));
                 return new CodecArgs($"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}");
             }
 

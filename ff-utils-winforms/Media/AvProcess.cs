@@ -196,6 +196,7 @@ namespace Nmkoder.Media
             {
                 av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + @".\vsynth;";
                 av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + @".\enc;";
+                av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + @"..\;";
                 av1an.StartInfo.Arguments = $"{GetCmdArg()} cd /D {dir.Wrap()} & av1an.exe {beforeArgs} {args}";
             }
             catch(Exception e)

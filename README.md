@@ -1,2 +1,7 @@
-# ff-utils
-Winforms GUI toolbox for various FFMPEG actions, such as extracting frames from a video, creating a video from frames, looping a video, changing the speed losslessly, and more.
+# Nmkoder
+Video encoding, muxing, and analysis GUI in Winforms, built around FFmpeg, FFprobe, and av1an.
+
+(Readme to be expanded soon)
+
+![](https://i.imgur.com/c8XtSlG.png)
+

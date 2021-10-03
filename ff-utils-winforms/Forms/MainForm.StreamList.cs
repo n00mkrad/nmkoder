@@ -45,6 +45,17 @@ namespace Nmkoder.Forms
             streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
+        public void UpdateTrackListUpDownBtnsState ()
+        {
+            bool newState = streamList.SelectedItem != null;
+
+            if (trackListMoveUpBtn.Visible != newState)
+                trackListMoveUpBtn.Visible = newState;
+
+            if (trackListMoveDownBtn.Visible != newState)
+                trackListMoveDownBtn.Visible = newState;
+        }
+
         public bool ignoreNextStreamListItemCheck;
 
         private void streamList_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -108,6 +119,38 @@ namespace Nmkoder.Forms
         {
             if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
                 streamList.SelectedItems.Clear();
+
+            UpdateTrackListUpDownBtnsState();
+        }
+
+        private void trackListMoveUpBtn_Click(object sender, EventArgs e)
+        {
+            MoveTrackListItem(-1);
+        }
+
+        private void trackListMoveDownBtn_Click(object sender, EventArgs e)
+        {
+            MoveTrackListItem(1);
+        }
+
+        private void MoveTrackListItem(int direction)
+        {
+            if (streamList.SelectedItem == null || streamList.SelectedIndex < 0)
+                return;
+
+            int newIndex = streamList.SelectedIndex + direction;
+
+            if (newIndex < 0 || newIndex >= streamList.Items.Count)
+                return; // Index out of range - nothing to do
+
+            bool isChecked = streamList.GetItemChecked(streamList.Items.IndexOf(streamList.SelectedItem));
+            object selected = streamList.SelectedItem;
+
+            streamList.Items.Remove(selected);
+            streamList.Items.Insert(newIndex, selected);
+            //RefreshIndex();
+            streamList.SetSelected(newIndex, true);
+            streamList.SetItemChecked(newIndex, isChecked);
         }
     }
 }

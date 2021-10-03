@@ -77,12 +77,30 @@ namespace Nmkoder.Forms
 
         private void fileListMoveUpBtn_Click(object sender, EventArgs e)
         {
-
+            MoveFileListItem(-1);
         }
 
         private void fileListMoveDownBtn_Click(object sender, EventArgs e)
         {
+            MoveFileListItem(1);
+        }
 
+        private void MoveFileListItem(int direction)
+        {
+            if (fileList.SelectedItem == null || fileList.SelectedIndex < 0)
+                return;
+
+            int newIndex = fileList.SelectedIndex + direction;
+
+            if (newIndex < 0 || newIndex >= fileList.Items.Count)
+                return; // Index out of range - nothing to do
+
+            object selected = fileList.SelectedItem;
+
+            fileList.Items.Remove(selected);
+            fileList.Items.Insert(newIndex, selected);
+            //RefreshIndex();
+            fileList.SetSelected(newIndex, true);
         }
 
         private bool AreAnyTracksLoaded ()

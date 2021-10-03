@@ -50,6 +50,8 @@
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListBox();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.trackListMoveUpBtn = new System.Windows.Forms.Button();
+            this.trackListMoveDownBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.trackListDefaultSubs = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -488,6 +490,8 @@
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.trackListMoveUpBtn);
+            this.streamListPage.Controls.Add(this.trackListMoveDownBtn);
             this.streamListPage.Controls.Add(this.label7);
             this.streamListPage.Controls.Add(this.trackListDefaultSubs);
             this.streamListPage.Controls.Add(this.label6);
@@ -498,6 +502,38 @@
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
+            // 
+            // trackListMoveUpBtn
+            // 
+            this.trackListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListMoveUpBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_up;
+            this.trackListMoveUpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(583, 232);
+            this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
+            this.trackListMoveUpBtn.Size = new System.Drawing.Size(35, 35);
+            this.trackListMoveUpBtn.TabIndex = 50;
+            this.toolTip.SetToolTip(this.trackListMoveUpBtn, "Move Up");
+            this.trackListMoveUpBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveUpBtn.Click += new System.EventHandler(this.trackListMoveUpBtn_Click);
+            // 
+            // trackListMoveDownBtn
+            // 
+            this.trackListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListMoveDownBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_down;
+            this.trackListMoveDownBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListMoveDownBtn.Location = new System.Drawing.Point(624, 232);
+            this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
+            this.trackListMoveDownBtn.Size = new System.Drawing.Size(35, 35);
+            this.trackListMoveDownBtn.TabIndex = 49;
+            this.toolTip.SetToolTip(this.trackListMoveDownBtn, "Move Down");
+            this.trackListMoveDownBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveDownBtn.Click += new System.EventHandler(this.trackListMoveDownBtn_Click);
             // 
             // label7
             // 
@@ -2523,6 +2559,8 @@
         private System.Windows.Forms.CheckBox av1anGrainSynthDenoise;
         private System.Windows.Forms.NumericUpDown av1anGrainSynthStrength;
         private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Button trackListMoveUpBtn;
+        private System.Windows.Forms.Button trackListMoveDownBtn;
     }
 }
 

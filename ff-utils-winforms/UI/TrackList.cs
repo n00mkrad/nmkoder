@@ -143,6 +143,7 @@ namespace Nmkoder.UI
                 Program.mainForm.mainTabList.SelectedIndex = 1;
 
             Program.mainForm.UpdateDefaultStreamsUi();
+            Program.mainForm.UpdateTrackListUpDownBtnsState();
         }
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)
@@ -210,9 +211,6 @@ namespace Nmkoder.UI
                     args.Add($"-i {entry.MediaFile.TruePath.Wrap()}");
             }
 
-            //List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath).ToList();
-            //List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
-            //List<string> args = GetInputFiles().Select(x => $"{x.GetConcStr(10)} -i {x.Wrap()}").ToList();
             Logger.Log($"Input Args: {string.Join(" ", args)}", true);
             return string.Join(" ", args);
         }
@@ -221,17 +219,6 @@ namespace Nmkoder.UI
         {
             List<string> args = new List<string>();
             List<string> files = new List<string>();
-
-            //for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            //{
-            //    if (Program.mainForm.streamListBox.GetItemChecked(i))
-            //    {
-            //        Stream stream = ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream;
-            //        args.Add($"-map {}:{stream.Index}");
-            //    }
-            //}
-
-            bool all = true;
 
             int fileIdx = -1;
 
@@ -245,14 +232,9 @@ namespace Nmkoder.UI
 
                 if (Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
                     args.Add($"-map {fileIdx}:{entry.Stream.Index}");
-                else
-                    all = false;
             }
 
-            if (all)
-                return string.Join(" ", files);
-            else
-                return string.Join(" ", args);
+            return string.Join(" ", args);
         }
     }
 }

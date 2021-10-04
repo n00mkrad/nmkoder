@@ -47,7 +47,7 @@ namespace Nmkoder.Forms
             this.fileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.fileList.Name = "fileList";
             this.fileList.ScrollAlwaysVisible = true;
-            this.fileList.Size = new System.Drawing.Size(440, 172);
+            this.fileList.Size = new System.Drawing.Size(440, 162);
             this.fileList.TabIndex = 28;
             // 
             // formatInfo
@@ -68,9 +68,10 @@ namespace Nmkoder.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.importAppendBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.importAppendBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.importAppendBtn.Location = new System.Drawing.Point(12, 246);
+            this.importAppendBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importAppendBtn.Location = new System.Drawing.Point(12, 241);
             this.importAppendBtn.Name = "importAppendBtn";
-            this.importAppendBtn.Size = new System.Drawing.Size(440, 23);
+            this.importAppendBtn.Size = new System.Drawing.Size(440, 28);
             this.importAppendBtn.TabIndex = 57;
             this.importAppendBtn.Text = "Import (Add To Existing Files)";
             this.importAppendBtn.UseVisualStyleBackColor = false;
@@ -82,9 +83,10 @@ namespace Nmkoder.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.importClearBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.importClearBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.importClearBtn.Location = new System.Drawing.Point(12, 217);
+            this.importClearBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importClearBtn.Location = new System.Drawing.Point(12, 207);
             this.importClearBtn.Name = "importClearBtn";
-            this.importClearBtn.Size = new System.Drawing.Size(440, 23);
+            this.importClearBtn.Size = new System.Drawing.Size(440, 28);
             this.importClearBtn.TabIndex = 58;
             this.importClearBtn.Text = "Import (Clear Existing Files First)";
             this.importClearBtn.UseVisualStyleBackColor = false;

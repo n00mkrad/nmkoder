@@ -21,7 +21,7 @@ namespace Nmkoder.Forms
         public FileImportForm(string[] files, bool allowClear)
         {
             InitializeComponent();
-            Text = $"Import {files.Length} Files...";
+            Text = $"Import {files.Length} File{(files.Length != 1 ? "s" : "")}";
             this.files = files;
             importClearBtn.Visible = allowClear;
             AcceptButton = importAppendBtn;
@@ -34,6 +34,9 @@ namespace Nmkoder.Forms
 
         private void FileImportForm_Shown(object sender, EventArgs e)
         {
+            if (!importClearBtn.Visible)
+                importAppendBtn.Text = importAppendBtn.Text.Split(' ')[0];
+
             fileList.Items.Clear();
 
             foreach (string file in files)

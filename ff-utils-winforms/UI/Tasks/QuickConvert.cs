@@ -12,8 +12,7 @@ namespace Nmkoder.UI.Tasks
 {
     class QuickConvert
     {
-        public enum Backend { Ffmpeg, Av1an }
-        public Backend currentBackend = Backend.Ffmpeg;
+        public enum QualityMode { Crf, TargetKbps, TargetMbytes }
 
         public static void Init()
         {
@@ -27,13 +26,14 @@ namespace Nmkoder.UI.Tasks
             
             try
             {
+                bool twoPass = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex != QualityMode.Crf;
                 Codecs.VideoCodec vCodec = GetCurrentCodecV();
                 Codecs.AudioCodec aCodec = GetCurrentCodecA();
                 Codecs.SubtitleCodec sCodec = GetCurrentCodecS();
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
                 string map = TrackList.GetMapArgs();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), TrackList.current);
+                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(twoPass), twoPass, TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(vCodec, codecArgs);
                 string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
@@ -43,6 +43,12 @@ namespace Nmkoder.UI.Tasks
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
                 string muxing = GetMuxingArgsFromUi();
                 args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+
+                if(twoPass)
+                {
+                    args = $"{custIn} {inFiles} -map v {v} {vf} -pass 1 -f null - && " +
+                        $"ffmpeg -y -loglevel warning -stats {custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} -pass 2 {outPath.Wrap()}";
+                }
             }
             catch(Exception e)
             {

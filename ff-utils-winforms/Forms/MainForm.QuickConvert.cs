@@ -17,6 +17,7 @@ using Nmkoder.Main;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Properties;
+using Nmkoder.Utils;
 
 namespace Nmkoder.Forms
 {
@@ -26,6 +27,7 @@ namespace Nmkoder.Forms
         public ComboBox ffmpegContainerBox { get { return containers; } }
         public ComboBox encVidCodecsBox { get { return encVidCodec; } }
         public NumericUpDown encVidQualityBox { get { return encVidQuality; } }
+        public ComboBox encQualModeBox { get { return encQualMode; } }
         public Label qInfoLabel { get { return qInfo; } }
         public ComboBox encVidPresetBox { get { return encVidPreset; } }
         public Label presetInfoLabel { get { return presetInfo; } }
@@ -63,6 +65,32 @@ namespace Nmkoder.Forms
         {
             SaveUiConfig();
             QuickConvertUi.ValidateContainer();
+        }
+
+        private void encQualityMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            encVidQuality.DecimalPlaces = 0;
+
+            if ((QuickConvert.QualityMode)encQualMode.SelectedIndex == QuickConvert.QualityMode.TargetKbps)
+            {
+                encVidQuality.Minimum = 50;
+                encVidQuality.Maximum = 100000;
+                encVidQuality.Value = 1500;
+            }
+            else if ((QuickConvert.QualityMode)encQualMode.SelectedIndex == QuickConvert.QualityMode.TargetMbytes)
+            {
+                encVidQuality.DecimalPlaces = 1;
+                encVidQuality.Minimum = 0;
+                encVidQuality.Maximum = 8192;
+                encVidQuality.Value = 50;
+            }
+            else
+            {
+                CodecInfo info = Codecs.GetCodecInfo((Codecs.VideoCodec)encVidCodec.SelectedIndex);
+                encVidQuality.Minimum = info.QMin.Clamp(0, int.MaxValue);
+                encVidQuality.Maximum = info.QMax.Clamp(0, int.MaxValue);
+                encVidQuality.Value = info.QDefault.Clamp(0, int.MaxValue);
+            }
         }
     }
 }

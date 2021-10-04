@@ -32,6 +32,11 @@ namespace Nmkoder.UI.Tasks
 
             ConfigParser.LoadComboxIndex(form.encVidCodecsBox);
 
+            foreach (QuickConvert.QualityMode qm in Enum.GetValues(typeof(QuickConvert.QualityMode)))  // Load quality modes
+                form.encQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetKbps", "Target Bitrate (Kbps)").Replace("TargetMbytes", "Target Filesize (MB)"));
+
+            form.encQualModeBox.SelectedIndex = 0;
+
             foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
                 form.encAudCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
 
@@ -223,13 +228,41 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
-        public static Dictionary<string, string> GetVideoArgsFromUi()
+        public static Dictionary<string, string> GetVideoArgsFromUi(bool twoPass)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("q", form.encVidQualityBox.Value.ToString());
+
+            if (twoPass)
+                dict.Add("bitrate", GetBitrate());
+            else
+                dict.Add("q", form.encVidQualityBox.Value.ToString());
+                
             dict.Add("preset", form.encVidPresetBox.Text.ToLower());
             dict.Add("pixFmt", form.encVidColorsBox.Text.ToLower());
+
             return dict;
+        }
+
+        private static string GetBitrate()
+        {
+            if((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
+            {
+                string br = form.encVidQualityBox.Text.ToLower().Trim();
+                br = br.EndsWith("k") || br.EndsWith("m") ? br : $"{br.GetInt()}k";
+                return br;
+            }
+
+            if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetMbytes)
+            {
+                double durationSecs = TrackList.current.DurationMs / (double)1000;
+                float targetMbytes = form.encVidQualityBox.Text.GetFloat();
+                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024); 
+                int targetBitrate = (int)Math.Floor(targetBits / durationSecs); // Round down since undershooting is better than overshooting here
+                Logger.Log($"GetBitrate - TargetMbytes Mode - Distributing {targetMbytes} megabytes ({(float)targetBits / 1024} kbits) over {durationSecs} secs => {targetBitrate} bps => ~{(float)targetBitrate / 1024} kbps bitrate");
+                return $"{targetBitrate}";
+            }
+
+            return "0";
         }
 
         public static Dictionary<string, string> GetAudioArgsFromUi()

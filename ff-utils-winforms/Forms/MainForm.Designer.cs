@@ -65,6 +65,7 @@
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.encQualMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.presetInfo = new System.Windows.Forms.Label();
@@ -684,6 +685,7 @@
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.encQualMode);
             this.encVid.Controls.Add(this.label4);
             this.encVid.Controls.Add(this.label3);
             this.encVid.Controls.Add(this.presetInfo);
@@ -710,6 +712,20 @@
             this.encVid.Size = new System.Drawing.Size(668, 288);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // encQualMode
+            // 
+            this.encQualMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encQualMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encQualMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encQualMode.ForeColor = System.Drawing.Color.White;
+            this.encQualMode.FormattingEnabled = true;
+            this.encQualMode.Location = new System.Drawing.Point(336, 38);
+            this.encQualMode.Name = "encQualMode";
+            this.encQualMode.Size = new System.Drawing.Size(134, 23);
+            this.encQualMode.TabIndex = 65;
+            this.toolTip.SetToolTip(this.encQualMode, "Use either a CRF value or a target VMAF quality level");
+            this.encQualMode.SelectedIndexChanged += new System.EventHandler(this.encQualityMode_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -827,7 +843,7 @@
             0,
             0});
             this.encVidQuality.Name = "encVidQuality";
-            this.encVidQuality.Size = new System.Drawing.Size(250, 23);
+            this.encVidQuality.Size = new System.Drawing.Size(110, 23);
             this.encVidQuality.TabIndex = 52;
             this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality level (CRF/CQ)");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
@@ -918,9 +934,9 @@
             this.label50.Location = new System.Drawing.Point(7, 100);
             this.label50.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(133, 15);
+            this.label50.Size = new System.Drawing.Size(80, 15);
             this.label50.TabIndex = 20;
-            this.label50.Text = "Color Space (Bit Depth):";
+            this.label50.Text = "Color Format:";
             // 
             // label49
             // 
@@ -940,9 +956,9 @@
             this.label48.Location = new System.Drawing.Point(7, 40);
             this.label48.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(78, 15);
+            this.label48.Size = new System.Drawing.Size(91, 15);
             this.label48.TabIndex = 18;
-            this.label48.Text = "Quality Level:";
+            this.label48.Text = "Quality Control:";
             // 
             // label38
             // 
@@ -1599,9 +1615,9 @@
             this.label23.Location = new System.Drawing.Point(7, 40);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(78, 15);
+            this.label23.Size = new System.Drawing.Size(91, 15);
             this.label23.TabIndex = 18;
-            this.label23.Text = "Quality Level:";
+            this.label23.Text = "Quality Control:";
             // 
             // label24
             // 
@@ -2393,6 +2409,7 @@
         private System.Windows.Forms.Label label1;
         private HTAlt.WinForms.HTButton utilsMetricsSelBtn;
         private HTAlt.WinForms.HTButton utilsMetricsConfBtn;
+        private System.Windows.Forms.ComboBox encQualMode;
     }
 }
 

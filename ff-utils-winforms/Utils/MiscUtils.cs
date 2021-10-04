@@ -11,9 +11,9 @@ namespace Nmkoder.Utils
 {
     class MiscUtils
     {
-        public static T ParseEnum<T>(string value)
+        public static T ParseEnum<T>(string value, bool ignoreCase = true)
         {
-            return (T)Enum.Parse(typeof(T), value, true);
+            return (T)Enum.Parse(typeof(T), value, ignoreCase);
         }
 
         public static string GetScaleFilter(string w, string h, bool logWarnings = true)

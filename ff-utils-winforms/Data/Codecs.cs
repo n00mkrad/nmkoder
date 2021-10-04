@@ -122,7 +122,7 @@ namespace Nmkoder.Data
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
-                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --film-grain {grain} {custom} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp 4 --film-grain {grain} {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.VpxVp9)

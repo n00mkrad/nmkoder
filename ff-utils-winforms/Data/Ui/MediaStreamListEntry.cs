@@ -10,7 +10,7 @@ using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.Data.Ui
 {
-    class MediaStreamListEntry
+    public class MediaStreamListEntry
     {
         public MediaFile MediaFile;
         public Stream Stream;

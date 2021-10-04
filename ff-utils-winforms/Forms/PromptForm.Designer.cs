@@ -29,6 +29,7 @@ namespace Nmkoder.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PromptForm));
             this.msgLabel = new System.Windows.Forms.Label();
             this.textBox = new System.Windows.Forms.TextBox();
             this.confirmBtn = new System.Windows.Forms.Button();
@@ -82,6 +83,7 @@ namespace Nmkoder.Forms
             this.Controls.Add(this.msgLabel);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PromptForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Prompt";

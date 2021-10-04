@@ -259,6 +259,7 @@
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
     <Compile Include="Data\Ui\MediaStreamListEntry.cs" />
+    <Compile Include="Data\Ui\SimpleFileListEntry.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Data\Streams\AudioStream.cs" />
     <Compile Include="Data\Codecs.cs" />
@@ -269,6 +270,12 @@
     <Compile Include="Data\QueryInfo.cs" />
     <Compile Include="Data\Streams\VideoStream.cs" />
     <Compile Include="Extensions\MagickExtensions.cs" />
+    <Compile Include="Forms\FileImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileImportForm.Designer.cs">
+      <DependentUpon>FileImportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.Av1an.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -337,6 +344,9 @@
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
+    <EmbeddedResource Include="Forms\FileImportForm.resx">
+      <DependentUpon>FileImportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -173,12 +173,6 @@
             this.pauseBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.dropPanel = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.dropLoadAddBg = new System.Windows.Forms.Panel();
-            this.dropLoadFilesAdd = new System.Windows.Forms.Label();
-            this.dropLoadClearBg = new System.Windows.Forms.Panel();
-            this.dropLoadFilesClear = new System.Windows.Forms.Label();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.runBtn = new System.Windows.Forms.Button();
             this.inputPanel.SuspendLayout();
@@ -215,10 +209,6 @@
             this.settingsGeneralTab.SuspendLayout();
             this.settingsContainersTab.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
-            this.dropPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.dropLoadAddBg.SuspendLayout();
-            this.dropLoadClearBg.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -2152,86 +2142,6 @@
             this.stopBtn.UseVisualStyleBackColor = false;
             this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
-            // dropPanel
-            // 
-            this.dropPanel.AllowDrop = true;
-            this.dropPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.dropPanel.Controls.Add(this.tableLayoutPanel1);
-            this.dropPanel.Location = new System.Drawing.Point(12, 86);
-            this.dropPanel.Name = "dropPanel";
-            this.dropPanel.Size = new System.Drawing.Size(314, 366);
-            this.dropPanel.TabIndex = 30;
-            this.dropPanel.Visible = false;
-            this.dropPanel.DragLeave += new System.EventHandler(this.dropPanel_DragLeave);
-            this.dropPanel.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.dropPanel_QueryContinueDrag);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.dropLoadAddBg, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.dropLoadClearBg, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(314, 366);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // dropLoadAddBg
-            // 
-            this.dropLoadAddBg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dropLoadAddBg.Controls.Add(this.dropLoadFilesAdd);
-            this.dropLoadAddBg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dropLoadAddBg.Location = new System.Drawing.Point(40, 203);
-            this.dropLoadAddBg.Margin = new System.Windows.Forms.Padding(40, 20, 40, 40);
-            this.dropLoadAddBg.Name = "dropLoadAddBg";
-            this.dropLoadAddBg.Size = new System.Drawing.Size(234, 123);
-            this.dropLoadAddBg.TabIndex = 3;
-            // 
-            // dropLoadFilesAdd
-            // 
-            this.dropLoadFilesAdd.AllowDrop = true;
-            this.dropLoadFilesAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dropLoadFilesAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dropLoadFilesAdd.ForeColor = System.Drawing.Color.White;
-            this.dropLoadFilesAdd.Location = new System.Drawing.Point(0, 0);
-            this.dropLoadFilesAdd.Name = "dropLoadFilesAdd";
-            this.dropLoadFilesAdd.Size = new System.Drawing.Size(234, 123);
-            this.dropLoadFilesAdd.TabIndex = 1;
-            this.dropLoadFilesAdd.Text = "Drop Here To Load\r\n(Add To Existing Files)";
-            this.dropLoadFilesAdd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.dropLoadFilesAdd.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesAdd_DragDrop);
-            this.dropLoadFilesAdd.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesAdd_DragEnter);
-            // 
-            // dropLoadClearBg
-            // 
-            this.dropLoadClearBg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dropLoadClearBg.Controls.Add(this.dropLoadFilesClear);
-            this.dropLoadClearBg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dropLoadClearBg.Location = new System.Drawing.Point(40, 40);
-            this.dropLoadClearBg.Margin = new System.Windows.Forms.Padding(40, 40, 40, 20);
-            this.dropLoadClearBg.Name = "dropLoadClearBg";
-            this.dropLoadClearBg.Size = new System.Drawing.Size(234, 123);
-            this.dropLoadClearBg.TabIndex = 2;
-            // 
-            // dropLoadFilesClear
-            // 
-            this.dropLoadFilesClear.AllowDrop = true;
-            this.dropLoadFilesClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dropLoadFilesClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dropLoadFilesClear.ForeColor = System.Drawing.Color.White;
-            this.dropLoadFilesClear.Location = new System.Drawing.Point(0, 0);
-            this.dropLoadFilesClear.Name = "dropLoadFilesClear";
-            this.dropLoadFilesClear.Size = new System.Drawing.Size(234, 123);
-            this.dropLoadFilesClear.TabIndex = 0;
-            this.dropLoadFilesClear.Text = "Drop Here To Load\r\n(Clear Existing Files)";
-            this.dropLoadFilesClear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.dropLoadFilesClear.DragDrop += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragDrop);
-            this.dropLoadFilesClear.DragEnter += new System.Windows.Forms.DragEventHandler(this.dropLoadFilesClear_DragEnter);
-            // 
             // currentActionLabel
             // 
             this.currentActionLabel.AutoSize = true;
@@ -2268,7 +2178,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
             this.Controls.Add(this.currentActionLabel);
-            this.Controls.Add(this.dropPanel);
             this.Controls.Add(this.busyControlsPanel);
             this.Controls.Add(this.progressCircle);
             this.Controls.Add(this.tabList);
@@ -2333,10 +2242,6 @@
             this.settingsContainersTab.ResumeLayout(false);
             this.settingsContainersTab.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
-            this.dropPanel.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.dropLoadAddBg.ResumeLayout(false);
-            this.dropLoadClearBg.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2414,12 +2319,6 @@
         private System.Windows.Forms.TextBox encScaleW;
         private System.Windows.Forms.ComboBox fileListMode;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.Panel dropPanel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label dropLoadFilesClear;
-        private System.Windows.Forms.Label dropLoadFilesAdd;
-        private System.Windows.Forms.Panel dropLoadAddBg;
-        private System.Windows.Forms.Panel dropLoadClearBg;
         private System.Windows.Forms.TextBox encCustomArgsOut;
         private HTAlt.WinForms.HTTabControl htTabControl1;
         private System.Windows.Forms.TabPage settingsGeneralTab;

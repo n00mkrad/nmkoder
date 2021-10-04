@@ -163,22 +163,26 @@ namespace Nmkoder.Forms
 
         private void inputPanel_DragEnter(object sender, DragEventArgs e)
         {
-            if(fileList.Items.Count < 1)
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                dropPanel.Visible = true;
-                dropLoadClearBg.BackColor = Color.FromArgb(48, 48, 48);
-                dropLoadAddBg.BackColor = Color.FromArgb(48, 48, 48);
-            }
+            e.Effect = DragDropEffects.Copy;
         }
 
         private void inputPanel_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            TrackList.HandleFiles(files, true);
+            bool anyFilesLoaded = fileList.Items.Count > 0;
+
+            if(files.Length > 1 || anyFilesLoaded)
+            {
+                FileImportForm form = new FileImportForm(files, anyFilesLoaded);
+                form.ShowDialog();
+
+                if (form.ImportFiles.Count > 0)
+                    TrackList.HandleFiles(form.ImportFiles.ToArray(), form.Clear);
+            }
+            else
+            {
+                TrackList.HandleFiles(files, false);
+            }
         }
 
         public void runBtn_Click(object sender = null, EventArgs e = null)
@@ -235,48 +239,6 @@ namespace Nmkoder.Forms
                 LoadConfig();
             else
                 SaveConfig();
-        }
-
-        #region File Drop Panel
-
-        private void dropLoadFilesClear_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-            dropLoadClearBg.BackColor = Color.FromArgb(64, 64, 64);
-            dropLoadAddBg.BackColor = Color.FromArgb(48, 48, 48);
-        }
-
-        private void dropLoadFilesAdd_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-            dropLoadClearBg.BackColor = Color.FromArgb(48, 48, 48);
-            dropLoadAddBg.BackColor = Color.FromArgb(64, 64, 64);
-        }
-
-        private void dropLoadFilesClear_DragDrop(object sender, DragEventArgs e)
-        {
-            dropPanel.Visible = false;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            TrackList.HandleFiles(files, true);
-        }
-
-        private void dropLoadFilesAdd_DragDrop(object sender, DragEventArgs e)
-        {
-            dropPanel.Visible = false;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            TrackList.HandleFiles(files, false);
-        }
-
-        private void dropPanel_DragLeave(object sender, EventArgs e)
-        {
-            dropPanel.Visible = false;
-        }
-
-        #endregion
-
-        private void dropPanel_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
-        {
-            
         }
     }
 }

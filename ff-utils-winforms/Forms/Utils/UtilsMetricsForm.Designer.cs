@@ -29,6 +29,7 @@ namespace Nmkoder.Forms.Utils
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UtilsMetricsForm));
             this.confirmBtn = new System.Windows.Forms.Button();
             this.encodedVideo = new System.Windows.Forms.ComboBox();
             this.referenceVideo = new System.Windows.Forms.ComboBox();
@@ -187,6 +188,7 @@ namespace Nmkoder.Forms.Utils
             this.Controls.Add(this.confirmBtn);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UtilsMetricsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Metrics";

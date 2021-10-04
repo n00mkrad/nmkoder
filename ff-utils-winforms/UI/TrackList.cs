@@ -152,6 +152,7 @@ namespace Nmkoder.UI
                 return "";
 
             List<string> lines = new List<string>();
+            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileName(mediaFile.SourcePath) : "Unknown")}");
             lines.Add($"Codec: {stream.CodecLong}");
 
             if (stream.Type == Stream.StreamType.Video)
@@ -161,7 +162,6 @@ namespace Nmkoder.UI
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
                 lines.Add($"Color Space: {v.ColorSpace}{(v.ColorSpace.ToLower().Contains("p10") ? " (10-bit)" : " (8-bit)")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
-                lines.Add($"Language: {((v.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(v.Language, 4)}" : "Unknown")}");
             }
 
             if (stream.Type == Stream.StreamType.Audio)

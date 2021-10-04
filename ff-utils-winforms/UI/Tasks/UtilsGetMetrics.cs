@@ -10,7 +10,6 @@ using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.Media;
 using Nmkoder.Utils;
-using Stream = Nmkoder.Data.Streams.Stream;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -18,7 +17,7 @@ namespace Nmkoder.UI.Tasks
     {
         public static string vidLq;
         public static string vidHq;
-        public static bool runVmaf = true;
+        public static bool runVmaf;
         public static bool runSsim;
         public static bool runPsnr;
 

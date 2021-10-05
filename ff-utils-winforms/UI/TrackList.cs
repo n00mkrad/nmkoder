@@ -218,20 +218,19 @@ namespace Nmkoder.UI
         public static string GetMapArgs()
         {
             List<string> args = new List<string>();
-            List<string> files = new List<string>();
-
-            int fileIdx = -1;
+            List<int> fileIndexesToMap = new List<int>();
 
             foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
             {
-                if (entry.Stream.Index == 0)
-                {
-                    fileIdx++;
-                    files.Add($"-map {fileIdx}");
-                }
-
                 if (Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
+                {
+                    int fileIdx = entry.ToString().Split('-')[0].GetInt() - 1;
+
+                    if (!fileIndexesToMap.Contains(fileIdx))
+                        fileIndexesToMap.Add(fileIdx);
+
                     args.Add($"-map {fileIdx}:{entry.Stream.Index}");
+                }
             }
 
             return string.Join(" ", args);

@@ -269,7 +269,7 @@ namespace Nmkoder.UI.Tasks
                 float targetMbytes = form.encVidQualityBox.Text.GetFloat();
                 long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024); 
                 int targetBitrate = (int)Math.Floor(targetBits / durationSecs); // Round down since undershooting is better than overshooting here
-                Logger.Log($"GetBitrate - TargetMbytes Mode - Distributing {targetMbytes} megabytes ({(float)targetBits / 1024} kbits) over {durationSecs} secs => {targetBitrate} bps => ~{(float)targetBitrate / 1024} kbps bitrate");
+                Logger.Log($"Target Filesize Mode: Using bitrate of {((float)targetBitrate / 1024).ToString("0.0")} kbps over {durationSecs.ToString("0.0")} seconds to hit {targetMbytes} megabytes.");
                 return $"{targetBitrate}";
             }
 

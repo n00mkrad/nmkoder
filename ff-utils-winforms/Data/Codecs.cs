@@ -17,7 +17,7 @@ namespace Nmkoder.Data
         public enum AudioCodec { Copy, StripAudio, Aac, Opus, Mp3, Flac };
         public enum SubtitleCodec { Copy, StripSubs, MovText, Srt, WebVtt };
 
-        public static CodecArgs GetArgs(VideoCodec c, Dictionary<string, string> encArgs, bool twoPass, MediaFile mediaFile = null)
+        public static CodecArgs GetArgs(VideoCodec c, Dictionary<string, string> encArgs, bool vbr, MediaFile mediaFile = null)
         {
             CodecInfo info = GetCodecInfo(c);
 
@@ -36,7 +36,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.QDefault.ToString();
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string rc = twoPass ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
+                string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
                 return new CodecArgs($"-c:v libx264 {rc} -preset {preset} -pix_fmt {pixFmt}");
             }
 
@@ -45,7 +45,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.QDefault.ToString();
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string rc = twoPass ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
+                string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
                 return new CodecArgs($"-c:v libx265 {rc} -preset {preset} -pix_fmt {pixFmt}");
             }
 
@@ -70,7 +70,7 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.QDefault.ToString();
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
-                string rc = twoPass ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
+                string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
                 return new CodecArgs($"-c:v libvpx-vp9 {rc} -tile-columns 2 -tile-rows 2 -row-mt 1 -cpu-used {preset} {g} -pix_fmt {pixFmt}");
             }
@@ -80,8 +80,9 @@ namespace Nmkoder.Data
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.QDefault.ToString();
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
+                string rc = vbr ? $"-rc vbr -b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
                 string g = GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
-                return new CodecArgs($"-c:v libsvtav1 -qp {q} -tile_columns 2 -tile_rows 1 -preset {preset} {g} -pix_fmt {pixFmt}");
+                return new CodecArgs($"-c:v libsvtav1 {rc} -tile_columns 1 -tile_rows 0 -preset {preset} {g} -pix_fmt {pixFmt}");
             }
 
             if (c == VideoCodec.Gif)

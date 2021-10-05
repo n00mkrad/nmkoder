@@ -58,9 +58,9 @@ namespace Nmkoder.Data
             return path;
         }
 
-        public static string GetVmafPath(bool escape)
+        public static string GetVmafPath(bool escape, string model = "vmaf_v0.6.1")
         {
-            string path = Path.Combine(GetBinPath(), "vmaf_v0.6.1.json");
+            string path = Path.Combine(GetBinPath(), $"{model}.json");
 
             if (escape)
                 return FormatUtils.GetFilterPath(path);

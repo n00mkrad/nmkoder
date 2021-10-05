@@ -16,15 +16,19 @@ namespace Nmkoder.Forms.Utils
     {
         public bool[] CheckedBoxes { get; set; }
         public int AlignMode { get; set; } = 0;
+        public int VmafModel { get; set; } = 0;
         public string VideoLq { get; set; }
         public string VideoHq { get; set; }
 
-        public UtilsMetricsForm(bool vmafChecked, bool ssimChecked, bool psnrChecked)
+        public UtilsMetricsForm()
         {
             InitializeComponent();
-            vmaf.Checked = vmafChecked;
-            ssim.Checked = ssimChecked;
-            psnr.Checked = psnrChecked;
+            
+            vmaf.Checked = UtilGetMetrics.runVmaf;
+            ssim.Checked = UtilGetMetrics.runSsim;
+            psnr.Checked = UtilGetMetrics.runPsnr;
+            align.SelectedIndex = UtilGetMetrics.alignMode;
+            vmafMdl.SelectedIndex = UtilGetMetrics.vmafModel;
             AcceptButton = confirmBtn;
         }
 
@@ -50,6 +54,7 @@ namespace Nmkoder.Forms.Utils
         private void confirmBtn_Click(object sender, EventArgs e)
         {
             AlignMode = align.SelectedIndex;
+            VmafModel = vmafMdl.SelectedIndex;
             CheckedBoxes = new bool[] { vmaf.Checked, ssim.Checked, psnr.Checked };
             VideoLq = ((MediaFile)encodedVideo.SelectedItem).TruePath;
             VideoHq = ((MediaFile)referenceVideo.SelectedItem).TruePath;

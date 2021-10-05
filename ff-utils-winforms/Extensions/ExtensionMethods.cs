@@ -236,7 +236,14 @@ namespace Nmkoder.Extensions
 
         public static bool IsConcatFile(this string filePath)
         {
-            return Path.GetExtension(filePath).ToLower() == ".concat";
+            try
+            {
+                return Path.GetExtension(filePath).ToLower() == ".concat";
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static string GetConcStr (this string filePath, int rate = -1)

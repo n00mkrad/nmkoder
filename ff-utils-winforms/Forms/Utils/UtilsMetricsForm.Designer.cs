@@ -43,6 +43,7 @@ namespace Nmkoder.Forms.Utils
             this.psnr = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.align = new System.Windows.Forms.ComboBox();
+            this.vmafMdl = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // confirmBtn
@@ -199,12 +200,29 @@ namespace Nmkoder.Forms.Utils
             this.align.Size = new System.Drawing.Size(222, 21);
             this.align.TabIndex = 77;
             // 
+            // vmafMdl
+            // 
+            this.vmafMdl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.vmafMdl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.vmafMdl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.vmafMdl.ForeColor = System.Drawing.Color.White;
+            this.vmafMdl.FormattingEnabled = true;
+            this.vmafMdl.Items.AddRange(new object[] {
+            "VMAF v0.6.1 (1080p)",
+            "VMAF v0.6.1 NEG (1080p)",
+            "VMAF v0.6.1 (4K)"});
+            this.vmafMdl.Location = new System.Drawing.Point(131, 101);
+            this.vmafMdl.Name = "vmafMdl";
+            this.vmafMdl.Size = new System.Drawing.Size(201, 21);
+            this.vmafMdl.TabIndex = 78;
+            // 
             // UtilsMetricsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(344, 227);
+            this.Controls.Add(this.vmafMdl);
             this.Controls.Add(this.align);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.psnr);
@@ -246,5 +264,6 @@ namespace Nmkoder.Forms.Utils
         private System.Windows.Forms.CheckBox psnr;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox align;
+        private System.Windows.Forms.ComboBox vmafMdl;
     }
 }

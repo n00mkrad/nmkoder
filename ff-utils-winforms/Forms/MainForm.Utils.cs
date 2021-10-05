@@ -50,13 +50,14 @@ namespace Nmkoder.Forms
                 return;
             }
 
-            Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm(UtilGetMetrics.runVmaf, UtilGetMetrics.runSsim, UtilGetMetrics.runPsnr);
+            Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm();
             form.ShowDialog();
 
             if (form.DialogResult != DialogResult.OK)
                 return;
 
             UtilGetMetrics.alignMode = form.AlignMode;
+            UtilGetMetrics.vmafModel = form.VmafModel;
             UtilGetMetrics.runVmaf = form.CheckedBoxes[0];
             UtilGetMetrics.runSsim = form.CheckedBoxes[1];
             UtilGetMetrics.runPsnr = form.CheckedBoxes[2];

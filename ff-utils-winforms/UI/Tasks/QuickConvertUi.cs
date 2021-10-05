@@ -81,7 +81,9 @@ namespace Nmkoder.UI.Tasks
             CodecInfo info = Codecs.GetCodecInfo(c);
             Program.mainForm.ffmpegContainerBox.Visible = !Codecs.IsFixedFormat(c); // Disable container selection for fixed formats (GIF, PNG etc)
             bool enc = !(c == Codecs.VideoCodec.Copy || c == Codecs.VideoCodec.StripVideo);
+            bool noRateControl = c == Codecs.VideoCodec.Gif || c == Codecs.VideoCodec.Png || c == Codecs.VideoCodec.Jpg;
             Program.mainForm.encVidQualityBox.Enabled = enc && info.QMin != info.QMax;
+            Program.mainForm.encQualModeBox.Enabled = enc && !noRateControl;
             Program.mainForm.encVidPresetBox.Enabled = enc && info.Presets.Length > 0;
             Program.mainForm.encVidColorsBox.Enabled = enc && info.ColorFormats.Length > 0;
             Program.mainForm.encVidFpsBox.Enabled = enc;

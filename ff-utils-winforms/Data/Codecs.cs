@@ -77,6 +77,7 @@ namespace Nmkoder.Data
 
             if (c == VideoCodec.Av1)
             {
+                if (vbr) Logger.Log($"WARNING: The 2-Pass implementation of SVT-AV1 is experimental. It might crash or produce inaccurate results.");
                 string q = encArgs.ContainsKey("q") ? encArgs["q"] : info.QDefault.ToString();
                 string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : info.Presets[info.PresetDef];
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];

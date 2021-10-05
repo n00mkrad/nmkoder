@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace Nmkoder.Forms.Utils
     public partial class UtilsMetricsForm : Form
     {
         public bool[] CheckedBoxes { get; set; }
+        public int AlignMode { get; set; } = 0;
         public string VideoLq { get; set; }
         public string VideoHq { get; set; }
 
@@ -28,7 +30,7 @@ namespace Nmkoder.Forms.Utils
 
         private void UtilsMetricsForm_Load(object sender, EventArgs e)
         {
-
+            align.SelectedIndex = UtilGetMetrics.alignMode;
         }
 
         private void UtilsMetricsForm_Shown(object sender, EventArgs e)
@@ -47,6 +49,7 @@ namespace Nmkoder.Forms.Utils
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            AlignMode = align.SelectedIndex;
             CheckedBoxes = new bool[] { vmaf.Checked, ssim.Checked, psnr.Checked };
             VideoLq = ((MediaFile)encodedVideo.SelectedItem).TruePath;
             VideoHq = ((MediaFile)referenceVideo.SelectedItem).TruePath;

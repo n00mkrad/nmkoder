@@ -165,13 +165,12 @@ namespace Nmkoder.Media
             return $"pad=width=ceil(iw/{px})*{px}:height=ceil(ih/{px})*{px}:color=black@0";
         }
 
-        public static async Task<string> GetCurrentAutoCrop(bool quiet)
+        public static async Task<string> GetCurrentAutoCrop(string path, bool quiet)
         {
             string msg = "Detecting crop... This can take a while for long videos.";
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 10);
-            string path = TrackList.current.TruePath;
             long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();

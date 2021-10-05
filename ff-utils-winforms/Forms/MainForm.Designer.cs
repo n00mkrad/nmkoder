@@ -161,6 +161,10 @@
             this.utilsMetricsConfBtn = new HTAlt.WinForms.HTButton();
             this.label1 = new System.Windows.Forms.Label();
             this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
+            this.utilsOcrPanel = new System.Windows.Forms.Panel();
+            this.htButton1 = new HTAlt.WinForms.HTButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.htButton2 = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.settingsGeneralTab = new System.Windows.Forms.TabPage();
@@ -205,6 +209,7 @@
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
             this.utilsMetricsPanel.SuspendLayout();
+            this.utilsOcrPanel.SuspendLayout();
             this.settingsPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.settingsGeneralTab.SuspendLayout();
@@ -1868,6 +1873,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsMetricsPanel, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.utilsOcrPanel, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1979,6 +1985,66 @@
             this.utilsMetricsSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.utilsMetricsSelBtn.Size = new System.Drawing.Size(87, 65);
             this.utilsMetricsSelBtn.TabIndex = 0;
+            // 
+            // utilsOcrPanel
+            // 
+            this.utilsOcrPanel.Controls.Add(this.htButton1);
+            this.utilsOcrPanel.Controls.Add(this.label2);
+            this.utilsOcrPanel.Controls.Add(this.htButton2);
+            this.utilsOcrPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.utilsOcrPanel.Location = new System.Drawing.Point(454, 0);
+            this.utilsOcrPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.utilsOcrPanel.Name = "utilsOcrPanel";
+            this.utilsOcrPanel.Size = new System.Drawing.Size(228, 127);
+            this.utilsOcrPanel.TabIndex = 5;
+            this.utilsOcrPanel.Click += new System.EventHandler(this.SelectOcr);
+            // 
+            // htButton1
+            // 
+            this.htButton1.AutoColor = true;
+            this.htButton1.ButtonImage = null;
+            this.htButton1.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.htButton1.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.htButton1.DrawImage = false;
+            this.htButton1.ForeColor = System.Drawing.Color.White;
+            this.htButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.htButton1.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.htButton1.Location = new System.Drawing.Point(50, 100);
+            this.htButton1.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.htButton1.Name = "htButton1";
+            this.htButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.htButton1.Size = new System.Drawing.Size(127, 23);
+            this.htButton1.TabIndex = 18;
+            this.htButton1.Text = "Configure";
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(4, 4);
+            this.label2.Margin = new System.Windows.Forms.Padding(4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(219, 20);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Convert Bitmap Subtitles To Text";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // htButton2
+            // 
+            this.htButton2.AutoColor = false;
+            this.htButton2.ButtonImage = global::Nmkoder.Properties.Resources.icon_subs;
+            this.htButton2.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.htButton2.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.htButton2.DrawImage = true;
+            this.htButton2.Enabled = false;
+            this.htButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.htButton2.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.htButton2.Location = new System.Drawing.Point(70, 31);
+            this.htButton2.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.htButton2.Name = "htButton2";
+            this.htButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.htButton2.Size = new System.Drawing.Size(87, 65);
+            this.htButton2.TabIndex = 0;
             // 
             // settingsPage
             // 
@@ -2251,6 +2317,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
             this.utilsMetricsPanel.ResumeLayout(false);
+            this.utilsOcrPanel.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.htTabControl1.ResumeLayout(false);
             this.settingsGeneralTab.ResumeLayout(false);
@@ -2410,6 +2477,10 @@
         private HTAlt.WinForms.HTButton utilsMetricsSelBtn;
         private HTAlt.WinForms.HTButton utilsMetricsConfBtn;
         private System.Windows.Forms.ComboBox encQualMode;
+        private System.Windows.Forms.Panel utilsOcrPanel;
+        private HTAlt.WinForms.HTButton htButton1;
+        private System.Windows.Forms.Label label2;
+        private HTAlt.WinForms.HTButton htButton2;
     }
 }
 

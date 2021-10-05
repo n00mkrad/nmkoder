@@ -329,12 +329,15 @@
     <Compile Include="Media\GetFrameCountCached.cs" />
     <Compile Include="Media\GetMediaResolutionCached.cs" />
     <Compile Include="Media\GetVideoInfo.cs" />
+    <Compile Include="Media\OcrProcess.cs" />
+    <Compile Include="Media\OcrUtils.cs" />
     <Compile Include="OS\OsUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\FileList.cs" />
+    <Compile Include="UI\Tasks\UtilOcr.cs" />
     <Compile Include="UI\Tasks\UtilReadBitrates.cs" />
-    <Compile Include="UI\Tasks\UtilsGetMetrics.cs" />
+    <Compile Include="UI\Tasks\UtilGetMetrics.cs" />
     <Compile Include="UI\TrackList.cs" />
     <Compile Include="UI\Tasks\Av1an.cs" />
     <Compile Include="UI\Tasks\Av1anUi.cs" />
@@ -387,6 +390,7 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\icon_subs.png" />
     <None Include="Resources\icon_metrics.png" />
     <None Include="Resources\icon_analyze.png" />
     <None Include="Resources\icon_imgStack2.png" />

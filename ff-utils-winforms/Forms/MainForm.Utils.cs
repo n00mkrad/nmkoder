@@ -50,8 +50,13 @@ namespace Nmkoder.Forms
                 return;
             }
 
-            Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm(UtilGetMetrics.runVmaf, false, false);
+            Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm(UtilGetMetrics.runVmaf, UtilGetMetrics.runSsim, UtilGetMetrics.runPsnr);
             form.ShowDialog();
+
+            if (form.DialogResult != DialogResult.OK)
+                return;
+
+            UtilGetMetrics.alignMode = form.AlignMode;
             UtilGetMetrics.runVmaf = form.CheckedBoxes[0];
             UtilGetMetrics.runSsim = form.CheckedBoxes[1];
             UtilGetMetrics.runPsnr = form.CheckedBoxes[2];
@@ -59,10 +64,17 @@ namespace Nmkoder.Forms
             UtilGetMetrics.vidHq = form.VideoHq;
         }
 
+        private void SelectOcr(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.UtilOcr;
+            UpdatePanels();
+        }
+
         private void UpdatePanels ()
         {
             utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsMetricsPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilGetMetrics) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsOcrPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilOcr) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,9 +18,10 @@ namespace Nmkoder.UI.Tasks
     {
         public static string vidLq;
         public static string vidHq;
-        public static bool runVmaf;
+        public static bool runVmaf = true;
         public static bool runSsim;
         public static bool runPsnr;
+        public static int alignMode = 0;
 
         public static async Task Run(bool fixRate = true)
         {
@@ -27,10 +29,11 @@ namespace Nmkoder.UI.Tasks
             Logger.Log("Analyzing video...");
 
             string r = fixRate ? "-r 24" : "";
+            string f = await GetAlignFilters();
 
             if (runVmaf)
             {
-                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex libvmaf={Paths.GetVmafPath(true)}:n_threads={Environment.ProcessorCount} -f null -";
+                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f},libvmaf={Paths.GetVmafPath(true)}:n_threads={Environment.ProcessorCount} -f null -";
                 string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                 List<string> vmafLines = output.SplitIntoLines().Where(x => x.Contains("VMAF score: ")).ToList();
 
@@ -47,7 +50,7 @@ namespace Nmkoder.UI.Tasks
 
             if (runSsim)
             {
-                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex ssim -f null -";
+                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f},ssim -f null -";
                 string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                 List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
@@ -64,7 +67,7 @@ namespace Nmkoder.UI.Tasks
 
             if (runPsnr)
             {
-                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex psnr -f null -";
+                string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f},psnr -f null -";
                 string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                 List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 
@@ -80,6 +83,24 @@ namespace Nmkoder.UI.Tasks
             }
 
             Program.mainForm.SetWorking(false);
+        }
+
+        private static async Task<string> GetAlignFilters ()
+        {
+            List<string> filters = new List<string>();
+
+            if(alignMode == 0 || alignMode == 2) // Auto-Crop
+            {
+                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(vidHq, true));
+            }
+
+            if (alignMode == 1 || alignMode == 2)
+            {
+                Size res = await GetMediaResolutionCached.GetSizeAsync(vidLq);
+                filters.Add($"scale={res.Width}:{res.Height}");
+            }
+
+            return "[1:v]" + string.Join(",", filters);
         }
     }
 }

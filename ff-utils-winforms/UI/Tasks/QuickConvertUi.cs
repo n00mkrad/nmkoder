@@ -193,10 +193,19 @@ namespace Nmkoder.UI.Tasks
                         form.ffmpegContainerBox.SelectedIndex = i;
             }
 
-            Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
-            bool noExt = Codecs.IsFixedFormat(vCodec);
-            string path = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), noExt ? null : current.ToString().ToLower());
-            Program.mainForm.ffmpegOutputBox.Text = path;
+            bool fixedFormat = Codecs.IsFixedFormat(vCodec);
+
+            if (fixedFormat)
+            {
+                string format = vCodec.ToString().ToLower();
+                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), format);
+            }
+            else
+            {
+                Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
+                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), current.ToString().ToLower());
+            }
+            
             ValidatePath();
         }
 

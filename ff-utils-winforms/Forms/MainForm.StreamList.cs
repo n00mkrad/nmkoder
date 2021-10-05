@@ -152,6 +152,7 @@ namespace Nmkoder.Forms
             streamList.SetSelected(newIndex, true);
             streamList.SetItemChecked(newIndex, isChecked);
             UpdateDefaultStreamsUi();
+            QuickConvertUi.LoadMetadataGrid();
         }
     }
 }

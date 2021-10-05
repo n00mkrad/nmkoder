@@ -44,6 +44,12 @@ namespace Nmkoder.Forms
 
         private void utilsMetricsConfBtn_Click(object sender, EventArgs e)
         {
+            if (fileListBox.Items.Count < 2)
+            {
+                Logger.Log($"You need to load at least 2 files into the file list to use this utility!");
+                return;
+            }
+
             Utils.UtilsMetricsForm form = new Utils.UtilsMetricsForm(UtilGetMetrics.runVmaf, false, false);
             form.ShowDialog();
             UtilGetMetrics.runVmaf = form.CheckedBoxes[0];

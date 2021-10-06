@@ -15,42 +15,41 @@ namespace Nmkoder.Media
 {
     class OcrProcess
     {
-        public static Process lastOcrProcess;
-        public static string lastOutputSubEdit;
+        //public static Process lastOcrProcess;
+        //public static string lastOutputSubEdit;
 
-        public static void Kill()
+        //public static void Kill()
+        //{
+        //    if (lastOcrProcess == null) return;
+        //
+        //    try
+        //    {
+        //        OsUtils.KillProcessTree(lastOcrProcess.Id);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Logger.Log($"Failed to kill lastOcrProcess process tree: {e.Message}", true);
+        //    }
+        //}
+
+        public static async Task RunSubtitleEdit(string args, bool hidden = false, bool trackProgress = false)
         {
-            if (lastOcrProcess == null) return;
-
-            try
-            {
-                OsUtils.KillProcessTree(lastOcrProcess.Id);
-            }
-            catch (Exception e)
-            {
-                Logger.Log($"Failed to kill lastOcrProcess process tree: {e.Message}", true);
-            }
-        }
-
-        public static async Task RunSubtitleEdit(string args, bool hidden = false)
-        {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
-            lastOutputSubEdit = "";
+            bool show = false; // Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            //lastOutputSubEdit = "";
             Process subEdit = OsUtils.NewProcess(!show);
             //timeSinceLastOutput.Restart();
-            lastOcrProcess = subEdit;
+            //lastOcrProcess = subEdit;
             //lastTask = taskType;
-
 
             subEdit.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & SubtitleEdit {args}";
 
-            if (true /* logMode != LogMode.Hidden */) Logger.Log("Running OCR...", false);
+            if (!hidden) Logger.Log("Starting OCR...", false);
             Logger.Log($"SubtitleEdit {args}", true, false, "ocr");
 
             if (!show)
             {
-                subEdit.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, !hidden); };
-                subEdit.ErrorDataReceived += (sender, outLine) => { LogOutput(outLine.Data, !hidden); };
+                subEdit.OutputDataReceived += (sender, outLine) => { LogOutput(outLine.Data, hidden, trackProgress, args); };
+                subEdit.ErrorDataReceived += (sender, outLine) => { LogOutput(outLine.Data, hidden, trackProgress, args); };
             }
 
             subEdit.Start();
@@ -63,37 +62,47 @@ namespace Nmkoder.Media
             }
 
             while (!subEdit.HasExited)
-                await Task.Delay(1);
+                await Task.Delay(100);
 
-            if (hidden)
+            if (!hidden)
                 Program.mainForm.SetProgress(0);
+
+            if (trackProgress)
+                OcrUtils.progressTracker[args] = 100;
         }
 
-        public static void LogOutput(string line, bool hidden)
+        public static void LogOutput(string line, bool hidden, bool trackProg, string args)
         {
             //timeSinceLastOutput.Restart();
 
             if (RunTask.canceled || string.IsNullOrWhiteSpace(line))
                 return;
 
-            lastOutputSubEdit = lastOutputSubEdit + "\n" + line;
+            //lastOutputSubEdit = lastOutputSubEdit + "\n" + line;
 
             //bool hidden = currentLogMode == LogMode.Hidden;
             //
             //if (HideMessage(line)) // Don't print certain warnings 
             //    hidden = true;
 
-            bool replaceLastLine = true; //currentLogMode == LogMode.OnlyLastLine;
+            //bool replaceLastLine = true; //currentLogMode == LogMode.OnlyLastLine;
 
-            Logger.Log(line, true, replaceLastLine, "ocr");
+            //Logger.Log(line, true, replaceLastLine, "ocr");
 
-            if (!hidden && line.Contains("OCR... :"))
+            if (line.Contains("OCR... :"))
             {
                 int percent = line.Split(':').LastOrDefault().GetInt();
-                Logger.Log($"Running Optical Character Recognition: {percent}%", false, Logger.GetLastLine().EndsWith("%"));
-                Program.mainForm.SetProgress(percent);
+
+                if (!hidden)
+                {
+                    Logger.Log($"Running Optical Character Recognition: {percent}%", false, Logger.GetLastLine().EndsWith("%"));
+                    Program.mainForm.SetProgress(percent);
+                }
+
+                if (trackProg)
+                    OcrUtils.progressTracker[args] = percent;
             }
-                
+
         }
 
         static string GetDir()

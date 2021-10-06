@@ -26,8 +26,13 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run(bool fixRate = true)
         {
+            if(RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
+            {
+                Logger.Log($"Metrics Utility: Didn't run because this util only works in Multi File Mode!");
+                return;
+            }
+
             Program.mainForm.SetWorking(true);
-            Logger.Log("Analyzing video...");
 
             try
             {
@@ -36,6 +41,7 @@ namespace Nmkoder.UI.Tasks
 
                 if (runVmaf)
                 {
+                    Logger.Log("Calculating VMAF...");
                     string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{vmafFilter} -f null -";
                     string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
@@ -43,46 +49,48 @@ namespace Nmkoder.UI.Tasks
 
                     if (vmafLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get VMAF!");
+                        Logger.Log($"Failed to get VMAF!", false, Logger.GetLastLine().EndsWith("..."));
                     }
                     else
                     {
                         string vmafStr = vmafLines[0].Split("VMAF score: ").LastOrDefault();
-                        Logger.Log($"VMAF Score: {vmafStr}");
+                        Logger.Log($"VMAF Score: {vmafStr}", false, Logger.GetLastLine().EndsWith("..."));
                     }
                 }
 
                 if (runSsim)
                 {
+                    Logger.Log("Calculating SSIM...");
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}ssim -f null -";
                     string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                     List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
                     if (ssimLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get SSIM!");
+                        Logger.Log($"Failed to get SSIM!", false, Logger.GetLastLine().EndsWith("..."));
                     }
                     else
                     {
                         string scoreStr = ssimLines[0].Split(" All:").LastOrDefault();
-                        Logger.Log($"SSIM Score: {scoreStr}");
+                        Logger.Log($"SSIM Score: {scoreStr}", false, Logger.GetLastLine().EndsWith("..."));
                     }
                 }
 
                 if (runPsnr)
                 {
+                    Logger.Log("Calculating PSNR...");
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}psnr -f null -";
                     string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                     List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 
                     if (psnrLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get PSNR!");
+                        Logger.Log($"Failed to get PSNR!", false, Logger.GetLastLine().EndsWith("..."));
                     }
                     else
                     {
                         string scoreStr = psnrLines[0].Split("average:").LastOrDefault().Split(' ')[0];
-                        Logger.Log($"PSNR Score: {scoreStr}");
+                        Logger.Log($"PSNR Score: {scoreStr}", false, Logger.GetLastLine().EndsWith("..."));
                     }
                 }
             }

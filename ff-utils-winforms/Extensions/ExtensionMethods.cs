@@ -267,5 +267,17 @@ namespace Nmkoder.Extensions
 
             return count;
         }
+
+        public static string CleanString (this string str)
+        {
+            try
+            {
+                return Regex.Replace(str.Trim(), @"[^\w\._-]", "", RegexOptions.None, TimeSpan.FromSeconds(1));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return String.Empty;
+            }
+        }
     }
 }

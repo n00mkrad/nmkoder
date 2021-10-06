@@ -2016,6 +2016,7 @@
             this.htButton1.Size = new System.Drawing.Size(127, 23);
             this.htButton1.TabIndex = 18;
             this.htButton1.Text = "Configure";
+            this.htButton1.Visible = false;
             // 
             // label2
             // 

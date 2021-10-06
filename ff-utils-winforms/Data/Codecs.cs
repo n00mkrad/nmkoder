@@ -118,7 +118,7 @@ namespace Nmkoder.Data
                 string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : info.ColorFormats[info.ColorFormatDef];
                 string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
                 string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
-                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain}  {custom} \" --pix-format {pixFmt}");
+                return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-min-dist=12 --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain}  {custom} \" --pix-format {pixFmt}");
             }
 
             if (c == Av1anCodec.SvtAv1)

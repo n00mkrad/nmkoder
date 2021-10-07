@@ -112,17 +112,22 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadQualityLevel(CodecInfo info)
         {
-            if (info.QMax > 0)
-                form.encVidQualityBox.Maximum = info.QMax;
-            else
-                form.encVidQualityBox.Maximum = 100;
+            if(form.encQualModeBox.SelectedIndex == 0)
+            {
+                if (info.QMax > 0)
+                    form.encVidQualityBox.Maximum = info.QMax;
+                else
+                    form.encVidQualityBox.Maximum = 100;
 
-            form.encVidQualityBox.Minimum = info.QMin;
+                form.encVidQualityBox.Minimum = info.QMin;
 
-            if (info.QDefault >= 0)
-                form.encVidQualityBox.Value = info.QDefault;
-            else
-                form.encVidQualityBox.Text = "";
+                if (info.QDefault >= 0)
+                    form.encVidQualityBox.Value = info.QDefault;
+                else
+                    form.encVidQualityBox.Text = "";
+            }
+
+            form.encVidQualityBox.Text = form.encVidQualityBox.Value.ToString();
         }
 
         static void LoadPresets(CodecInfo info)

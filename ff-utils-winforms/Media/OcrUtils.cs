@@ -38,16 +38,26 @@ namespace Nmkoder.Media
                 Logger.Log($"Extracting subtitles to convert them...");
                 MediaFile mediaFile = new MediaFile(inPath);
                 await mediaFile.Initialize(true);
-                string fps = mediaFile.VideoStreams[0].Rate.GetFloat().ToStringDot();
-                //long durationMs = FfmpegCommands.GetDurationMs(inPath);
+                string fpsArg = "";
+
+                try
+                {
+                    fpsArg = $"/targetfps:{ mediaFile.VideoStreams[0].Rate.GetFloat().ToStringDot()}";
+                }
+                catch { }
+
                 await Split(inPath, map, mediaFile.DurationMs, seDirSplit);
                 NmkdStopwatch sw = new NmkdStopwatch();
 
-                await OcrProcess.RunSubtitleEdit($"/convert split/full.mkv srt /ocrengine:nOCR /targetfps:{fps}", true, false);
+                await OcrProcess.RunSubtitleEdit($"/convert split/full.mkv srt /ocrengine:nOCR {fpsArg}", true, false);
+
+                if (IoUtils.GetFilesSorted(seDirSplit, "full.*.srt").Count() < 1)
+                    return false;
+
                 string[] timecodes = File.ReadAllLines(IoUtils.GetFilesSorted(seDirSplit, "full.*.srt").FirstOrDefault()).Where(x => x.Contains("-->")).ToArray();
 
                 foreach (FileInfo f in IoUtils.GetFileInfosSorted(seDirSplit, false, "chunk*"))
-                    Task.Run(() => OcrProcess.RunSubtitleEdit($"/convert split/{f.Name} srt /ocrengine:tesseract /targetfps:{fps}", true, true));
+                    Task.Run(() => OcrProcess.RunSubtitleEdit($"/convert split/{f.Name} srt /ocrengine:tesseract {fpsArg}", true, true));
 
                 while (true)
                 {

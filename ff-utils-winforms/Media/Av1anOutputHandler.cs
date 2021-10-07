@@ -35,12 +35,6 @@ namespace Nmkoder.Media
 
             Logger.Log(line, hidden, replaceLastLine, "av1an");
 
-            // if (!hidden && showProgressBar && line.Contains("Time:"))
-            // {
-            //     Regex timeRegex = new Regex("(?<=Time:).*(?= )");
-            //     UpdateFfmpegProgress(timeRegex.Match(line).Value);
-            // }
-
             if (line.StartsWith("Queue: "))
                 TryParseQueueSize(line);
 

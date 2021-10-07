@@ -162,7 +162,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
             this.utilsOcrPanel = new System.Windows.Forms.Panel();
-            this.htButton1 = new HTAlt.WinForms.HTButton();
             this.label2 = new System.Windows.Forms.Label();
             this.htButton2 = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
@@ -1988,7 +1987,6 @@
             // 
             // utilsOcrPanel
             // 
-            this.utilsOcrPanel.Controls.Add(this.htButton1);
             this.utilsOcrPanel.Controls.Add(this.label2);
             this.utilsOcrPanel.Controls.Add(this.htButton2);
             this.utilsOcrPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1998,25 +1996,6 @@
             this.utilsOcrPanel.Size = new System.Drawing.Size(228, 127);
             this.utilsOcrPanel.TabIndex = 5;
             this.utilsOcrPanel.Click += new System.EventHandler(this.SelectOcr);
-            // 
-            // htButton1
-            // 
-            this.htButton1.AutoColor = true;
-            this.htButton1.ButtonImage = null;
-            this.htButton1.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.htButton1.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.htButton1.DrawImage = false;
-            this.htButton1.ForeColor = System.Drawing.Color.White;
-            this.htButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.htButton1.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
-            this.htButton1.Location = new System.Drawing.Point(50, 100);
-            this.htButton1.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
-            this.htButton1.Name = "htButton1";
-            this.htButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.htButton1.Size = new System.Drawing.Size(127, 23);
-            this.htButton1.TabIndex = 18;
-            this.htButton1.Text = "Configure";
-            this.htButton1.Visible = false;
             // 
             // label2
             // 
@@ -2479,7 +2458,6 @@
         private HTAlt.WinForms.HTButton utilsMetricsConfBtn;
         private System.Windows.Forms.ComboBox encQualMode;
         private System.Windows.Forms.Panel utilsOcrPanel;
-        private HTAlt.WinForms.HTButton htButton1;
         private System.Windows.Forms.Label label2;
         private HTAlt.WinForms.HTButton htButton2;
     }

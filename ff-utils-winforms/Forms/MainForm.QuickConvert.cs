@@ -18,6 +18,7 @@ using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Properties;
 using Nmkoder.Utils;
+using Nmkoder.Data.Codecs;
 
 namespace Nmkoder.Forms
 {
@@ -86,10 +87,10 @@ namespace Nmkoder.Forms
             }
             else
             {
-                CodecInfo info = Codecs.GetCodecInfo((Codecs.VideoCodec)encVidCodec.SelectedIndex);
-                encVidQuality.Minimum = info.QMin.Clamp(0, int.MaxValue);
-                encVidQuality.Maximum = info.QMax.Clamp(0, int.MaxValue);
-                encVidQuality.Value = info.QDefault.Clamp(0, int.MaxValue);
+                IEncoder enc = CodecUtils.GetCodec((CodecUtils.VideoCodec)encVidCodec.SelectedIndex);
+                encVidQuality.Minimum = enc.QMin.Clamp(0, int.MaxValue);
+                encVidQuality.Maximum = enc.QMax.Clamp(0, int.MaxValue);
+                encVidQuality.Value = enc.QDefault.Clamp(0, int.MaxValue);
             }
         }
     }

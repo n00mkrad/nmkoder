@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Codecs;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.UI.Tasks;
@@ -61,10 +62,10 @@ namespace Nmkoder.Forms
             }
             else
             {
-                CodecInfo info = Codecs.GetCodecInfo((Codecs.Av1anCodec)av1anCodecBox.SelectedIndex);
-                av1anQuality.Minimum = info.QMin;
-                av1anQuality.Maximum = info.QMax;
-                av1anQuality.Value = info.QDefault;
+                IEncoder enc = CodecUtils.GetCodec((CodecUtils.Av1anCodec)av1anCodecBox.SelectedIndex);
+                av1anQuality.Minimum = enc.QMin;
+                av1anQuality.Maximum = enc.QMax;
+                av1anQuality.Value = enc.QDefault;
             }
         }
 

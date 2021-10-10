@@ -27,17 +27,17 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
-                Codecs.Av1anCodec vCodec = GetCurrentCodecV();
-                Codecs.AudioCodec aCodec = GetCurrentCodecA();
+                CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
+                CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 bool vmaf = IsUsingVmaf();
                 string inPath = TrackList.current.TruePath;
                 string outPath = GetOutPath();
                 string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                 string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(), vmaf, custEnc, TrackList.current);
+                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(codecArgs);
-                string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
+                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
                 string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
                 string sm = GetSplittingMethod();
                 string cm = GetChunkGenMethod();

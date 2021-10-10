@@ -27,17 +27,17 @@ namespace Nmkoder.UI.Tasks
             try
             {
                 bool twoPass = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex != QualityMode.Crf;
-                Codecs.VideoCodec vCodec = GetCurrentCodecV();
-                Codecs.AudioCodec aCodec = GetCurrentCodecA();
-                Codecs.SubtitleCodec sCodec = GetCurrentCodecS();
+                CodecUtils.VideoCodec vCodec = GetCurrentCodecV();
+                CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
+                CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
                 string map = TrackList.GetMapArgs();
-                CodecArgs codecArgs = Codecs.GetArgs(vCodec, GetVideoArgsFromUi(twoPass), twoPass, TrackList.current);
+                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(twoPass), TrackList.current); // CodecUtils.GetArgs(vCodec, GetVideoArgsFromUi(twoPass), twoPass, TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(vCodec, codecArgs);
-                string a = Codecs.GetArgs(aCodec, GetAudioArgsFromUi());
-                string s = Codecs.GetArgs(sCodec);
+                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments; // CodecUtils.GetArgs(aCodec, GetAudioArgsFromUi());
+                string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments; // CodecUtils.GetArgs(sCodec);
                 string meta = GetMetadataArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();

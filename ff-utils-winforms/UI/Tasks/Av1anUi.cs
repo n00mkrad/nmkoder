@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Codecs;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -27,28 +28,22 @@ namespace Nmkoder.UI.Tasks
         {
             form = Program.mainForm;
 
-            foreach (Codecs.Av1anCodec c in Enum.GetValues(typeof(Codecs.Av1anCodec)))  // Load video codecs
-                form.av1anCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
+            form.av1anCodecBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.Av1anCodec)).Cast<CodecUtils.Av1anCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load video codecs
 
             ConfigParser.LoadComboxIndex(form.av1anCodecBox);
-
 
             foreach (Av1an.QualityMode qm in Enum.GetValues(typeof(Av1an.QualityMode)))  // Load quality modes
                 form.av1anQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetVmaf", "Target VMAF"));
 
             form.av1anQualModeBox.SelectedIndex = 0;
 
-
             form.av1anOptsSplitModeBox.SelectedIndex = 1;
-
 
             foreach (Av1an.ChunkMethod cm in Enum.GetValues(typeof(Av1an.ChunkMethod)))  // Load chunk modes
                 form.av1anOptsChunkModeBox.Items.Add(cm);
 
+            form.av1anAudCodecBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.AudioCodec)).Cast<CodecUtils.AudioCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load audio codecs
 
-            foreach (Codecs.AudioCodec c in Enum.GetValues(typeof(Codecs.AudioCodec)))  // Load audio codecs
-                form.av1anAudCodecBox.Items.Add(Codecs.GetCodecInfo(c).FriendlyName);
-            
             ConfigParser.LoadComboxIndex(form.av1anAudCodecBox);
 
             form.av1anContainerBox.Items.Add(Containers.Container.Mkv.ToString().ToUpper());
@@ -92,36 +87,36 @@ namespace Nmkoder.UI.Tasks
 
         public static void VidEncoderSelected(int index)
         {
-            Codecs.Av1anCodec c = (Codecs.Av1anCodec)index;
-            CodecInfo info = Codecs.GetCodecInfo(c);
-            form.qInfoLabel.Text = info.QInfo;
-            form.presetInfoLabel.Text = info.PInfo;
-            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c == Codecs.Av1anCodec.AomAv1 || c == Codecs.Av1anCodec.SvtAv1; // Only AV1 has grain synth
-            form.av1anGrainSynthDenoiseBox.Enabled = c == Codecs.Av1anCodec.AomAv1; // Only AOM has an option to enable or disable denoising...
-            form.av1anGrainSynthDenoiseBox.Checked = c == Codecs.Av1anCodec.SvtAv1; // ...SVT always has it enabled
-            LoadQualityLevel(info);
-            LoadPresets(info);
-            LoadColorFormats(info);
+            CodecUtils.Av1anCodec c = (CodecUtils.Av1anCodec)index;
+            IEncoder enc = CodecUtils.GetCodec(c);
+            form.qInfoLabel.Text = enc.QInfo;
+            form.presetInfoLabel.Text = enc.PresetInfo;
+            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c == CodecUtils.Av1anCodec.AomAv1 || c == CodecUtils.Av1anCodec.SvtAv1; // Only AV1 has grain synth
+            form.av1anGrainSynthDenoiseBox.Enabled = c == CodecUtils.Av1anCodec.AomAv1; // Only AOM has an option to enable or disable denoising...
+            form.av1anGrainSynthDenoiseBox.Checked = c == CodecUtils.Av1anCodec.SvtAv1; // ...SVT always has it enabled
+            LoadQualityLevel(enc);
+            LoadPresets(enc);
+            LoadColorFormats(enc);
         }
 
         public static void AudEncoderSelected(int index)
         {
-            Codecs.AudioCodec c = (Codecs.AudioCodec)index;
-            CodecInfo info = Codecs.GetCodecInfo(c);
+            CodecUtils.AudioCodec c = (CodecUtils.AudioCodec)index;
+            IEncoder enc = CodecUtils.GetCodec(c);
 
-            form.av1anAudChannelsBox.Enabled = !(c == Codecs.AudioCodec.Copy || c == Codecs.AudioCodec.StripAudio);
-            form.av1anAudQualUpDown.Enabled = info.QDefault >= 0;
-            LoadAudBitrate(info);
+            form.av1anAudChannelsBox.Enabled = !(c == CodecUtils.AudioCodec.CopyAudio || c == CodecUtils.AudioCodec.StripAudio);
+            form.av1anAudQualUpDown.Enabled = enc.QDefault >= 0 && Math.Abs(enc.QMin - enc.QMax) > 0;
+            LoadAudBitrate(enc);
             ValidateContainer();
         }
 
-        static void LoadAudBitrate(CodecInfo info)
+        static void LoadAudBitrate(IEncoder enc)
         {
             int channels = form.av1anAudChannelsBox.Text.Split(' ')[0].GetInt();
 
-            if (info.QDefault >= 0)
+            if (enc.QDefault >= 0)
             {
-                form.av1anAudQualUpDown.Value = (info.QDefault * MiscUtils.GetAudioBitrateMultiplier(channels)).RoundToInt();
+                form.av1anAudQualUpDown.Value = (enc.QDefault * MiscUtils.GetAudioBitrateMultiplier(channels)).RoundToInt();
                 form.av1anAudQualUpDown.Text = form.av1anAudQualUpDown.Value.ToString();
             }
             else
@@ -133,60 +128,60 @@ namespace Nmkoder.UI.Tasks
 
         #region Load Info After Selecting Encoder
 
-        static void LoadQualityLevel(CodecInfo info)
+        static void LoadQualityLevel(IEncoder enc)
         {
             if (IsUsingVmaf())
                 return;
 
-            if (info.QMax > 0)
-                form.av1anQualityUpDown.Maximum = info.QMax;
+            if (enc.QMax > 0)
+                form.av1anQualityUpDown.Maximum = enc.QMax;
             else
                 form.av1anQualityUpDown.Maximum = 100;
 
-            form.av1anQualityUpDown.Minimum = info.QMin;
+            form.av1anQualityUpDown.Minimum = enc.QMin;
 
-            if (info.QDefault >= 0)
-                form.av1anQualityUpDown.Value = info.QDefault;
+            if (enc.QDefault >= 0)
+                form.av1anQualityUpDown.Value = enc.QDefault;
             else
                 form.av1anQualityUpDown.Text = "";
         }
 
-        static void LoadPresets(CodecInfo info)
+        static void LoadPresets(IEncoder enc)
         {
             form.av1anPresetBox.Items.Clear();
 
-            if (info.Presets != null)
-                foreach (string p in info.Presets)
+            if (enc.Presets != null)
+                foreach (string p in enc.Presets)
                     form.av1anPresetBox.Items.Add(p.ToTitleCase()); // Add every preset to the dropdown
 
             if (form.av1anPresetBox.Items.Count > 0)
-                form.av1anPresetBox.SelectedIndex = info.PresetDef; // Select default preset
+                form.av1anPresetBox.SelectedIndex = enc.PresetDefault; // Select default preset
         }
 
-        static void LoadColorFormats(CodecInfo info)
+        static void LoadColorFormats(IEncoder enc)
         {
             form.av1anColorsBox.Items.Clear();
 
-            if (info.ColorFormats != null)
-                foreach (string p in info.ColorFormats)
+            if (enc.ColorFormats != null)
+                foreach (string p in enc.ColorFormats)
                     form.av1anColorsBox.Items.Add(p.ToUpper()); // Add every pix_fmt to the dropdown
 
             if (form.av1anColorsBox.Items.Count > 0)
-                form.av1anColorsBox.SelectedIndex = info.ColorFormatDef; // Select default pix_fmt
+                form.av1anColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt
         }
 
         #endregion
 
         #region Get Current Codec
 
-        public static Codecs.Av1anCodec GetCurrentCodecV()
+        public static CodecUtils.Av1anCodec GetCurrentCodecV()
         {
-            return (Codecs.Av1anCodec)form.av1anCodecBox.SelectedIndex;
+            return (CodecUtils.Av1anCodec)form.av1anCodecBox.SelectedIndex;
         }
 
-        public static Codecs.AudioCodec GetCurrentCodecA()
+        public static CodecUtils.AudioCodec GetCurrentCodecA()
         {
-            return (Codecs.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
+            return (CodecUtils.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
         }
 
         #endregion
@@ -199,6 +194,8 @@ namespace Nmkoder.UI.Tasks
             dict.Add("pixFmt", form.av1anColorsBox.Text.ToLower());
             dict.Add("grainSynthStrength", form.av1anGrainSynthStrengthUpDown.Value.ToString());
             dict.Add("grainSynthDenoise", form.av1anGrainSynthDenoiseBox.Checked.ToString());
+            dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
+            dict.Add("custom", form.av1anCustomEncArgsBox.Text);
             return dict;
         }
 
@@ -284,11 +281,11 @@ namespace Nmkoder.UI.Tasks
             if (form.av1anContainerBox.SelectedIndex < 0)
                 return;
 
-            Codecs.AudioCodec aCodec = (Codecs.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
+            CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
 
             Containers.Container c = (Containers.Container)form.av1anContainerBox.SelectedIndex;
 
-            if (!Containers.ContainerSupports(c, aCodec))
+            if (!Containers.ContainerSupports(c, CodecUtils.GetCodec(aCodec)))
             {
                 Containers.Container supported = Containers.Container.Mkv;
 

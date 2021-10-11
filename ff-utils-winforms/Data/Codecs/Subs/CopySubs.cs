@@ -27,7 +27,7 @@ namespace Nmkoder.Data.Codecs
 
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
         {
-            return new CodecArgs($"-c:v copy");
+            return new CodecArgs($"-c:s copy");
         }
     }
 }

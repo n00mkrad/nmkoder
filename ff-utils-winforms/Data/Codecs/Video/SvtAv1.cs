@@ -13,7 +13,7 @@ namespace Nmkoder.Data.Codecs
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
         public int PresetDefault { get; } = 5;
         public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le" };
-        public int ColorFormatDefault { get; } = 0;
+        public int ColorFormatDefault { get; } = 1;
         public int QMin { get; } = 0;
         public int QMax { get; } = 50;
         public int QDefault { get; } = 20;

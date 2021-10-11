@@ -3,6 +3,7 @@ using Nmkoder.IO;
 using Nmkoder.Media;
 using Nmkoder.UI;
 using Nmkoder.UI.Tasks;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,7 @@ namespace Nmkoder.Main
             }
 
             canceled = false;
+            NmkdStopwatch sw = new NmkdStopwatch();
 
             if (taskType == TaskType.Convert)
                 await QuickConvert.Run();
@@ -81,7 +83,7 @@ namespace Nmkoder.Main
             if (taskType == TaskType.UtilOcr)
                 await UtilOcr.Run();
 
-            Logger.Log($"Done.");
+            Logger.Log($"Done - Finished task in {sw}");
             Program.mainForm.SetProgress(0);
         }
 

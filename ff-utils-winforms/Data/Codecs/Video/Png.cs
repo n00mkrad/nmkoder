@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Png : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "Png";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "PNG [Image Sequence]";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

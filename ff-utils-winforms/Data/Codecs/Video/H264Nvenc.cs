@@ -10,7 +10,7 @@ namespace Nmkoder.Data.Codecs
     class H264Nvenc : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "H264Nvenc";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "H.264 / AVC (NVIDIA NVENC)";
         public string[] Presets { get; } = new string[] { "p5", "p4", "p3", "p2", "p1" };
         public int PresetDefault { get; } = 0;

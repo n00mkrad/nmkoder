@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class CopyAudio : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get; } = "CopyAudio";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Copy Audio Without Re-Encoding";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

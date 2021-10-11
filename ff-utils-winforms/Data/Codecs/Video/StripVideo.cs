@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class StripVideo : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "StripVideo";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Disable (Strip Video)";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

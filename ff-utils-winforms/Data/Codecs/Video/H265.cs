@@ -10,7 +10,7 @@ namespace Nmkoder.Data.Codecs
     class H265 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "H265";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "H.265 / HEVC (x265)";
         public string[] Presets { get; } = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
         public int PresetDefault { get; } = 3;

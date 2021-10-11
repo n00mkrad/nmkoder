@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class CopyVideo : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "CopyVideo";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Copy Video Without Re-Encoding";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

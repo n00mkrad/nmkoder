@@ -83,6 +83,7 @@ namespace Nmkoder.Data
         public static bool ContainerSupports(Container c, IEncoder enc)
         {
             string name = enc.Name;
+            //Logger.Log($"ContainerSupports - Container {c}, IEncoder.Name {enc.Name} - Container supports {string.Join("/", GetSupportedVideoCodecs(c).Select(x => x.ToString()))}");
 
             if(enc.Type == Streams.Stream.StreamType.Video)
                 return name == VC.CopyVideo.ToString() || name == VC.StripVideo.ToString() || GetSupportedVideoCodecs(c).Select(x => x.ToString()).Contains(name);

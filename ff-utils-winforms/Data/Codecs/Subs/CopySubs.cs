@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class CopySubs : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Subtitle;
-        public string Name { get; } = "CopySubtitles";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Copy Subtitles Without Re-Encoding";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

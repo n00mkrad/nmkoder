@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Gif : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "Gif";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "GIF [Animated GIF]";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Aac : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get; } = "Aac";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AAC (Advanced Audio Coding)";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

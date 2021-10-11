@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Mp3 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get; } = "Mp3";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "MP3";
         public string[] Presets { get; }
         public int PresetDefault { get; }

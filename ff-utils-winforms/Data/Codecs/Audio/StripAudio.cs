@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class StripAudio : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get; } = "StripAudio";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Disable (Strip Audio)";
         public string[] Presets { get; }
         public int PresetDefault { get; }

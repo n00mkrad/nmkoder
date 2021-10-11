@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Srt : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Subtitle;
-        public string Name { get; } = "Srt";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "SRT (SubRip Text) - For MKV";
         public string[] Presets { get; }
         public int PresetDefault { get; }

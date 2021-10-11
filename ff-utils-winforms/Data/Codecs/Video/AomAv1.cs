@@ -8,7 +8,7 @@ namespace Nmkoder.Data.Codecs
     class AomAv1 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "AomAv1";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AV1 (AOM)";
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6" };
         public int PresetDefault { get; } = 5;

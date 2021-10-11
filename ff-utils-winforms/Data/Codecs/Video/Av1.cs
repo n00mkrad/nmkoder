@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Av1 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "Av1";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AV1 (svt-av1)";
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
         public int PresetDefault { get; } = 3;

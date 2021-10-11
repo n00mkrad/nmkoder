@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class MovText : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Subtitle;
-        public string Name { get; } = "MovText";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Mov_Text (3GPP Timed Text) - For MP4/MOV";
         public string[] Presets { get; }
         public int PresetDefault { get; }

@@ -9,7 +9,7 @@ namespace Nmkoder.Data.Codecs
     class StripSubs : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Subtitle;
-        public string Name { get; } = "StripSubs";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Disable (Strip Subtitles)";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }

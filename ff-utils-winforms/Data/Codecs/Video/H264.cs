@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class H264 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
-        public string Name { get; } = "H264";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "H.264 / AVC (x264)";
         public string[] Presets { get; } = new string[] { "veryslow", "slower", "slow", "medium", "fast", "faster", "veryfast", "superfast" };
         public int PresetDefault { get; } = 2;

@@ -7,7 +7,7 @@ namespace Nmkoder.Data.Codecs
     class Opus : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get; } = "Opus";
+        public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "Opus";
         public string[] Presets { get; }
         public int PresetDefault { get; }

@@ -199,7 +199,8 @@ namespace Nmkoder.Utils
 
         public static string GetFilterPath(string path)
         {
-            return path.Replace("/", @"\").Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
+            return path.Replace(@"\", @"/").Replace(":", @"\\:").Wrap();
+            //return path.Replace("/", @"\").Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
         }
     }
 }

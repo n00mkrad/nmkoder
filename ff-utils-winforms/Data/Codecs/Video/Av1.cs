@@ -10,9 +10,9 @@ namespace Nmkoder.Data.Codecs
         public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AV1 (svt-av1)";
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-        public int PresetDefault { get; } = 3;
+        public int PresetDefault { get; } = 5;
         public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le" };
-        public int ColorFormatDefault { get; } = 0;
+        public int ColorFormatDefault { get; } = 1;
         public int QMin { get; } = 0;
         public int QMax { get; } = 50;
         public int QDefault { get; } = 24;
@@ -30,7 +30,7 @@ namespace Nmkoder.Data.Codecs
             string q = encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
-            string rc = vbr ? $"-rc vbr -b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
+            string rc = vbr ? $"-rc vbr -b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-qp {q}";
             string g = CodecUtils.GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
             return new CodecArgs($"-c:v libsvtav1 {rc} -tile_columns 1 -tile_rows 0 -preset {preset} {g} -pix_fmt {pixFmt} {cust}");

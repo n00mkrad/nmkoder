@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Nmkoder.Data.Codecs
 {
-    class VpxVp9 : IEncoder
+    class Vpx : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
         public string Name { get; } = "VpxVp9";

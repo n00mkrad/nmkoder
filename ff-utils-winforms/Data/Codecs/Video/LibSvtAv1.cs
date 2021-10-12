@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Nmkoder.Data.Codecs
 {
-    class Av1 : IEncoder
+    class LibSvtAv1 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
         public string Name { get { return GetType().Name; } }

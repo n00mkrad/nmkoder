@@ -245,11 +245,11 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
-        public static Dictionary<string, string> GetVideoArgsFromUi(bool twoPass)
+        public static Dictionary<string, string> GetVideoArgsFromUi(bool vbr)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            if (twoPass)
+            if (vbr)
                 dict.Add("bitrate", GetBitrate());
             else
                 dict.Add("q", form.encVidQualityBox.Value.ToString());
@@ -437,14 +437,14 @@ namespace Nmkoder.UI.Tasks
             return Containers.GetMuxingArgs(c);
         }
 
-        public static async Task<string> GetVideoFilterArgs(CodecUtils.VideoCodec vCodec, CodecArgs codecArgs = null)
+        public static async Task<string> GetVideoFilterArgs(IEncoder vCodec, CodecArgs codecArgs = null)
         {
             List<string> filters = new List<string>();
 
             if (codecArgs != null && codecArgs.ForcedFilters != null)
                 filters.AddRange(codecArgs.ForcedFilters);
 
-            if (TrackList.current.VideoStreams.Count < 1 || (vCodec == CodecUtils.VideoCodec.CopyVideo || vCodec == CodecUtils.VideoCodec.StripVideo))
+            if (TrackList.current.VideoStreams.Count < 1 || vCodec.DoesNotEncode)
                 return "";
 
             VideoStream vs = TrackList.current.VideoStreams.First();
@@ -479,11 +479,11 @@ namespace Nmkoder.UI.Tasks
                 return "";
         }
 
-        public static string GetOutPath (CodecUtils.VideoCodec c)
+        public static string GetOutPath (IEncoder c)
         {
             string uiPath = Program.mainForm.ffmpegOutputBox.Text.Trim();
 
-            if (CodecUtils.GetCodec(c).IsSequence)
+            if (c.IsSequence)
             {
                 Directory.CreateDirectory(uiPath);
                 string ext = Program.mainForm.encVidCodecsBox.Text.Split(' ')[0].ToLower();

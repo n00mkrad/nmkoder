@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VC = Nmkoder.Data.CodecUtils.VideoCodec;
 using AC = Nmkoder.Data.CodecUtils.AudioCodec;
 using SC = Nmkoder.Data.CodecUtils.SubtitleCodec;
@@ -72,14 +70,6 @@ namespace Nmkoder.Data
             return new SC[0];
         }
 
-        // public static bool ContainerSupports(Container c, VC cv)
-        // {
-        //     string name = CodecUtils.GetCodec(cv).Name;
-        //     bool s = name ==  VC.CopyVideo.ToString() || name == VC.StripVideo.ToString() || GetSupportedVideoCodecs(c).Select(x => x.ToString()).Contains(name);
-        //     //Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cv.ToString().ToUpper()}!", true);
-        //     return s;
-        // }
-
         public static bool ContainerSupports(Container c, IEncoder enc)
         {
             string name = enc.Name;
@@ -96,20 +86,6 @@ namespace Nmkoder.Data
 
             return false;
         }
-
-        // public static bool ContainerSupports(Container c, AC ca)
-        // {
-        //     bool s = ca == AC.CopyAudio || ca == AC.StripAudio || GetSupportedAudioCodecs(c).Contains(ca);
-        //     //Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {ca.ToString().ToUpper()}!", true);
-        //     return s;
-        // }
-        // 
-        // public static bool ContainerSupports(Container c, SC cs)
-        // {
-        //     bool s = cs == SC.CopySubs || cs == SC.StripSubs || GetSupportedSubtitleCodecs(c).Contains(cs);
-        //     Logger.Log($"{c.ToString().ToUpper()} {(s ? "supports" : "doesn't support")} {cs.ToString().ToUpper()}!", true);
-        //     return s;
-        // }
 
         public static Container GetSupportedContainer(IEncoder cv, IEncoder ca, IEncoder cs)
         {

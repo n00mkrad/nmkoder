@@ -85,6 +85,7 @@ namespace Nmkoder.Main
 
             Logger.Log($"Done - Finished task in {sw}");
             Program.mainForm.SetProgress(0);
+            Program.mainForm.SetWorking(false);
         }
 
         public static async Task StartBatch ()

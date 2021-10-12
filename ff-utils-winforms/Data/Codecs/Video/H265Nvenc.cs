@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
 
@@ -19,17 +20,21 @@ namespace Nmkoder.Data.Codecs
         public string QInfo { get; } = "CRF (0-51 - Lower is better)";
         public string PresetInfo { get; } = "Higher = Better compression";
 
-        public bool DoesNotEncode { get; } = false;
+        public bool SupportsTwoPass { get; } = false;
+		public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
         {
+            bool vbr = encArgs.ContainsKey("qMode") && (UI.Tasks.QuickConvert.QualityMode)encArgs["qMode"].GetInt() != UI.Tasks.QuickConvert.QualityMode.Crf;
             string q = encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
+            int br = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"].GetInt() : 0;
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
+            string rc = vbr ? $"-b:v {br}k -minrate {br / 4}k -maxrate {br * 2}k -bufsize {br}k" : (q.GetInt() > 0 ? $"-b:v 0 -cq {q}" : "-tune lossless");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($"-c:v hevc_nvenc -b:v 0 {(q.GetInt() > 0 ? $"-cq {q}" : "-tune lossless")} -preset {preset} -pix_fmt {pixFmt} {cust}");
+            return new CodecArgs($"-c:v hevc_nvenc {rc} -preset {preset} -pix_fmt {pixFmt} {cust}");
         }
     }
 }

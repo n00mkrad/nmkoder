@@ -19,11 +19,12 @@ namespace Nmkoder.Data.Codecs
         public string QInfo { get; }
         public string PresetInfo { get; }
 
-        public bool DoesNotEncode { get; } = false;
+        public bool SupportsTwoPass { get; } = false;
+		public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = true;
         public bool IsSequence { get; } = true;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
         {
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
             return new CodecArgs($"-c:v png -compression_level 3 {cust}");

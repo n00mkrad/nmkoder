@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Nmkoder.Data.Codecs
 {
+    public enum Pass { OneOfOne, OneOfTwo, TwoOfTwo }
+
     interface IEncoder
     {
         Streams.Stream.StreamType Type { get; }
@@ -21,10 +23,11 @@ namespace Nmkoder.Data.Codecs
         string QInfo { get; }
         string PresetInfo { get; }
 
+        bool SupportsTwoPass { get; }
         bool DoesNotEncode { get; }
         bool IsFixedFormat { get; }
         bool IsSequence { get; }
 
-        CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null);
+        CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null);
     }
 }

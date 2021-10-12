@@ -20,11 +20,12 @@ namespace Nmkoder.Data.Codecs
         public string QInfo { get; } = "CRF (0-50 - Lower is better)";
         public string PresetInfo { get; } = "Higher = Better compression";
 
-        public bool DoesNotEncode { get; } = false;
+        public bool SupportsTwoPass { get; } = false;
+		public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
         {
             string g = CodecUtils.GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs), "");
             bool vmaf = encArgs.ContainsKey("qMode") && (UI.Tasks.Av1an.QualityMode)encArgs["qMode"].GetInt() == UI.Tasks.Av1an.QualityMode.TargetVmaf;

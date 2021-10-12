@@ -20,11 +20,12 @@ namespace Nmkoder.Data.Codecs
         public string QInfo { get; } = "CRF (0-63 - Lower is better)";
         public string PresetInfo { get; } = "Higher = Better compression";
 
-        public bool DoesNotEncode { get; } = false;
+        public bool SupportsTwoPass { get; } = true;
+		public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
         {
             bool vbr = encArgs.ContainsKey("qMode") && (UI.Tasks.QuickConvert.QualityMode)encArgs["qMode"].GetInt() != UI.Tasks.QuickConvert.QualityMode.Crf;
             string q = encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
@@ -32,8 +33,10 @@ namespace Nmkoder.Data.Codecs
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-crf {q}";
             string g = CodecUtils.GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
+            string p = pass == Pass.OneOfOne ? "" : (pass == Pass.OneOfTwo ? "-pass 1" : "-pass 2");
+            Logger.Log($"LibVpx.GetArgs - pass = {pass} - p = {p}");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($"-c:v libvpx-vp9 {rc} -tile-columns 1 -tile-rows 1 -row-mt 1 -cpu-used {preset} {g} -pix_fmt {pixFmt} {cust}");
+            return new CodecArgs($"-c:v libvpx-vp9 {p} {rc} -tile-columns 1 -tile-rows 1 -row-mt 1 -cpu-used {preset} {g} -pix_fmt {pixFmt} {cust}");
         }
     }
 }

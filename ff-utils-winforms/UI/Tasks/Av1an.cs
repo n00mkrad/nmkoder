@@ -34,7 +34,7 @@ namespace Nmkoder.UI.Tasks
                 string outPath = GetOutPath();
                 string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                 string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
-                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current);
+                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), Data.Codecs.Pass.OneOfOne, TrackList.current);
                 string v = codecArgs.Arguments;
                 string vf = await GetVideoFilterArgs(codecArgs);
                 string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;

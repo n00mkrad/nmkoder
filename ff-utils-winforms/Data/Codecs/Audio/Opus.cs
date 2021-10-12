@@ -19,11 +19,12 @@ namespace Nmkoder.Data.Codecs
         public string QInfo { get; }
         public string PresetInfo { get; }
 
-        public bool DoesNotEncode { get; } = false;
+        public bool SupportsTwoPass { get; } = false;
+		public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "96k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nmkoder.Data;
+using Nmkoder.Data.Codecs;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Media;
@@ -26,28 +27,40 @@ namespace Nmkoder.UI.Tasks
             
             try
             {
-                bool twoPass = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex != QualityMode.Crf;
-                CodecUtils.VideoCodec vCodec = GetCurrentCodecV();
+                IEncoder vCodec = CodecUtils.GetCodec(GetCurrentCodecV());
                 CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
+                bool crf = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.Crf;
+                bool twoPass = vCodec.SupportsTwoPass && !crf;
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
                 string map = TrackList.GetMapArgs();
-                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(twoPass), TrackList.current); // CodecUtils.GetArgs(vCodec, GetVideoArgsFromUi(twoPass), twoPass, TrackList.current);
-                string v = codecArgs.Arguments;
-                string vf = await GetVideoFilterArgs(vCodec, codecArgs);
-                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments; // CodecUtils.GetArgs(aCodec, GetAudioArgsFromUi());
-                string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments; // CodecUtils.GetArgs(sCodec);
+                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
+                string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
                 string meta = GetMetadataArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
                 string muxing = GetMuxingArgsFromUi();
-                args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
 
                 if(twoPass)
                 {
-                    args = $"{custIn} {inFiles} -map v {v} {vf} -pass 1 -f null - && " +
-                        $"ffmpeg -y -loglevel warning -stats {custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} -pass 2 {outPath.Wrap()}";
+                    CodecArgs codecArgsPass1 = vCodec.GetArgs(GetVideoArgsFromUi(!crf), Pass.OneOfTwo, TrackList.current);
+                    string v1 = codecArgsPass1.Arguments;
+                    string vf1 = await GetVideoFilterArgs(vCodec, codecArgsPass1);
+                    CodecArgs codecArgsPass2 = vCodec.GetArgs(GetVideoArgsFromUi(!crf), Pass.TwoOfTwo, TrackList.current);
+                    string v2 = codecArgsPass2.Arguments;
+                    string vf2 = await GetVideoFilterArgs(vCodec, codecArgsPass2);
+
+                    args = $"{custIn} {inFiles} -map v {v1} {vf1} -f null - && ffmpeg -y -loglevel warning -stats " +
+                           $"{custIn} {inFiles} {map} {v2} {vf2} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+                }
+                else
+                {
+                    CodecArgs codecArgs = vCodec.GetArgs(GetVideoArgsFromUi(!crf), Pass.OneOfOne, TrackList.current);
+                    string v = codecArgs.Arguments;
+                    string vf = await GetVideoFilterArgs(vCodec, codecArgs);
+
+                    args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
                 }
             }
             catch(Exception e)
@@ -59,10 +72,6 @@ namespace Nmkoder.UI.Tasks
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, AvProcess.TaskType.Encode, true);
-
-            Program.mainForm.SetWorking(false);
         }
-
-        
     }
 }

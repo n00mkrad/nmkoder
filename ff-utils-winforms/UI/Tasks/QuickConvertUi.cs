@@ -250,7 +250,7 @@ namespace Nmkoder.UI.Tasks
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             if (vbr)
-                dict.Add("bitrate", GetBitrate());
+                dict.Add("bitrate", GetVideoBitrate().ToString());
             else
                 dict.Add("q", form.encVidQualityBox.Value.ToString());
                 
@@ -262,26 +262,32 @@ namespace Nmkoder.UI.Tasks
             return dict;
         }
 
-        private static string GetBitrate()
+        private static int GetVideoBitrate()
         {
             if((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
             {
                 string br = form.encVidQualityBox.Text.ToLower().Trim();
-                br = br.EndsWith("k") || br.EndsWith("m") ? br : $"{br.GetInt()}k";
-                return br;
+                if (br.EndsWith("k")) return br.GetInt() * 1024;
+                if (br.EndsWith("m")) return br.GetInt() * 1024 * 1024;
+
+                return br.GetInt();
             }
 
             if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetMbytes)
             {
+                int audioBps = (int)form.encAudQualUpDown.Value * 1024;
                 double durationSecs = TrackList.current.DurationMs / (double)1000;
                 float targetMbytes = form.encVidQualityBox.Text.GetFloat();
                 long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024); 
-                int targetBitrate = (int)Math.Floor(targetBits / durationSecs); // Round down since undershooting is better than overshooting here
-                Logger.Log($"Target Filesize Mode: Using bitrate of {((float)targetBitrate / 1024).ToString("0.0")} kbps over {durationSecs.ToString("0.0")} seconds to hit {targetMbytes} megabytes.");
-                return $"{targetBitrate}";
+                int targetVidBitrate = (int)Math.Floor(targetBits / durationSecs) - audioBps; // Round down since undershooting is better than overshooting here
+                string brTotal = (((float)targetVidBitrate + audioBps) / 1024).ToString("0.0");
+                string brVid = ((float)targetVidBitrate / 1024).ToString("0");
+                string brAud = form.encAudQualUpDown.Value.ToString();
+                Logger.Log($"Target Filesize Mode: Using bitrate of {brTotal} kbps ({brVid}k Video, {brAud}k Audio) over {durationSecs.ToString("0.0")} seconds to hit {targetMbytes} megabytes.");
+                return targetVidBitrate;
             }
 
-            return "0";
+            return 0;
         }
 
         public static Dictionary<string, string> GetAudioArgsFromUi()
@@ -455,8 +461,8 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string filename = FormatUtils.GetFilterPath(TrackList.current.TruePath);
-                filters.Add($"subtitles={filename.Wrap()}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
+                string subFilePath = FormatUtils.GetFilterPath(TrackList.current.TruePath);
+                filters.Add($"subtitles={subFilePath}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
 
             if ((vs.Resolution.Width % 2 != 0) || (vs.Resolution.Height % 2 != 0)) // Check Filter: Pad for mod2

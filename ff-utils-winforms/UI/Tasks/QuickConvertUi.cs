@@ -471,11 +471,11 @@ namespace Nmkoder.UI.Tasks
             string scaleW = Program.mainForm.encScaleBoxW.Text.Trim().ToLower();
             string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
 
-            if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
-                filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
-
             if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.TruePath, false));
+
+            if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
+                filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 

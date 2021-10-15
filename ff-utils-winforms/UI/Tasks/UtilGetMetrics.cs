@@ -33,11 +33,13 @@ namespace Nmkoder.UI.Tasks
             }
 
             Program.mainForm.SetWorking(true);
+            Logger.Log($"Getting metrics for {Path.GetFileName(vidLq)} compared against {Path.GetFileName(vidHq)}.");
 
             try
             {
                 string r = fixRate ? "-r 24" : "";
                 string f = await GetAlignFilters();
+                FfmpegOutputHandler.overrideTargetDurationMs = FfmpegCommands.GetDurationMs(vidLq);
 
                 if (runVmaf)
                 {
@@ -49,12 +51,12 @@ namespace Nmkoder.UI.Tasks
 
                     if (vmafLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get VMAF!", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"Failed to get VMAF!", false, ReplaceLastLine());
                     }
                     else
                     {
                         string vmafStr = vmafLines[0].Split("VMAF score: ").LastOrDefault();
-                        Logger.Log($"VMAF Score: {vmafStr}", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"VMAF Score: {vmafStr}", false, ReplaceLastLine());
                     }
                 }
 
@@ -67,12 +69,12 @@ namespace Nmkoder.UI.Tasks
 
                     if (ssimLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get SSIM!", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"Failed to get SSIM!", false, ReplaceLastLine());
                     }
                     else
                     {
                         string scoreStr = ssimLines[0].Split(" All:").LastOrDefault();
-                        Logger.Log($"SSIM Score: {scoreStr}", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"SSIM Score: {scoreStr}", false, ReplaceLastLine());
                     }
                 }
 
@@ -85,12 +87,12 @@ namespace Nmkoder.UI.Tasks
 
                     if (psnrLines.Count < 1)
                     {
-                        Logger.Log($"Failed to get PSNR!", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"Failed to get PSNR!", false, ReplaceLastLine());
                     }
                     else
                     {
                         string scoreStr = psnrLines[0].Split("average:").LastOrDefault().Split(' ')[0];
-                        Logger.Log($"PSNR Score: {scoreStr}", false, Logger.GetLastLine().EndsWith("..."));
+                        Logger.Log($"PSNR Score: {scoreStr}", false, ReplaceLastLine());
                     }
                 }
             }
@@ -98,9 +100,14 @@ namespace Nmkoder.UI.Tasks
             {
                 Logger.Log($"Error trying to get metrics: {e.Message}\n{e.StackTrace}");
             }
-            
 
+            FfmpegOutputHandler.overrideTargetDurationMs = -1;
             Program.mainForm.SetWorking(false);
+        }
+
+        static bool ReplaceLastLine ()
+        {
+            return (new[] { "...", FfmpegOutputHandler.prefix }).Any(c => Logger.GetLastLine().Contains(c));
         }
 
         private static async Task<string> GetAlignFilters ()

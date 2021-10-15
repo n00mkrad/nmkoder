@@ -45,7 +45,7 @@ namespace Nmkoder.Media
             string loopStr = (looptimes > 0) ? $"-stream_loop {looptimes}" : "";
             string vfrFilename = Path.GetFileName(concatFile);
             string args = $" {loopStr} -vsync 1 -f concat -i {vfrFilename} -c copy -movflags +faststart -fflags +genpts {outPath.Wrap()}";
-            await RunFfmpeg(args, concatFile.GetParentDir(), LogMode.Hidden, TaskType.Merge);
+            await RunFfmpeg(args, concatFile.GetParentDir(), LogMode.Hidden);
         }
 
         public static async Task LoopVideo(string inputFile, int times, bool delSrc = false)

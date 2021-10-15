@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Main;
+using Nmkoder.UI;
 using Nmkoder.Utils;
 using System;
 using System.Linq;
@@ -12,7 +13,10 @@ namespace Nmkoder.Media
 {
     class FfmpegOutputHandler
     {
-        public static void LogOutput(string line, string logFilename, bool showProgressBar)
+        public static readonly string prefix = "[ffmpeg]";
+        public static long overrideTargetDurationMs = -1;
+
+        public static void LogOutput(string line, ref string appendStr, string logFilename, LogMode logMode, bool showProgressBar)
         {
             timeSinceLastOutput.Restart();
 
@@ -21,17 +25,18 @@ namespace Nmkoder.Media
 
             lastOutputAv1an = lastOutputAv1an + "\n" + line;
 
-            bool hidden = currentLogMode == LogMode.Hidden;
+            bool hidden = logMode == LogMode.Hidden;
 
             if (HideMessage(line)) // Don't print certain warnings 
                 hidden = true;
 
-            bool replaceLastLine = currentLogMode == LogMode.OnlyLastLine;
+            bool replaceLastLine = logMode == LogMode.OnlyLastLine;
 
             if (line.Contains("time=") && (line.StartsWith("frame=") || line.StartsWith("size=")))
                 line = FormatUtils.BeautifyFfmpegStats(line);
 
-            Logger.Log(line, hidden, replaceLastLine, "ffmpeg");
+            appendStr += line;
+            Logger.Log($"{prefix} {line}", hidden, replaceLastLine, logFilename);
 
             if (!hidden && showProgressBar && line.Contains("Time:"))
             {
@@ -79,6 +84,32 @@ namespace Nmkoder.Media
             {
                 RunTask.Cancel($"Error: {line}\n\nYou tried to mux a non-GIF stream into a GIF file.");
                 return;
+            }
+        }
+
+        static void UpdateFfmpegProgress(string ffmpegTime)
+        {
+            try
+            {
+                if (TrackList.current == null && overrideTargetDurationMs < 0)
+                    return;
+
+                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : TrackList.current.DurationMs;
+
+                if (currInDuration < 1)
+                {
+                    Program.mainForm.SetProgress(0);
+                    return;
+                }
+
+                long total = currInDuration / 100;
+                long current = FormatUtils.TimestampToMs(ffmpegTime);
+                int progress = Convert.ToInt32(current / total);
+                Program.mainForm.SetProgress(progress);
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to get ffmpeg progress: {e.Message}", true);
             }
         }
 

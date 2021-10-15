@@ -292,7 +292,7 @@ namespace Nmkoder.Media
             Size res = await GetMediaResolutionCached.GetSizeAsync(inputFile);
             string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
             string args = $"-i {inputFile.Wrap()} -vf \"select=eq(n\\,{frameNum})\" -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
-            await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
+            await RunFfmpeg(args, LogMode.Hidden);
         }
 
         public static async Task ExtractSingleFrameAtTime(string inputFile, string outputPath, int skipSeconds, int maxH = 2160, bool noKey = false)
@@ -305,7 +305,7 @@ namespace Nmkoder.Media
             string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
             string noKeyArg = noKey ? "-skip_frame nokey" : "";
             string args = $"{noKeyArg} -ss {skipSeconds} -i {inputFile.Wrap()} -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
-            await RunFfmpeg(args, LogMode.Hidden, TaskType.ExtractFrames);
+            await RunFfmpeg(args, LogMode.Hidden);
         }
 
         public static async Task ExtractThumbs(string inputFile, string outputDir, int amount, int maxH = 360, string format = "jpg")

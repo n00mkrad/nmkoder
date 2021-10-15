@@ -279,6 +279,7 @@ namespace Nmkoder.IO
         public enum Key
         {
             autoCropSamples,
+            av1anCmdVisible,
             av1anOptsChunkMode,
             av1anOptsWorkerCount,
             cmdDebugMode,

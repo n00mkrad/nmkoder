@@ -17,7 +17,7 @@ namespace Nmkoder.Media
         static int currentQueueSize;
         public static Task currentLogReaderTask;
 
-        public static void LogOutput(string line, string logFilename, bool showProgressBar)
+        public static void LogOutput(string line, string logFilename, LogMode logMode, bool showProgressBar)
         {
             timeSinceLastOutput.Restart();
 
@@ -26,12 +26,12 @@ namespace Nmkoder.Media
 
             lastOutputAv1an = lastOutputAv1an + "\n" + line;
 
-            bool hidden = currentLogMode == LogMode.Hidden;
+            bool hidden = logMode == LogMode.Hidden;
 
             if (HideMessage(line)) // Don't print certain warnings 
                 hidden = true;
 
-            bool replaceLastLine = currentLogMode == LogMode.OnlyLastLine;
+            bool replaceLastLine = logMode == LogMode.OnlyLastLine;
 
             Logger.Log(line, hidden, replaceLastLine, "av1an");
 

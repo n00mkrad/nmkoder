@@ -16,7 +16,7 @@ namespace Nmkoder.Data.Codecs
         public int QMin { get; } = 1;
         public int QMax { get; } = 31;
         public int QDefault { get; } = 3;
-        public string QInfo { get; }
+        public string QInfo { get; } = "Quality (1-31 - Lower is better)";
         public string PresetInfo { get; }
 
         public bool SupportsTwoPass { get; } = false;

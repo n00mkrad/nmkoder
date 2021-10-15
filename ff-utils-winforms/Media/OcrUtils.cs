@@ -28,10 +28,7 @@ namespace Nmkoder.Media
                     return false; // TODO: Show error?
 
                 string seDir = Path.Combine(Paths.GetBinPath(), "SE");
-                string seDirSplit = Path.Combine(seDir, "split");
-
-                foreach (FileInfo fileInfo in IoUtils.GetFileInfosSorted(seDir, false, "*.srt"))
-                    fileInfo.Delete();
+                string seTempDir = Path.Combine(seDir, "temp");
 
                 string seInPath = Path.Combine(seDir, $"{trackName}.mkv");
                 string seOutPath = Path.Combine(seDir, $"{trackName}.srt");
@@ -46,17 +43,17 @@ namespace Nmkoder.Media
                 }
                 catch { }
 
-                await Split(inPath, map, mediaFile.DurationMs, seDirSplit);
+                await Split(inPath, map, mediaFile.DurationMs, seTempDir);
                 NmkdStopwatch sw = new NmkdStopwatch();
 
                 await OcrProcess.RunSubtitleEdit($"/convert split/full.mkv srt /ocrengine:nOCR {fpsArg}", true, false);
 
-                if (IoUtils.GetFilesSorted(seDirSplit, "full.*.srt").Count() < 1)
+                if (IoUtils.GetFilesSorted(seTempDir, "full.*.srt").Count() < 1)
                     return false;
 
-                string[] timecodes = File.ReadAllLines(IoUtils.GetFilesSorted(seDirSplit, "full.*.srt").FirstOrDefault()).Where(x => x.Contains("-->")).ToArray();
+                string[] timecodes = File.ReadAllLines(IoUtils.GetFilesSorted(seTempDir, "full.*.srt").FirstOrDefault()).Where(x => x.Contains("-->")).ToArray();
 
-                foreach (FileInfo f in IoUtils.GetFileInfosSorted(seDirSplit, false, "chunk*"))
+                foreach (FileInfo f in IoUtils.GetFileInfosSorted(seTempDir, false, "chunk*"))
                     Task.Run(() => OcrProcess.RunSubtitleEdit($"/convert split/{f.Name} srt /ocrengine:tesseract {fpsArg}", true, true));
 
                 while (true)
@@ -82,7 +79,7 @@ namespace Nmkoder.Media
                 if (RunTask.canceled)
                     return false;
 
-                string mergedFilePath = await Merge(seDirSplit);
+                string mergedFilePath = await Merge(seTempDir);
                 string[] linesSrtSubs = File.ReadAllLines(mergedFilePath);
 
                 List<string> linesFinalSrt = new List<string>();
@@ -104,13 +101,29 @@ namespace Nmkoder.Media
 
                 string outPath = Path.Combine(outDir, trackName + ".srt");
                 File.WriteAllLines(outPath, linesFinalSrt);
-                IoUtils.DeleteContentsOfDir(seDirSplit);
+                IoUtils.DeleteContentsOfDir(seTempDir);
                 return File.Exists(outPath);
             }
             catch (Exception e)
             {
                 Logger.Log($"Error occured during subtitle conversion: {e.Message}\n{e.StackTrace}");
                 return false;
+            }
+        }
+
+        private static async Task Extract(string inPath, string map, long durationMs, string outDir)
+        {
+            try
+            {
+                IoUtils.DeleteContentsOfDir(outDir);
+                int secs = (int)Math.Ceiling((double)durationMs / 1000);
+                int splitTime = (int)Math.Ceiling(((double)secs / (Environment.ProcessorCount - 1).Clamp(1, 24)) * 1);
+                string argsFull = $"-i {inPath.Wrap()} -map {map} -c copy \"{outDir}/full.mkv\"";
+                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden, false);
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to extract subtitles: {e.Message}");
             }
         }
 
@@ -122,9 +135,9 @@ namespace Nmkoder.Media
                 int secs = (int)Math.Ceiling((double)durationMs / 1000);
                 int splitTime = (int)Math.Ceiling(((double)secs / (Environment.ProcessorCount - 1).Clamp(1, 24)) * 1);
                 string argsFull = $"-i {inPath.Wrap()} -map {map} -c copy \"{outDir}/full.mkv\""; // First, copy full un-split file to get accuratet timecodes (splitting can break them)
-                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden, AvProcess.TaskType.ExtractOther, false);
+                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden, false);
                 string argsChunks = $"-i {inPath.Wrap()} -f segment -segment_time {splitTime} -reset_timestamps 1 -map {map} -c copy \"{outDir}/chunk%4d.mkv\""; // Make chunks for multithreaded OCR
-                await AvProcess.RunFfmpeg(argsChunks, AvProcess.LogMode.Hidden, AvProcess.TaskType.ExtractOther, false);
+                await AvProcess.RunFfmpeg(argsChunks, AvProcess.LogMode.Hidden, false);
             }
             catch (Exception e)
             {
@@ -142,7 +155,7 @@ namespace Nmkoder.Media
                 File.WriteAllText(concatFilePath, concatText);
                 string outFilePath = Path.Combine(dir, "merged.srt");
                 string args = $"-safe 0 -f concat -i {concatFilePath.Wrap()} -map 0 -c copy {outFilePath.Wrap()}";
-                await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Hidden, AvProcess.TaskType.ExtractOther, false);
+                await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Hidden, false);
                 return outFilePath;
             }
             catch(Exception e)

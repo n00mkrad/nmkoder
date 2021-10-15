@@ -43,7 +43,7 @@ namespace Nmkoder.UI.Tasks
                 string cm = GetChunkGenMethod();
                 IoUtils.TryDeleteIfExists(outPath);
 
-                args = $"-i {inPath.Wrap()} --verbose --keep --split-method {sm} -m {cm} {v} -f \" {vf} \" -a \" {a} \" {cust} -w {w} -o {outPath.Wrap()}";
+                args = $"-i {inPath.Wrap()} --verbose --keep --split-method {sm} -m {cm} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                 if (vmaf)
                 {

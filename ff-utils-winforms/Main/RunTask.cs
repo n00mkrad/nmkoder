@@ -66,6 +66,7 @@ namespace Nmkoder.Main
             }
 
             canceled = false;
+            FfmpegOutputHandler.overrideTargetDurationMs = -1;
             NmkdStopwatch sw = new NmkdStopwatch();
 
             if (taskType == TaskType.Convert)

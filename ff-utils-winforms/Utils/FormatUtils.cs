@@ -142,7 +142,7 @@ namespace Nmkoder.Utils
         public static int RatioInt(long numFrom, long numTo)
         {
             double ratio = Math.Round(((float)numFrom / (float)numTo) * 100f);
-            return (int)ratio;
+            return ((int)ratio).Clamp(0, int.MaxValue);
         }
 
         public static string RatioIntStr(long numFrom, long numTo)

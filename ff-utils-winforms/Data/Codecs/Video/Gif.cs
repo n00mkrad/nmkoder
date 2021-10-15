@@ -11,7 +11,7 @@ namespace Nmkoder.Data.Codecs
         public string FriendlyName { get; } = "GIF [Animated GIF]";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }
-        public string[] ColorFormats { get; }
+        public string[] ColorFormats { get; } = new string[] { };
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 0;
         public int QMax { get; } = 50;

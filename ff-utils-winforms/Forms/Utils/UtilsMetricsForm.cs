@@ -67,8 +67,6 @@ namespace Nmkoder.Forms.Utils
 
             if (encodedVideo.SelectedIndex < 0 || referenceVideo.SelectedIndex < 0)
             {
-                Logger.Log($"init comboxes");
-
                 encodedVideo.SelectedItem = encodedVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).Last();
                 referenceVideo.SelectedItem = referenceVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).First();
             }

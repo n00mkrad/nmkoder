@@ -20,6 +20,8 @@ namespace Nmkoder.Forms.Utils
         public string VideoLq { get; set; }
         public string VideoHq { get; set; }
 
+        ListBox fileList = Program.mainForm.fileListBox;
+
         public UtilsMetricsForm()
         {
             InitializeComponent();
@@ -30,6 +32,18 @@ namespace Nmkoder.Forms.Utils
             align.SelectedIndex = UtilGetMetrics.alignMode;
             vmafMdl.SelectedIndex = UtilGetMetrics.vmafModel;
             AcceptButton = confirmBtn;
+        }
+
+        private void LoadVideoBox (ComboBox box, string videoPath)
+        {
+            for (int i = 0; i < fileList.Items.Count; i++)
+            {
+                if(((MediaFile)fileList.Items[i]).TruePath == videoPath)
+                {
+                    box.SelectedIndex = i;
+                    return;
+                }
+            }
         }
 
         private void UtilsMetricsForm_Load(object sender, EventArgs e)
@@ -47,8 +61,14 @@ namespace Nmkoder.Forms.Utils
                 referenceVideo.Items.Add(mf);
             }
 
-            encodedVideo.SelectedIndex = 0;
-            referenceVideo.SelectedIndex = 1;
+            LoadVideoBox(encodedVideo, UtilGetMetrics.vidLq);
+            LoadVideoBox(referenceVideo, UtilGetMetrics.vidHq);
+
+            if (encodedVideo.SelectedIndex < 0)
+                encodedVideo.SelectedIndex = 0;
+
+            if (referenceVideo.SelectedIndex < 0)
+                referenceVideo.SelectedIndex = 1;
         }
 
         private void confirmBtn_Click(object sender, EventArgs e)

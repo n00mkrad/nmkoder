@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.IO;
 using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
@@ -64,11 +65,13 @@ namespace Nmkoder.Forms.Utils
             LoadVideoBox(encodedVideo, UtilGetMetrics.vidLq);
             LoadVideoBox(referenceVideo, UtilGetMetrics.vidHq);
 
-            if (encodedVideo.SelectedIndex < 0)
-                encodedVideo.SelectedIndex = 0;
+            if (encodedVideo.SelectedIndex < 0 || referenceVideo.SelectedIndex < 0)
+            {
+                Logger.Log($"init comboxes");
 
-            if (referenceVideo.SelectedIndex < 0)
-                referenceVideo.SelectedIndex = 1;
+                encodedVideo.SelectedItem = encodedVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).Last();
+                referenceVideo.SelectedItem = referenceVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).First();
+            }
         }
 
         private void confirmBtn_Click(object sender, EventArgs e)

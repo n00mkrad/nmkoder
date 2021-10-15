@@ -47,17 +47,17 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunFfmpeg(string args, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
         {
-            return await RunFfmpeg(args, "", logMode, defLogLevel, false, progressBar);
+            return await RunFfmpeg(args, "", logMode, defLogLevel, reliableOutput, progressBar);
         }
 
         public static async Task<string> RunFfmpeg(string args, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)
         {
-            return await RunFfmpeg(args, "", logMode, loglevel, false, progressBar);
+            return await RunFfmpeg(args, "", logMode, loglevel, reliableOutput, progressBar);
         }
 
         public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
         {
-            return await RunFfmpeg(args, workingDir, logMode, defLogLevel, false, progressBar);
+            return await RunFfmpeg(args, workingDir, logMode, defLogLevel, reliableOutput, progressBar);
         }
 
         public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)

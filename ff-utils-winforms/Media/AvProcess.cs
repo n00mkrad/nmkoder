@@ -45,26 +45,25 @@ namespace Nmkoder.Media
 
         #region FFmpeg
 
-        public static async Task RunFfmpeg(string args, LogMode logMode, bool progressBar = false)
+        public static async Task<string> RunFfmpeg(string args, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
         {
-            await RunFfmpeg(args, "", logMode, defLogLevel, progressBar);
+            return await RunFfmpeg(args, "", logMode, defLogLevel, false, progressBar);
         }
 
-        public static async Task RunFfmpeg(string args, LogMode logMode, string loglevel, bool progressBar = false)
+        public static async Task<string> RunFfmpeg(string args, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)
         {
-            await RunFfmpeg(args, "", logMode, loglevel, progressBar);
+            return await RunFfmpeg(args, "", logMode, loglevel, false, progressBar);
         }
 
-        public static async Task RunFfmpeg(string args, string workingDir, LogMode logMode, bool progressBar = false)
+        public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
         {
-            await RunFfmpeg(args, workingDir, logMode, defLogLevel, progressBar);
+            return await RunFfmpeg(args, workingDir, logMode, defLogLevel, false, progressBar);
         }
 
-        public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, bool progressBar = false)
+        public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
-            //showProgressBar = progressBar;
             Process ffmpeg = OsUtils.NewProcess(!show);
             timeSinceLastOutput.Restart();
             lastAvProcess = ffmpeg;
@@ -97,8 +96,11 @@ namespace Nmkoder.Media
                 ffmpeg.BeginErrorReadLine();
             }
 
-            while (!ffmpeg.HasExited)
-                await Task.Delay(10);
+            //while (!ffmpeg.HasExited)
+            //    await Task.Delay(10);
+
+            while (!ffmpeg.HasExited) await Task.Delay(10);
+            while (reliableOutput && timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);
@@ -109,7 +111,7 @@ namespace Nmkoder.Media
         public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)
         {
             if (setBusy) Program.mainForm.SetWorking(true);
-            return await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", progressBar);
+            return await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", true, progressBar);
             if (setBusy) Program.mainForm.SetWorking(false);
             //timeSinceLastOutput.Restart();
             //if (Program.busy) setBusy = false;

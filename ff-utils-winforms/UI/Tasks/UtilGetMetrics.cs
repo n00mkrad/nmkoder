@@ -46,7 +46,7 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating VMAF...");
                     string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{vmafFilter} -f null -";
-                    string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
+                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
                     List<string> vmafLines = output.SplitIntoLines().Where(x => x.Contains("VMAF score: ")).ToList();
 
                     if (vmafLines.Count < 1)

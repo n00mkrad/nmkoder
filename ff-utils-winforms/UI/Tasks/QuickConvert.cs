@@ -73,7 +73,7 @@ namespace Nmkoder.UI.Tasks
             
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
-            await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, true);
+            await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, false, true);
         }
     }
 }

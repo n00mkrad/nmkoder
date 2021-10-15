@@ -119,7 +119,7 @@ namespace Nmkoder.Media
                 int secs = (int)Math.Ceiling((double)durationMs / 1000);
                 int splitTime = (int)Math.Ceiling(((double)secs / (Environment.ProcessorCount - 1).Clamp(1, 24)) * 1);
                 string argsFull = $"-i {inPath.Wrap()} -map {map} -c copy \"{outDir}/full.mkv\"";
-                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden, false);
+                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden);
             }
             catch (Exception e)
             {
@@ -135,9 +135,9 @@ namespace Nmkoder.Media
                 int secs = (int)Math.Ceiling((double)durationMs / 1000);
                 int splitTime = (int)Math.Ceiling(((double)secs / (Environment.ProcessorCount - 1).Clamp(1, 24)) * 1);
                 string argsFull = $"-i {inPath.Wrap()} -map {map} -c copy \"{outDir}/full.mkv\""; // First, copy full un-split file to get accuratet timecodes (splitting can break them)
-                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden, false);
+                await AvProcess.RunFfmpeg(argsFull, AvProcess.LogMode.Hidden);
                 string argsChunks = $"-i {inPath.Wrap()} -f segment -segment_time {splitTime} -reset_timestamps 1 -map {map} -c copy \"{outDir}/chunk%4d.mkv\""; // Make chunks for multithreaded OCR
-                await AvProcess.RunFfmpeg(argsChunks, AvProcess.LogMode.Hidden, false);
+                await AvProcess.RunFfmpeg(argsChunks, AvProcess.LogMode.Hidden);
             }
             catch (Exception e)
             {
@@ -155,7 +155,7 @@ namespace Nmkoder.Media
                 File.WriteAllText(concatFilePath, concatText);
                 string outFilePath = Path.Combine(dir, "merged.srt");
                 string args = $"-safe 0 -f concat -i {concatFilePath.Wrap()} -map 0 -c copy {outFilePath.Wrap()}";
-                await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Hidden, false);
+                await AvProcess.RunFfmpeg(args, AvProcess.LogMode.Hidden);
                 return outFilePath;
             }
             catch(Exception e)

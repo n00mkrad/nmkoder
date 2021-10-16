@@ -162,7 +162,6 @@ namespace Nmkoder.Media
                 bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
                 lastTempDirAv1an = tempDir;
                 lastOutputAv1an = "";
-                //showProgressBar = progressBar;
                 Process av1an = OsUtils.NewProcess(!show);
                 timeSinceLastOutput.Restart();
                 lastAvProcess = av1an;
@@ -187,7 +186,7 @@ namespace Nmkoder.Media
 
                 Task.Run(() => Av1anOutputHandler.ParseProgressLoop());
                 av1an.Start();
-                //av1an.PriorityClass = ProcessPriorityClass.BelowNormal;
+                av1an.PriorityClass = ProcessPriorityClass.BelowNormal;
 
                 if (!show)
                 {
@@ -197,8 +196,6 @@ namespace Nmkoder.Media
 
                 while (!av1an.HasExited)
                     await Task.Delay(10);
-
-                Logger.Log($"av1an PROCESS EXITED");
 
                 if (progressBar)
                     Program.mainForm.SetProgress(0);

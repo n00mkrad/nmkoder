@@ -42,6 +42,7 @@ namespace Nmkoder.Media
             //lastTask = taskType;
 
             subEdit.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & SubtitleEdit {args}";
+            Logger.Log($"cmd {subEdit.StartInfo.Arguments}", true, false);
 
             if (!hidden) Logger.Log("Starting OCR...", false);
             Logger.Log($"SubtitleEdit {args}", true, false, "ocr");
@@ -68,7 +69,7 @@ namespace Nmkoder.Media
                 Program.mainForm.SetProgress(0);
 
             if (trackProgress)
-                OcrUtils.progressTracker[args] = 100;
+                OcrUtils.procsFinished++;
         }
 
         public static void LogOutput(string line, bool hidden, bool trackProg, string args)
@@ -105,7 +106,7 @@ namespace Nmkoder.Media
 
         }
 
-        static string GetDir()
+        public static string GetDir()
         {
             return Path.Combine(Paths.GetBinPath(), "SE");
         }

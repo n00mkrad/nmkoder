@@ -174,7 +174,7 @@ namespace Nmkoder.Media
                 if (!show)
                     av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + $";{vsynthPath};{encPath};{ffmpegPath}";
 
-                av1an.StartInfo.Arguments = $"{GetCmdArg()} cd /D {dir.Wrap()} && SET PATH=%PATH%;{vsynthPath};{encPath};{ffmpegPath} && av1an.exe {beforeArgs} {args}";
+                av1an.StartInfo.Arguments = $"/K cd /D {dir.Wrap()} && SET PATH=%PATH%;{vsynthPath};{encPath};{ffmpegPath} && av1an.exe {beforeArgs} {args}";
 
                 if (logMode != LogMode.Hidden) Logger.Log("Running av1an...", false);
 
@@ -204,6 +204,41 @@ namespace Nmkoder.Media
             {
                 Logger.Log($"{e.Message}");
             }
+        }
+
+        #endregion
+
+        #region MKVExtract
+
+        public static async Task<string> RunMkvExtract(string args)
+        {
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            string processOutput = "";
+
+            try
+            {
+                Process mkve = OsUtils.NewProcess(!show);
+
+                mkve.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvextract.exe {args}";
+
+                Logger.Log($"mkvextract {args}", true, false, "mkvextract");
+
+                mkve.OutputDataReceived += (sender, outLine) => { processOutput += outLine.Data; Logger.Log($"[mkvextract] {outLine.Data}", true, false, "ocr"); };
+                mkve.ErrorDataReceived += (sender, outLine) => { processOutput += outLine.Data; };
+
+                mkve.Start();
+                mkve.PriorityClass = ProcessPriorityClass.BelowNormal;
+                mkve.BeginOutputReadLine();
+                mkve.BeginErrorReadLine();
+
+                while (!mkve.HasExited) await Task.Delay(10);
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"Error running MkvExtract: {e.Message}");
+            }
+
+            return processOutput;
         }
 
         #endregion

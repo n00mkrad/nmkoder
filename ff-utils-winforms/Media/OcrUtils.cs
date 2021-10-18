@@ -52,7 +52,7 @@ namespace Nmkoder.Media
                     int progSum = progressTracker.Select(x => x.Value).Sum();
                     int avgProg = ((float)progSum / progressTracker.Count).RoundToInt();
                     int running = progressTracker.Where(x => x.Value < 100).Count();
-                    Logger.Log($"Running {running} OCR Instances - Progress: {avgProg}%", false, Logger.GetLastLine().EndsWith("%"));
+                    Logger.Log($"Running {running} OCR Instances - Average Progress: {avgProg}%", false, Logger.GetLastLine().EndsWith("%"));
                     Program.mainForm.SetProgress(avgProg);
 
                     if (RunTask.canceled)
@@ -62,7 +62,7 @@ namespace Nmkoder.Media
                 await Task.Delay(100);
             }
 
-            Logger.Log($"All OCR processes have finished.", true, Logger.GetLastLine().EndsWith("%"));
+            Logger.Log($"All OCR processes have finished.", false, Logger.GetLastLine().EndsWith("%"));
 
             return true;
         }

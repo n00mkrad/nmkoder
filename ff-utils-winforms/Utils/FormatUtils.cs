@@ -39,12 +39,7 @@ namespace Nmkoder.Utils
 
         public static string Time(long milliseconds)
         {
-            double secs = (milliseconds / 1000f);
-            if (milliseconds <= 1000)
-            {
-                return milliseconds + "ms";
-            }
-            return secs.ToString("0.00") + "s";
+            return Time(TimeSpan.FromMilliseconds(milliseconds));
         }
 
         public static string Time(TimeSpan span, bool allowMs = true)

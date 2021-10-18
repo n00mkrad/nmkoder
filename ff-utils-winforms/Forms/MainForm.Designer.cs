@@ -1344,7 +1344,7 @@
             this.av1anGrainSynthStrength.Name = "av1anGrainSynthStrength";
             this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 23);
             this.av1anGrainSynthStrength.TabIndex = 71;
-            this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Set the video quality level (CRF/CQ)");
+            this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Improves encodes of noisy videos by synthesizing grain");
             // 
             // label37
             // 
@@ -1367,6 +1367,7 @@
             this.av1anCustomEncArgs.Name = "av1anCustomEncArgs";
             this.av1anCustomEncArgs.Size = new System.Drawing.Size(250, 23);
             this.av1anCustomEncArgs.TabIndex = 69;
+            this.toolTip.SetToolTip(this.av1anCustomEncArgs, "Enter custom arguments for the selected encoder.");
             // 
             // label36
             // 
@@ -2253,7 +2254,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NMKD\'s NMKoDer";
+            this.Text = "Nmkoder";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);

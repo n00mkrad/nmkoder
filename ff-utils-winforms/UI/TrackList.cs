@@ -128,7 +128,7 @@ namespace Nmkoder.UI
             {
                 try
                 {
-                    box.Items.Add(new MediaStreamListEntry(mediaFile, s, uniqueFileCount));
+                    box.Items.Add(new MediaStreamListEntry(mediaFile, s));
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
                     Program.mainForm.ignoreNextStreamListItemCheck = true;
                     box.SetItemChecked(box.Items.Count - 1, check);
@@ -144,6 +144,22 @@ namespace Nmkoder.UI
 
             Program.mainForm.UpdateDefaultStreamsUi();
             Program.mainForm.UpdateTrackListUpDownBtnsState();
+        }
+
+        public static void Refresh ()
+        {
+            List<string> loadedPaths = Program.mainForm.fileListBox.Items.OfType<MediaFile>().Select(x => x.TruePath).ToList();
+
+            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            {
+                MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamListBox.Items[i];
+
+                if (entry.MediaFile == null || !loadedPaths.Contains(entry.MediaFile.TruePath))
+                {
+                    Program.mainForm.streamListBox.Items.Remove(Program.mainForm.streamListBox.Items[i]);
+                    i = 0; // Reset loop index, otherwise removing will result in skipped entries
+                }
+            }
         }
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)

@@ -73,6 +73,8 @@ namespace Nmkoder.Forms
         {
             if(fileList.SelectedIndex >= 0 && fileList.SelectedIndex < fileList.Items.Count)
                 fileList.Items.RemoveAt(fileList.SelectedIndex);
+
+            TrackList.Refresh();
         }
 
         private void fileListMoveUpBtn_Click(object sender, EventArgs e)

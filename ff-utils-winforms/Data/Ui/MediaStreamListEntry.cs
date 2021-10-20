@@ -14,13 +14,13 @@ namespace Nmkoder.Data.Ui
     {
         public MediaFile MediaFile;
         public Stream Stream;
-        public int FileIndex;
 
         public override string ToString()
         {
             string codec = FormatUtils.CapsIfShort(Stream.Codec, 5);
             const int maxChars = 50;
-            string str = $"[File {FileIndex + 1} - Track {Stream.Index + 1}]:";
+            int fileIndex = GetFileIndex();
+            string str = $"[File {fileIndex + 1} - Track {Stream.Index + 1}]:";
 
             if (Stream.Type == Stream.StreamType.Video)
             {
@@ -73,11 +73,21 @@ namespace Nmkoder.Data.Ui
             return str;
         }
 
-        public MediaStreamListEntry(MediaFile mediaFile, Stream stream, int fileIndex)
+        int GetFileIndex ()
+        {
+            for(int i = 0; i < Program.mainForm.fileListBox.Items.Count; i++)
+            {
+                if (((MediaFile)Program.mainForm.fileListBox.Items[i]).TruePath == MediaFile.TruePath)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public MediaStreamListEntry(MediaFile mediaFile, Stream stream)
         {
             MediaFile = mediaFile;
             Stream = stream;
-            FileIndex = fileIndex;
         }
     }
 }

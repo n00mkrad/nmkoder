@@ -154,5 +154,40 @@ namespace Nmkoder.Forms
             UpdateDefaultStreamsUi();
             QuickConvertUi.LoadMetadataGrid();
         }
+
+        private void trackListCheckTracksBtn_Click(object sender, EventArgs e)
+        {
+            checkItemsContextMenu.Show(Cursor.Position);
+        }
+
+        private void checkAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckAll(true);
+        }
+
+        private void checkNoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckAll(false);
+        }
+
+        private void invertSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.InvertSelection();
+        }
+
+        private void checkAllVideoTracksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckTracksOfType(Stream.StreamType.Video);
+        }
+
+        private void checkAllAudioTracksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckTracksOfType(Stream.StreamType.Audio);
+        }
+
+        private void checkAllSubtitleTracksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckTracksOfType(Stream.StreamType.Subtitle);
+        }
     }
 }

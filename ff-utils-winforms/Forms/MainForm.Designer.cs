@@ -1,4 +1,6 @@
-﻿namespace Nmkoder.Forms
+﻿using Nmkoder.UI;
+
+namespace Nmkoder.Forms
 {
     partial class MainForm
     {
@@ -50,6 +52,7 @@
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListBox();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
             this.trackListMoveUpBtn = new System.Windows.Forms.Button();
             this.trackListMoveDownBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -178,6 +181,13 @@
             this.stopBtn = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.currentActionLabel = new System.Windows.Forms.Label();
+            this.checkItemsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.checkAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkNoneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invertSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkAllVideoTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -214,6 +224,7 @@
             this.settingsGeneralTab.SuspendLayout();
             this.settingsContainersTab.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
+            this.checkItemsContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -480,6 +491,7 @@
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.trackListCheckTracksBtn);
             this.streamListPage.Controls.Add(this.trackListMoveUpBtn);
             this.streamListPage.Controls.Add(this.trackListMoveDownBtn);
             this.streamListPage.Controls.Add(this.label7);
@@ -493,6 +505,22 @@
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
             // 
+            // trackListCheckTracksBtn
+            // 
+            this.trackListCheckTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListCheckTracksBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_checklist;
+            this.trackListCheckTracksBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListCheckTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListCheckTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListCheckTracksBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(629, 62);
+            this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
+            this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListCheckTracksBtn.TabIndex = 51;
+            this.toolTip.SetToolTip(this.trackListCheckTracksBtn, "Move Down");
+            this.trackListCheckTracksBtn.UseVisualStyleBackColor = false;
+            this.trackListCheckTracksBtn.Click += new System.EventHandler(this.trackListCheckTracksBtn_Click);
+            // 
             // trackListMoveUpBtn
             // 
             this.trackListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -501,12 +529,13 @@
             this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveUpBtn.Location = new System.Drawing.Point(583, 232);
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(594, 238);
             this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
-            this.trackListMoveUpBtn.Size = new System.Drawing.Size(35, 35);
+            this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveUpBtn.TabIndex = 50;
             this.toolTip.SetToolTip(this.trackListMoveUpBtn, "Move Up");
             this.trackListMoveUpBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveUpBtn.Visible = false;
             this.trackListMoveUpBtn.Click += new System.EventHandler(this.trackListMoveUpBtn_Click);
             // 
             // trackListMoveDownBtn
@@ -517,12 +546,13 @@
             this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveDownBtn.Location = new System.Drawing.Point(624, 232);
+            this.trackListMoveDownBtn.Location = new System.Drawing.Point(629, 238);
             this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
-            this.trackListMoveDownBtn.Size = new System.Drawing.Size(35, 35);
+            this.trackListMoveDownBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveDownBtn.TabIndex = 49;
             this.toolTip.SetToolTip(this.trackListMoveDownBtn, "Move Down");
             this.trackListMoveDownBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveDownBtn.Visible = false;
             this.trackListMoveDownBtn.Click += new System.EventHandler(this.trackListMoveDownBtn_Click);
             // 
             // label7
@@ -728,7 +758,7 @@
             this.encQualMode.Name = "encQualMode";
             this.encQualMode.Size = new System.Drawing.Size(134, 23);
             this.encQualMode.TabIndex = 65;
-            this.toolTip.SetToolTip(this.encQualMode, "Use either a CRF value or a target VMAF quality level");
+            this.toolTip.SetToolTip(this.encQualMode, "Select how the quality/filesize will be controlled");
             this.encQualMode.SelectedIndexChanged += new System.EventHandler(this.encQualityMode_SelectedIndexChanged);
             // 
             // label4
@@ -849,7 +879,7 @@
             this.encVidQuality.Name = "encVidQuality";
             this.encVidQuality.Size = new System.Drawing.Size(110, 23);
             this.encVidQuality.TabIndex = 52;
-            this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality level (CRF/CQ)");
+            this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality/filesize");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
             // label61
@@ -2215,6 +2245,60 @@
             this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
             this.currentActionLabel.TabIndex = 40;
             // 
+            // checkItemsContextMenu
+            // 
+            this.checkItemsContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkAllToolStripMenuItem,
+            this.checkNoneToolStripMenuItem,
+            this.invertSelectionToolStripMenuItem,
+            this.checkAllVideoTracksToolStripMenuItem,
+            this.checkAllAudioTracksToolStripMenuItem,
+            this.checkAllSubtitleTracksToolStripMenuItem});
+            this.checkItemsContextMenu.Name = "checkItemsContextMenu";
+            this.checkItemsContextMenu.Size = new System.Drawing.Size(203, 158);
+            // 
+            // checkAllToolStripMenuItem
+            // 
+            this.checkAllToolStripMenuItem.Name = "checkAllToolStripMenuItem";
+            this.checkAllToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllToolStripMenuItem.Text = "Check All";
+            this.checkAllToolStripMenuItem.Click += new System.EventHandler(this.checkAllToolStripMenuItem_Click);
+            // 
+            // checkNoneToolStripMenuItem
+            // 
+            this.checkNoneToolStripMenuItem.Name = "checkNoneToolStripMenuItem";
+            this.checkNoneToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkNoneToolStripMenuItem.Text = "Check None";
+            this.checkNoneToolStripMenuItem.Click += new System.EventHandler(this.checkNoneToolStripMenuItem_Click);
+            // 
+            // invertSelectionToolStripMenuItem
+            // 
+            this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
+            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.invertSelectionToolStripMenuItem.Text = "Invert Selection";
+            this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
+            // 
+            // checkAllVideoTracksToolStripMenuItem
+            // 
+            this.checkAllVideoTracksToolStripMenuItem.Name = "checkAllVideoTracksToolStripMenuItem";
+            this.checkAllVideoTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllVideoTracksToolStripMenuItem.Text = "Check All Video Tracks";
+            this.checkAllVideoTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllVideoTracksToolStripMenuItem_Click);
+            // 
+            // checkAllAudioTracksToolStripMenuItem
+            // 
+            this.checkAllAudioTracksToolStripMenuItem.Name = "checkAllAudioTracksToolStripMenuItem";
+            this.checkAllAudioTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllAudioTracksToolStripMenuItem.Text = "Check All Audio Tracks";
+            this.checkAllAudioTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllAudioTracksToolStripMenuItem_Click);
+            // 
+            // checkAllSubtitleTracksToolStripMenuItem
+            // 
+            this.checkAllSubtitleTracksToolStripMenuItem.Name = "checkAllSubtitleTracksToolStripMenuItem";
+            this.checkAllSubtitleTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllSubtitleTracksToolStripMenuItem.Text = "Check All Subtitle Tracks";
+            this.checkAllSubtitleTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllSubtitleTracksToolStripMenuItem_Click);
+            // 
             // runBtn
             // 
             this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -2306,6 +2390,7 @@
             this.settingsContainersTab.ResumeLayout(false);
             this.settingsContainersTab.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
+            this.checkItemsContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2461,6 +2546,14 @@
         private System.Windows.Forms.Panel utilsOcrPanel;
         private System.Windows.Forms.Label label2;
         private HTAlt.WinForms.HTButton htButton2;
+        private System.Windows.Forms.Button trackListCheckTracksBtn;
+        private System.Windows.Forms.ContextMenuStrip checkItemsContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem checkAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkNoneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem invertSelectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkAllVideoTracksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkAllAudioTracksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkAllSubtitleTracksToolStripMenuItem;
     }
 }
 

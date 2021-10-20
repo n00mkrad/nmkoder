@@ -235,5 +235,36 @@ namespace Nmkoder.UI
 
             return string.Join(" ", args);
         }
+
+        #region Selection
+
+        public static void CheckAll (bool check)
+        {
+            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
+                Program.mainForm.streamListBox.SetItemChecked(i, check);
+            }
+        }
+
+        public static void InvertSelection(object sender = null, EventArgs e = null)
+        {
+            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
+                Program.mainForm.streamListBox.SetItemChecked(i, !Program.mainForm.streamListBox.GetItemChecked(i));
+            }
+        }
+
+        public static void CheckTracksOfType(Stream.StreamType type)
+        {
+            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
+                Program.mainForm.streamListBox.SetItemChecked(i, ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream.Type == type);
+            }
+        }
+
+        #endregion
     }
 }

@@ -217,6 +217,7 @@ namespace Nmkoder.Media
         private static string WriteBatchFile (string workingDir, string[] paths, string av1anArgs)
         {
             List<string> lines = new List<string>();
+            lines.Add($"@echo off");
             lines.Add($"cd /D {workingDir.Wrap()}");
             lines.Add($"SET PATH=%PATH% {string.Join(";", paths)}");
             lines.Add($"av1an {av1anArgs}");

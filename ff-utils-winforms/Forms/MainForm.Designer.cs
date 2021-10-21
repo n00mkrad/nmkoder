@@ -1040,6 +1040,7 @@ namespace Nmkoder.Forms
             this.encAudChannels.ForeColor = System.Drawing.Color.White;
             this.encAudChannels.FormattingEnabled = true;
             this.encAudChannels.Items.AddRange(new object[] {
+            "Unchanged",
             "1 (Mono)",
             "2 (Stereo)",
             "6 (5.1)",
@@ -2255,7 +2256,7 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem,
             this.checkAllSubtitleTracksToolStripMenuItem});
             this.checkItemsContextMenu.Name = "checkItemsContextMenu";
-            this.checkItemsContextMenu.Size = new System.Drawing.Size(203, 158);
+            this.checkItemsContextMenu.Size = new System.Drawing.Size(203, 136);
             // 
             // checkAllToolStripMenuItem
             // 

@@ -8,6 +8,7 @@ using Nmkoder.UI;
 using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -172,9 +173,15 @@ namespace Nmkoder.Media
                 string ffmpegPath = Paths.GetBinPath();
 
                 if (!show)
+                {
                     av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + $";{vsynthPath};{encPath};{ffmpegPath}";
-
-                av1an.StartInfo.Arguments = $"/K cd /D {dir.Wrap()} && SET PATH=%PATH%;{vsynthPath};{encPath};{ffmpegPath} && av1an.exe {beforeArgs} {args}";
+                    av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.exe {beforeArgs} {args}";
+                }
+                else
+                {
+                    WriteBatchFile(dir, new string[] { vsynthPath, encPath, ffmpegPath }, $"{beforeArgs} {args}");
+                    av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.bat";
+                }
 
                 if (logMode != LogMode.Hidden) Logger.Log("Running av1an...", false);
 
@@ -184,6 +191,7 @@ namespace Nmkoder.Media
                     av1an.ErrorDataReceived += (sender, outLine) => { Av1anOutputHandler.LogOutput(outLine.Data, "av1an", logMode, progressBar); };
                 }
 
+                Logger.Log($"cmd {av1an.StartInfo.Arguments}", true, false, "av1an");
                 Task.Run(() => Av1anOutputHandler.ParseProgressLoop());
                 av1an.Start();
                 av1an.PriorityClass = ProcessPriorityClass.BelowNormal;
@@ -204,6 +212,17 @@ namespace Nmkoder.Media
             {
                 Logger.Log($"{e.Message}");
             }
+        }
+
+        private static string WriteBatchFile (string workingDir, string[] paths, string av1anArgs)
+        {
+            List<string> lines = new List<string>();
+            lines.Add($"cd /D {workingDir.Wrap()}");
+            lines.Add($"SET PATH=%PATH% {string.Join(";", paths)}");
+            lines.Add($"av1an {av1anArgs}");
+            string path = Path.Combine(workingDir, "av1an.bat");
+            File.WriteAllLines(path, lines);
+            return path;
         }
 
         #endregion

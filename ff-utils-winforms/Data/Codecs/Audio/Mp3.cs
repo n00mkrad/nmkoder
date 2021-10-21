@@ -1,4 +1,5 @@
-﻿using Nmkoder.IO;
+﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
 
@@ -28,7 +29,7 @@ namespace Nmkoder.Data.Codecs
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "320k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a libmp3lame -b:a {bitrate}k -ac {channels}");
+            return new CodecArgs($"-c:a libmp3lame {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
         }
     }
 }

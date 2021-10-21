@@ -86,8 +86,14 @@ namespace Nmkoder.Data
             {
                 int audioIdx = mf.AudioStreams.IndexOf(s);
                 int ac = overrideChannels > 0 ? overrideChannels : s.Channels;
-                int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
-                args.Add($"-b:a:{audioIdx} {kbps}k -ac:{audioIdx} {ac}");
+
+                if(baseBitrate > 0)
+                {
+                    int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
+                    args.Add($"-b:a:{audioIdx} {kbps}k");
+                }
+
+                args.Add($"-ac:{audioIdx} {ac}");
             }
 
             return string.Join(" ", args);

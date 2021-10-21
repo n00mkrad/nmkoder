@@ -1,4 +1,5 @@
-﻿using Nmkoder.IO;
+﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +28,7 @@ namespace Nmkoder.Data.Codecs
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a flac -ac {channels}");
+            return new CodecArgs($"-c:a flac {CodecUtils.GetAudioArgsForEachStream(mediaFile, -1, channels.GetInt())}");
         }
     }
 }

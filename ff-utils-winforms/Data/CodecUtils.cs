@@ -82,14 +82,23 @@ namespace Nmkoder.Data
             List<Streams.Stream> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<Ui.MediaStreamListEntry>().Select(x => x.Stream).ToList();
             List<Streams.AudioStream> streams = checkedStreams.Where(x => x.Type == Streams.Stream.StreamType.Audio).OfType<Streams.AudioStream>().ToList();
 
+            List<AudioConfigurationEntry> audioConf = TrackList.currentAudioConfig != null ? TrackList.currentAudioConfig.GetConfig(mf) : null;
+
             foreach (Streams.AudioStream s in streams)
             {
-                int audioIdx = mf.AudioStreams.IndexOf(s);
+                int audioIdx = checkedStreams.IndexOf(s);
                 int ac = overrideChannels > 0 ? overrideChannels : s.Channels;
 
-                if(baseBitrate > 0)
+                if (audioConf != null)
+                    ac = audioConf[audioIdx].ChannelCount;
+
+                if (baseBitrate > 0)
                 {
                     int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
+
+                    if (audioConf != null)
+                        kbps = audioConf[audioIdx].BitrateKbps;
+
                     args.Add($"-b:a:{audioIdx} {kbps}k");
                 }
 

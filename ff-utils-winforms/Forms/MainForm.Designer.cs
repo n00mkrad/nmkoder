@@ -38,15 +38,23 @@ namespace Nmkoder.Forms
             this.titleLabel = new System.Windows.Forms.Label();
             this.inputPanel = new System.Windows.Forms.Panel();
             this.thumbInfo = new System.Windows.Forms.Label();
+            this.thumbnail = new System.Windows.Forms.PictureBox();
             this.taskMode = new System.Windows.Forms.ComboBox();
+            this.inputDropPanel = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
             this.fileListMode = new System.Windows.Forms.ComboBox();
+            this.fileListMoveUpBtn = new System.Windows.Forms.Button();
+            this.fileListCleanBtn = new System.Windows.Forms.Button();
+            this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListBox();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
+            this.trackListMoveUpBtn = new System.Windows.Forms.Button();
+            this.trackListMoveDownBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.trackListDefaultSubs = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -82,6 +90,11 @@ namespace Nmkoder.Forms
             this.label48 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.encAudPerTrackPanel = new System.Windows.Forms.Panel();
+            this.encAudConfigureBtn = new HTAlt.WinForms.HTButton();
+            this.encAudConfMode = new System.Windows.Forms.ComboBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
             this.encAudChannels = new System.Windows.Forms.ComboBox();
             this.encAudQuality = new System.Windows.Forms.NumericUpDown();
@@ -151,11 +164,14 @@ namespace Nmkoder.Forms
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
+            this.utilsBitratesSelBtn = new HTAlt.WinForms.HTButton();
             this.utilsMetricsPanel = new System.Windows.Forms.Panel();
             this.utilsMetricsConfBtn = new HTAlt.WinForms.HTButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
             this.utilsOcrPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.htButton2 = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.settingsGeneralTab = new System.Windows.Forms.TabPage();
@@ -166,6 +182,8 @@ namespace Nmkoder.Forms
             this.label64 = new System.Windows.Forms.Label();
             this.progressCircle = new CircularProgressBar.CircularProgressBar();
             this.busyControlsPanel = new System.Windows.Forms.Panel();
+            this.pauseBtn = new System.Windows.Forms.Button();
+            this.stopBtn = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.checkItemsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -175,22 +193,9 @@ namespace Nmkoder.Forms
             this.checkAllVideoTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseBtn = new System.Windows.Forms.Button();
-            this.stopBtn = new System.Windows.Forms.Button();
-            this.fileListMoveUpBtn = new System.Windows.Forms.Button();
-            this.fileListCleanBtn = new System.Windows.Forms.Button();
-            this.fileListMoveDownBtn = new System.Windows.Forms.Button();
-            this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
-            this.trackListMoveUpBtn = new System.Windows.Forms.Button();
-            this.trackListMoveDownBtn = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.utilsBitratesSelBtn = new HTAlt.WinForms.HTButton();
-            this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
-            this.htButton2 = new HTAlt.WinForms.HTButton();
             this.runBtn = new System.Windows.Forms.Button();
-            this.thumbnail = new System.Windows.Forms.PictureBox();
-            this.inputDropPanel = new System.Windows.Forms.Panel();
             this.inputPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
             this.fileListPage.SuspendLayout();
             this.streamListPage.SuspendLayout();
@@ -199,6 +204,8 @@ namespace Nmkoder.Forms
             this.encVid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.encAudPerTrackPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.encMetaTab.SuspendLayout();
@@ -225,8 +232,6 @@ namespace Nmkoder.Forms
             this.settingsContainersTab.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
             this.checkItemsContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -308,6 +313,20 @@ namespace Nmkoder.Forms
             this.thumbInfo.TabIndex = 29;
             this.thumbInfo.Text = "No Thumbnails Loaded.";
             // 
+            // thumbnail
+            // 
+            this.thumbnail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.thumbnail.Enabled = false;
+            this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
+            this.thumbnail.Location = new System.Drawing.Point(7, 133);
+            this.thumbnail.Margin = new System.Windows.Forms.Padding(0);
+            this.thumbnail.Name = "thumbnail";
+            this.thumbnail.Size = new System.Drawing.Size(301, 205);
+            this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.thumbnail.TabIndex = 27;
+            this.thumbnail.TabStop = false;
+            this.thumbnail.Click += new System.EventHandler(this.thumbnail_Click);
+            // 
             // taskMode
             // 
             this.taskMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -323,6 +342,19 @@ namespace Nmkoder.Forms
             this.taskMode.Size = new System.Drawing.Size(302, 21);
             this.taskMode.TabIndex = 26;
             this.taskMode.SelectedIndexChanged += new System.EventHandler(this.SaveUiConfig);
+            // 
+            // inputDropPanel
+            // 
+            this.inputDropPanel.AllowDrop = true;
+            this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
+            this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
+            this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.inputDropPanel.Enabled = false;
+            this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
+            this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
+            this.inputDropPanel.Name = "inputDropPanel";
+            this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
+            this.inputDropPanel.TabIndex = 1;
             // 
             // label33
             // 
@@ -388,6 +420,54 @@ namespace Nmkoder.Forms
             this.fileListMode.TabIndex = 42;
             this.fileListMode.SelectedIndexChanged += new System.EventHandler(this.fileListMode_SelectedIndexChanged);
             // 
+            // fileListMoveUpBtn
+            // 
+            this.fileListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListMoveUpBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_up;
+            this.fileListMoveUpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fileListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListMoveUpBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListMoveUpBtn.Location = new System.Drawing.Point(583, 330);
+            this.fileListMoveUpBtn.Name = "fileListMoveUpBtn";
+            this.fileListMoveUpBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListMoveUpBtn.TabIndex = 41;
+            this.toolTip.SetToolTip(this.fileListMoveUpBtn, "Move Up");
+            this.fileListMoveUpBtn.UseVisualStyleBackColor = false;
+            this.fileListMoveUpBtn.Click += new System.EventHandler(this.fileListMoveUpBtn_Click);
+            // 
+            // fileListCleanBtn
+            // 
+            this.fileListCleanBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListCleanBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
+            this.fileListCleanBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fileListCleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListCleanBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListCleanBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListCleanBtn.Location = new System.Drawing.Point(532, 330);
+            this.fileListCleanBtn.Name = "fileListCleanBtn";
+            this.fileListCleanBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListCleanBtn.TabIndex = 40;
+            this.toolTip.SetToolTip(this.fileListCleanBtn, "Remove This File From The List");
+            this.fileListCleanBtn.UseVisualStyleBackColor = false;
+            this.fileListCleanBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
+            // 
+            // fileListMoveDownBtn
+            // 
+            this.fileListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListMoveDownBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_down;
+            this.fileListMoveDownBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fileListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListMoveDownBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListMoveDownBtn.Location = new System.Drawing.Point(634, 330);
+            this.fileListMoveDownBtn.Name = "fileListMoveDownBtn";
+            this.fileListMoveDownBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListMoveDownBtn.TabIndex = 39;
+            this.toolTip.SetToolTip(this.fileListMoveDownBtn, "Move Down");
+            this.fileListMoveDownBtn.UseVisualStyleBackColor = false;
+            this.fileListMoveDownBtn.Click += new System.EventHandler(this.fileListMoveDownBtn_Click);
+            // 
             // addTracksFromFileBtn
             // 
             this.addTracksFromFileBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -431,6 +511,56 @@ namespace Nmkoder.Forms
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
+            // 
+            // trackListCheckTracksBtn
+            // 
+            this.trackListCheckTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListCheckTracksBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_checklist;
+            this.trackListCheckTracksBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListCheckTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListCheckTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListCheckTracksBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(629, 62);
+            this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
+            this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListCheckTracksBtn.TabIndex = 51;
+            this.toolTip.SetToolTip(this.trackListCheckTracksBtn, "Move Down");
+            this.trackListCheckTracksBtn.UseVisualStyleBackColor = false;
+            this.trackListCheckTracksBtn.Click += new System.EventHandler(this.trackListCheckTracksBtn_Click);
+            // 
+            // trackListMoveUpBtn
+            // 
+            this.trackListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListMoveUpBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_up;
+            this.trackListMoveUpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(594, 238);
+            this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
+            this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListMoveUpBtn.TabIndex = 50;
+            this.toolTip.SetToolTip(this.trackListMoveUpBtn, "Move Up");
+            this.trackListMoveUpBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveUpBtn.Visible = false;
+            this.trackListMoveUpBtn.Click += new System.EventHandler(this.trackListMoveUpBtn_Click);
+            // 
+            // trackListMoveDownBtn
+            // 
+            this.trackListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListMoveDownBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_down;
+            this.trackListMoveDownBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListMoveDownBtn.Location = new System.Drawing.Point(629, 238);
+            this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
+            this.trackListMoveDownBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListMoveDownBtn.TabIndex = 49;
+            this.toolTip.SetToolTip(this.trackListMoveDownBtn, "Move Down");
+            this.trackListMoveDownBtn.UseVisualStyleBackColor = false;
+            this.trackListMoveDownBtn.Visible = false;
+            this.trackListMoveDownBtn.Click += new System.EventHandler(this.trackListMoveDownBtn_Click);
             // 
             // label7
             // 
@@ -885,6 +1015,9 @@ namespace Nmkoder.Forms
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage2.Controls.Add(this.encAudPerTrackPanel);
+            this.tabPage2.Controls.Add(this.encAudConfMode);
+            this.tabPage2.Controls.Add(this.label39);
             this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Controls.Add(this.label11);
             this.tabPage2.Controls.Add(this.encAudChannels);
@@ -899,11 +1032,79 @@ namespace Nmkoder.Forms
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Audio";
             // 
+            // encAudPerTrackPanel
+            // 
+            this.encAudPerTrackPanel.Controls.Add(this.encAudConfigureBtn);
+            this.encAudPerTrackPanel.Location = new System.Drawing.Point(220, 68);
+            this.encAudPerTrackPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.encAudPerTrackPanel.Name = "encAudPerTrackPanel";
+            this.encAudPerTrackPanel.Size = new System.Drawing.Size(250, 52);
+            this.encAudPerTrackPanel.TabIndex = 58;
+            // 
+            // encAudConfigureBtn
+            // 
+            this.encAudConfigureBtn.AutoColor = true;
+            this.encAudConfigureBtn.ButtonImage = null;
+            this.encAudConfigureBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encAudConfigureBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.encAudConfigureBtn.DrawImage = false;
+            this.encAudConfigureBtn.ForeColor = System.Drawing.Color.White;
+            this.encAudConfigureBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.encAudConfigureBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.encAudConfigureBtn.Location = new System.Drawing.Point(0, 15);
+            this.encAudConfigureBtn.Name = "encAudConfigureBtn";
+            this.encAudConfigureBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.encAudConfigureBtn.Size = new System.Drawing.Size(250, 23);
+            this.encAudConfigureBtn.TabIndex = 55;
+            this.encAudConfigureBtn.Text = "Configure Per Track...";
+            this.encAudConfigureBtn.Click += new System.EventHandler(this.encAudConfigureBtn_Click);
+            // 
+            // encAudConfMode
+            // 
+            this.encAudConfMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudConfMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encAudConfMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encAudConfMode.ForeColor = System.Drawing.Color.White;
+            this.encAudConfMode.FormattingEnabled = true;
+            this.encAudConfMode.Items.AddRange(new object[] {
+            "Basic - Apply Settings To All Tracks",
+            "Advanced - Specify For Each Track"});
+            this.encAudConfMode.Location = new System.Drawing.Point(220, 37);
+            this.encAudConfMode.Name = "encAudConfMode";
+            this.encAudConfMode.Size = new System.Drawing.Size(250, 23);
+            this.encAudConfMode.TabIndex = 57;
+            this.encAudConfMode.SelectedIndexChanged += new System.EventHandler(this.encAudConfMode_SelectedIndexChanged);
+            this.encAudConfMode.VisibleChanged += new System.EventHandler(this.encAudConfMode_VisibleChanged);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.ForeColor = System.Drawing.Color.White;
+            this.label39.Location = new System.Drawing.Point(7, 40);
+            this.label39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(153, 15);
+            this.label39.TabIndex = 56;
+            this.label39.Text = "Audio Configuration Mode:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::Nmkoder.Properties.Resources.icon_info;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Help;
+            this.pictureBox1.Location = new System.Drawing.Point(447, 68);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(23, 23);
+            this.pictureBox1.TabIndex = 54;
+            this.pictureBox1.TabStop = false;
+            this.toolTip.SetToolTip(this.pictureBox1, "Base bitrate for Stereo (2-Channel).\r\nFor any other channel count (like 5.1), a m" +
+        "ultiplier will be used on this value.");
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(7, 70);
+            this.label11.Location = new System.Drawing.Point(7, 100);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(59, 15);
@@ -923,7 +1124,7 @@ namespace Nmkoder.Forms
             "2 (Stereo)",
             "6 (5.1)",
             "8 (7.1)"});
-            this.encAudChannels.Location = new System.Drawing.Point(220, 67);
+            this.encAudChannels.Location = new System.Drawing.Point(220, 97);
             this.encAudChannels.Name = "encAudChannels";
             this.encAudChannels.Size = new System.Drawing.Size(250, 23);
             this.encAudChannels.TabIndex = 52;
@@ -932,14 +1133,14 @@ namespace Nmkoder.Forms
             // 
             this.encAudQuality.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.encAudQuality.ForeColor = System.Drawing.Color.White;
-            this.encAudQuality.Location = new System.Drawing.Point(220, 38);
+            this.encAudQuality.Location = new System.Drawing.Point(220, 68);
             this.encAudQuality.Maximum = new decimal(new int[] {
             6400,
             0,
             0,
             0});
             this.encAudQuality.Name = "encAudQuality";
-            this.encAudQuality.Size = new System.Drawing.Size(250, 23);
+            this.encAudQuality.Size = new System.Drawing.Size(221, 23);
             this.encAudQuality.TabIndex = 51;
             this.encAudQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
@@ -960,7 +1161,7 @@ namespace Nmkoder.Forms
             // 
             this.label53.AutoSize = true;
             this.label53.ForeColor = System.Drawing.Color.White;
-            this.label53.Location = new System.Drawing.Point(7, 40);
+            this.label53.Location = new System.Drawing.Point(7, 70);
             this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(135, 15);
@@ -1817,6 +2018,23 @@ namespace Nmkoder.Forms
             this.label5.Text = "Read Bitrates And Stream Sizes";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // utilsBitratesSelBtn
+            // 
+            this.utilsBitratesSelBtn.AutoColor = false;
+            this.utilsBitratesSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_analyze;
+            this.utilsBitratesSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsBitratesSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsBitratesSelBtn.DrawImage = true;
+            this.utilsBitratesSelBtn.Enabled = false;
+            this.utilsBitratesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsBitratesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.utilsBitratesSelBtn.Location = new System.Drawing.Point(70, 31);
+            this.utilsBitratesSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.utilsBitratesSelBtn.Name = "utilsBitratesSelBtn";
+            this.utilsBitratesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.utilsBitratesSelBtn.Size = new System.Drawing.Size(87, 65);
+            this.utilsBitratesSelBtn.TabIndex = 0;
+            // 
             // utilsMetricsPanel
             // 
             this.utilsMetricsPanel.Controls.Add(this.utilsMetricsConfBtn);
@@ -1861,6 +2079,23 @@ namespace Nmkoder.Forms
             this.label1.Text = "Get Metrics (VMAF, SSIM, PSNR)";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // utilsMetricsSelBtn
+            // 
+            this.utilsMetricsSelBtn.AutoColor = false;
+            this.utilsMetricsSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_metrics;
+            this.utilsMetricsSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsMetricsSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsMetricsSelBtn.DrawImage = true;
+            this.utilsMetricsSelBtn.Enabled = false;
+            this.utilsMetricsSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsMetricsSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.utilsMetricsSelBtn.Location = new System.Drawing.Point(70, 31);
+            this.utilsMetricsSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.utilsMetricsSelBtn.Name = "utilsMetricsSelBtn";
+            this.utilsMetricsSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.utilsMetricsSelBtn.Size = new System.Drawing.Size(87, 65);
+            this.utilsMetricsSelBtn.TabIndex = 0;
+            // 
             // utilsOcrPanel
             // 
             this.utilsOcrPanel.Controls.Add(this.label2);
@@ -1884,6 +2119,23 @@ namespace Nmkoder.Forms
             this.label2.TabIndex = 17;
             this.label2.Text = "Convert Bitmap Subtitles To Text";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // htButton2
+            // 
+            this.htButton2.AutoColor = false;
+            this.htButton2.ButtonImage = global::Nmkoder.Properties.Resources.icon_subs;
+            this.htButton2.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.htButton2.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.htButton2.DrawImage = true;
+            this.htButton2.Enabled = false;
+            this.htButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.htButton2.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.htButton2.Location = new System.Drawing.Point(70, 31);
+            this.htButton2.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.htButton2.Name = "htButton2";
+            this.htButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.htButton2.Size = new System.Drawing.Size(87, 65);
+            this.htButton2.TabIndex = 0;
             // 
             // settingsPage
             // 
@@ -2033,6 +2285,36 @@ namespace Nmkoder.Forms
             this.busyControlsPanel.TabIndex = 39;
             this.busyControlsPanel.Visible = false;
             // 
+            // pauseBtn
+            // 
+            this.pauseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.pauseBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_pause_white_48dp;
+            this.pauseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pauseBtn.ForeColor = System.Drawing.Color.White;
+            this.pauseBtn.Location = new System.Drawing.Point(0, 0);
+            this.pauseBtn.Name = "pauseBtn";
+            this.pauseBtn.Size = new System.Drawing.Size(45, 45);
+            this.pauseBtn.TabIndex = 37;
+            this.pauseBtn.UseVisualStyleBackColor = false;
+            this.pauseBtn.Click += new System.EventHandler(this.pauseBtn_Click);
+            // 
+            // stopBtn
+            // 
+            this.stopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.stopBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_stop_white_48dp;
+            this.stopBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stopBtn.ForeColor = System.Drawing.Color.White;
+            this.stopBtn.Location = new System.Drawing.Point(51, 0);
+            this.stopBtn.Name = "stopBtn";
+            this.stopBtn.Size = new System.Drawing.Size(45, 45);
+            this.stopBtn.TabIndex = 36;
+            this.stopBtn.UseVisualStyleBackColor = false;
+            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
+            // 
             // currentActionLabel
             // 
             this.currentActionLabel.AutoSize = true;
@@ -2097,198 +2379,6 @@ namespace Nmkoder.Forms
             this.checkAllSubtitleTracksToolStripMenuItem.Text = "Check All Subtitle Tracks";
             this.checkAllSubtitleTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllSubtitleTracksToolStripMenuItem_Click);
             // 
-            // pauseBtn
-            // 
-            this.pauseBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.pauseBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_pause_white_48dp;
-            this.pauseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pauseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pauseBtn.ForeColor = System.Drawing.Color.White;
-            this.pauseBtn.Location = new System.Drawing.Point(0, 0);
-            this.pauseBtn.Name = "pauseBtn";
-            this.pauseBtn.Size = new System.Drawing.Size(45, 45);
-            this.pauseBtn.TabIndex = 37;
-            this.pauseBtn.UseVisualStyleBackColor = false;
-            this.pauseBtn.Click += new System.EventHandler(this.pauseBtn_Click);
-            // 
-            // stopBtn
-            // 
-            this.stopBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.stopBtn.BackgroundImage = global::Nmkoder.Properties.Resources.baseline_stop_white_48dp;
-            this.stopBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.stopBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stopBtn.ForeColor = System.Drawing.Color.White;
-            this.stopBtn.Location = new System.Drawing.Point(51, 0);
-            this.stopBtn.Name = "stopBtn";
-            this.stopBtn.Size = new System.Drawing.Size(45, 45);
-            this.stopBtn.TabIndex = 36;
-            this.stopBtn.UseVisualStyleBackColor = false;
-            this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
-            // 
-            // fileListMoveUpBtn
-            // 
-            this.fileListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.fileListMoveUpBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_up;
-            this.fileListMoveUpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.fileListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListMoveUpBtn.Location = new System.Drawing.Point(583, 330);
-            this.fileListMoveUpBtn.Name = "fileListMoveUpBtn";
-            this.fileListMoveUpBtn.Size = new System.Drawing.Size(45, 45);
-            this.fileListMoveUpBtn.TabIndex = 41;
-            this.toolTip.SetToolTip(this.fileListMoveUpBtn, "Move Up");
-            this.fileListMoveUpBtn.UseVisualStyleBackColor = false;
-            this.fileListMoveUpBtn.Click += new System.EventHandler(this.fileListMoveUpBtn_Click);
-            // 
-            // fileListCleanBtn
-            // 
-            this.fileListCleanBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.fileListCleanBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
-            this.fileListCleanBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.fileListCleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileListCleanBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileListCleanBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListCleanBtn.Location = new System.Drawing.Point(532, 330);
-            this.fileListCleanBtn.Name = "fileListCleanBtn";
-            this.fileListCleanBtn.Size = new System.Drawing.Size(45, 45);
-            this.fileListCleanBtn.TabIndex = 40;
-            this.toolTip.SetToolTip(this.fileListCleanBtn, "Remove This File From The List");
-            this.fileListCleanBtn.UseVisualStyleBackColor = false;
-            this.fileListCleanBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
-            // 
-            // fileListMoveDownBtn
-            // 
-            this.fileListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.fileListMoveDownBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_down;
-            this.fileListMoveDownBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.fileListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListMoveDownBtn.Location = new System.Drawing.Point(634, 330);
-            this.fileListMoveDownBtn.Name = "fileListMoveDownBtn";
-            this.fileListMoveDownBtn.Size = new System.Drawing.Size(45, 45);
-            this.fileListMoveDownBtn.TabIndex = 39;
-            this.toolTip.SetToolTip(this.fileListMoveDownBtn, "Move Down");
-            this.fileListMoveDownBtn.UseVisualStyleBackColor = false;
-            this.fileListMoveDownBtn.Click += new System.EventHandler(this.fileListMoveDownBtn_Click);
-            // 
-            // trackListCheckTracksBtn
-            // 
-            this.trackListCheckTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.trackListCheckTracksBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_checklist;
-            this.trackListCheckTracksBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.trackListCheckTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.trackListCheckTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackListCheckTracksBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(629, 62);
-            this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
-            this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
-            this.trackListCheckTracksBtn.TabIndex = 51;
-            this.toolTip.SetToolTip(this.trackListCheckTracksBtn, "Move Down");
-            this.trackListCheckTracksBtn.UseVisualStyleBackColor = false;
-            this.trackListCheckTracksBtn.Click += new System.EventHandler(this.trackListCheckTracksBtn_Click);
-            // 
-            // trackListMoveUpBtn
-            // 
-            this.trackListMoveUpBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.trackListMoveUpBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_up;
-            this.trackListMoveUpBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveUpBtn.Location = new System.Drawing.Point(594, 238);
-            this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
-            this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
-            this.trackListMoveUpBtn.TabIndex = 50;
-            this.toolTip.SetToolTip(this.trackListMoveUpBtn, "Move Up");
-            this.trackListMoveUpBtn.UseVisualStyleBackColor = false;
-            this.trackListMoveUpBtn.Visible = false;
-            this.trackListMoveUpBtn.Click += new System.EventHandler(this.trackListMoveUpBtn_Click);
-            // 
-            // trackListMoveDownBtn
-            // 
-            this.trackListMoveDownBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.trackListMoveDownBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_arrow_down;
-            this.trackListMoveDownBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveDownBtn.Location = new System.Drawing.Point(629, 238);
-            this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
-            this.trackListMoveDownBtn.Size = new System.Drawing.Size(30, 30);
-            this.trackListMoveDownBtn.TabIndex = 49;
-            this.toolTip.SetToolTip(this.trackListMoveDownBtn, "Move Down");
-            this.trackListMoveDownBtn.UseVisualStyleBackColor = false;
-            this.trackListMoveDownBtn.Visible = false;
-            this.trackListMoveDownBtn.Click += new System.EventHandler(this.trackListMoveDownBtn_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::Nmkoder.Properties.Resources.icon_info;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Help;
-            this.pictureBox1.Location = new System.Drawing.Point(476, 38);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(23, 23);
-            this.pictureBox1.TabIndex = 54;
-            this.pictureBox1.TabStop = false;
-            this.toolTip.SetToolTip(this.pictureBox1, "Base bitrate for Stereo (2-Channel).\r\nFor any other channel count (like 5.1) the " +
-        "bitrate will be multiplied based on this value.");
-            // 
-            // utilsBitratesSelBtn
-            // 
-            this.utilsBitratesSelBtn.AutoColor = false;
-            this.utilsBitratesSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_analyze;
-            this.utilsBitratesSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsBitratesSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsBitratesSelBtn.DrawImage = true;
-            this.utilsBitratesSelBtn.Enabled = false;
-            this.utilsBitratesSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsBitratesSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsBitratesSelBtn.Location = new System.Drawing.Point(70, 31);
-            this.utilsBitratesSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
-            this.utilsBitratesSelBtn.Name = "utilsBitratesSelBtn";
-            this.utilsBitratesSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.utilsBitratesSelBtn.Size = new System.Drawing.Size(87, 65);
-            this.utilsBitratesSelBtn.TabIndex = 0;
-            // 
-            // utilsMetricsSelBtn
-            // 
-            this.utilsMetricsSelBtn.AutoColor = false;
-            this.utilsMetricsSelBtn.ButtonImage = global::Nmkoder.Properties.Resources.icon_metrics;
-            this.utilsMetricsSelBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.utilsMetricsSelBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.utilsMetricsSelBtn.DrawImage = true;
-            this.utilsMetricsSelBtn.Enabled = false;
-            this.utilsMetricsSelBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.utilsMetricsSelBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.utilsMetricsSelBtn.Location = new System.Drawing.Point(70, 31);
-            this.utilsMetricsSelBtn.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
-            this.utilsMetricsSelBtn.Name = "utilsMetricsSelBtn";
-            this.utilsMetricsSelBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.utilsMetricsSelBtn.Size = new System.Drawing.Size(87, 65);
-            this.utilsMetricsSelBtn.TabIndex = 0;
-            // 
-            // htButton2
-            // 
-            this.htButton2.AutoColor = false;
-            this.htButton2.ButtonImage = global::Nmkoder.Properties.Resources.icon_subs;
-            this.htButton2.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.htButton2.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.htButton2.DrawImage = true;
-            this.htButton2.Enabled = false;
-            this.htButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.htButton2.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.htButton2.Location = new System.Drawing.Point(70, 31);
-            this.htButton2.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
-            this.htButton2.Name = "htButton2";
-            this.htButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.htButton2.Size = new System.Drawing.Size(87, 65);
-            this.htButton2.TabIndex = 0;
-            // 
             // runBtn
             // 
             this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -2307,33 +2397,6 @@ namespace Nmkoder.Forms
             this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
-            // 
-            // thumbnail
-            // 
-            this.thumbnail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.thumbnail.Enabled = false;
-            this.thumbnail.Image = global::Nmkoder.Properties.Resources.baseline_image_white_48dp_4x_25pcAlphaPad;
-            this.thumbnail.Location = new System.Drawing.Point(7, 133);
-            this.thumbnail.Margin = new System.Windows.Forms.Padding(0);
-            this.thumbnail.Name = "thumbnail";
-            this.thumbnail.Size = new System.Drawing.Size(301, 205);
-            this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.thumbnail.TabIndex = 27;
-            this.thumbnail.TabStop = false;
-            this.thumbnail.Click += new System.EventHandler(this.thumbnail_Click);
-            // 
-            // inputDropPanel
-            // 
-            this.inputDropPanel.AllowDrop = true;
-            this.inputDropPanel.BackColor = System.Drawing.Color.Transparent;
-            this.inputDropPanel.BackgroundImage = global::Nmkoder.Properties.Resources.dragdrop2_white;
-            this.inputDropPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.inputDropPanel.Enabled = false;
-            this.inputDropPanel.Location = new System.Drawing.Point(6, 27);
-            this.inputDropPanel.Margin = new System.Windows.Forms.Padding(6);
-            this.inputDropPanel.Name = "inputDropPanel";
-            this.inputDropPanel.Size = new System.Drawing.Size(302, 100);
-            this.inputDropPanel.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -2361,6 +2424,7 @@ namespace Nmkoder.Forms
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.inputPanel.ResumeLayout(false);
             this.inputPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.tabList.ResumeLayout(false);
             this.fileListPage.ResumeLayout(false);
             this.streamListPage.ResumeLayout(false);
@@ -2373,6 +2437,8 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.encAudPerTrackPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -2407,8 +2473,6 @@ namespace Nmkoder.Forms
             this.settingsContainersTab.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
             this.checkItemsContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2573,6 +2637,10 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ToolStripMenuItem checkAllAudioTracksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkAllSubtitleTracksToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private HTAlt.WinForms.HTButton encAudConfigureBtn;
+        private System.Windows.Forms.Panel encAudPerTrackPanel;
+        private System.Windows.Forms.ComboBox encAudConfMode;
+        private System.Windows.Forms.Label label39;
     }
 }
 

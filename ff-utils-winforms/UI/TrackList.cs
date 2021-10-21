@@ -22,6 +22,7 @@ namespace Nmkoder.UI
     class TrackList
     {
         public static MediaFile current;
+        public static AudioConfiguration currentAudioConfig = null;
 
         public static async Task HandleFiles(string[] paths, bool clearExisting)
         {
@@ -79,11 +80,10 @@ namespace Nmkoder.UI
             string dur = FormatUtils.MsToTimestamp(current.DurationMs);
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.Size)}";
             Program.mainForm.streamListBox.Items.Clear();
+            currentAudioConfig = null;
             await AddStreamsToList(current, switchToTrackList);
 
-            //QuickConvertUi.ValidatePath();
             QuickConvertUi.InitFile(current.SourcePath);
-            //Av1anUi.ValidatePath();
             Av1anUi.InitFile(current.SourcePath);
 
             if (generateThumbs)
@@ -252,7 +252,7 @@ namespace Nmkoder.UI
             return string.Join(" ", args);
         }
 
-        #region Selection
+        #region Stream Selection
 
         public static void CheckAll (bool check)
         {

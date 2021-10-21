@@ -39,6 +39,7 @@ namespace Nmkoder.Forms
         public ComboBox encCropModeBox { get { return encCropMode; } }
         // Quick Convert - Audio
         public ComboBox encAudCodecBox { get { return encAudCodec; } }
+        public ComboBox encAudConfModeBox { get { return encAudConfMode; } }
         public NumericUpDown encAudQualUpDown { get { return encAudQuality; } }
         public ComboBox encAudChannelsBox { get { return encAudChannels; } }
         // Quick Convert - Subs
@@ -91,6 +92,61 @@ namespace Nmkoder.Forms
                 encVidQuality.Minimum = enc.QMin.Clamp(0, int.MaxValue);
                 encVidQuality.Maximum = enc.QMax.Clamp(0, int.MaxValue);
                 encVidQuality.Value = enc.QDefault.Clamp(0, int.MaxValue);
+            }
+        }
+
+        private void encAudConfigureBtn_Click(object sender, EventArgs e)
+        {
+            AudioStreamsForm form = new AudioStreamsForm(TrackList.current, (int)encAudQuality.Value);
+            form.ShowDialog();
+
+            if (form.DialogResult == DialogResult.OK && form.ConfigurationEntries != null && form.ConfigurationEntries.Count > 0)
+                TrackList.currentAudioConfig = new AudioConfiguration(TrackList.current, form.ConfigurationEntries);
+        }
+
+        private void encAudConfMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i = encAudConfMode.SelectedIndex;
+
+
+            if(i == 1)
+            {
+                bool currentNull = TrackList.current == null;
+                bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
+
+                if (currentNull || noAudTracks)
+                {
+                    if(currentNull)
+                        MessageBox.Show("Please load a file first in order to configure its audio tracks.", "Error");
+                    else if(noAudTracks)
+                        MessageBox.Show("This is only available if you have at least one audio track in the track list.", "Error");
+
+                    encAudConfMode.SelectedIndex = 0;
+                    return;
+                }
+                else
+                {
+                    encAudConfigureBtn_Click(null, null);
+                }
+            }
+
+            encAudPerTrackPanel.Visible = i == 1;
+        }
+
+        private void encAudConfMode_VisibleChanged(object sender, EventArgs e)
+        {
+            int i = encAudConfMode.SelectedIndex;
+
+            if (i == 1)
+            {
+                bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
+
+                if (TrackList.current == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks)
+                {
+                    TrackList.currentAudioConfig = null;
+                    encAudConfMode.SelectedIndex = 0;
+                    return;
+                }
             }
         }
     }

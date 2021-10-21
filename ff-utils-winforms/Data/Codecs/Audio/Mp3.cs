@@ -16,7 +16,7 @@ namespace Nmkoder.Data.Codecs
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 32;
         public int QMax { get; } = 1280;
-        public int QDefault { get; } = 320;
+        public int QDefault { get; } = 256;
         public string QInfo { get; }
         public string PresetInfo { get; }
 

@@ -251,6 +251,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\AudioConfiguration.cs" />
     <Compile Include="Data\CodecInfo.cs" />
     <Compile Include="Data\CodecArgs.cs" />
     <Compile Include="Data\Codecs\Audio\Aac.cs" />
@@ -297,6 +298,12 @@
     <Compile Include="Data\QueryInfo.cs" />
     <Compile Include="Data\Streams\VideoStream.cs" />
     <Compile Include="Extensions\MagickExtensions.cs" />
+    <Compile Include="Forms\AudioStreamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AudioStreamsForm.designer.cs">
+      <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FileImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,6 +381,9 @@
     <Compile Include="Utils\FormatUtils.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Utils\NmkdStopwatch.cs" />
+    <EmbeddedResource Include="Forms\AudioStreamsForm.resx">
+      <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FileImportForm.resx">
       <DependentUpon>FileImportForm.cs</DependentUpon>
     </EmbeddedResource>

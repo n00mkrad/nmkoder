@@ -50,6 +50,7 @@ namespace Nmkoder.UI.Tasks
                 form.ffmpegContainerBox.Items.Add(c.ToUpper());
 
             ConfigParser.LoadComboxIndex(form.ffmpegContainerBox);
+            form.encAudConfModeBox.SelectedIndex = 0;
         }
 
         public static void InitFile(string path)
@@ -61,7 +62,6 @@ namespace Nmkoder.UI.Tasks
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
                     Program.mainForm.encScaleBoxW.Text = Program.mainForm.encScaleBoxH.Text = "";
-                    //InitAudioChannels(TrackList.current.AudioStreams.FirstOrDefault()?.Channels);
                     InitBurnCombox();
                     LoadMetadataGrid();
                 }
@@ -301,21 +301,6 @@ namespace Nmkoder.UI.Tasks
         }
 
         #region Load Media Info Into UI Where Needed
-
-        public static void InitAudioChannels(int? ch)
-        {
-            if (ch == null || ch < 1)
-            {
-                form.encAudChannelsBox.SelectedIndex = 1;
-                return;
-            }
-
-            for (int i = 0; i < form.encAudChannelsBox.Items.Count; i++)
-            {
-                if (form.encAudChannelsBox.Items[i].ToString().Split(' ').First().GetInt() == ch)
-                    form.encAudChannelsBox.SelectedIndex = i;
-            }
-        }
 
         public static void InitBurnCombox()
         {

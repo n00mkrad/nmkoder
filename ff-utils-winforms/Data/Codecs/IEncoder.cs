@@ -28,6 +28,6 @@ namespace Nmkoder.Data.Codecs
         bool IsFixedFormat { get; }
         bool IsSequence { get; }
 
-        CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null);
+        CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne);
     }
 }

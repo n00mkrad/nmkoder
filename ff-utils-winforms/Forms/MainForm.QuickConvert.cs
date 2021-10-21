@@ -52,7 +52,7 @@ namespace Nmkoder.Forms
 
         public void InitQuickConvert ()
         {
-            encAudChannels.SelectedIndex = 1;
+            encAudChannels.SelectedIndex = 0;
             encCropMode.SelectedIndex = 0;
         }
 

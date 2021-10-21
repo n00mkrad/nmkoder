@@ -1,6 +1,8 @@
 ﻿using Nmkoder.Data.Codecs;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.UI;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +73,24 @@ namespace Nmkoder.Data
 
             int keyInt = ((float)(mediaFile?.VideoStreams.FirstOrDefault().Rate.GetFloat() * intervalSeconds)).RoundToInt();
             return keyInt >= 24 ? $"{arg}{keyInt}" : "";
+        }
+
+        public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels)
+        {
+            List<string> args = new List<string>();
+
+            List<Streams.Stream> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<Ui.MediaStreamListEntry>().Select(x => x.Stream).ToList();
+            List<Streams.AudioStream> streams = checkedStreams.Where(x => x.Type == Streams.Stream.StreamType.Audio).OfType<Streams.AudioStream>().ToList();
+
+            foreach (Streams.AudioStream s in streams)
+            {
+                int audioIdx = mf.AudioStreams.IndexOf(s);
+                int ac = overrideChannels > 0 ? overrideChannels : s.Channels;
+                int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
+                args.Add($"-b:a:{audioIdx} {kbps}k -ac:{audioIdx} {ac}");
+            }
+
+            return string.Join(" ", args);
         }
     }
 }

@@ -65,10 +65,10 @@ namespace Nmkoder.Utils
                 return 1f;
 
             if (channels > 4) // 5.1, etc
-                return 2.25f;
+                return 2f;
 
             if (channels > 6) // 6.1, 7.1, etc
-                return 2.5f;
+                return 2.25f;
 
             return 1f;
         }

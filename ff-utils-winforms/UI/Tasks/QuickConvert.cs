@@ -37,7 +37,7 @@ namespace Nmkoder.UI.Tasks
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
                 string map = TrackList.GetMapArgs();
-                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
+                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current).Arguments;
                 string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
                 string meta = GetMetadataArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
@@ -46,10 +46,10 @@ namespace Nmkoder.UI.Tasks
 
                 if(twoPass)
                 {
-                    CodecArgs codecArgsPass1 = vCodec.GetArgs(videoArgs, Pass.OneOfTwo, TrackList.current);
+                    CodecArgs codecArgsPass1 = vCodec.GetArgs(videoArgs, TrackList.current, Pass.OneOfTwo);
                     string v1 = codecArgsPass1.Arguments;
                     string vf1 = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgsPass1);
-                    CodecArgs codecArgsPass2 = vCodec.GetArgs(videoArgs, Pass.TwoOfTwo, TrackList.current);
+                    CodecArgs codecArgsPass2 = vCodec.GetArgs(videoArgs, TrackList.current, Pass.TwoOfTwo);
                     string v2 = codecArgsPass2.Arguments;
                     string vf2 = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgsPass2);
 
@@ -58,7 +58,7 @@ namespace Nmkoder.UI.Tasks
                 }
                 else
                 {
-                    CodecArgs codecArgs = vCodec.GetArgs(videoArgs, Pass.OneOfOne, TrackList.current);
+                    CodecArgs codecArgs = vCodec.GetArgs(videoArgs, TrackList.current, Pass.OneOfOne);
                     string v = codecArgs.Arguments;
                     string vf = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgs);
 

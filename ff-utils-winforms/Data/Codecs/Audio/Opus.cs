@@ -1,4 +1,5 @@
-﻿using Nmkoder.IO;
+﻿using Nmkoder.Extensions;
+using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
 
@@ -24,11 +25,11 @@ namespace Nmkoder.Data.Codecs
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "96k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a libopus -b:a {bitrate}k -ac {channels}");
+            return new CodecArgs($"-c:a libopus {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Nmkoder.Data.Codecs
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 
-        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, Pass pass = Pass.OneOfOne, MediaFile mediaFile = null)
+        public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
             string q = encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";

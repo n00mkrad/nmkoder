@@ -32,6 +32,12 @@ namespace Nmkoder.UI.Tasks
             string outDirName = Path.GetFileNameWithoutExtension(inPath).CleanString().Trunc(50, false) + "-Subtitles";
             string outDir = Path.Combine(new FileInfo(inPath).DirectoryName, outDirName);
 
+            if(!Directory.Exists(OcrProcess.GetDir()) || IoUtils.GetAmountOfFiles(OcrProcess.GetDir(), true, "*.exe") < 1)
+            {
+                Logger.Log($"OCR binaries not found! Did you download a build without OCR?");
+                return;
+            }
+
             if(streamsBitmap.Count < 1)
             {
                 Logger.Log($"No bitmap subtitles found to convert!");

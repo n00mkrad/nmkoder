@@ -1,8 +1,10 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,15 +21,37 @@ namespace Nmkoder
         [STAThread]
         static void Main()
         {
+            Paths.Init();
             Config.Init();
-            IoUtils.DeleteContentsOfDir(Paths.GetLogPath());
-            IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-            IoUtils.DeleteContentsOfDir(Paths.GetFrameSeqPath());
+            Cleanup();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Console.WriteLine(Environment.CurrentDirectory);
             Application.Run(new MainForm());
+        }
+
+        public static void Cleanup ()
+        {
+            foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetLogPath(true)).GetDirectories())
+            {
+                string[] split = dir.Name.Split('-');
+                int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+
+                if (daysOld > 7 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 7 days
+                    dir.Delete(true);
+            }
+
+            IoUtils.DeleteContentsOfDir(Paths.GetSessionDataPath()); // Clear this session's temp files...
+
+            foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetSessionsPath()).GetDirectories())
+            {
+                string[] split = dir.Name.Split('-');
+                int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+
+                if (daysOld > 2 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
+                    dir.Delete(true);
+            }
         }
     }
 }

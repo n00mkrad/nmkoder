@@ -11,14 +11,22 @@ namespace Nmkoder.Data
 {
     class Paths
     {
+        public static string sessionTimestamp;
+
+        public static void Init ()
+        {
+            var n = DateTime.Now;
+            sessionTimestamp = $"{n.Year}-{n.Month}-{n.Day}-{n.Hour}-{n.Minute}-{n.Second}-{n.Millisecond}";
+        }
+
         public static string GetOwnFolder()
         {
             return Environment.CurrentDirectory;
         }
 
-        public static string GetLogPath()
+        public static string GetLogPath(bool noSession = false)
         {
-            string path = Path.Combine(GetOwnFolder(), "logs");
+            string path = Path.Combine(GetOwnFolder(), "logs", (noSession ? "" : sessionTimestamp));
             Directory.CreateDirectory(path);
             return path;
         }
@@ -37,16 +45,30 @@ namespace Nmkoder.Data
             return path;
         }
 
-        public static string GetThumbsPath()
+        public static string GetSessionsPath()
         {
-            string path = Path.Combine(GetDataPath(), "thumbs");
+            string path = Path.Combine(GetDataPath(), "sessions");
             Directory.CreateDirectory(path);
             return path;
         }
 
-        public static string GetFrameSeqPath()
+        public static string GetSessionDataPath()
         {
-            string path = Path.Combine(GetDataPath(), "frameSequences");
+            string path = Path.Combine(GetSessionsPath(), sessionTimestamp);
+            Directory.CreateDirectory(path);
+            return path;
+        }
+
+        public static string GetThumbsPath(bool noSession = false)
+        {
+            string path = Path.Combine((noSession ? GetDataPath() : GetSessionDataPath()), "thumbs");
+            Directory.CreateDirectory(path);
+            return path;
+        }
+
+        public static string GetFrameSeqPath(bool noSession = false)
+        {
+            string path = Path.Combine((noSession ? GetDataPath() : GetSessionDataPath()), "frameSequences");
             Directory.CreateDirectory(path);
             return path;
         }

@@ -24,7 +24,7 @@ namespace Nmkoder.Media
 
         public static async Task<bool> RunOcrOnStreams(string inPath, List<SubtitleStream> streams, string outDir)
         {
-            string tempDir = Path.Combine(Paths.GetDataPath(), "subs-temp");
+            string tempDir = Path.Combine(Paths.GetSessionDataPath(), "subs-temp");
             Directory.CreateDirectory(tempDir);
             IoUtils.DeleteContentsOfDir(tempDir);
             Logger.Log($"Muxing subs from input to all-subs.mkv", true, false, "ocr");

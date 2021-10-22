@@ -26,6 +26,7 @@ namespace Nmkoder.Forms
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfig();
+            Program.Cleanup();
         }
 
         public void SaveConfig ()

@@ -352,6 +352,7 @@
     <Compile Include="IO\ConfigParser.cs" />
     <Compile Include="IO\IoUtils.cs" />
     <Compile Include="IO\Logger.cs" />
+    <Compile Include="IO\PackageBuild.cs" />
     <Compile Include="Main\RunTask.cs" />
     <Compile Include="Media\Av1anOutputHandler.cs" />
     <Compile Include="Media\AvProcess.cs" />

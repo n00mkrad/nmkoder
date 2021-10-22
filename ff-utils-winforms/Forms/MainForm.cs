@@ -72,6 +72,9 @@ namespace Nmkoder.Forms
             encSubCodec_SelectedIndexChanged(null, null);
             av1anAudCodec_SelectedIndexChanged(null, null);
             initialized = true;
+
+            if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
+                PackageBuild.Run(Program.args.Where(x => x.StartsWith("package=")).First().Split('=')[1]);
         }
 
         void LoadUiConfig()

@@ -15,6 +15,9 @@ namespace Nmkoder
 {
     static class Program
     {
+        public static string[] fileArgs = new string[0];
+        public static string[] args = new string[0];
+
         public static bool busy;
         public static MainForm mainForm;
 
@@ -25,13 +28,19 @@ namespace Nmkoder
             Config.Init();
             Cleanup();
 
+            fileArgs = Environment.GetCommandLineArgs().Where(a => a[0] != '-' && File.Exists(a)).ToList().Skip(1).ToArray();
+            args = Environment.GetCommandLineArgs().Where(a => a[0] == '-').Select(x => x.Trim().Substring(1).ToLowerInvariant()).ToArray();
+            Logger.Log($"Command Line: {Environment.CommandLine}", true);
+            Logger.Log($"Files: {(fileArgs.Length > 0 ? string.Join(", ", fileArgs) : "None")}", true);
+            Logger.Log($"Args: {(args.Length > 0 ? string.Join(", ", args) : "None")}", true);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Console.WriteLine(Environment.CurrentDirectory);
             Application.Run(new MainForm());
         }
 
-        public static void Cleanup ()
+        public static void Cleanup()
         {
             try
             {
@@ -57,8 +66,11 @@ namespace Nmkoder
 
                 foreach (string file in IoUtils.GetFilesSorted(Paths.GetBinPath(), true, "*.log*"))
                     IoUtils.TryDeleteIfExists(file);
+
+                foreach (string file in IoUtils.GetFilesSorted(Paths.GetBinPath(), true, "desktop.ini"))
+                    IoUtils.TryDeleteIfExists(file);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"Cleanup Error: {e.Message}\n{e.StackTrace}");
             }

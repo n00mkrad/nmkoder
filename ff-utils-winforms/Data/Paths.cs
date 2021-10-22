@@ -19,7 +19,17 @@ namespace Nmkoder.Data
             sessionTimestamp = $"{n.Year}-{n.Month}-{n.Day}-{n.Hour}-{n.Minute}-{n.Second}-{n.Millisecond}";
         }
 
+        public static string GetExe()
+        {
+            return System.Reflection.Assembly.GetEntryAssembly().GetName().CodeBase.Replace("file:///", "");
+        }
+
         public static string GetOwnFolder()
+        {
+            return new FileInfo(GetExe()).Directory.FullName;
+        }
+
+        public static string GetWorkingDir()
         {
             return Environment.CurrentDirectory;
         }

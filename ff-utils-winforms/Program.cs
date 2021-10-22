@@ -33,24 +33,34 @@ namespace Nmkoder
 
         public static void Cleanup ()
         {
-            foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetLogPath(true)).GetDirectories())
+            try
             {
-                string[] split = dir.Name.Split('-');
-                int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+                foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetLogPath(true)).GetDirectories())
+                {
+                    string[] split = dir.Name.Split('-');
+                    int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
 
-                if (daysOld > 7 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 7 days
-                    dir.Delete(true);
+                    if (daysOld > 7 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 7 days
+                        dir.Delete(true);
+                }
+
+                IoUtils.DeleteContentsOfDir(Paths.GetSessionDataPath()); // Clear this session's temp files...
+
+                foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetSessionsPath()).GetDirectories())
+                {
+                    string[] split = dir.Name.Split('-');
+                    int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+
+                    if (daysOld > 2 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
+                        dir.Delete(true);
+                }
+
+                foreach (string file in IoUtils.GetFilesSorted(Paths.GetBinPath(), true, "*.log*"))
+                    IoUtils.TryDeleteIfExists(file);
             }
-
-            IoUtils.DeleteContentsOfDir(Paths.GetSessionDataPath()); // Clear this session's temp files...
-
-            foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetSessionsPath()).GetDirectories())
+            catch(Exception e)
             {
-                string[] split = dir.Name.Split('-');
-                int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
-
-                if (daysOld > 2 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
-                    dir.Delete(true);
+                Logger.Log($"Cleanup Error: {e.Message}\n{e.StackTrace}");
             }
         }
     }

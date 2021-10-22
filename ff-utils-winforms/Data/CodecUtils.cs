@@ -1,4 +1,6 @@
 ﻿using Nmkoder.Data.Codecs;
+using Nmkoder.Data.Streams;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.UI;
@@ -76,34 +78,44 @@ namespace Nmkoder.Data
             return keyInt >= 24 ? $"{arg}{keyInt}" : "";
         }
 
-        public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels)
+        public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels, List<string> extraArgs = null)
         {
             List<string> args = new List<string>();
-
-            List<Streams.Stream> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<Ui.MediaStreamListEntry>().Select(x => x.Stream).ToList();
-            List<Streams.AudioStream> streams = checkedStreams.Where(x => x.Type == Streams.Stream.StreamType.Audio).OfType<Streams.AudioStream>().ToList();
-
+            List<AudioStream> allAudioStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+            List<AudioStream> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
             List<AudioConfigurationEntry> audioConf = TrackList.currentAudioConfig != null ? TrackList.currentAudioConfig.GetConfig(mf) : null;
 
-            foreach (Streams.AudioStream s in streams)
+            foreach (AudioStream s in checkedStreams)
             {
-                int audioIdx = checkedStreams.IndexOf(s);
+                int indexTotal = allAudioStreams.IndexOf(s);
+                int indexChecked = checkedStreams.IndexOf(s);
                 int ac = overrideChannels > 0 ? overrideChannels : s.Channels;
 
                 if (audioConf != null)
-                    ac = audioConf[audioIdx].ChannelCount;
+                    ac = audioConf[indexTotal].ChannelCount;
 
                 if (baseBitrate > 0)
                 {
                     int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
 
                     if (audioConf != null)
-                        kbps = audioConf[audioIdx].BitrateKbps;
+                        kbps = audioConf[indexTotal].BitrateKbps;
 
-                    args.Add($"-b:a:{audioIdx} {kbps}k");
+                    args.Add($"-b:a:{indexChecked} {kbps}k");
                 }
 
-                args.Add($"-ac:{audioIdx} {ac}");
+                args.Add($"-ac:a:{indexChecked} {ac}");
+
+                if (extraArgs != null)
+                {
+                    foreach (var arg in extraArgs)
+                    {
+                        string[] split = arg.Split(' ');
+
+                        if (split.Length == 2)
+                            args.Add($"{split[0]}:{indexChecked} {split[1]}");
+                    }
+                }
             }
 
             return string.Join(" ", args);

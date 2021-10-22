@@ -29,7 +29,9 @@ namespace Nmkoder.Data.Codecs
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "96k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a libopus {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
+            List<string> extraArgs = new List<string>();
+            extraArgs.Add("-mapping_family 1");
+            return new CodecArgs($"-c:a libopus {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt(), extraArgs)}");
         }
     }
 }

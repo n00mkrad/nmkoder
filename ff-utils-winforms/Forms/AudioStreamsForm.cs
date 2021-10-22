@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Streams;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.UI;
 using Nmkoder.Utils;
@@ -72,7 +73,7 @@ namespace Nmkoder.Forms
             grid.Columns[3].FillWeight = 15;
             grid.Columns[4].FillWeight = 20;
 
-            List<AudioStream> streams = current.AudioStreams;
+            List<AudioStream> streams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
 
             List<AudioConfigurationEntry> currentEntries = TrackList.currentAudioConfig?.GetConfig(current);
 

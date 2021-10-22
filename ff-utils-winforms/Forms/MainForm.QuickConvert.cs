@@ -141,7 +141,7 @@ namespace Nmkoder.Forms
             {
                 bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
-                if (TrackList.current == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks)
+                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks)
                 {
                     TrackList.currentAudioConfig = null;
                     encAudConfMode.SelectedIndex = 0;

@@ -5,6 +5,7 @@ using Nmkoder.UI;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +107,21 @@ namespace Nmkoder.Data
             }
 
             return string.Join(" ", args);
+        }
+
+        public static string GetTilingArgs(Size resolution, string colArg, string rowArg)
+        {
+            int cols = 0;
+            if (resolution.Width >= 1920) cols = 1;
+            if (resolution.Width >= 3840) cols = 2;
+            if (resolution.Width >= 7680) cols = 3;
+
+            int rows = 0;
+            if (resolution.Height >= 1600) cols = 1;
+            if (resolution.Height >= 3200) cols = 2;
+            if (resolution.Height >= 6400) cols = 3;
+
+            return $"{colArg}{cols} {rowArg}{rows}";
         }
     }
 }

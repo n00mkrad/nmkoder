@@ -2,6 +2,7 @@
 using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nmkoder.Data.Codecs
 {
@@ -34,8 +35,9 @@ namespace Nmkoder.Data.Codecs
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
+            string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows ", "--tile-columns ");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp 4 --film-grain {grain} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp 4 --film-grain {grain} {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

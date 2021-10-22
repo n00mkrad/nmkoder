@@ -37,8 +37,9 @@ namespace Nmkoder.Data.Codecs
             int b = pixFmt.Split('p').LastOrDefault().GetInt();
             b = (b > 0) ? b : 8; // Make bit depth default to 8 if it was detected as 0 (e.g. when using yuv420p which does not explicitly specify 8-bit)
             int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
+            string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-columns=", "--tile-rows=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

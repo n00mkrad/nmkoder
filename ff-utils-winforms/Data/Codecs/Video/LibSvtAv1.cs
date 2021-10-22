@@ -2,6 +2,7 @@
 using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nmkoder.Data.Codecs
 {
@@ -35,8 +36,9 @@ namespace Nmkoder.Data.Codecs
             string rc = vbr ? $"-rc vbr -b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}" : $"-qp {q}";
             string g = CodecUtils.GetKeyIntArg(mediaFile, Config.GetInt(Config.Key.defaultKeyIntSecs));
             string p = pass == Pass.OneOfOne ? "" : (pass == Pass.OneOfTwo ? "-pass 1" : "-pass 2");
+            string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "-tile_columns ", "-tile_rows ");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($"-c:v libsvtav1 {p} {rc} -tile_columns 1 -tile_rows 0 -preset {preset} {g} -pix_fmt {pixFmt} {cust}");
+            return new CodecArgs($"-c:v libsvtav1 {p} {rc} -preset {preset} {g} {tiles} -pix_fmt {pixFmt} {cust}");
         }
     }
 }

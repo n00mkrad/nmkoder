@@ -219,7 +219,7 @@ namespace Nmkoder.Media
             List<string> lines = new List<string>();
             lines.Add($"@echo off");
             lines.Add($"cd /D {workingDir.Wrap()}");
-            lines.Add($"SET PATH=%PATH% {string.Join(";", paths)}");
+            lines.Add($"SET PATH=%PATH%;{string.Join(";", paths)}");
             lines.Add($"av1an {av1anArgs}");
             string path = Path.Combine(workingDir, "av1an.bat");
             File.WriteAllLines(path, lines);

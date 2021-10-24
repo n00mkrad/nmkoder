@@ -112,14 +112,17 @@ namespace Nmkoder.Forms
             if(i == 1)
             {
                 bool currentNull = TrackList.current == null;
+                bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
                 bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
-                if (currentNull || noAudTracks)
+                if (currentNull || noAudTracks || noEnc)
                 {
                     if(currentNull)
                         MessageBox.Show("Please load a file first in order to configure its audio tracks.", "Error");
                     else if(noAudTracks)
                         MessageBox.Show("This is only available if you have at least one audio track in the track list.", "Error");
+                    else if (noEnc)
+                        MessageBox.Show("The selected audio encoder does not support custom bitrates.", "Error");
 
                     encAudConfMode.SelectedIndex = 0;
                     return;
@@ -139,9 +142,10 @@ namespace Nmkoder.Forms
 
             if (i == 1)
             {
+                bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
                 bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
-                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks)
+                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks || noEnc)
                 {
                     TrackList.currentAudioConfig = null;
                     encAudConfMode.SelectedIndex = 0;

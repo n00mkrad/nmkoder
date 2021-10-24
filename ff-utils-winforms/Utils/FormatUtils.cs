@@ -134,6 +134,16 @@ namespace Nmkoder.Utils
             return ratio.ToString("0.00") + "%";
         }
 
+        public static float RatioFloat(long numFrom, long numTo)
+        {
+            double ratio = ((float)numFrom / (float)numTo) * 100f;
+
+            if (ratio < 0f)
+                ratio = 0f;
+
+            return (float)ratio;
+        }
+
         public static int RatioInt(long numFrom, long numTo)
         {
             double ratio = Math.Round(((float)numFrom / (float)numTo) * 100f);

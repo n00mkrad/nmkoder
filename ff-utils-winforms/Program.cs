@@ -49,7 +49,7 @@ namespace Nmkoder
                     string[] split = dir.Name.Split('-');
                     int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
 
-                    if (daysOld > 7 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 7 days
+                    if (daysOld > 4 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 4 days
                         dir.Delete(true);
                 }
 

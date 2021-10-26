@@ -175,7 +175,7 @@ namespace Nmkoder.Media
 
                 if (!show)
                 {
-                    av1an.StartInfo.EnvironmentVariables["Path"] = av1an.StartInfo.EnvironmentVariables["Path"] + $";{vsynthPath};{encPath};{ffmpegPath}";
+                    av1an.StartInfo.EnvironmentVariables["Path"] = $"{vsynthPath};{encPath};{ffmpegPath};{av1an.StartInfo.EnvironmentVariables["Path"]}";
                     av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.exe {beforeArgs} {args}";
                 }
                 else
@@ -217,10 +217,11 @@ namespace Nmkoder.Media
 
         private static string WriteBatchFile (string workingDir, string[] paths, string av1anArgs)
         {
+            Logger.Log($"Writing batch file to launch: av1an {av1anArgs}", true, false, "av1an");
             List<string> lines = new List<string>();
             lines.Add($"@echo off");
             lines.Add($"cd /D {workingDir.Wrap()}");
-            lines.Add($"SET PATH=%PATH%;{string.Join(";", paths)}");
+            lines.Add($"SET PATH={string.Join(";", paths)};%PATH%");
             lines.Add($"av1an {av1anArgs}");
             string path = Path.Combine(workingDir, "av1an.bat");
             File.WriteAllLines(path, lines);

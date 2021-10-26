@@ -112,8 +112,9 @@ namespace Nmkoder.Media
         public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)
         {
             if (setBusy) Program.mainForm.SetWorking(true);
-            return await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", true, progressBar);
+            string output = await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", true, progressBar);
             if (setBusy) Program.mainForm.SetWorking(false);
+            return output;
             //timeSinceLastOutput.Restart();
             //if (Program.busy) setBusy = false;
             //lastOutputFfmpeg = "";

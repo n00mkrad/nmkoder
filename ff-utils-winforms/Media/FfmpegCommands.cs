@@ -198,14 +198,14 @@ namespace Nmkoder.Media
             return -1;
         }
 
-        static async Task<int> ReadFrameCountFfmpegAsync (string filePath)
+        public static async Task<int> ReadFrameCountFfmpegAsync (string filePath)
         {
             string args = $" -loglevel panic -stats {filePath.GetConcStr()} -i {filePath.Wrap()} -map 0:v:0 -c copy -f null - ";
             string info = await GetFfmpegOutputAsync(args, true, true);
             try
             {
                 string[] lines = info.SplitIntoLines();
-                string lastLine = lines.Last();
+                string lastLine = lines.Last().ToLower();
                 return lastLine.Substring(0, lastLine.IndexOf("fps")).GetInt();
             }
             catch

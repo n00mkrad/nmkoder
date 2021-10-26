@@ -23,8 +23,6 @@ namespace Nmkoder.Media
             if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
                 return;
 
-            lastOutputAv1an = lastOutputAv1an + "\n" + line;
-
             bool hidden = logMode == LogMode.Hidden;
 
             if (HideMessage(line)) // Don't print certain warnings 
@@ -35,7 +33,7 @@ namespace Nmkoder.Media
             if (line.Contains("time=") && (line.StartsWith("frame=") || line.StartsWith("size=")))
                 line = FormatUtils.BeautifyFfmpegStats(line);
 
-            appendStr += line;
+            appendStr += Environment.NewLine + line;
             Logger.Log($"{prefix} {line}", hidden, replaceLastLine, logFilename);
 
             if (!hidden && showProgressBar && line.Contains("Time:"))

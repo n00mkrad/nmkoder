@@ -180,8 +180,8 @@ namespace Nmkoder.Media
                 }
                 else
                 {
-                    WriteBatchFile(dir, new string[] { vsynthPath, encPath, ffmpegPath }, $"{beforeArgs} {args}");
-                    av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.bat";
+                    string batPath = WriteBatchFile(dir, new string[] { vsynthPath, encPath, ffmpegPath }, $"{beforeArgs} {args}");
+                    av1an.StartInfo.Arguments = $"/C {batPath.Wrap()}";
                 }
 
                 if (logMode != LogMode.Hidden) Logger.Log("Running av1an...", false);
@@ -223,7 +223,7 @@ namespace Nmkoder.Media
             lines.Add($"cd /D {workingDir.Wrap()}");
             lines.Add($"SET PATH={string.Join(";", paths)};%PATH%");
             lines.Add($"av1an {av1anArgs}");
-            string path = Path.Combine(workingDir, "av1an.bat");
+            string path = Path.Combine(Paths.GetSessionDataPath(), "av1an.bat");
             File.WriteAllLines(path, lines);
             return path;
         }

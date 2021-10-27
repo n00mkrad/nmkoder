@@ -75,7 +75,7 @@ namespace Nmkoder.Data
                 return "";
 
             int keyInt = ((float)(mediaFile?.VideoStreams.FirstOrDefault().Rate.GetFloat() * intervalSeconds)).RoundToInt();
-            return keyInt >= 24 ? $"{arg}{keyInt}" : "";
+            return $"{arg}{keyInt.Clamp(20, 480)}";
         }
 
         public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels, List<string> extraArgs = null)

@@ -1885,7 +1885,7 @@ namespace Nmkoder.Forms
             this.av1anOptsWorkerCount.Name = "av1anOptsWorkerCount";
             this.av1anOptsWorkerCount.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsWorkerCount.TabIndex = 53;
-            this.toolTip.SetToolTip(this.av1anOptsWorkerCount, "Set the video quality level (CRF/CQ)");
+            this.toolTip.SetToolTip(this.av1anOptsWorkerCount, "Set the amount of av1an workers (encoder instances)");
             this.av1anOptsWorkerCount.Value = new decimal(new int[] {
             1,
             0,
@@ -1926,7 +1926,7 @@ namespace Nmkoder.Forms
             this.av1anOptsChunkMode.Name = "av1anOptsChunkMode";
             this.av1anOptsChunkMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsChunkMode.TabIndex = 49;
-            this.toolTip.SetToolTip(this.av1anOptsChunkMode, "Select which video codec and encoder to use.");
+            this.toolTip.SetToolTip(this.av1anOptsChunkMode, "Select the chunk generation method. If you are unsure, use lsmash.");
             this.av1anOptsChunkMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // label34
@@ -1954,7 +1954,7 @@ namespace Nmkoder.Forms
             this.av1anOptsSplitMode.Name = "av1anOptsSplitMode";
             this.av1anOptsSplitMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsSplitMode.TabIndex = 47;
-            this.toolTip.SetToolTip(this.av1anOptsSplitMode, "Select which video codec and encoder to use.");
+            this.toolTip.SetToolTip(this.av1anOptsSplitMode, "Set how to split the video into chunks");
             this.av1anOptsSplitMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // label32

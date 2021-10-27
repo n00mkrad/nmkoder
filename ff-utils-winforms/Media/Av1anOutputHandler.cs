@@ -37,7 +37,8 @@ namespace Nmkoder.Media
 
             if (line.StartsWith("Queue: "))
                 TryParseQueueSize(line);
-
+            else if (line.Contains("SC: Now at "))
+                currentQueueSize = line.Split("SC: Now at ")[1].Split(' ')[0].GetInt();
 
             if (line.Contains("Could not open file"))
             {
@@ -91,6 +92,12 @@ namespace Nmkoder.Media
                     string[] logLines = contents.SplitIntoLines();
                     int encodedChunks = logLines.Where(x => x.Contains("Done: ")).Count();
 
+                    if(currentQueueSize == 0)
+                    {
+                        string[] sc = logLines.Where(x => x.Contains("SC: Now at ")).ToArray();
+                        currentQueueSize = sc.Length > 0 ? sc[0].Split("SC: Now at ")[1].Split(' ')[0].GetInt() : 0;
+                    }
+
                     int ratio = FormatUtils.RatioInt(encodedChunks, currentQueueSize);
                     Program.mainForm.SetProgress(ratio);
 
@@ -120,7 +127,6 @@ namespace Nmkoder.Media
                 catch (Exception e)
                 {
                     Logger.Log($"Failed to get av1an progress from log file: {e.Message}\n{e.StackTrace}", true);
-
 
                     for (int i = 100; i > 0; i--)
                     {

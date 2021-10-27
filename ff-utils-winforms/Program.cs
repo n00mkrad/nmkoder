@@ -42,14 +42,18 @@ namespace Nmkoder
 
         public static void Cleanup()
         {
+            int keepLogsDays = 4;
+            int keepSessionDataDays = 4;
+
             try
             {
                 foreach (DirectoryInfo dir in new DirectoryInfo(Paths.GetLogPath(true)).GetDirectories())
                 {
                     string[] split = dir.Name.Split('-');
                     int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+                    Logger.Log($"Cleanup: Log folder {dir.Name} is {daysOld} days old - Will {(daysOld <= keepLogsDays ? "Keep" : "Delete")}", true);
 
-                    if (daysOld > 4 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 4 days
+                    if (daysOld > keepLogsDays || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 4 days
                         dir.Delete(true);
                 }
 
@@ -59,8 +63,9 @@ namespace Nmkoder
                 {
                     string[] split = dir.Name.Split('-');
                     int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
+                    Logger.Log($"Cleanup: Log folder {dir.Name} is {daysOld} days old - Will {(daysOld <= keepSessionDataDays ? "Keep" : "Delete")}", true);
 
-                    if (daysOld > 2 || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
+                    if (daysOld > keepSessionDataDays || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
                         dir.Delete(true);
                 }
 

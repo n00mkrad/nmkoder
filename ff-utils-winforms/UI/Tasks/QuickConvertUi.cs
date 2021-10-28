@@ -379,7 +379,9 @@ namespace Nmkoder.UI.Tasks
             }
 
             grid.Columns[0].ReadOnly = true;
-            foreach(DataGridViewColumn col in grid.Columns) col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[1].ReadOnly = true;
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);
             grid.Columns[0].FillWeight = 5;
             grid.Columns[1].FillWeight = 20;
             grid.Columns[2].FillWeight = 65;

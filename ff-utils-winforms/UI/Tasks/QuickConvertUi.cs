@@ -444,8 +444,9 @@ namespace Nmkoder.UI.Tasks
             {
                 string track = row.Cells[1].Value?.ToString();
                 int idx = track.GetInt() - 1;
+                bool check = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Index == idx).Any();
 
-                if (idx >= 0)
+                if (idx >= 0 && check)
                 {
                     if (track.ToLower().Contains("audio"))
                         argsDispo.Add($"-disposition:a:{idx} {(defaultAudio == idx ? "default" : "0")}");

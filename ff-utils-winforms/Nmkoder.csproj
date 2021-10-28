@@ -288,6 +288,7 @@
     <Compile Include="Data\Streams\SubtitleStream.cs" />
     <Compile Include="Data\Ui\MediaStreamListEntry.cs" />
     <Compile Include="Data\Ui\SimpleFileListEntry.cs" />
+    <Compile Include="Data\UniqueMetadataEntry.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Data\Streams\AudioStream.cs" />
     <Compile Include="Data\CodecUtils.cs" />

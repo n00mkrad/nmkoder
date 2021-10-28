@@ -153,5 +153,10 @@ namespace Nmkoder.Forms
                 }
             }
         }
+
+        private void metadataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            QuickConvertUi.SaveMetadata();
+        }
     }
 }

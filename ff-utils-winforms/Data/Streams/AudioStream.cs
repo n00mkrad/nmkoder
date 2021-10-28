@@ -2,8 +2,6 @@
 {
     public class AudioStream : Stream
     {
-        public string Language;
-        public string Title;
         public int Kbits;
         public int SampleRate;
         public int Channels;

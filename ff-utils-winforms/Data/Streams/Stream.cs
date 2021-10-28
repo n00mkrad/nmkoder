@@ -7,6 +7,8 @@
         public int Index;
         public string Codec;
         public string CodecLong;
+        public string Language;
+        public string Title;
 
         public override string ToString()
         {

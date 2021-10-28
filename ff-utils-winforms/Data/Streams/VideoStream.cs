@@ -10,8 +10,6 @@ namespace Nmkoder.Data.Streams
         public Size Sar;
         public Size Dar;
         public Fraction Rate;
-        public string Language;
-        public string Title;
 
         public VideoStream(string language, string title, string codec, string codecLong, string colorSpace, int kbits, Size resolution, Size sar, Size dar, Fraction rate)
         {

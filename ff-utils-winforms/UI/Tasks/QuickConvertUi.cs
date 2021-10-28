@@ -322,19 +322,12 @@ namespace Nmkoder.UI.Tasks
 
         #region Metadata Tab 
 
-        public static string lastMap = "";
+        public static List<UniqueMetadataEntry> metaEntries = new List<UniqueMetadataEntry>();
 
         public static void LoadMetadataGrid()
         {
             if (TrackList.current == null)
                 return;
-
-            string currMap = TrackList.GetMapArgs();
-
-            if (currMap == lastMap)
-                return;
-
-            lastMap = currMap;
 
             DataGridView grid = Program.mainForm.metaGrid;
             MediaFile c = TrackList.current;
@@ -342,36 +335,97 @@ namespace Nmkoder.UI.Tasks
             if (grid.Columns.Count != 3)
             {
                 grid.Columns.Clear();
+                grid.Columns.Add("0", "#");
                 grid.Columns.Add("1", "Track");
                 grid.Columns.Add("2", "Title");
                 grid.Columns.Add("3", "Lang");
             }
 
-            grid.Rows.Clear();
+            GetMetadata();
 
-            grid.Rows.Add($"File", TrackList.current.Title, TrackList.current.Language);
+            grid.Rows.Clear();
+            grid.Rows.Add("", $"File", metaEntries[0].Title, metaEntries[0].Language);
 
             var checkStreamEntries = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
-            List<VideoStream> vStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
-
-            List<AudioStream> aStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
-            
-            List<SubtitleStream> sStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
+            List<MediaStreamListEntry> vStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Video).ToList();
+            List<MediaStreamListEntry> aStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Audio).ToList();
+            List<MediaStreamListEntry> sStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).ToList();
 
             for (int i = 0; i < vStreams.Count; i++)
-                    grid.Rows.Add($"Video Track {i + 1}", vStreams[i].Title, vStreams[i].Language);
+            {
+                UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Video, vStreams[i].Stream.Index);
+                List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
+                string title = match.Count > 0 ? match[0].Title : vStreams[i].Stream.Title;
+                string lang = match.Count > 0 ? match[0].Language : vStreams[i].Stream.Language;
+                grid.Rows.Add(e.StreamIndex, $"Video Track {i + 1}", title, lang);
+            }
 
             for (int i = 0; i < aStreams.Count; i++)
-                    grid.Rows.Add($"Audio Track {i + 1}", aStreams[i].Title, aStreams[i].Language);
+            {
+                UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Audio, aStreams[i].Stream.Index);
+                List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
+                string title = match.Count > 0 ? match[0].Title : sStreams[i].Stream.Title;
+                string lang = match.Count > 0 ? match[0].Language : aStreams[i].Stream.Language;
+                grid.Rows.Add(e.StreamIndex, $"Audio Track {i + 1}", title, lang);
+            }
 
             for (int i = 0; i < sStreams.Count; i++)
-                    grid.Rows.Add($"Subtitle Track {i + 1}", sStreams[i].Title, sStreams[i].Language);
+            {
+                UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Subtitle, sStreams[i].Stream.Index);
+                List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
+                string title = match.Count > 0 ? match[0].Title : sStreams[i].Stream.Title;
+                string lang = match.Count > 0 ? match[0].Language : sStreams[i].Stream.Language;
+                grid.Rows.Add(e.StreamIndex, $"Subtitle Track {i + 1}", title, lang);
+            }
 
             grid.Columns[0].ReadOnly = true;
-            grid.Columns[0].AutoSizeMode = grid.Columns[1].AutoSizeMode = grid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            grid.Columns[0].FillWeight = 20;
-            grid.Columns[1].FillWeight = 70;
-            grid.Columns[2].FillWeight = 10;
+            foreach(DataGridViewColumn col in grid.Columns) col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid.Columns[0].FillWeight = 5;
+            grid.Columns[1].FillWeight = 20;
+            grid.Columns[2].FillWeight = 65;
+            grid.Columns[3].FillWeight = 10;
+        }
+
+        private static void GetMetadata ()
+        {
+            var checkedStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
+            List<Stream> allStreams = checkedStreams.Select(s => s.Stream).ToList();
+            List<VideoStream> vStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
+            List<AudioStream> aStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
+            List<SubtitleStream> sStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
+
+            metaEntries.Add(new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Data, -1, TrackList.current.Title, TrackList.current.Language));
+
+            for (int i = 0; i < checkedStreams.Count(); i++)
+            {
+                MediaStreamListEntry e = checkedStreams.ElementAt(i);
+                metaEntries.Add(new UniqueMetadataEntry(e.MediaFile.SourcePath, e.Stream.Type, i, e.Stream.Title, e.Stream.Language));
+            }
+        }
+
+        public static void SaveMetadata ()
+        {
+            DataGridView grid = Program.mainForm.metaGrid;
+
+            for (int i = 0; i < grid.Rows.Count; i++)
+            {
+                DataGridViewRow row = grid.Rows[i];
+
+                int idx = row.Cells[0].Value.ToString().GetInt();
+                string title = row.Cells[2].Value?.ToString().Trim();
+                string lang = row.Cells[3].Value?.ToString().Trim();
+
+
+                if (row.Cells[1].Value?.ToString().Trim().ToLower() == "file")
+                {
+                    metaEntries[0].Title = title;
+                    metaEntries[0].Language = lang;
+                    continue;
+                }
+
+                metaEntries[idx + 1].Title = title;
+                metaEntries[idx + 1].Language = lang;
+            }
         }
 
         public static string GetMetadataArgs()

@@ -57,6 +57,7 @@ namespace Nmkoder.UI
             Program.mainForm.formatInfoLabel.Text = "";
             Program.mainForm.metaGrid.Columns.Clear();
             Program.mainForm.metaGrid.Rows.Clear();
+            QuickConvertUi.metaEntries.Clear();
             ThumbnailView.ClearUi();
         }
 
@@ -73,7 +74,6 @@ namespace Nmkoder.UI
             await mediaFile.Initialize();
             PrintFoundStreams(mediaFile);
             current = mediaFile;
-            QuickConvertUi.lastMap = "";
 
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
             string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";

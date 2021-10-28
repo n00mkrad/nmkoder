@@ -1281,6 +1281,7 @@ namespace Nmkoder.Forms
             this.metadataGrid.RowHeadersWidth = 51;
             this.metadataGrid.Size = new System.Drawing.Size(656, 205);
             this.metadataGrid.TabIndex = 1;
+            this.metadataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.metadataGrid_CellEndEdit);
             // 
             // panel2
             // 

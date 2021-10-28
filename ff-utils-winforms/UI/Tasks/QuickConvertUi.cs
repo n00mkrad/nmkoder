@@ -433,21 +433,37 @@ namespace Nmkoder.UI.Tasks
             bool attachments = TrackList.current.AttachmentStreams.Count > 0;
             string stripStr = attachments ? ":s:t 0:s:t" : " -1"; // If there are attachments, only copy the attachment metadata, otherwise none
             int cfg = Config.GetInt(Config.Key.metaMode);
-
-            if (cfg == 2) // 2 = Strip All
-                return $"-map_metadata{stripStr}"; 
-
-            bool map = cfg == 0;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             DataGridView grid = Program.mainForm.metaGrid;
             int defaultAudio = Program.mainForm.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = Program.mainForm.trackListDefaultSubsBox.SelectedIndex - 1;
-            List<string> args = new List<string>();
+            List<string> argsDispo = new List<string>();
 
             foreach (DataGridViewRow row in grid.Rows)
             {
-                string track = row.Cells[0].Value?.ToString();
-                string title = row.Cells[1].Value?.ToString().Trim();
-                string lang = row.Cells[2].Value?.ToString().Trim();
+                string track = row.Cells[1].Value?.ToString();
+                int idx = track.GetInt() - 1;
+
+                if (idx >= 0)
+                {
+                    if (track.ToLower().Contains("audio"))
+                        argsDispo.Add($"-disposition:a:{idx} {(defaultAudio == idx ? "default" : "0")}");
+
+                    if (track.ToLower().Contains("subtitle"))
+                        argsDispo.Add($"-disposition:s:{idx} {(defaultSubs == idx ? "default" : "0")}");
+                }
+            }
+
+            if (cfg == 2) // 2 = Strip All
+                return $"-map_metadata{stripStr} {string.Join(" ", argsDispo)}"; 
+
+            bool map = cfg == 0;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
+            List<string> argsMeta = new List<string>();
+
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                string track = row.Cells[1].Value?.ToString();
+                string title = row.Cells[2].Value?.ToString().Trim();
+                string lang = row.Cells[3].Value?.ToString().Trim();
 
                 int idx = track.GetInt() - 1;
 
@@ -456,22 +472,22 @@ namespace Nmkoder.UI.Tasks
 
                 if (idx < 0)
                 {
-                    args.Add($"-metadata title=\"{title}\"");
+                    argsMeta.Add($"-metadata title=\"{title}\"");
                 }
                 else
                 {
                     if (track.ToLower().Contains("video"))
-                        args.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:v:{idx} language=\"{lang}\"");
+                        argsMeta.Add($"-metadata:s:v:{idx} title=\"{title}\" -metadata:s:v:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("audio"))
-                        args.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:a:{idx} language=\"{lang}\" -disposition:a:{idx} {(defaultAudio == idx ? "default" : "0")}");
+                        argsMeta.Add($"-metadata:s:a:{idx} title=\"{title}\" -metadata:s:a:{idx} language=\"{lang}\"");
 
                     if (track.ToLower().Contains("subtitle"))
-                        args.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\" -disposition:s:{idx} {(defaultSubs == idx ? "default" : "0")}");
+                        argsMeta.Add($"-metadata:s:s:{idx} title=\"{title}\" -metadata:s:s:{idx} language=\"{lang}\"");
                 }
             }
 
-            return $"-map_metadata{(map ? " 0" : stripStr)} {string.Join(" ", args)}";
+            return $"-map_metadata{(map ? " 0" : stripStr)} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
         }
 
         #endregion

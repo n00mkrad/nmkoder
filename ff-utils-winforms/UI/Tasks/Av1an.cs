@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Nmkoder.Data;
 using Nmkoder.Extensions;
+using Nmkoder.Forms;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using static Nmkoder.UI.Tasks.Av1anUi;
@@ -60,7 +62,21 @@ namespace Nmkoder.UI.Tasks
                 return;
             }
 
-            Logger.Log($"Running:\nav1an {args}", true, false, "ffmpeg");
+            if (Keyboard.Modifiers == ModifierKeys.Shift) // Allow reviewing and editing command if shift is held
+            {
+                EditCommandForm form = new EditCommandForm("av1an", args);
+                form.ShowDialog();
+
+                if (string.IsNullOrWhiteSpace(form.Args))
+                {
+                    Program.mainForm.SetWorking(false);
+                    return;
+                }
+
+                args = form.Args;
+            }
+
+            Logger.Log($"Running:\nav1an {args}", true, false, "av1an");
 
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);
 

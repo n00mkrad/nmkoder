@@ -305,6 +305,12 @@
     <Compile Include="Forms\AudioStreamsForm.designer.cs">
       <DependentUpon>AudioStreamsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditCommandForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditCommandForm.Designer.cs">
+      <DependentUpon>EditCommandForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FileImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -386,6 +392,9 @@
     <Compile Include="Utils\NmkdStopwatch.cs" />
     <EmbeddedResource Include="Forms\AudioStreamsForm.resx">
       <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditCommandForm.resx">
+      <DependentUpon>EditCommandForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FileImportForm.resx">
       <DependentUpon>FileImportForm.cs</DependentUpon>

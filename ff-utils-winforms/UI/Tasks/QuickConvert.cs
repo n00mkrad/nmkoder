@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Nmkoder.Data;
 using Nmkoder.Data.Codecs;
 using Nmkoder.Extensions;
+using Nmkoder.Forms;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using static Nmkoder.UI.Tasks.QuickConvertUi;
@@ -70,7 +72,21 @@ namespace Nmkoder.UI.Tasks
                 Logger.Log($"Error creating FFmpeg command: {e.Message}\n{e.StackTrace}");
                 return;
             }
-            
+
+            if (Keyboard.Modifiers == ModifierKeys.Shift) // Allow reviewing and editing command if shift is held
+            {
+                EditCommandForm form = new EditCommandForm("ffmpeg", args);
+                form.ShowDialog();
+
+                if (string.IsNullOrWhiteSpace(form.Args))
+                {
+                    Program.mainForm.SetWorking(false);
+                    return;
+                }
+
+                args = form.Args;
+            }
+
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
             await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, false, true);

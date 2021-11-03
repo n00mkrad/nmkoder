@@ -35,8 +35,8 @@ namespace Nmkoder.UI.Tasks
                     continue;
 
                 Stream s = entry.Stream;
-                FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(TrackList.current.TruePath, s.Index);
-                string percent = FormatUtils.RatioFloat(info.Bytes, TrackList.current.Size).ToString("0.0");
+                FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(TrackList.current.File.TruePath, s.Index);
+                string percent = FormatUtils.RatioFloat(info.Bytes, TrackList.current.File.Size).ToString("0.0");
                 string br = info.Kbps > 1 ? FormatUtils.Bitrate(info.Kbps.RoundToInt()) : info.Kbps.ToString("0.0") + " kbps";
                 Logger.Log($"Stream #{s.Index} ({s.Type}) - Bitrate: {br} - Size: {FormatUtils.Bytes(info.Bytes)} ({percent}%)");
 
@@ -59,9 +59,9 @@ namespace Nmkoder.UI.Tasks
                 }
             }
 
-            string totalPercentVid = FormatUtils.RatioFloat(totalBytesVid, TrackList.current.Size).ToString("0.0");
-            string totalPercentAud = FormatUtils.RatioFloat(totalBytesAud, TrackList.current.Size).ToString("0.0");
-            string totalPercentSub = FormatUtils.RatioFloat(totalBytesSub, TrackList.current.Size).ToString("0.0");
+            string totalPercentVid = FormatUtils.RatioFloat(totalBytesVid, TrackList.current.File.Size).ToString("0.0");
+            string totalPercentAud = FormatUtils.RatioFloat(totalBytesAud, TrackList.current.File.Size).ToString("0.0");
+            string totalPercentSub = FormatUtils.RatioFloat(totalBytesSub, TrackList.current.File.Size).ToString("0.0");
 
             Logger.Log($"Total Video Bitrate: {FormatUtils.Bitrate(totalKbpsVid)} - Total Video Size: {FormatUtils.Bytes(totalBytesVid)} ({totalPercentVid}%)");
             Logger.Log($"Total Audio Bitrate: {FormatUtils.Bitrate(totalKbpsAud)} - Total Audio Size: {FormatUtils.Bytes(totalBytesAud)} ({totalPercentAud}%)");

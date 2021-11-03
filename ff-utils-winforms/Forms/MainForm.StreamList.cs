@@ -90,7 +90,7 @@ namespace Nmkoder.Forms
             {
                 string title = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Title) ? "" : $" ({((AudioStream)(a[i].Stream)).Title})";
                 string lang = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Language) ? "" : $" ({((AudioStream)(a[i].Stream)).Language})";
-                trackListDefaultAudio.Items.Add($"Track {i + 1}{title}{lang}");
+                trackListDefaultAudio.Items.Add($"Track {i + 1}{title}{lang.ToUpper()}");
             }
 
             if (a.Count > 0)
@@ -103,7 +103,7 @@ namespace Nmkoder.Forms
             {
                 string title = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Title) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Title})";
                 string lang = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Language) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Language})";
-                trackListDefaultSubs.Items.Add($"Track {i + 1}{title}{lang}");
+                trackListDefaultSubs.Items.Add($"Track {i + 1}{title}{lang.ToUpper()}");
             }
 
             if (s.Count > 0)

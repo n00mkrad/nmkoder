@@ -97,11 +97,11 @@ namespace Nmkoder.Forms
 
         private void encAudConfigureBtn_Click(object sender, EventArgs e)
         {
-            AudioStreamsForm form = new AudioStreamsForm(TrackList.current, (int)encAudQuality.Value);
+            AudioStreamsForm form = new AudioStreamsForm(TrackList.current.File, (int)encAudQuality.Value);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK && form.ConfigurationEntries != null && form.ConfigurationEntries.Count > 0)
-                TrackList.currentAudioConfig = new AudioConfiguration(TrackList.current, form.ConfigurationEntries);
+                TrackList.currentAudioConfig = new AudioConfiguration(TrackList.current.File, form.ConfigurationEntries);
         }
 
         private void encAudConfMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace Nmkoder.Forms
                 bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
                 bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
-                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.TruePath || noAudTracks || noEnc)
+                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.File.TruePath || noAudTracks || noEnc)
                 {
                     TrackList.currentAudioConfig = null;
                     encAudConfMode.SelectedIndex = 0;

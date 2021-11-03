@@ -15,6 +15,11 @@ namespace Nmkoder.Data.Ui
         public MediaFile MediaFile;
         public Stream Stream;
 
+        public string Title { get { return Stream.Title; } }
+        public string TitleEdited { get; set; } = "";
+        public string Language { get { return Stream.Language; } }
+        public string LanguageEdited { get; set; } = "";
+
         public override string ToString()
         {
             string codec = FormatUtils.CapsIfShort(Stream.Codec, 5);

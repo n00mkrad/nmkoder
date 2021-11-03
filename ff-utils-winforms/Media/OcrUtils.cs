@@ -39,7 +39,7 @@ namespace Nmkoder.Media
             for (int i = 0; i < streams.Count; i++)
             {
                 int iCopy = i;
-                int subStreamIdx = TrackList.current.SubtitleStreams.IndexOf(streams[iCopy]);
+                int subStreamIdx = TrackList.current.File.SubtitleStreams.IndexOf(streams[iCopy]);
                 string srtDir = Path.Combine(tempDir, $"{subStreamIdx}");
                 Directory.CreateDirectory(srtDir);
                 Task.Run(() => RunOcrOnSingleStream(tempDir, outDir, streams[iCopy], subStreamIdx));

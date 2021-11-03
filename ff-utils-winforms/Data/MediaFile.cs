@@ -17,8 +17,8 @@ namespace Nmkoder.Data
     public class MediaFile
     {
         public bool IsDirectory;
-        private FileInfo File;
-        private DirectoryInfo Directory;
+        public FileInfo File;
+        public DirectoryInfo Directory;
         public int FileCount;
         public string Name;
         public string SourcePath;

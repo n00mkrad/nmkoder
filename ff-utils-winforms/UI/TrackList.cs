@@ -21,7 +21,7 @@ namespace Nmkoder.UI
 {
     class TrackList
     {
-        public static MediaFile current;
+        public static FileListEntry current;
         public static AudioConfiguration currentAudioConfig = null;
 
         public static async Task HandleFiles(string[] paths, bool clearExisting)
@@ -57,7 +57,7 @@ namespace Nmkoder.UI
             Program.mainForm.formatInfoLabel.Text = "";
             Program.mainForm.metaGrid.Columns.Clear();
             Program.mainForm.metaGrid.Rows.Clear();
-            QuickConvertUi.metaEntries.Clear();
+            //QuickConvertUi.metaEntries.Clear();
             ThumbnailView.ClearUi();
         }
 
@@ -73,18 +73,18 @@ namespace Nmkoder.UI
             Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
             PrintFoundStreams(mediaFile);
-            current = mediaFile;
+            current = new FileListEntry(mediaFile);
 
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
-            string br = current.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.TotalKbits)}" : "";
-            string dur = FormatUtils.MsToTimestamp(current.DurationMs);
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.Size)}";
+            string br = current.File.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.File.TotalKbits)}" : "";
+            string dur = FormatUtils.MsToTimestamp(current.File.DurationMs);
+            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
             Program.mainForm.streamListBox.Items.Clear();
             currentAudioConfig = null;
-            await AddStreamsToList(current, switchToTrackList);
+            await AddStreamsToList(current.File, switchToTrackList);
 
-            QuickConvertUi.InitFile(current.SourcePath);
-            Av1anUi.InitFile(current.SourcePath);
+            QuickConvertUi.InitFile(current.File.SourcePath);
+            Av1anUi.InitFile(current.File.SourcePath);
 
             if (generateThumbs)
                 Task.Run(() => ThumbnailView.GenerateThumbs(mediaFile.SourcePath)); // Generate thumbs in background

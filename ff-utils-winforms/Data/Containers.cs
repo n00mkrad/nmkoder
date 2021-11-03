@@ -110,7 +110,7 @@ namespace Nmkoder.Data
                 return $"{(Config.GetBool(Config.Key.mp4Faststart) ? "-movflags +faststart" : "")}"; // Web Optimize
 
             if (c == Container.Mkv)
-                return "-max_interleave_delta 0"; // Fix muxing bug
+                return "-default_mode infer_no_subs -max_interleave_delta 0"; // -default_mode: Disable first sub track being set as default, -max_interleave_delta: Fix audio muxing problems
 
             if (c == Container.Webm)
                 return "";

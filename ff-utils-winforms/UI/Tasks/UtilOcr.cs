@@ -28,7 +28,7 @@ namespace Nmkoder.UI.Tasks
             List<SubtitleStream> streamsText = subStreams.Where(x => !x.Bitmap).ToList();
             List<SubtitleStream> streamsBitmap = subStreams.Where(x => x.Bitmap).ToList();
 
-            string inPath = TrackList.current.TruePath;
+            string inPath = TrackList.current.File.TruePath;
             string outDirName = Path.GetFileNameWithoutExtension(inPath).CleanString().Trunc(50, false) + "-Subtitles";
             string outDir = Path.Combine(new FileInfo(inPath).DirectoryName, outDirName);
 

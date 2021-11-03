@@ -177,12 +177,12 @@ namespace Nmkoder.UI
         public static async Task SlideshowLoop(int interval = 2)
         {
             Logger.Log($"Slideshow.RunFromPath - imgsDir = {Paths.GetThumbsPath()}", true);
-            string inputFile = TrackList.current.SourcePath;
+            string inputFile = TrackList.current.File.SourcePath;
             long inputFileSize = new FileInfo(inputFile).Length;
 
             for (int i = 0; true; i++)
             {
-                if (inputFile != TrackList.current.SourcePath || inputFileSize != new FileInfo(inputFile).Length)
+                if (inputFile != TrackList.current.File.SourcePath || inputFileSize != new FileInfo(inputFile).Length)
                     return;
 
                 string[] files = IoUtils.GetFilesSorted(Paths.GetThumbsPath(), false, "*.*p*");

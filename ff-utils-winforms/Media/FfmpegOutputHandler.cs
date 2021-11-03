@@ -92,7 +92,7 @@ namespace Nmkoder.Media
                 if (TrackList.current == null && overrideTargetDurationMs < 0)
                     return;
 
-                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : TrackList.current.DurationMs;
+                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : TrackList.current.File.DurationMs;
 
                 if (currInDuration < 1)
                 {

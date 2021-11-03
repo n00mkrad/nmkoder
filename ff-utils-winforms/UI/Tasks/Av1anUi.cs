@@ -59,7 +59,7 @@ namespace Nmkoder.UI.Tasks
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
                     form.av1anScaleBoxW.Text = form.av1anScaleBoxH.Text = "";
-                    InitAudioChannels(TrackList.current.AudioStreams.FirstOrDefault()?.Channels);
+                    InitAudioChannels(TrackList.current.File.AudioStreams.FirstOrDefault()?.Channels);
                 }
 
                 ValidateContainer();
@@ -216,10 +216,10 @@ namespace Nmkoder.UI.Tasks
             if (codecArgs != null && codecArgs.ForcedFilters != null)
                 filters.AddRange(codecArgs.ForcedFilters);
 
-            if (TrackList.current.VideoStreams.Count < 1)
+            if (TrackList.current.File.VideoStreams.Count < 1)
                 return "";
 
-            VideoStream vs = TrackList.current.VideoStreams.First();
+            VideoStream vs = TrackList.current.File.VideoStreams.First();
             Fraction fps = GetUiFps();
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
@@ -235,7 +235,7 @@ namespace Nmkoder.UI.Tasks
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
             if (form.av1anCropBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
-                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.TruePath, false));
+                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.File.TruePath, false));
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 

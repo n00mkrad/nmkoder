@@ -41,7 +41,7 @@ namespace Nmkoder.Forms
 
             foreach (string file in files)
             {
-                SimpleFileListEntry entry = new SimpleFileListEntry(file);
+                FileListEntry entry = new FileListEntry(new Data.MediaFile(file));
                 fileList.Items.Add(entry);
                 fileList.SetItemChecked(fileList.Items.Count - 1, true);
             }
@@ -66,7 +66,7 @@ namespace Nmkoder.Forms
             for (int i = 0; i < fileList.Items.Count; i++)
             {
                 if (fileList.GetItemChecked(i))
-                    ImportFiles.Add(((SimpleFileListEntry)fileList.Items[i]).File.FullName);
+                    ImportFiles.Add(((FileListEntry)fileList.Items[i]).File.File.FullName);
             }
 
             DialogResult = DialogResult.OK;

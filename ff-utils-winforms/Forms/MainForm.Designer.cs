@@ -495,6 +495,7 @@ namespace Nmkoder.Forms
             this.fileList.Size = new System.Drawing.Size(523, 345);
             this.fileList.TabIndex = 0;
             this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged);
+            this.fileList.DoubleClick += new System.EventHandler(this.fileList_DoubleClick);
             // 
             // streamListPage
             // 

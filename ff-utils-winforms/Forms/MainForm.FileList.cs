@@ -109,5 +109,12 @@ namespace Nmkoder.Forms
         {
             return streamList.Items.Count > 0;
         }
+
+
+        private void fileList_DoubleClick(object sender, EventArgs e)
+        {
+            if (fileList.SelectedItem != null)
+                addTracksFromFileBtn_Click(null, null);
+        }
     }
 }

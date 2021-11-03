@@ -520,7 +520,7 @@ namespace Nmkoder.UI.Tasks
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.Title}\"");
 
                     if (!string.IsNullOrWhiteSpace(entry.LanguageEdited))
-                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
+                        argsMeta.Add($"-metadata:s:{i} title=\"{entry.LanguageEdited}\"");
                     else if(cfg == 1 && entry.LanguageEdited.Trim() != entry.Language)
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.Language}\"");
                 }

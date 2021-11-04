@@ -451,13 +451,8 @@ namespace Nmkoder.UI.Tasks
                 else
                 {
                     MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamListBox.Items[idx];
-
-                    if (title.Trim() != entry.Title.Trim())
-                        entry.TitleEdited = title;
-
-                    if (lang.Trim() != entry.Language.Trim())
-                        entry.LanguageEdited = lang;
-
+                    entry.TitleEdited = title;
+                    entry.LanguageEdited = lang;
                     //Logger.Log($"Saved file metadata: {entry.TitleEdited} | {entry.LanguageEdited}");
                 }
             }
@@ -508,7 +503,7 @@ namespace Nmkoder.UI.Tasks
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
                     argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
-                var streamEntries = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().ToArray();
+                var streamEntries = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().ToArray();
 
                 for (int i = 0; i < streamEntries.Count(); i++)
                 {

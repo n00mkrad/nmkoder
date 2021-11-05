@@ -214,17 +214,14 @@ namespace Nmkoder.UI
             List<string> args = new List<string>();
             List<string> addedFiles = new List<string>();
 
-            foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
+            foreach (FileListEntry entry in Program.mainForm.fileListBox.Items)
             {
-                if (addedFiles.Contains(entry.MediaFile.SourcePath))
-                    continue;
+                addedFiles.Add(entry.File.SourcePath);
 
-                addedFiles.Add(entry.MediaFile.SourcePath);
-
-                if (entry.MediaFile.IsDirectory)
-                    args.Add($"-safe 0 -f concat -r {entry.MediaFile.InputRate} -i {entry.MediaFile.TruePath.Wrap()}");
+                if (entry.File.IsDirectory)
+                    args.Add($"-safe 0 -f concat -r {entry.File.InputRate} -i {entry.File.TruePath.Wrap()}");
                 else
-                    args.Add($"-i {entry.MediaFile.TruePath.Wrap()}");
+                    args.Add($"-i {entry.File.TruePath.Wrap()}");
             }
 
             Logger.Log($"Input Args: {string.Join(" ", args)}", true);

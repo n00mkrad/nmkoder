@@ -509,15 +509,15 @@ namespace Nmkoder.UI.Tasks
                 {
                     MediaStreamListEntry entry = streamEntries[i];
 
-                    if (!string.IsNullOrWhiteSpace(entry.TitleEdited))
+                    if (cfg == 0 && entry.TitleEdited.Trim() != entry.Title)
                         argsMeta.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
-                    else if (cfg == 1 && entry.TitleEdited.Trim() != entry.Title)
-                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.Title}\"");
+                    else if (cfg == 1)
+                        argsMeta.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
 
-                    if (!string.IsNullOrWhiteSpace(entry.LanguageEdited))
-                        argsMeta.Add($"-metadata:s:{i} title=\"{entry.LanguageEdited}\"");
-                    else if(cfg == 1 && entry.LanguageEdited.Trim() != entry.Language)
-                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.Language}\"");
+                    if (cfg == 0 && entry.LanguageEdited.Trim() != entry.Language)
+                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
+                    else if(cfg == 1)
+                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
                 }
             }
 

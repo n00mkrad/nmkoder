@@ -35,27 +35,10 @@ namespace Nmkoder.Media
 
             Logger.Log(line, hidden, replaceLastLine, "av1an");
 
-            if (line.StartsWith("Queue: "))
-                TryParseQueueSize(line);
-            else if (line.Contains("SC: Now at "))
-                currentQueueSize = line.Split("SC: Now at ")[1].Split(' ')[0].GetInt();
-
             if (line.Contains("Could not open file"))
             {
                 RunTask.Cancel($"Error: {line}");
                 return;
-            }
-        }
-
-        static void TryParseQueueSize(string line)
-        {
-            try
-            {
-                currentQueueSize = line.Split("Queue:")[1].Split("Workers:")[0].GetInt();
-            }
-            catch (Exception e)
-            {
-                Logger.Log($"Failed to read av1an queue size from line: {line} ({e.Message})", true);
             }
         }
 

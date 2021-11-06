@@ -47,7 +47,7 @@ namespace Nmkoder.Forms
             if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
-                    await TrackList.LoadFirstFile((MediaFile)fileList.Items[0]);
+                    await TrackList.LoadFirstFile(((FileListEntry)fileList.Items[0]).File);
             }
         }
 

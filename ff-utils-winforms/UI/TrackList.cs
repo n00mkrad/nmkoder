@@ -42,7 +42,7 @@ namespace Nmkoder.UI
             FileList.LoadFiles(paths, clearExisting);
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
-                await LoadFirstFile((MediaFile)Program.mainForm.fileListBox.Items[0]);
+                await LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0]).File);
 
             if (runInstantly)
                 Program.mainForm.runBtn_Click();

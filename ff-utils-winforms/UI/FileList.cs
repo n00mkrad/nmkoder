@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Ui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,6 @@ namespace Nmkoder.UI
     {
         public static List<MediaFile> currentFiles = new List<MediaFile>();
 
-        public static void RefreshList ()
-        {
-            foreach (MediaFile mediaFile in currentFiles)
-                Program.mainForm.fileListBox.Items.Add(mediaFile.Name);
-        }
-
         public static void LoadFiles (string[] paths, bool clearExisting)
         {
             if(clearExisting)
@@ -24,7 +19,7 @@ namespace Nmkoder.UI
             foreach (string file in paths)
             {
                 MediaFile mediaFile = new MediaFile(file); // Create MediaFile without initializing
-                Program.mainForm.fileListBox.Items.Add(mediaFile);
+                Program.mainForm.fileListBox.Items.Add(new FileListEntry(mediaFile));
             }
         }
     }

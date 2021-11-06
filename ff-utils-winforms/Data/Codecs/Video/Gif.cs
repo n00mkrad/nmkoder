@@ -14,14 +14,14 @@ namespace Nmkoder.Data.Codecs
         public string[] ColorFormats { get; } = new string[] { };
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 0;
-        public int QMax { get; } = 50;
-        public int QDefault { get; } = 24;
+        public int QMax { get; } = 256;
+        public int QDefault { get; } = 128;
         public string QInfo { get; } = "Color Palette Size (Higher is better)";
         public string PresetInfo { get; } = "Higher = Better compression";
 
         public bool SupportsTwoPass { get; } = false;
 		public bool DoesNotEncode { get; } = false;
-        public bool IsFixedFormat { get; } = false;
+        public bool IsFixedFormat { get; } = true;
         public bool IsSequence { get; } = false;
 
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)

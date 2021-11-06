@@ -304,7 +304,7 @@ namespace Nmkoder.Media
             Size res = await GetMediaResolutionCached.GetSizeAsync(inputFile);
             string vf = res.Height > maxH ? $"-vf scale=-1:{maxH.RoundMod(2)}" : "";
             string noKeyArg = noKey ? "-skip_frame nokey" : "";
-            string args = $"{noKeyArg} -ss {skipSeconds} -i {inputFile.Wrap()} -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
+            string args = $"{noKeyArg} -ss {skipSeconds} -i {inputFile.Wrap()} -map 0:v -vframes 1 {pixFmt} {vf} {outputPath.Wrap()}";
             await RunFfmpeg(args, LogMode.Hidden);
         }
 

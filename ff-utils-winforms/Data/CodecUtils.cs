@@ -129,10 +129,11 @@ namespace Nmkoder.Data
             if (resolution.Width >= 7680) cols = 3;
 
             int rows = 0;
-            if (resolution.Height >= 1600) cols = 1;
-            if (resolution.Height >= 3200) cols = 2;
-            if (resolution.Height >= 6400) cols = 3;
+            if (resolution.Height >= 1600) rows = 1;
+            if (resolution.Height >= 3200) rows = 2;
+            if (resolution.Height >= 6400) rows = 3;
 
+            Logger.Log($"GetTilingArgs: Video resolution is {resolution.Width}x{resolution.Height} - Using 2^{cols} columns, 2^{rows} rows (=> {Math.Pow(2, cols)}x{Math.Pow(2, rows)} = {Math.Pow(2, cols) * Math.Pow(2, rows)} Tiles)", true);
             return $"{colArg}{cols} {rowArg}{rows}";
         }
     }

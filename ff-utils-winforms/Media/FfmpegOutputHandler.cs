@@ -83,6 +83,12 @@ namespace Nmkoder.Media
                 RunTask.Cancel($"Error: {line}\n\nYou tried to mux a non-GIF stream into a GIF file.");
                 return;
             }
+
+            if (line.Contains("Width and height of input videos must be same"))
+            {
+                RunTask.Cancel($"Error: {line}");
+                return;
+            }
         }
 
         static void UpdateFfmpegProgress(string ffmpegTime)

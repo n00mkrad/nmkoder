@@ -40,6 +40,7 @@ namespace Nmkoder.Forms
         {
             currentTask = RunTask.TaskType.UtilGetMetrics;
             UpdatePanels();
+            utilsMetricsConfBtn_Click(null, null);
         }
 
         private void utilsMetricsConfBtn_Click(object sender, EventArgs e)
@@ -56,6 +57,7 @@ namespace Nmkoder.Forms
             if (form.DialogResult != DialogResult.OK)
                 return;
 
+            UtilGetMetrics.subsample = form.Subsample;
             UtilGetMetrics.alignMode = form.AlignMode;
             UtilGetMetrics.vmafModel = form.VmafModel;
             UtilGetMetrics.runVmaf = form.CheckedBoxes[0];

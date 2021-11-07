@@ -23,6 +23,7 @@ namespace Nmkoder.UI.Tasks
         public static bool runPsnr;
         public static int alignMode = 0;
         public static int vmafModel = 0;
+        public static int subsample = 0;
 
         public static async Task Run(bool fixRate = true)
         {
@@ -44,7 +45,7 @@ namespace Nmkoder.UI.Tasks
                 if (runVmaf)
                 {
                     Logger.Log("Calculating VMAF...");
-                    string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}";
+                    string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}:n_subsample={subsample}";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{vmafFilter} -f null -";
                     string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
                     List<string> vmafLines = output.SplitIntoLines().Where(x => x.Contains("VMAF score: ")).ToList();
@@ -63,7 +64,8 @@ namespace Nmkoder.UI.Tasks
                 if (runSsim)
                 {
                     Logger.Log("Calculating SSIM...");
-                    string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}ssim -f null -";
+                    string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
+                    string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}ssim -f null -";
                     string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                     List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
@@ -81,7 +83,8 @@ namespace Nmkoder.UI.Tasks
                 if (runPsnr)
                 {
                     Logger.Log("Calculating PSNR...");
-                    string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}psnr -f null -";
+                    string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
+                    string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}psnr -f null -";
                     string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
                     List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 

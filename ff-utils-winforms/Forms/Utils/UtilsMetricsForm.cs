@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Ui;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.UI.Tasks;
 using System;
@@ -17,6 +18,7 @@ namespace Nmkoder.Forms.Utils
     public partial class UtilsMetricsForm : Form
     {
         public bool[] CheckedBoxes { get; set; }
+        public int Subsample { get; set; } = 1;
         public int AlignMode { get; set; } = 0;
         public int VmafModel { get; set; } = 0;
         public string VideoLq { get; set; }
@@ -51,6 +53,7 @@ namespace Nmkoder.Forms.Utils
         private void UtilsMetricsForm_Load(object sender, EventArgs e)
         {
             align.SelectedIndex = UtilGetMetrics.alignMode;
+            subsample.SelectedIndex = (UtilGetMetrics.subsample - 1).Clamp(0, 64);
         }
 
         private void UtilsMetricsForm_Shown(object sender, EventArgs e)
@@ -73,16 +76,26 @@ namespace Nmkoder.Forms.Utils
             }
         }
 
+        bool pressedOk = false;
+
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            Subsample = subsample.SelectedIndex + 1;
             AlignMode = align.SelectedIndex;
             VmafModel = vmafMdl.SelectedIndex;
             CheckedBoxes = new bool[] { vmaf.Checked, ssim.Checked, psnr.Checked };
             VideoLq = ((MediaFile)encodedVideo.SelectedItem).TruePath;
             VideoHq = ((MediaFile)referenceVideo.SelectedItem).TruePath;
             DialogResult = DialogResult.OK;
+            pressedOk = true;
             Close();
             Program.mainForm.BringToFront();
+        }
+
+        private void UtilsMetricsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(!pressedOk)
+                confirmBtn_Click(null, null);
         }
     }
 }

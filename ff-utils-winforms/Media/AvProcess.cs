@@ -158,7 +158,7 @@ namespace Nmkoder.Media
             try
             {
                 string dir = Path.Combine(GetDir(), "av1an");
-                IoUtils.TryDeleteIfExists(Paths.GetAv1anTempPath());
+                //IoUtils.TryDeleteIfExists(Paths.GetAv1anTempPath());
                 string tempDir = Path.Combine(Paths.GetAv1anTempPath(), ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString());
                 Directory.CreateDirectory(tempDir);
                 bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;

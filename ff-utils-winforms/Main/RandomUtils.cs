@@ -11,10 +11,8 @@ namespace Nmkoder.Main
 {
     class RandomUtils
     {
-        public static async Task RecoverDoneJson()
+        public static async Task RecoverDoneJson(string dir)
         {
-            string dir = @"C:\Files\Videos\Encoding\tenet\mrg";
-
             FileInfo[] chunks = IoUtils.GetFileInfosSorted(dir, false, "*.ivf");
 
             string s = "";
@@ -32,21 +30,34 @@ namespace Nmkoder.Main
             Logger.Log($"Done");
         }
 
-        public static async Task ValidateDoneJson()
+        public static async Task ValidateDoneJson(string jsonPath, string chunksDir)
         {
             try
             {
-                string jsonPath = @"C:\Software\Nmkoder\data\av1anTemp\1635170121824\done.json";
-                string chunksDir = @"C:\Software\Nmkoder\data\av1anTemp\1635170121824\encode";
+                int minSizeKb = 10;
 
-                string[] filenames = File.ReadAllText(jsonPath).Split('{')[2].Split('}')[0].Split(',').Select(x => x.Split(':')[0].Remove("\"")).ToArray();
+                string doneJsonText = File.ReadAllText(jsonPath);
+                string[] filenames = doneJsonText.Split('{')[2].Split('}')[0].Split(',').Select(x => x.Split(':')[0].Remove("\"")).ToArray();
                 //string[] chunks = IoUtils.GetFilesSorted(chunksDir, false, "*.ivf");
+
+                string newJsonText = doneJsonText.Split('{')[1] + "{";
 
                 foreach (string f in filenames)
                 {
-                    bool exists = File.Exists(Path.Combine(chunksDir, f + ".ivf"));
-                    Logger.Log($"{f} => {(exists ? "exists" : "does not exist!")}");
+                    string path = Path.Combine(chunksDir, f + ".ivf");
+                    bool valid = File.Exists(path) && new FileInfo(path).Length > (1024 * minSizeKb);
+                    //Logger.Log($"{f} => {(valid ? "exists" : "does not exist!")}");
+
+                    if (valid)
+                        newJsonText += $"{(f + ".ivf").Wrap()}";
+                    else
+                        Logger.Log($"Chunk {f} does not exist!");
                 }
+
+                newJsonText += "},\"audio_done\":true}";
+
+                File.Move(jsonPath, jsonPath + ".bak");
+                File.WriteAllText(jsonPath, newJsonText);
             }
             catch (Exception e)
             {

@@ -44,6 +44,8 @@ namespace Nmkoder.Forms.Utils
             this.label5 = new System.Windows.Forms.Label();
             this.align = new System.Windows.Forms.ComboBox();
             this.vmafMdl = new System.Windows.Forms.ComboBox();
+            this.subsample = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // confirmBtn
@@ -52,7 +54,7 @@ namespace Nmkoder.Forms.Utils
             | System.Windows.Forms.AnchorStyles.Right)));
             this.confirmBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.confirmBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.confirmBtn.Location = new System.Drawing.Point(12, 192);
+            this.confirmBtn.Location = new System.Drawing.Point(12, 222);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(320, 23);
             this.confirmBtn.TabIndex = 57;
@@ -110,7 +112,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(13, 105);
+            this.label2.Location = new System.Drawing.Point(13, 135);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 13);
@@ -121,7 +123,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(13, 135);
+            this.label3.Location = new System.Drawing.Point(13, 165);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
@@ -132,7 +134,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(13, 165);
+            this.label4.Location = new System.Drawing.Point(13, 195);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(87, 13);
@@ -143,7 +145,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.vmaf.AutoSize = true;
             this.vmaf.ForeColor = System.Drawing.Color.White;
-            this.vmaf.Location = new System.Drawing.Point(110, 104);
+            this.vmaf.Location = new System.Drawing.Point(110, 134);
             this.vmaf.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.vmaf.Name = "vmaf";
             this.vmaf.Size = new System.Drawing.Size(15, 14);
@@ -154,7 +156,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.ssim.AutoSize = true;
             this.ssim.ForeColor = System.Drawing.Color.White;
-            this.ssim.Location = new System.Drawing.Point(110, 135);
+            this.ssim.Location = new System.Drawing.Point(110, 165);
             this.ssim.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.ssim.Name = "ssim";
             this.ssim.Size = new System.Drawing.Size(15, 14);
@@ -165,7 +167,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.psnr.AutoSize = true;
             this.psnr.ForeColor = System.Drawing.Color.White;
-            this.psnr.Location = new System.Drawing.Point(110, 165);
+            this.psnr.Location = new System.Drawing.Point(110, 195);
             this.psnr.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.psnr.Name = "psnr";
             this.psnr.Size = new System.Drawing.Size(15, 14);
@@ -176,7 +178,7 @@ namespace Nmkoder.Forms.Utils
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(13, 73);
+            this.label5.Location = new System.Drawing.Point(13, 105);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(33, 13);
@@ -195,7 +197,7 @@ namespace Nmkoder.Forms.Utils
             "Auto-Crop",
             "Resize To Match",
             "Auto-Crop Then Resize To Match"});
-            this.align.Location = new System.Drawing.Point(110, 70);
+            this.align.Location = new System.Drawing.Point(110, 102);
             this.align.Name = "align";
             this.align.Size = new System.Drawing.Size(222, 21);
             this.align.TabIndex = 77;
@@ -211,17 +213,47 @@ namespace Nmkoder.Forms.Utils
             "VMAF v0.6.1 (1080p)",
             "VMAF v0.6.1 NEG (1080p)",
             "VMAF v0.6.1 (4K)"});
-            this.vmafMdl.Location = new System.Drawing.Point(131, 101);
+            this.vmafMdl.Location = new System.Drawing.Point(131, 131);
             this.vmafMdl.Name = "vmafMdl";
             this.vmafMdl.Size = new System.Drawing.Size(201, 21);
             this.vmafMdl.TabIndex = 78;
+            // 
+            // subsample
+            // 
+            this.subsample.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.subsample.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.subsample.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.subsample.ForeColor = System.Drawing.Color.White;
+            this.subsample.FormattingEnabled = true;
+            this.subsample.Items.AddRange(new object[] {
+            "Check Every Frame",
+            "Check Every 2nd Frame",
+            "Check Every 3rd Frame",
+            "Check Every 4th Frame"});
+            this.subsample.Location = new System.Drawing.Point(110, 72);
+            this.subsample.Name = "subsample";
+            this.subsample.Size = new System.Drawing.Size(222, 21);
+            this.subsample.TabIndex = 79;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(13, 75);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 13);
+            this.label6.TabIndex = 80;
+            this.label6.Text = "Accuracy";
             // 
             // UtilsMetricsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(344, 227);
+            this.ClientSize = new System.Drawing.Size(344, 257);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.subsample);
             this.Controls.Add(this.vmafMdl);
             this.Controls.Add(this.align);
             this.Controls.Add(this.label5);
@@ -242,6 +274,7 @@ namespace Nmkoder.Forms.Utils
             this.Name = "UtilsMetricsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Metrics";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UtilsMetricsForm_FormClosing);
             this.Load += new System.EventHandler(this.UtilsMetricsForm_Load);
             this.Shown += new System.EventHandler(this.UtilsMetricsForm_Shown);
             this.ResumeLayout(false);
@@ -265,5 +298,7 @@ namespace Nmkoder.Forms.Utils
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox align;
         private System.Windows.Forms.ComboBox vmafMdl;
+        private System.Windows.Forms.ComboBox subsample;
+        private System.Windows.Forms.Label label6;
     }
 }

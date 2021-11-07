@@ -23,7 +23,7 @@ namespace Nmkoder.Forms
         {
             bool mfm = RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput;
 
-            addTracksFromFileBtn.Visible = mfm && (MediaFile)fileList.SelectedItem != null;
+            addTracksFromFileBtn.Visible = mfm && (FileListEntry)fileList.SelectedItem != null;
             addTracksFromFileBtn.Text = AreAnyTracksLoaded() ? "Add Tracks To List" : "Load File";
         }
 
@@ -56,9 +56,9 @@ namespace Nmkoder.Forms
             addTracksFromFileBtn.Enabled = false;
 
             if (AreAnyTracksLoaded())
-                await TrackList.AddStreamsToList((MediaFile)fileList.SelectedItem, true);
+                await TrackList.AddStreamsToList(((FileListEntry)fileList.SelectedItem).File, true);
             else
-                await TrackList.LoadFirstFile(((MediaFile)fileList.SelectedItem).SourcePath);
+                await TrackList.LoadFirstFile((((FileListEntry)fileList.SelectedItem)).File.SourcePath);
 
             QuickConvertUi.LoadMetadataGrid();
             addTracksFromFileBtn.Enabled = true;

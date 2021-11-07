@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Ui;
 using Nmkoder.IO;
 using Nmkoder.UI.Tasks;
 using System;
@@ -39,7 +40,7 @@ namespace Nmkoder.Forms.Utils
         {
             for (int i = 0; i < fileList.Items.Count; i++)
             {
-                if(((MediaFile)fileList.Items[i]).TruePath == videoPath)
+                if((((FileListEntry)fileList.Items[i])).File.TruePath == videoPath)
                 {
                     box.SelectedIndex = i;
                     return;
@@ -56,10 +57,10 @@ namespace Nmkoder.Forms.Utils
         {
             ListBox fileList = Program.mainForm.fileListBox;
 
-            foreach(MediaFile mf in fileList.Items)
+            foreach(FileListEntry entry in fileList.Items)
             {
-                encodedVideo.Items.Add(mf);
-                referenceVideo.Items.Add(mf);
+                encodedVideo.Items.Add(entry.File);
+                referenceVideo.Items.Add(entry.File);
             }
 
             LoadVideoBox(encodedVideo, UtilGetMetrics.vidLq);

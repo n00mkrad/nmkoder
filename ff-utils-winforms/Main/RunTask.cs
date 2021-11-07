@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Ui;
 using Nmkoder.IO;
 using Nmkoder.Media;
 using Nmkoder.UI;
@@ -109,7 +110,7 @@ namespace Nmkoder.Main
 
             for (int i = 0; i < taskFileList.Length; i++)
             {
-                MediaFile mf = (MediaFile)taskFileList[i];
+                MediaFile mf = ((FileListEntry)taskFileList[i]).File;
                 Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.Name}.");
                 TrackList.ClearCurrentFile();
                 await TrackList.LoadFirstFile(mf, false, false); // Load file info

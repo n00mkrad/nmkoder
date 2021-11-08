@@ -329,6 +329,7 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
+            Logger.Log($"Reloading metadata grid.", true);
             DataGridView grid = Program.mainForm.metaGrid;
             MediaFile c = TrackList.current.File;
 
@@ -358,50 +359,6 @@ namespace Nmkoder.UI.Tasks
                 grid.Rows[newIdx].Visible = Program.mainForm.streamListBox.GetItemChecked(i);
             }
 
-            //if (FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).Any())
-            //    grid.Rows.Add("-1", $"File", metaEntries[0].Title, metaEntries[0].Language);
-
-            //var checkStreamEntries = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
-            //List<MediaStreamListEntry> vStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Video).ToList();
-            //List<MediaStreamListEntry> aStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Audio).ToList();
-            //List<MediaStreamListEntry> sStreams = checkStreamEntries.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).ToList();
-            //
-            //for (int i = 0; i < vStreams.Count; i++)
-            //{
-            //    UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Video, vStreams[i].Stream.Index);
-            //    List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
-            //    if (match.Count < 1)  continue;
-            //    string title = match.Count > 0 ? match[0].Title : vStreams[i].Stream.Title;
-            //    string lang = match.Count > 0 ? match[0].Language : vStreams[i].Stream.Language;
-            //    if (!FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).Any()) continue;
-            //    int fileIdx = FileList.currentFiles.IndexOf(FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).First());
-            //    grid.Rows.Add(fileIdx, e.StreamIndex, $"Video Track {i + 1}", title, lang);
-            //}
-            //
-            //for (int i = 0; i < aStreams.Count; i++)
-            //{
-            //    UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Audio, aStreams[i].Stream.Index);
-            //    List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
-            //    if (match.Count < 1) continue;
-            //    string title = match.Count > 0 ? match[0].Title : sStreams[i].Stream.Title;
-            //    string lang = match.Count > 0 ? match[0].Language : aStreams[i].Stream.Language;
-            //    if (!FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).Any()) continue;
-            //    int fileIdx = FileList.currentFiles.IndexOf(FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).First());
-            //    grid.Rows.Add(fileIdx, e.StreamIndex, $"Audio Track {i + 1}", title, lang);
-            //}
-            //
-            //for (int i = 0; i < sStreams.Count; i++)
-            //{
-            //    UniqueMetadataEntry e = new UniqueMetadataEntry(TrackList.current.SourcePath, Stream.StreamType.Subtitle, sStreams[i].Stream.Index);
-            //    List<UniqueMetadataEntry> match = metaEntries.Where(x => x.GetPseudoHash() == e.GetPseudoHash()).ToList();
-            //    if (match.Count < 1) continue;
-            //    string title = match.Count > 0 ? match[0].Title : sStreams[i].Stream.Title;
-            //    string lang = match.Count > 0 ? match[0].Language : sStreams[i].Stream.Language;
-            //    if (!FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).Any()) continue;
-            //    int fileIdx = FileList.currentFiles.IndexOf(FileList.currentFiles.Where(x => x.SourcePath == e.SourceFilePath).First());
-            //    grid.Rows.Add(fileIdx, e.StreamIndex, $"Subtitle Track {i + 1}", title, lang);
-            //}
-
             grid.RowHeadersVisible = false;
             grid.Columns[0].ReadOnly = true;
             grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
@@ -413,26 +370,10 @@ namespace Nmkoder.UI.Tasks
             grid.Columns[2].FillWeight = 6;
         }
 
-        // private static void GetMetadata ()
-        // {
-        //     var checkedStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => Program.mainForm.streamListBox.CheckedItems.Contains(x));
-        //     List<Stream> allStreams = checkedStreams.Select(s => s.Stream).ToList();
-        //     List<VideoStream> vStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Video).Select(s => (VideoStream)s.Stream).ToList();
-        //     List<AudioStream> aStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Audio).Select(s => (AudioStream)s.Stream).ToList();
-        //     List<SubtitleStream> sStreams = checkedStreams.Where(e => e.Stream.Type == Stream.StreamType.Subtitle).Select(s => (SubtitleStream)s.Stream).ToList();
-        // 
-        //     metaEntries.Add(new UniqueMetadataEntry(TrackList.current.File.SourcePath, Stream.StreamType.Data, -1, TrackList.current.Title, TrackList.current.Language));
-        // 
-        //     for (int i = 0; i < checkedStreams.Count(); i++)
-        //     {
-        //         MediaStreamListEntry e = checkedStreams.ElementAt(i);
-        //         metaEntries.Add(new UniqueMetadataEntry(e.MediaFile.SourcePath, e.Stream.Type, i, e.Stream.Title, e.Stream.Language));
-        //     }
-        // }
-
         public static void SaveMetadata ()
         {
             DataGridView grid = Program.mainForm.metaGrid;
+            Logger.Log($"Saving metadata.", true);
 
             for (int i = 0; i < grid.Rows.Count; i++)
             {
@@ -446,26 +387,45 @@ namespace Nmkoder.UI.Tasks
                 {
                     TrackList.current.TitleEdited = title;
                     TrackList.current.LanguageEdited = lang;
-                    //Logger.Log($"Saved file metadata: {title} | {lang}");
                 }
                 else
                 {
                     MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamListBox.Items[idx];
                     entry.TitleEdited = title;
                     entry.LanguageEdited = lang;
-                    //Logger.Log($"Saved file metadata: {entry.TitleEdited} | {entry.LanguageEdited}");
                 }
             }
         }
 
         public static string GetMetadataArgs()
         {
-            bool attachments = TrackList.current.File.AttachmentStreams.Count > 0;
-            string stripStr = attachments ? ":s:t 0:s:t" : " -1"; // If there are attachments, only copy the attachment metadata, otherwise none
+            SaveMetadata();
+            MainForm form = Program.mainForm;
+            bool attachments = form.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
+            string stripStr = ""; // If there are attachments, only copy the attachment metadata, otherwise none
+
+            if (attachments)
+            {
+                for (int i = 0; i < form.fileListBox.Items.Count; i++)
+                {
+                    MediaFile file = ((FileListEntry)form.fileListBox.Items[i]).File;
+
+                    bool fileHasAttachments = form.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.MediaFile.SourcePath == file.SourcePath).Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
+
+                    if (fileHasAttachments)
+                        stripStr += $"-map_metadata:s:t {i}:s:t";
+                }
+            }
+            else
+            {
+                stripStr = "-map_metadata -1";
+            }
+            
+
             int cfg = Config.GetInt(Config.Key.metaMode);
-            DataGridView grid = Program.mainForm.metaGrid;
-            int defaultAudio = Program.mainForm.trackListDefaultAudioBox.SelectedIndex;
-            int defaultSubs = Program.mainForm.trackListDefaultSubsBox.SelectedIndex - 1;
+            DataGridView grid = form.metaGrid;
+            int defaultAudio = form.trackListDefaultAudioBox.SelectedIndex;
+            int defaultSubs = form.trackListDefaultSubsBox.SelectedIndex - 1;
             List<string> argsDispo = new List<string>();
 
             int relIdxAud = 0;
@@ -476,7 +436,7 @@ namespace Nmkoder.UI.Tasks
                 DataGridViewRow row = grid.Rows[i];
                 string trackTitle = row.Cells[0].Value?.ToString();
 
-                if (i > 0 && Program.mainForm.streamListBox.GetItemChecked(i - 1))
+                if (i > 0 && form.streamListBox.GetItemChecked(i - 1))
                 {
                     if (trackTitle.ToLower().Contains("audio"))
                     {
@@ -503,7 +463,7 @@ namespace Nmkoder.UI.Tasks
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
                     argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
-                var streamEntries = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().ToArray();
+                var streamEntries = form.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().ToArray();
 
                 for (int i = 0; i < streamEntries.Count(); i++)
                 {
@@ -523,11 +483,11 @@ namespace Nmkoder.UI.Tasks
 
             if (cfg == 0) // 0 = Map all and add titles/langs
                 return $"-map_metadata 0 {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
-            else if (cfg == 0) // 1 = Strip but add titles/langs
-                return $"-map_metadata{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
+            else if (cfg == 1) // 1 = Strip but add titles/langs
+                return $"{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
 
             Logger.Log($"Metadata mode not 0, 1, or 2!! cfg = {cfg}", true);
-            return $"-map_metadata{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
+            return $"{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
         }
 
         #endregion

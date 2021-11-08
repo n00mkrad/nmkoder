@@ -73,6 +73,7 @@ namespace Nmkoder.Forms
         private void OnCheckedStreamsChange ()
         {
             UpdateDefaultStreamsUi();
+            QuickConvertUi.LoadMetadataGrid();
         }
 
         public void UpdateDefaultStreamsUi ()

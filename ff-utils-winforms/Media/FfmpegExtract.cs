@@ -320,7 +320,7 @@ namespace Nmkoder.Media
             for (int i = 0; i < amount; i++)
             {
                 int time = interval * (i + 1);
-                tasks.Add(ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH, true));
+                tasks.Add(ExtractSingleFrameAtTime(inputFile, Path.Combine(outputDir, $"thumb{i + 1}-s{time}.{format}"), time, maxH, false));
             }
 
             await Task.WhenAll(tasks);

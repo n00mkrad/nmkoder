@@ -460,6 +460,9 @@ namespace Nmkoder.UI.Tasks
 
             if (map)
             {
+                if (!string.IsNullOrWhiteSpace(TrackList.current.TitleEdited))
+                    argsMeta.Add($"-metadata title=\"{TrackList.current.TitleEdited}\"");
+
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
                     argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 

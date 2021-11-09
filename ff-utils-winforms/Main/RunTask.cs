@@ -16,7 +16,7 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr };
+        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData };
         //public static TaskType currentTask;
 
         public enum FileListMode { MultiFileInput, BatchProcess };
@@ -84,6 +84,9 @@ namespace Nmkoder.Main
 
             if (taskType == TaskType.UtilOcr)
                 await UtilOcr.Run();
+
+            if (taskType == TaskType.UtilColorData)
+                await UtilColorData.Run();
 
             Logger.Log($"Done - Finished task in {sw}");
             Program.mainForm.SetProgress(0);

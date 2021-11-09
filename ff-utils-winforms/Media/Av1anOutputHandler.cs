@@ -19,8 +19,6 @@ namespace Nmkoder.Media
 
         public static void LogOutput(string line, string logFilename, LogMode logMode, bool showProgressBar)
         {
-            timeSinceLastOutput.Restart();
-
             if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
                 return;
 

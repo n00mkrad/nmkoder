@@ -67,6 +67,34 @@ namespace Nmkoder.Forms
             UtilGetMetrics.vidHq = form.VideoHq;
         }
 
+        private void SelectColorData(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.UtilColorData;
+            UpdatePanels();
+            utilsColorDataConfBtn_Click(null, null);
+        }
+
+
+        private void utilsColorDataConfBtn_Click(object sender, EventArgs e)
+        {
+            if (fileListBox.Items.Count < 2)
+            {
+                Logger.Log($"You need to load at least 2 files into the file list to use this utility!");
+                return;
+            }
+
+            Utils.UtilsColorDataForm form = new Utils.UtilsColorDataForm();
+            form.ShowDialog();
+
+            if (form.DialogResult != DialogResult.OK)
+                return;
+
+            UtilColorData.copyColorSpace = form.TransferColorSpace;
+            UtilColorData.copyHdrData = form.TransferHdrData;
+            UtilColorData.vidSrc = form.VideoSrc;
+            UtilColorData.vidTarget = form.VideoTarget;
+        }
+
         private void SelectOcr(object sender, EventArgs e)
         {
             currentTask = RunTask.TaskType.UtilOcr;
@@ -78,6 +106,7 @@ namespace Nmkoder.Forms
             utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsMetricsPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilGetMetrics) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsOcrPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilOcr) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsColorDataPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilColorData) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

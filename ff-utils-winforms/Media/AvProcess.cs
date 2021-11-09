@@ -19,7 +19,6 @@ namespace Nmkoder.Media
     class AvProcess
     {
         public static Process lastAvProcess;
-        public static Stopwatch timeSinceLastOutput = new Stopwatch();
 
         public static string lastOutputAv1an;
         public static string lastTempDirAv1an;
@@ -66,7 +65,7 @@ namespace Nmkoder.Media
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
             Process ffmpeg = OsUtils.NewProcess(!show);
-            timeSinceLastOutput.Restart();
+            NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
             lastAvProcess = ffmpeg;
 
             if (string.IsNullOrWhiteSpace(loglevel))
@@ -84,8 +83,8 @@ namespace Nmkoder.Media
 
             if (!show)
             {
-                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); };
-                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); };
+                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
             }
 
             ffmpeg.Start();
@@ -101,7 +100,7 @@ namespace Nmkoder.Media
             //    await Task.Delay(10);
 
             while (!ffmpeg.HasExited) await Task.Delay(10);
-            while (reliableOutput && timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
+            while (reliableOutput && timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);
@@ -165,7 +164,6 @@ namespace Nmkoder.Media
                 lastTempDirAv1an = tempDir;
                 lastOutputAv1an = "";
                 Process av1an = OsUtils.NewProcess(!show);
-                timeSinceLastOutput.Restart();
                 lastAvProcess = av1an;
 
                 string beforeArgs = $"--temp {tempDir.Wrap()}";
@@ -230,7 +228,7 @@ namespace Nmkoder.Media
 
         #endregion
 
-        #region MKVExtract
+        #region MkvToolNix
 
         public static async Task<string> RunMkvExtract(string args)
         {
@@ -245,8 +243,8 @@ namespace Nmkoder.Media
 
                 Logger.Log($"mkvextract {args}", true, false, "mkvextract");
 
-                mkve.OutputDataReceived += (sender, outLine) => { processOutput += outLine.Data; Logger.Log($"[mkvextract] {outLine.Data}", true, false, "ocr"); };
-                mkve.ErrorDataReceived += (sender, outLine) => { processOutput += outLine.Data; };
+                mkve.OutputDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; Logger.Log($"[mkvextract] {outLine.Data}", true, false, "mkvextract"); };
+                mkve.ErrorDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; };
 
                 mkve.Start();
                 mkve.PriorityClass = ProcessPriorityClass.BelowNormal;
@@ -258,6 +256,70 @@ namespace Nmkoder.Media
             catch(Exception e)
             {
                 Logger.Log($"Error running MkvExtract: {e.Message}");
+            }
+
+            return processOutput;
+        }
+
+        public static async Task<string> RunMkvMerge(string args, bool log = false)
+        {
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            string processOutput = "";
+
+            try
+            {
+                Process mkvm = OsUtils.NewProcess(!show);
+
+                mkvm.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvmerge.exe {args}";
+
+                Logger.Log($"mkvmerge {args}", true, false, "mkvmerge");
+
+                mkvm.OutputDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; Logger.Log($"[mkvmerge] {outLine.Data}", !log, false, "mkvmerge"); };
+                mkvm.ErrorDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; };
+
+                mkvm.Start();
+                mkvm.PriorityClass = ProcessPriorityClass.BelowNormal;
+                mkvm.BeginOutputReadLine();
+                mkvm.BeginErrorReadLine();
+
+                while (!mkvm.HasExited) await Task.Delay(10);
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Error running MkvMerge: {e.Message}");
+            }
+
+            return processOutput;
+        }
+
+        public static async Task<string> RunMkvInfo(string args, bool log = false)
+        {
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            string processOutput = "";
+            NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
+
+            try
+            {
+                Process mkvi = OsUtils.NewProcess(!show);
+
+                mkvi.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvinfo.exe {args}";
+
+                Logger.Log($"mkvinfo {args}", true, false, "mkvinfo");
+
+                mkvi.OutputDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; if(log) Logger.Log($"[mkvinfo] {outLine.Data}", true, false, "ocr"); timeSinceLastOutput.sw.Restart(); };
+                mkvi.ErrorDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; timeSinceLastOutput.sw.Restart(); };
+
+                mkvi.Start();
+                mkvi.PriorityClass = ProcessPriorityClass.BelowNormal;
+                mkvi.BeginOutputReadLine();
+                mkvi.BeginErrorReadLine();
+
+                while (!mkvi.HasExited) await Task.Delay(10);
+                while (timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Error running MkvInfo: {e.Message}");
             }
 
             return processOutput;

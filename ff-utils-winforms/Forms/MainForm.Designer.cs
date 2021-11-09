@@ -172,6 +172,10 @@ namespace Nmkoder.Forms
             this.utilsOcrPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.htButton2 = new HTAlt.WinForms.HTButton();
+            this.utilsColorDataPanel = new System.Windows.Forms.Panel();
+            this.utilsColorDataConfBtn = new HTAlt.WinForms.HTButton();
+            this.label40 = new System.Windows.Forms.Label();
+            this.htButton3 = new HTAlt.WinForms.HTButton();
             this.settingsPage = new Cyotek.Windows.Forms.TabListPage();
             this.htTabControl1 = new HTAlt.WinForms.HTTabControl();
             this.settingsGeneralTab = new System.Windows.Forms.TabPage();
@@ -226,6 +230,7 @@ namespace Nmkoder.Forms
             this.utilsBitratesPanel.SuspendLayout();
             this.utilsMetricsPanel.SuspendLayout();
             this.utilsOcrPanel.SuspendLayout();
+            this.utilsColorDataPanel.SuspendLayout();
             this.settingsPage.SuspendLayout();
             this.htTabControl1.SuspendLayout();
             this.settingsGeneralTab.SuspendLayout();
@@ -1986,6 +1991,7 @@ namespace Nmkoder.Forms
             this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsMetricsPanel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsOcrPanel, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.utilsColorDataPanel, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -2138,6 +2144,67 @@ namespace Nmkoder.Forms
             this.htButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.htButton2.Size = new System.Drawing.Size(87, 65);
             this.htButton2.TabIndex = 0;
+            // 
+            // utilsColorDataPanel
+            // 
+            this.utilsColorDataPanel.Controls.Add(this.utilsColorDataConfBtn);
+            this.utilsColorDataPanel.Controls.Add(this.label40);
+            this.utilsColorDataPanel.Controls.Add(this.htButton3);
+            this.utilsColorDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.utilsColorDataPanel.Location = new System.Drawing.Point(0, 127);
+            this.utilsColorDataPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.utilsColorDataPanel.Name = "utilsColorDataPanel";
+            this.utilsColorDataPanel.Size = new System.Drawing.Size(227, 127);
+            this.utilsColorDataPanel.TabIndex = 6;
+            this.utilsColorDataPanel.Click += new System.EventHandler(this.SelectColorData);
+            // 
+            // utilsColorDataConfBtn
+            // 
+            this.utilsColorDataConfBtn.AutoColor = true;
+            this.utilsColorDataConfBtn.ButtonImage = null;
+            this.utilsColorDataConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.utilsColorDataConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.utilsColorDataConfBtn.DrawImage = false;
+            this.utilsColorDataConfBtn.ForeColor = System.Drawing.Color.White;
+            this.utilsColorDataConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.utilsColorDataConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.utilsColorDataConfBtn.Location = new System.Drawing.Point(50, 100);
+            this.utilsColorDataConfBtn.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.utilsColorDataConfBtn.Name = "utilsColorDataConfBtn";
+            this.utilsColorDataConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.utilsColorDataConfBtn.Size = new System.Drawing.Size(127, 23);
+            this.utilsColorDataConfBtn.TabIndex = 18;
+            this.utilsColorDataConfBtn.Text = "Configure";
+            this.utilsColorDataConfBtn.Click += new System.EventHandler(this.utilsColorDataConfBtn_Click);
+            // 
+            // label40
+            // 
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.White;
+            this.label40.Location = new System.Drawing.Point(4, 4);
+            this.label40.Margin = new System.Windows.Forms.Padding(4);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(219, 20);
+            this.label40.TabIndex = 17;
+            this.label40.Text = "Transfer Color/HDR Metadata";
+            this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // htButton3
+            // 
+            this.htButton3.AutoColor = false;
+            this.htButton3.ButtonImage = global::Nmkoder.Properties.Resources.icon_videocolor;
+            this.htButton3.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.htButton3.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.htButton3.DrawImage = true;
+            this.htButton3.Enabled = false;
+            this.htButton3.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.htButton3.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
+            this.htButton3.Location = new System.Drawing.Point(70, 31);
+            this.htButton3.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
+            this.htButton3.Name = "htButton3";
+            this.htButton3.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.htButton3.Size = new System.Drawing.Size(87, 65);
+            this.htButton3.TabIndex = 0;
             // 
             // settingsPage
             // 
@@ -2467,6 +2534,7 @@ namespace Nmkoder.Forms
             this.utilsBitratesPanel.ResumeLayout(false);
             this.utilsMetricsPanel.ResumeLayout(false);
             this.utilsOcrPanel.ResumeLayout(false);
+            this.utilsColorDataPanel.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.htTabControl1.ResumeLayout(false);
             this.settingsGeneralTab.ResumeLayout(false);
@@ -2643,6 +2711,10 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Panel encAudPerTrackPanel;
         private System.Windows.Forms.ComboBox encAudConfMode;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Panel utilsColorDataPanel;
+        private HTAlt.WinForms.HTButton utilsColorDataConfBtn;
+        private System.Windows.Forms.Label label40;
+        private HTAlt.WinForms.HTButton htButton3;
     }
 }
 

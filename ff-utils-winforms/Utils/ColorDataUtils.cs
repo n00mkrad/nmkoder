@@ -136,20 +136,20 @@ namespace Nmkoder.Utils
                     $"--colour-transfer-characteristics 0:{d.ColorTransfer} " +
                     $"--colour-primaries 0:{d.ColorPrimaries} " +
                     $"--max-luminance 0:{d.LumaMax} " +
-                    $"--min-luminance 0:{d.LumaMin} " +
+                    $"--min-luminance 0:{d.LumaMin} " + 
                     $"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY} " +
                     $"--white-colour-coordinates 0:{d.WhiteX},{d.WhiteY} " +
                     $"{path.Wrap()}";
 
                 await AvProcess.RunMkvMerge(args, true);
 
-                //long filesizeDiff = Math.Abs(new FileInfo(path).Length - new FileInfo(tmpPath).Length);
-                float filesizeFactor = new FileInfo(tmpPath).Length / new FileInfo(path).Length;
-                Logger.Log($"{MethodBase.GetCurrentMethod().DeclaringType}: Filesize ratio of remuxed file against original: {filesizeFactor}");
+                int filesizeDiffKb = (int)((Math.Abs(new FileInfo(path).Length - new FileInfo(tmpPath).Length)) / 1024);
+                double filesizeFactor = (double)(new FileInfo(tmpPath).Length) / (double)(new FileInfo(path).Length);
+                Logger.Log($"{MethodBase.GetCurrentMethod().DeclaringType}: Filesize ratio of remuxed file against original: {filesizeFactor}", true);
 
-                if (filesizeFactor < 0.95f || filesizeFactor > 1.05f)
+                if (filesizeDiffKb > 1024 && (filesizeFactor < 0.95d || filesizeFactor > 1.05d))
                 {
-                    Logger.Log($"Warning: Output file size is not within 5% of the original size! Won't delete original to be sure.");
+                    Logger.Log($"Warning: Output file size differs by >1MB is not within 5% of the original size! Won't delete original to be sure.");
                 }
                 else
                 {

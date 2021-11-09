@@ -31,8 +31,8 @@ namespace Nmkoder.Forms.Utils
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UtilsColorDataForm));
             this.confirmBtn = new System.Windows.Forms.Button();
-            this.encodedVideo = new System.Windows.Forms.ComboBox();
-            this.referenceVideo = new System.Windows.Forms.ComboBox();
+            this.sourceVideo = new System.Windows.Forms.ComboBox();
+            this.targetVideo = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -57,27 +57,27 @@ namespace Nmkoder.Forms.Utils
             // 
             // encodedVideo
             // 
-            this.encodedVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encodedVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.encodedVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.encodedVideo.ForeColor = System.Drawing.Color.White;
-            this.encodedVideo.FormattingEnabled = true;
-            this.encodedVideo.Location = new System.Drawing.Point(150, 12);
-            this.encodedVideo.Name = "encodedVideo";
-            this.encodedVideo.Size = new System.Drawing.Size(222, 21);
-            this.encodedVideo.TabIndex = 58;
+            this.sourceVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.sourceVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sourceVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.sourceVideo.ForeColor = System.Drawing.Color.White;
+            this.sourceVideo.FormattingEnabled = true;
+            this.sourceVideo.Location = new System.Drawing.Point(150, 12);
+            this.sourceVideo.Name = "encodedVideo";
+            this.sourceVideo.Size = new System.Drawing.Size(222, 21);
+            this.sourceVideo.TabIndex = 58;
             // 
             // referenceVideo
             // 
-            this.referenceVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.referenceVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.referenceVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.referenceVideo.ForeColor = System.Drawing.Color.White;
-            this.referenceVideo.FormattingEnabled = true;
-            this.referenceVideo.Location = new System.Drawing.Point(150, 42);
-            this.referenceVideo.Name = "referenceVideo";
-            this.referenceVideo.Size = new System.Drawing.Size(222, 21);
-            this.referenceVideo.TabIndex = 59;
+            this.targetVideo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.targetVideo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.targetVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.targetVideo.ForeColor = System.Drawing.Color.White;
+            this.targetVideo.FormattingEnabled = true;
+            this.targetVideo.Location = new System.Drawing.Point(150, 42);
+            this.targetVideo.Name = "referenceVideo";
+            this.targetVideo.Size = new System.Drawing.Size(222, 21);
+            this.targetVideo.TabIndex = 59;
             // 
             // label23
             // 
@@ -157,8 +157,8 @@ namespace Nmkoder.Forms.Utils
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.referenceVideo);
-            this.Controls.Add(this.encodedVideo);
+            this.Controls.Add(this.targetVideo);
+            this.Controls.Add(this.sourceVideo);
             this.Controls.Add(this.confirmBtn);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -177,8 +177,8 @@ namespace Nmkoder.Forms.Utils
         #endregion
 
         private System.Windows.Forms.Button confirmBtn;
-        private System.Windows.Forms.ComboBox encodedVideo;
-        private System.Windows.Forms.ComboBox referenceVideo;
+        private System.Windows.Forms.ComboBox sourceVideo;
+        private System.Windows.Forms.ComboBox targetVideo;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

@@ -2,6 +2,8 @@
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Main;
+using Nmkoder.UI;
 using Nmkoder.UI.Tasks;
 using System;
 using System.Data;
@@ -18,12 +20,31 @@ namespace Nmkoder.Forms.Utils
         public string VideoSrc { get; set; }
         public string VideoTarget { get; set; }
 
+        private bool batchMode = false;
+        private bool closeRightAway = false;
         ListBox fileList = Program.mainForm.fileListBox;
 
-        public UtilsColorDataForm()
+        public UtilsColorDataForm(bool close = false)
         {
             InitializeComponent();
-            
+            batchMode = RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess;
+            closeRightAway = close || batchMode;
+
+            if (closeRightAway)
+                Opacity = 0;
+
+            if (batchMode)
+            {
+                if(!close)
+                    Logger.Log($"In batch processing mode, this util can only be used to read the metadata! Use the Multi File Mode for transferring.");
+
+                if (TrackList.current == null)
+                {
+                    pressedOk = true;
+                    Close();
+                }
+            }
+
             copyColorSpace.Checked = UtilColorData.copyColorSpace;
             copyHdrData.Checked = UtilColorData.copyHdrData;
             AcceptButton = confirmBtn;
@@ -50,20 +71,35 @@ namespace Nmkoder.Forms.Utils
         {
             ListBox fileList = Program.mainForm.fileListBox;
 
-            foreach(FileListEntry entry in fileList.Items)
+            if (batchMode)
             {
-                encodedVideo.Items.Add(entry.File);
-                referenceVideo.Items.Add(entry.File);
+                if(TrackList.current != null)
+                    sourceVideo.Items.Add(TrackList.current.File);
+            }
+            else
+            {
+                foreach (FileListEntry entry in fileList.Items)
+                {
+                    sourceVideo.Items.Add(entry.File);
+                    targetVideo.Items.Add(entry.File);
+                }
+            }
+            
+            LoadVideoBox(sourceVideo, UtilColorData.vidSrc);
+
+            if (!batchMode && fileList.Items.Count > 1)
+                LoadVideoBox(targetVideo, UtilColorData.vidTarget);
+
+            if (sourceVideo.SelectedIndex < 0 || targetVideo.SelectedIndex < 0)
+            {
+                sourceVideo.SelectedItem = sourceVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).First();
+
+                if (!batchMode && fileList.Items.Count > 1)
+                    targetVideo.SelectedItem = targetVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).Last();
             }
 
-            LoadVideoBox(encodedVideo, UtilGetMetrics.vidLq);
-            LoadVideoBox(referenceVideo, UtilGetMetrics.vidHq);
-
-            if (encodedVideo.SelectedIndex < 0 || referenceVideo.SelectedIndex < 0)
-            {
-                encodedVideo.SelectedItem = encodedVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).Last();
-                referenceVideo.SelectedItem = referenceVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).First();
-            }
+            if (closeRightAway)
+                Close();
         }
 
         bool pressedOk = false;
@@ -72,8 +108,13 @@ namespace Nmkoder.Forms.Utils
         {
             TransferColorSpace = copyColorSpace.Checked;
             TransferHdrData = copyHdrData.Checked;
-            VideoSrc = ((MediaFile)encodedVideo.SelectedItem).TruePath;
-            VideoTarget = ((MediaFile)referenceVideo.SelectedItem).TruePath;
+
+            if(sourceVideo.SelectedItem != null)
+                VideoSrc = ((MediaFile)sourceVideo.SelectedItem).TruePath;
+
+            if (targetVideo.SelectedItem != null)
+                VideoTarget = ((MediaFile)targetVideo.SelectedItem).TruePath;
+
             DialogResult = DialogResult.OK;
             pressedOk = true;
             Close();

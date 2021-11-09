@@ -27,18 +27,18 @@ namespace Nmkoder.Data
         public override string ToString()
         {
             return
-            $"Colour transfer: {ColorTransfer}" +
-            $"\nColour matrix coefficients: {ColorMatrixCoeffs}" +
-            $"\nColour primaries: {ColorPrimaries}" +
-            $"\nColour range: {ColorRange}" +
-            $"\nRed colour coordinate x: {RedX}" +
-            $"\nRed colour coordinate y: {RedY}" +
-            $"\nGreen colour coordinate x: {GreenX}" +
-            $"\nGreen colour coordinate y: {GreenY}" +
-            $"\nBlue colour coordinate y: {BlueX}" +
-            $"\nBlue colour coordinate x: {BlueY}" +
-            $"\nWhite colour coordinate y: {WhiteX}" +
-            $"\nWhite colour coordinate x: {WhiteY}" +
+            $"Color transfer: {ColorTransfer}" +
+            $"\nColor matrix coefficients: {ColorMatrixCoeffs}" +
+            $"\nColor primaries: {ColorPrimaries}" +
+            $"\nColor range: {ColorRange}" +
+            $"\nRed color coordinate x: {RedX}" +
+            $"\nRed color coordinate y: {RedY}" +
+            $"\nGreen color coordinate x: {GreenX}" +
+            $"\nGreen color coordinate y: {GreenY}" +
+            $"\nBlue color coordinate y: {BlueX}" +
+            $"\nBlue color coordinate x: {BlueY}" +
+            $"\nWhite color coordinate y: {WhiteX}" +
+            $"\nWhite color coordinate x: {WhiteY}" +
             $"\nMaximum luminance: {LumaMax}" +
             $"\nMinimum luminance: {LumaMin}";
         }

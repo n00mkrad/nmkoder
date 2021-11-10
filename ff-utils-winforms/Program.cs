@@ -51,10 +51,12 @@ namespace Nmkoder
                 {
                     string[] split = dir.Name.Split('-');
                     int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
-                    Logger.Log($"Cleanup: Log folder {dir.Name} is {daysOld} days old - Will {(daysOld <= keepLogsDays ? "Keep" : "Delete")}", true);
 
                     if (daysOld > keepLogsDays || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep logs for 4 days
-                        dir.Delete(true);
+                    {
+                        Logger.Log($"Cleanup: Log folder {dir.Name} is {daysOld} days old - Will Delete", true);
+                        IoUtils.TryDeleteIfExists(dir.FullName);
+                    }
                 }
 
                 IoUtils.DeleteContentsOfDir(Paths.GetSessionDataPath()); // Clear this session's temp files...
@@ -63,10 +65,12 @@ namespace Nmkoder
                 {
                     string[] split = dir.Name.Split('-');
                     int daysOld = (DateTime.Now - new DateTime(split[0].GetInt(), split[1].GetInt(), split[2].GetInt())).Days;
-                    Logger.Log($"Cleanup: Log folder {dir.Name} is {daysOld} days old - Will {(daysOld <= keepSessionDataDays ? "Keep" : "Delete")}", true);
 
                     if (daysOld > keepSessionDataDays || dir.GetFiles("*", SearchOption.AllDirectories).Length < 1) // keep temp files for 2 days
-                        dir.Delete(true);
+                    {
+                        Logger.Log($"Cleanup: Session folder {dir.Name} is {daysOld} days old - Will Delete", true);
+                        IoUtils.TryDeleteIfExists(dir.FullName);
+                    }
                 }
 
                 foreach (string file in IoUtils.GetFilesSorted(Paths.GetBinPath(), true, "*.log*"))

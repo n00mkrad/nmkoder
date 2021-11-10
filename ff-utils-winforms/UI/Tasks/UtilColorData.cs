@@ -39,22 +39,7 @@ namespace Nmkoder.UI.Tasks
                 {
                     Logger.Log($"Only one file loaded - Will only print metadata for {Path.GetFileName(vidSrc)}.");
                     VideoColorData d = await ColorDataUtils.GetColorData(vidSrc);
-                    List<string> lines = new List<string>();
-                    if (!string.IsNullOrWhiteSpace(d.ColorTransfer)) lines.Add($"Color transfer: {d.ColorTransfer}");
-                    if (!string.IsNullOrWhiteSpace(d.ColorMatrixCoeffs)) lines.Add($"Colour matrix coefficients: {d.ColorMatrixCoeffs}");
-                    if (!string.IsNullOrWhiteSpace(d.ColorMatrixCoeffs)) lines.Add($"Colour primaries: {d.ColorPrimaries}");
-                    if (!string.IsNullOrWhiteSpace(d.ColorRange)) lines.Add($"Colour range: {d.ColorRange}");
-                    if (!string.IsNullOrWhiteSpace(d.RedX) && !string.IsNullOrWhiteSpace(d.RedY)) lines.Add($"Red color coordinates X/Y: {d.RedX}/{d.RedY}");
-                    if (!string.IsNullOrWhiteSpace(d.GreenX) && !string.IsNullOrWhiteSpace(d.GreenY)) lines.Add($"Green color coordinates X/Y: {d.GreenX}/{d.GreenY}");
-                    if (!string.IsNullOrWhiteSpace(d.BlueX) && !string.IsNullOrWhiteSpace(d.BlueY)) lines.Add($"Blue color coordinates X/Y: {d.BlueX}/{d.BlueY}");
-                    if (!string.IsNullOrWhiteSpace(d.WhiteX) && !string.IsNullOrWhiteSpace(d.WhiteY)) lines.Add($"White color coordinates X/Y: {d.WhiteX}/{d.WhiteY}");
-                    if (!string.IsNullOrWhiteSpace(d.LumaMin)) lines.Add($"Minimum luminance: { d.LumaMin}");
-                    if (!string.IsNullOrWhiteSpace(d.LumaMax)) lines.Add($"Maximum luminance: { d.LumaMax}");
-
-                    if (lines.Count > 0)
-                        Logger.Log(string.Join("\n", lines));
-                    else
-                        Logger.Log($"No metadata found.");
+                    Logger.Log(d.ToString());
                 }
                 else
                 {

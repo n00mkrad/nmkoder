@@ -71,10 +71,21 @@ namespace Nmkoder.IO
             WriteConfig();
         }
 
-        private static void WriteConfig()
+        private static async Task WriteConfig(int tries = 5)
         {
-            SortedDictionary<string, string> cachedValuesSorted = new SortedDictionary<string, string>(cachedValues);
-            File.WriteAllText(configPath, JsonConvert.SerializeObject(cachedValuesSorted, Formatting.Indented));
+            try
+            {
+                File.WriteAllText(configPath, JsonConvert.SerializeObject(new SortedDictionary<string, string>(cachedValues), Formatting.Indented));
+            }
+            catch
+            {
+                if (tries > 0)
+                {
+                    Logger.Log($"Failed to write config. Retrying ({tries} tries left)", true);
+                    await Task.Delay(200);
+                    await WriteConfig(tries - 1);
+                }
+            }
         }
 
         private static void Reload()

@@ -259,6 +259,7 @@
     <Compile Include="Data\Codecs\Audio\Flac.cs" />
     <Compile Include="Data\Codecs\Audio\Mp3.cs" />
     <Compile Include="Data\Codecs\Audio\Opus.cs" />
+    <Compile Include="Data\Codecs\Audio\Vorbis.cs" />
     <Compile Include="Data\Codecs\IEncoder.cs" />
     <Compile Include="Data\Codecs\Audio\StripAudio.cs" />
     <Compile Include="Data\Codecs\Subs\MovText.cs" />

@@ -36,10 +36,10 @@ namespace Nmkoder.Data
                 return new AC[] { AC.Aac, AC.Mp3 };
 
             if (c == Container.Mkv)
-                return new AC[] { AC.Aac, AC.Opus, AC.Mp3, AC.Flac };
+                return new AC[] { AC.Aac, AC.Opus, AC.Vorbis, AC.Mp3, AC.Flac };
 
             if (c == Container.Webm)
-                return new AC[] { AC.Opus };
+                return new AC[] { AC.Opus, AC.Vorbis };
 
             if (c == Container.Mov)
                 return new AC[] { AC.Aac, AC.Mp3 };
@@ -48,7 +48,7 @@ namespace Nmkoder.Data
                 return new AC[] { AC.Aac };
 
             if (c == Container.Ogg)
-                return new AC[] { AC.Opus };
+                return new AC[] { AC.Opus, AC.Vorbis };
 
             return new AC[0];
         }

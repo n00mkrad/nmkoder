@@ -20,7 +20,7 @@ namespace Nmkoder.Data
 
         public enum Av1anCodec { AomAv1, SvtAv1, Vpx, X265 };
         public enum VideoCodec { CopyVideo, StripVideo, Libx264, Libx265, H264Nvenc, H265Nvenc, LibVpx, LibSvtAv1, Gif, Png, Jpg };
-        public enum AudioCodec { CopyAudio, StripAudio, Aac, Opus, Mp3, Flac };
+        public enum AudioCodec { CopyAudio, StripAudio, Aac, Opus, Vorbis, Mp3, Flac };
         public enum SubtitleCodec { CopySubs, StripSubs, MovText, Srt, WebVtt };
 
         public static IEncoder GetCodec(VideoCodec c)
@@ -54,6 +54,7 @@ namespace Nmkoder.Data
             if (c == AudioCodec.CopyAudio) return new CopyAudio();
             if (c == AudioCodec.Aac) return new Aac();
             if (c == AudioCodec.Opus) return new Opus();
+            if (c == AudioCodec.Vorbis) return new Vorbis();
             if (c == AudioCodec.Mp3) return new Mp3();
             if (c == AudioCodec.Flac) return new Flac();
             return null;

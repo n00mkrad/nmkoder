@@ -116,7 +116,7 @@ namespace Nmkoder.UI.Tasks
 
         static bool ReplaceLastLine ()
         {
-            return (new[] { "...", FfmpegOutputHandler.prefix }).Any(c => Logger.GetLastLine().Contains(c));
+            return (new[] { "...", FfmpegOutputHandler.prefix }).Any(c => Logger.LastLine.Contains(c));
         }
 
         private static async Task<string> GetAlignFilters ()

@@ -39,7 +39,7 @@ namespace Nmkoder.Media
             Logger.Log($"ConcatVideos('{Path.GetFileName(concatFile)}', '{outPath}', {looptimes})", true, false, "ffmpeg");
 
             if(showLog)
-                Logger.Log($"Merging videos...", false, Logger.GetLastLine().Contains("frame"));
+                Logger.Log($"Merging videos...", false, Logger.LastLine.Contains("frame"));
 
             IoUtils.RenameExistingFile(outPath);
             string loopStr = (looptimes > 0) ? $"-stream_loop {looptimes}" : "";

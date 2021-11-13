@@ -19,6 +19,8 @@ namespace Nmkoder.IO
         public const string defaultLogName = "sessionlog";
         public static long id;
 
+        public static string LastLine { get { return GetLastLine(); } }
+
         public struct LogEntry
         {
             public string logMessage;
@@ -147,11 +149,13 @@ namespace Nmkoder.IO
             textbox.Text = "";
         }
 
-        public static string GetLastLine()
+        private static string GetLastLine()
         {
             string[] lines = textbox.Text.SplitIntoLines();
+
             if (lines.Length < 1)
                 return "";
+
             return lines.Last();
         }
 

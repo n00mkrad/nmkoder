@@ -96,7 +96,7 @@ namespace Nmkoder.Media
 
                 if (!hidden)
                 {
-                    Logger.Log($"Running Optical Character Recognition: {percent}%", false, Logger.GetLastLine().EndsWith("%"));
+                    Logger.Log($"Running Optical Character Recognition: {percent}%", false, Logger.LastLine.EndsWith("%"));
                     Program.mainForm.SetProgress(percent);
                 }
 

@@ -274,8 +274,17 @@ namespace Nmkoder.Media
 
                 Logger.Log($"mkvmerge {args}", true, false, "mkvmerge");
 
-                mkvm.OutputDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; Logger.Log($"[mkvmerge] {outLine.Data}", !log, false, "mkvmerge"); };
-                mkvm.ErrorDataReceived += (sender, outLine) => { processOutput += Environment.NewLine + outLine.Data; };
+                mkvm.OutputDataReceived += (sender, outLine) => {
+                    string s = (outLine != null && outLine.Data != null) ? outLine.Data : "";
+                    processOutput += Environment.NewLine + s;
+                    Logger.Log($"[mkvmerge] {s}", !log || s.Trim().Length < 1, Logger.LastLine.Trim().EndsWith("%"), "mkvmerge");
+                };
+
+                mkvm.ErrorDataReceived += (sender, outLine) => {
+                    string s = (outLine != null && outLine.Data != null) ? outLine.Data : "";
+                    processOutput += Environment.NewLine + s;
+                    Logger.Log($"[mkvmerge] [E] {s}", !log || s.Trim().Length < 1, false, "mkvmerge");
+                };
 
                 mkvm.Start();
                 mkvm.PriorityClass = ProcessPriorityClass.BelowNormal;

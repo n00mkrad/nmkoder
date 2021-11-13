@@ -203,7 +203,7 @@ namespace Nmkoder.Media
             string chosen = commonCertainty > 85 ? mostCommon : largest; // Use most common if it's >85% common, otherwise use largest to be safe (thanks Nolan)
             Logger.Log($"GetCurrentAutoCrop - Largest: {largest} - Smallest: {detectedCrops.Last()} - Most Common: {mostCommon} ({commonCertainty}%) - Chosen: {chosen} [T = {sw}]", true);
             string[] cropVals = chosen.Split(':');
-            bool repl = Logger.GetLastLine().Contains(msg);
+            bool repl = Logger.LastLine.Contains(msg);
             Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]})", quiet, !quiet && repl);
 
             return $"crop={chosen}";

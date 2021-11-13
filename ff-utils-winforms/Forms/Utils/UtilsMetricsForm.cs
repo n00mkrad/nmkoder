@@ -24,16 +24,24 @@ namespace Nmkoder.Forms.Utils
         public string VideoLq { get; set; }
         public string VideoHq { get; set; }
 
+        private bool closeRightAway = false;
+
         ListBox fileList = Program.mainForm.fileListBox;
 
-        public UtilsMetricsForm()
+        public UtilsMetricsForm(bool close = false)
         {
             InitializeComponent();
-            
+
+            closeRightAway = close;
+
+            if (closeRightAway)
+                Opacity = 0;
+
             vmaf.Checked = UtilGetMetrics.runVmaf;
             ssim.Checked = UtilGetMetrics.runSsim;
             psnr.Checked = UtilGetMetrics.runPsnr;
             align.SelectedIndex = UtilGetMetrics.alignMode;
+            subsample.SelectedIndex = (UtilGetMetrics.subsample - 1).Clamp(0, 64);
             vmafMdl.SelectedIndex = UtilGetMetrics.vmafModel;
             AcceptButton = confirmBtn;
         }
@@ -52,8 +60,7 @@ namespace Nmkoder.Forms.Utils
 
         private void UtilsMetricsForm_Load(object sender, EventArgs e)
         {
-            align.SelectedIndex = UtilGetMetrics.alignMode;
-            subsample.SelectedIndex = (UtilGetMetrics.subsample - 1).Clamp(0, 64);
+            
         }
 
         private void UtilsMetricsForm_Shown(object sender, EventArgs e)
@@ -74,6 +81,9 @@ namespace Nmkoder.Forms.Utils
                 encodedVideo.SelectedItem = encodedVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).Last();
                 referenceVideo.SelectedItem = referenceVideo.Items.OfType<MediaFile>().OrderByDescending(x => x.Size).First();
             }
+
+            if (closeRightAway)
+                Close();
         }
 
         bool pressedOk = false;

@@ -158,7 +158,7 @@ namespace Nmkoder.Utils
 
                 if (filesizeDiffKb > 1024 && (filesizeFactor < 0.95d || filesizeFactor > 1.05d))
                 {
-                    Logger.Log($"Warning: Output file size differs by >1MB is not within 5% of the original size! Won't delete original to be sure.");
+                    Logger.Log($"Warning: Output file size differs by >1MB is not within 5% of the original file's size! Won't delete original to be sure.");
                 }
                 else
                 {

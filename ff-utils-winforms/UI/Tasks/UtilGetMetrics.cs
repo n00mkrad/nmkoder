@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
+using Nmkoder.Forms.Utils;
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.Media;
@@ -34,10 +35,15 @@ namespace Nmkoder.UI.Tasks
             }
 
             Program.mainForm.SetWorking(true);
-            Logger.Log($"Getting metrics for {Path.GetFileName(vidLq)} compared against {Path.GetFileName(vidHq)}.");
 
             try
             {
+                UtilsMetricsForm form = new UtilsMetricsForm(true);
+                form.ShowDialog();
+                Program.mainForm.SetMetricsVarsFromForm(form);
+
+                Logger.Log($"Getting metrics for {Path.GetFileName(vidLq)} compared against {Path.GetFileName(vidHq)}.");
+
                 string r = fixRate ? "-r 24" : "";
                 string f = await GetAlignFilters();
                 FfmpegOutputHandler.overrideTargetDurationMs = FfmpegCommands.GetDurationMs(vidLq);

@@ -33,7 +33,7 @@ namespace Nmkoder.UI.Tasks
             {
                 UtilsColorDataForm form = new UtilsColorDataForm(true);
                 form.ShowDialog();
-                Program.mainForm.SetColorDataFormVars(form);
+                Program.mainForm.SetColorDataVarsFromForm(form);
 
                 if (!File.Exists(vidTarget))
                 {

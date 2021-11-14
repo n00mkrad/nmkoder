@@ -24,25 +24,11 @@ namespace Nmkoder.Data
         public string WhiteY { get; set; } = "";
         public string LumaMin { get; set; } = "";
         public string LumaMax { get; set; } = "";
+        public string MaxCll { get; set; } = "";
+        public string MaxFall { get; set; } = "";
 
         public override string ToString()
         {
-            //return
-            //$"Color transfer: {ColorTransfer}" +
-            //$"\nColor matrix coefficients: {ColorMatrixCoeffs}" +
-            //$"\nColor primaries: {ColorPrimaries}" +
-            //$"\nColor range: {ColorRange}" +
-            //$"\nRed color coordinate x: {RedX}" +
-            //$"\nRed color coordinate y: {RedY}" +
-            //$"\nGreen color coordinate x: {GreenX}" +
-            //$"\nGreen color coordinate y: {GreenY}" +
-            //$"\nBlue color coordinate y: {BlueX}" +
-            //$"\nBlue color coordinate x: {BlueY}" +
-            //$"\nWhite color coordinate y: {WhiteX}" +
-            //$"\nWhite color coordinate x: {WhiteY}" +
-            //$"\nMaximum luminance: {LumaMax}" +
-            //$"\nMinimum luminance: {LumaMin}";
-
             List<string> lines = new List<string>();
 
             try
@@ -57,6 +43,8 @@ namespace Nmkoder.Data
                 if (!string.IsNullOrWhiteSpace(WhiteX) && !string.IsNullOrWhiteSpace(WhiteY)) lines.Add($"White color coordinates X/Y: {WhiteX}/{WhiteY}");
                 if (!string.IsNullOrWhiteSpace(LumaMin)) lines.Add($"Minimum luminance: {LumaMin}");
                 if (!string.IsNullOrWhiteSpace(LumaMax)) lines.Add($"Maximum luminance: {LumaMax}");
+                if (!string.IsNullOrWhiteSpace(MaxCll)) lines.Add($"Maximum Content Light Level: {MaxCll}");
+                if (!string.IsNullOrWhiteSpace(MaxFall)) lines.Add($"Maximum Frame-Average Light Level: {MaxFall}");
             }
             catch { }
 

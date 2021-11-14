@@ -66,6 +66,12 @@ namespace Nmkoder.Utils
 
                 else if (line.Contains("min_luminance="))
                     data.LumaMin = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
+
+                else if (line.Contains("max_content="))
+                    data.MaxCll = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
+
+                else if (line.Contains("max_average="))
+                    data.MaxFall = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
             }
 
             string infoMkvinfo = await AvProcess.RunMkvInfo($"{path.Wrap()}");
@@ -117,6 +123,12 @@ namespace Nmkoder.Utils
 
                     else if (line.Contains("+ Minimum luminance:"))
                         data.LumaMin = ValidateNumber(line.Split(':')[1]);
+
+                    else if (line.Contains("+ Maximum content light:"))
+                        data.MaxCll = ValidateNumber(line.Split(':')[1]);
+
+                    else if (line.Contains("+ Maximum frame light:"))
+                        data.MaxFall = ValidateNumber(line.Split(':')[1]);
                 }
             }
 
@@ -147,7 +159,8 @@ namespace Nmkoder.Utils
                     $"--max-luminance 0:{d.LumaMax} " +
                     $"--min-luminance 0:{d.LumaMin} " +
                     $"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY} " +
-                    $"--white-colour-coordinates 0:{d.WhiteX},{d.WhiteY} " +
+                    $"--max-content-light 0:{d.MaxCll} " +
+                    $"--max-frame-light 0:{d.MaxFall} " +
                     $"{path.Wrap()}";
 
                 await AvProcess.RunMkvMerge(args, true);

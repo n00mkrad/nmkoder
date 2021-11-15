@@ -37,7 +37,7 @@ namespace Nmkoder.Data.Codecs
             string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
             string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-columns=", "--tile-rows=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-min-dist=12 --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain} {tiles} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-min-dist=12 --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain} {tiles} {cust} --enable-keyframe-filtering=0 \" --pix-format {pixFmt}");
         }
     }
 }

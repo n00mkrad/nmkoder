@@ -1,8 +1,6 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.IO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Nmkoder.Data.Codecs
 {

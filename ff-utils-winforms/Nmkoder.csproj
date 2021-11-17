@@ -268,6 +268,7 @@
     <Compile Include="Data\Codecs\Subs\CopySubs.cs" />
     <Compile Include="Data\Codecs\Subs\WebVtt.cs" />
     <Compile Include="Data\Codecs\Video\AomAv1.cs" />
+    <Compile Include="Data\Codecs\Video\LibAomAv1.cs" />
     <Compile Include="Data\Codecs\Video\LibSvtAv1.cs" />
     <Compile Include="Data\Codecs\Video\CopyVideo.cs" />
     <Compile Include="Data\Codecs\Video\Gif.cs" />

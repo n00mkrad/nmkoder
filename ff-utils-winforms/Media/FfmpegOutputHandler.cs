@@ -40,6 +40,13 @@ namespace Nmkoder.Media
                 UpdateFfmpegProgress(timeRegex.Match(line).Value);
             }
 
+
+            if (line.Contains("Unable to"))
+            {
+                RunTask.Cancel($"Error: {line}");
+                return;
+            }
+
             if (line.Contains("Could not open file"))
             {
                 RunTask.Cancel($"Error: {line}");

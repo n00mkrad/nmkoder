@@ -16,13 +16,13 @@ namespace Nmkoder.Data
         public static VC[] GetSupportedVideoCodecs (Container c)
         {
             if (c == Container.Mp4)
-                return new VC[] { VC.Libx264, VC.Libx265, VC.H264Nvenc, VC.H265Nvenc, VC.LibSvtAv1 };
+                return new VC[] { VC.Libx264, VC.Libx265, VC.H264Nvenc, VC.H265Nvenc, VC.LibSvtAv1, VC.LibAomAv1 };
 
             if (c == Container.Mkv)
-                return new VC[] { VC.Libx264, VC.Libx265, VC.H264Nvenc, VC.H265Nvenc, VC.LibVpx, VC.LibSvtAv1, VC.Png, VC.Jpg };
+                return new VC[] { VC.Libx264, VC.Libx265, VC.H264Nvenc, VC.H265Nvenc, VC.LibVpx, VC.LibSvtAv1, VC.LibAomAv1, VC.Png, VC.Jpg };
 
             if (c == Container.Webm)
-                return new VC[] { VC.LibVpx, VC.LibSvtAv1 };
+                return new VC[] { VC.LibVpx, VC.LibSvtAv1, VC.LibAomAv1 };
 
             if (c == Container.Mov)
                 return new VC[] { VC.Libx264, VC.Libx265, VC.H264Nvenc, VC.H265Nvenc };

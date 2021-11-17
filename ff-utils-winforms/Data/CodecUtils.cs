@@ -19,7 +19,7 @@ namespace Nmkoder.Data
         //public enum CodecType { Video, AnimImage, Image, Audio }
 
         public enum Av1anCodec { AomAv1, SvtAv1, Vpx, X265 };
-        public enum VideoCodec { CopyVideo, StripVideo, Libx264, Libx265, H264Nvenc, H265Nvenc, LibVpx, LibSvtAv1, Gif, Png, Jpg };
+        public enum VideoCodec { CopyVideo, StripVideo, Libx264, Libx265, H264Nvenc, H265Nvenc, LibVpx, LibSvtAv1, LibAomAv1, Gif, Png, Jpg };
         public enum AudioCodec { CopyAudio, StripAudio, Aac, Opus, Vorbis, Mp3, Flac };
         public enum SubtitleCodec { CopySubs, StripSubs, MovText, Srt, WebVtt };
 
@@ -33,6 +33,7 @@ namespace Nmkoder.Data
             if (c == VideoCodec.H265Nvenc) return new H265Nvenc();
             if (c == VideoCodec.LibVpx) return new LibVpx();
             if (c == VideoCodec.LibSvtAv1) return new LibSvtAv1();
+            if (c == VideoCodec.LibAomAv1) return new LibAomAv1();
             if (c == VideoCodec.Gif) return new Gif();
             if (c == VideoCodec.Png) return new Png();
             if (c == VideoCodec.Jpg) return new Jpg();

@@ -41,11 +41,12 @@ namespace Nmkoder.UI.Tasks
                 string vf = await GetVideoFilterArgs(codecArgs);
                 string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
                 string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
-                string sm = GetSplittingMethod();
-                string cm = GetChunkGenMethod();
+                string s = GetSplittingMethod();
+                string m = GetChunkGenMethod();
+                string c = GetConcatMethod();
                 IoUtils.TryDeleteIfExists(outPath);
 
-                args = $"-i {inPath.Wrap()} --verbose --keep --split-method {sm} -m {cm} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                args = $"-i {inPath.Wrap()} --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                 if (vmaf)
                 {

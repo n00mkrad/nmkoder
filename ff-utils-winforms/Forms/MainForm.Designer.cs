@@ -198,6 +198,8 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
+            this.label41 = new System.Windows.Forms.Label();
+            this.av1anOptsConcatMode = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -1848,6 +1850,8 @@ namespace Nmkoder.Forms
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage5.Controls.Add(this.av1anOptsConcatMode);
+            this.tabPage5.Controls.Add(this.label41);
             this.tabPage5.Controls.Add(this.label8);
             this.tabPage5.Controls.Add(this.av1anOptsWorkerCount);
             this.tabPage5.Controls.Add(this.av1anCustomArgs);
@@ -1867,7 +1871,7 @@ namespace Nmkoder.Forms
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(5, 100);
+            this.label8.Location = new System.Drawing.Point(5, 130);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(111, 15);
@@ -1878,7 +1882,7 @@ namespace Nmkoder.Forms
             // 
             this.av1anOptsWorkerCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anOptsWorkerCount.ForeColor = System.Drawing.Color.White;
-            this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 70);
+            this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 100);
             this.av1anOptsWorkerCount.Maximum = new decimal(new int[] {
             24,
             0,
@@ -1905,7 +1909,7 @@ namespace Nmkoder.Forms
             this.av1anCustomArgs.AllowDrop = true;
             this.av1anCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 97);
+            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 127);
             this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomArgs.Name = "av1anCustomArgs";
             this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
@@ -1915,7 +1919,7 @@ namespace Nmkoder.Forms
             // 
             this.label35.AutoSize = true;
             this.label35.ForeColor = System.Drawing.Color.White;
-            this.label35.Location = new System.Drawing.Point(7, 70);
+            this.label35.Location = new System.Drawing.Point(7, 100);
             this.label35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(113, 15);
@@ -2467,6 +2471,33 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.ForeColor = System.Drawing.Color.White;
+            this.label41.Location = new System.Drawing.Point(5, 70);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(135, 15);
+            this.label41.TabIndex = 58;
+            this.label41.Text = "Chunk Merging Method";
+            // 
+            // av1anOptsConcatMode
+            // 
+            this.av1anOptsConcatMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsConcatMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsConcatMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsConcatMode.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsConcatMode.FormattingEnabled = true;
+            this.av1anOptsConcatMode.Items.AddRange(new object[] {
+            "ffmpeg",
+            "mkvmerge"});
+            this.av1anOptsConcatMode.Location = new System.Drawing.Point(220, 67);
+            this.av1anOptsConcatMode.Name = "av1anOptsConcatMode";
+            this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsConcatMode.TabIndex = 59;
+            this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk generation method. If you are unsure, use lsmash.");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2715,6 +2746,8 @@ namespace Nmkoder.Forms
         private HTAlt.WinForms.HTButton utilsColorDataConfBtn;
         private System.Windows.Forms.Label label40;
         private HTAlt.WinForms.HTButton htButton3;
+        private System.Windows.Forms.ComboBox av1anOptsConcatMode;
+        private System.Windows.Forms.Label label41;
     }
 }
 

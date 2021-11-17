@@ -269,6 +269,11 @@ namespace Nmkoder.UI.Tasks
             // return "";
         }
 
+        public static string GetConcatMethod()
+        {
+            return form.av1anOptsConcatModeBox.Text.ToLower().Trim();
+        }
+
         public static string GetOutPath()
         {
             return form.av1anOutputPathBox.Text.Trim();

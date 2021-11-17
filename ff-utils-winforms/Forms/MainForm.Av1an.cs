@@ -39,6 +39,7 @@ namespace Nmkoder.Forms
 
         public ComboBox av1anOptsSplitModeBox { get { return av1anOptsSplitMode; } }
         public ComboBox av1anOptsChunkModeBox { get { return av1anOptsChunkMode; } }
+        public ComboBox av1anOptsConcatModeBox { get { return av1anOptsConcatMode; } }
         public NumericUpDown av1anOptsWorkerCountUpDown { get { return av1anOptsWorkerCount; } }
 
         public void InitAv1an ()
@@ -81,6 +82,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(av1anCodec);
             ConfigParser.LoadComboxIndex(av1anAudCodec);
             ConfigParser.LoadComboxIndex(av1anOptsChunkMode);
+            ConfigParser.LoadComboxIndex(av1anOptsConcatMode);
             ConfigParser.LoadGuiElement(av1anOptsWorkerCount, false);
         }
 
@@ -93,6 +95,7 @@ namespace Nmkoder.Forms
             ConfigParser.SaveComboxIndex(av1anCodec);
             ConfigParser.SaveComboxIndex(av1anAudCodec);
             ConfigParser.SaveComboxIndex(av1anOptsChunkMode);
+            ConfigParser.SaveComboxIndex(av1anOptsConcatMode);
             ConfigParser.SaveGuiElement(av1anOptsWorkerCount);
         }
 

@@ -152,6 +152,10 @@ namespace Nmkoder.Forms
             this.label28 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.av1anResumeBtn = new HTAlt.WinForms.HTButton();
+            this.label42 = new System.Windows.Forms.Label();
+            this.av1anOptsConcatMode = new System.Windows.Forms.ComboBox();
+            this.label41 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.av1anOptsWorkerCount = new System.Windows.Forms.NumericUpDown();
             this.av1anCustomArgs = new System.Windows.Forms.TextBox();
@@ -198,8 +202,6 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
-            this.label41 = new System.Windows.Forms.Label();
-            this.av1anOptsConcatMode = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -1850,6 +1852,8 @@ namespace Nmkoder.Forms
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage5.Controls.Add(this.av1anResumeBtn);
+            this.tabPage5.Controls.Add(this.label42);
             this.tabPage5.Controls.Add(this.av1anOptsConcatMode);
             this.tabPage5.Controls.Add(this.label41);
             this.tabPage5.Controls.Add(this.label8);
@@ -1866,6 +1870,62 @@ namespace Nmkoder.Forms
             this.tabPage5.Size = new System.Drawing.Size(668, 318);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Av1an Options";
+            // 
+            // av1anResumeBtn
+            // 
+            this.av1anResumeBtn.AutoColor = true;
+            this.av1anResumeBtn.ButtonImage = null;
+            this.av1anResumeBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.av1anResumeBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.av1anResumeBtn.DrawImage = false;
+            this.av1anResumeBtn.ForeColor = System.Drawing.Color.White;
+            this.av1anResumeBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.av1anResumeBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.av1anResumeBtn.Location = new System.Drawing.Point(220, 156);
+            this.av1anResumeBtn.Name = "av1anResumeBtn";
+            this.av1anResumeBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.av1anResumeBtn.Size = new System.Drawing.Size(250, 23);
+            this.av1anResumeBtn.TabIndex = 61;
+            this.av1anResumeBtn.Text = "Select Encode To Resume";
+            this.av1anResumeBtn.Click += new System.EventHandler(this.av1anResumeBtn_Click);
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.ForeColor = System.Drawing.Color.White;
+            this.label42.Location = new System.Drawing.Point(5, 160);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(91, 15);
+            this.label42.TabIndex = 60;
+            this.label42.Text = "Resume Encode";
+            // 
+            // av1anOptsConcatMode
+            // 
+            this.av1anOptsConcatMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsConcatMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsConcatMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsConcatMode.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsConcatMode.FormattingEnabled = true;
+            this.av1anOptsConcatMode.Items.AddRange(new object[] {
+            "ffmpeg",
+            "mkvmerge"});
+            this.av1anOptsConcatMode.Location = new System.Drawing.Point(220, 67);
+            this.av1anOptsConcatMode.Name = "av1anOptsConcatMode";
+            this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsConcatMode.TabIndex = 59;
+            this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk generation method. If you are unsure, use lsmash.");
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.ForeColor = System.Drawing.Color.White;
+            this.label41.Location = new System.Drawing.Point(5, 70);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(135, 15);
+            this.label41.TabIndex = 58;
+            this.label41.Text = "Chunk Merging Method";
             // 
             // label8
             // 
@@ -2471,33 +2531,6 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.ForeColor = System.Drawing.Color.White;
-            this.label41.Location = new System.Drawing.Point(5, 70);
-            this.label41.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(135, 15);
-            this.label41.TabIndex = 58;
-            this.label41.Text = "Chunk Merging Method";
-            // 
-            // av1anOptsConcatMode
-            // 
-            this.av1anOptsConcatMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anOptsConcatMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.av1anOptsConcatMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.av1anOptsConcatMode.ForeColor = System.Drawing.Color.White;
-            this.av1anOptsConcatMode.FormattingEnabled = true;
-            this.av1anOptsConcatMode.Items.AddRange(new object[] {
-            "ffmpeg",
-            "mkvmerge"});
-            this.av1anOptsConcatMode.Location = new System.Drawing.Point(220, 67);
-            this.av1anOptsConcatMode.Name = "av1anOptsConcatMode";
-            this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 23);
-            this.av1anOptsConcatMode.TabIndex = 59;
-            this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk generation method. If you are unsure, use lsmash.");
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2748,6 +2781,8 @@ namespace Nmkoder.Forms
         private HTAlt.WinForms.HTButton htButton3;
         private System.Windows.Forms.ComboBox av1anOptsConcatMode;
         private System.Windows.Forms.Label label41;
+        private HTAlt.WinForms.HTButton av1anResumeBtn;
+        private System.Windows.Forms.Label label42;
     }
 }
 

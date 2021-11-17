@@ -6,6 +6,7 @@ using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace Nmkoder.Forms
         public ComboBox av1anOptsConcatModeBox { get { return av1anOptsConcatMode; } }
         public NumericUpDown av1anOptsWorkerCountUpDown { get { return av1anOptsWorkerCount; } }
 
-        public void InitAv1an ()
+        public void InitAv1an()
         {
             av1anAudChannels.SelectedIndex = 1;
             av1anCrop.SelectedIndex = 0;
@@ -76,7 +77,7 @@ namespace Nmkoder.Forms
             QuickConvertUi.ValidateContainer();
         }
 
-        public void LoadConfigAv1an ()
+        public void LoadConfigAv1an()
         {
             ConfigParser.LoadComboxIndex(av1anContainer);
             ConfigParser.LoadComboxIndex(av1anCodec);
@@ -86,7 +87,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadGuiElement(av1anOptsWorkerCount, false);
         }
 
-        public void SaveConfigAv1an (object sender = null, EventArgs e = null)
+        public void SaveConfigAv1an(object sender = null, EventArgs e = null)
         {
             if (!initialized)
                 return;
@@ -103,6 +104,39 @@ namespace Nmkoder.Forms
         {
             SaveConfigAv1an();
             Av1anUi.AudEncoderSelected(av1anAudCodec.SelectedIndex);
+        }
+
+        private void av1anResumeBtn_Click(object sender, EventArgs e)
+        {
+            Av1anResumeForm form = new Av1anResumeForm();
+            form.ShowDialog();
+
+            if (form.ChosenEntry == null)
+                return;
+
+            if (form.Resume)
+            {
+                if (form.ChosenEntry.jsonInfo == null)
+                {
+                    Logger.Log($"Cannot resume - Failed to load info from JSON.");
+                    return;
+                }
+
+                if (form.ChosenEntry.InputFile == null || !File.Exists(form.ChosenEntry.InputFile.FullName))
+                {
+                    Logger.Log($"Cannot resume - Input file doesn't seem to exists at '{form.ChosenEntry.InputFile}'.");
+                    return;
+                }
+
+                if (form.UseSavedCommand)
+                {
+                    Av1an.RunResumeWithSavedArgs(form.ChosenEntry.TempFolderName, form.ChosenEntry.Args);
+                }
+                else
+                {
+                    Av1an.RunResumeWithNewArgs(form.ChosenEntry.InputFile.FullName, form.ChosenEntry.TempFolderName);
+                }
+            }
         }
     }
 }

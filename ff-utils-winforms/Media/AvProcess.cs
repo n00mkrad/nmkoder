@@ -158,15 +158,11 @@ namespace Nmkoder.Media
             {
                 string dir = Path.Combine(GetDir(), "av1an");
                 //IoUtils.TryDeleteIfExists(Paths.GetAv1anTempPath());
-                string tempDir = Path.Combine(Paths.GetAv1anTempPath(), ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString());
-                Directory.CreateDirectory(tempDir);
                 bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
-                lastTempDirAv1an = tempDir;
                 lastOutputAv1an = "";
                 Process av1an = OsUtils.NewProcess(!show);
                 lastAvProcess = av1an;
 
-                string beforeArgs = $"--temp {tempDir.Wrap()}";
                 string vsynthPath = Path.Combine(dir, "vsynth");
                 string encPath = Path.Combine(dir, "enc");
                 string ffmpegPath = Paths.GetBinPath();
@@ -174,11 +170,11 @@ namespace Nmkoder.Media
                 if (!show)
                 {
                     av1an.StartInfo.EnvironmentVariables["Path"] = $"{vsynthPath};{encPath};{ffmpegPath};{av1an.StartInfo.EnvironmentVariables["Path"]}";
-                    av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.exe {beforeArgs} {args}";
+                    av1an.StartInfo.Arguments = $"/C cd /D {dir.Wrap()} && av1an.exe {args}";
                 }
                 else
                 {
-                    string batPath = WriteBatchFile(dir, new string[] { vsynthPath, encPath, ffmpegPath }, $"{beforeArgs} {args}");
+                    string batPath = WriteBatchFile(dir, new string[] { vsynthPath, encPath, ffmpegPath }, args);
                     av1an.StartInfo.Arguments = $"/C {batPath.Wrap()}";
                 }
 

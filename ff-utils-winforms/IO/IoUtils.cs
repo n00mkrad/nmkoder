@@ -769,9 +769,16 @@ namespace Nmkoder.IO
 
 		public static FileInfo[] GetFileInfosSorted(string path, bool recursive = false, string pattern = "*")
 		{
-			SearchOption opt = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-			DirectoryInfo dir = new DirectoryInfo(path);
-			return dir.GetFiles(pattern, opt).OrderBy(x => x.Name).ToArray();
+            try
+            {
+				SearchOption opt = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+				DirectoryInfo dir = new DirectoryInfo(path);
+				return dir.GetFiles(pattern, opt).OrderBy(x => x.Name).ToArray();
+			}
+			catch
+            {
+				return new FileInfo[0];
+            }
 		}
 
 		public static bool CreateFileIfNotExists (string path)

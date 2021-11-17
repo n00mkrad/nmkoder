@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json;
 using Nmkoder.Data;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
@@ -22,40 +26,79 @@ namespace Nmkoder.UI.Tasks
             Av1anUi.Init();
         }
 
-        public static async Task Run()
+        public static async Task RunResumeWithSavedArgs(string overrideTempDir = "", string overrideArgs = "")
+        {
+            await Run(true, overrideTempDir, overrideArgs);
+        }
+
+        public static async Task RunResumeWithNewArgs(string sourceFile, string overrideTempDir = "")
+        {
+            if(TrackList.current == null || TrackList.current.File.TruePath != sourceFile)
+            {
+                Logger.Log($"You first need to load the input file that was used for this encode to resume with new settings!");
+                Program.mainForm.fileListBox.SelectedItem = 0; // Force MFM
+                FileList.LoadFiles(new string[1] { sourceFile }, true); // Add input file
+                await TrackList.LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0]).File); // Load file
+            }
+
+            await Run(true, overrideTempDir, "");
+        }
+
+        public static async Task Run(bool resume = false, string overrideTempDir = "", string overrideArgs = "")
         {
             Program.mainForm.SetWorking(true);
             string args = "";
+            string inPath = "";
+            string timestamp = ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
             try
             {
-                CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
-                CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
-                bool vmaf = IsUsingVmaf();
-                string inPath = TrackList.current.File.TruePath;
-                string outPath = GetOutPath();
-                string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
-                string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
-                CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
-                string v = codecArgs.Arguments;
-                string vf = await GetVideoFilterArgs(codecArgs);
-                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
-                string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
-                string s = GetSplittingMethod();
-                string m = GetChunkGenMethod();
-                string c = GetConcatMethod();
-                IoUtils.TryDeleteIfExists(outPath);
-
-                args = $"-i {inPath.Wrap()} --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
-
-                if (vmaf)
+                if (string.IsNullOrWhiteSpace(overrideArgs))
                 {
-                    int q = (int)Program.mainForm.av1anQualityUpDown.Value;
-                    string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
-                    args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
+                    CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
+                    CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
+                    bool vmaf = IsUsingVmaf();
+                    inPath = TrackList.current.File.TruePath;
+                    string outPath = GetOutPath();
+                    string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
+                    string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
+                    CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
+                    string v = codecArgs.Arguments;
+                    string vf = await GetVideoFilterArgs(codecArgs);
+                    string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
+                    string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
+                    string s = GetSplittingMethod();
+                    string m = GetChunkGenMethod();
+                    string c = GetConcatMethod();
+
+                    args = $"-i {inPath.Wrap()} --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+
+                    if (vmaf)
+                    {
+                        int q = (int)Program.mainForm.av1anQualityUpDown.Value;
+                        string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
+                        args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
+                    }
+
+                    IoUtils.TryDeleteIfExists(outPath);
                 }
-               
-                Logger.Log("av1an " + args);
+                else
+                {
+                    inPath = overrideArgs.Split("-i \"")[1].Split("\"")[0].Trim();
+                    IoUtils.TryDeleteIfExists(overrideArgs.Split(" -o \"").Last().Remove("\"").Trim());
+                }
+
+                string tempDirName = !string.IsNullOrWhiteSpace(overrideTempDir) ? overrideTempDir : timestamp;
+                string tempDir = Path.Combine(Paths.GetAv1anTempPath(), tempDirName);
+                AvProcess.lastTempDirAv1an = tempDir;
+                string tmp = $"--temp {tempDir.Wrap()}";
+                Directory.CreateDirectory(tempDir);
+
+                args = !string.IsNullOrWhiteSpace(overrideArgs) ? overrideArgs : args;
+                args = $"{(resume ? "-r" : "")} {tmp} {args}";
+
+                string creationTimestamp = (resume ? (LoadJson(overrideTempDir).ContainsKey("creationTimestamp") ? LoadJson(overrideTempDir)["creationTimestamp"] : "-1") : timestamp);
+                SaveJson(inPath, tempDirName, args, creationTimestamp, timestamp);
             }
             catch (Exception e)
             {
@@ -84,9 +127,45 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.SetWorking(false);
         }
 
+        private static void SaveJson(string inputFilePath, string tempFolderName, string args, string creationTimestamp, string lastRunTimestamp)
+        {
+            try
+            {
+                string jsonPath = Path.Combine(Paths.GetAv1anTempPath(), $"{tempFolderName}.json");
+                Dictionary<string, string> info = new Dictionary<string, string>();
+
+                info.Add("fileName", Path.GetFileName(inputFilePath));
+                info.Add("filePath", inputFilePath);
+                info.Add("tempFolderName", tempFolderName);
+                info.Add("args", "-i " + args.Split(" -i ")[1]);
+                info.Add("creationTimestamp", creationTimestamp);
+                info.Add("lastRunTimestamp", lastRunTimestamp);
+
+                File.WriteAllText(jsonPath, JsonConvert.SerializeObject(info, Formatting.Indented));
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to write nmkoder av1an info json! {e.Message}", true);
+            }
+        }
+
+        public static Dictionary<string, string> LoadJson(string tempFolderName)
+        {
+            try
+            {
+                string jsonPath = Path.Combine(Paths.GetAv1anTempPath(), $"{tempFolderName}.json");
+                return JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(jsonPath));
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to load nmkoder av1an info json! {e.Message}", true);
+                return new Dictionary<string, string>();
+            }
+        }
+
         public static int GetDefaultWorkerCount ()
         {
-            return (int)Math.Ceiling((double)Environment.ProcessorCount * 0.4f);
+            return ((int)Math.Ceiling((double)Environment.ProcessorCount * 0.4f)).Clamp(2, 32);
         }
     }
 }

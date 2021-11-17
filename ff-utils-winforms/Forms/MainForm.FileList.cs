@@ -19,6 +19,8 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
+        public ComboBox fileListModeBox { get { return fileListMode; } }
+
         public void RefreshFileListUi ()
         {
             bool mfm = RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput;

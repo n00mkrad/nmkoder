@@ -288,6 +288,7 @@
     <Compile Include="Data\Streams\DataStream.cs" />
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
+    <Compile Include="Data\Ui\Av1anFolderEntry.cs" />
     <Compile Include="Data\Ui\MediaStreamListEntry.cs" />
     <Compile Include="Data\Ui\FileListEntry.cs" />
     <Compile Include="Data\UniqueMetadataEntry.cs" />
@@ -307,6 +308,12 @@
     </Compile>
     <Compile Include="Forms\AudioStreamsForm.designer.cs">
       <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Av1anResumeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Av1anResumeForm.Designer.cs">
+      <DependentUpon>Av1anResumeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EditCommandForm.cs">
       <SubType>Form</SubType>
@@ -403,6 +410,9 @@
     <Compile Include="Utils\NmkdStopwatch.cs" />
     <EmbeddedResource Include="Forms\AudioStreamsForm.resx">
       <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Av1anResumeForm.resx">
+      <DependentUpon>Av1anResumeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditCommandForm.resx">
       <DependentUpon>EditCommandForm.cs</DependentUpon>

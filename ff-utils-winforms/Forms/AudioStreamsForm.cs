@@ -2,6 +2,7 @@
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
+using Nmkoder.IO;
 using Nmkoder.UI;
 using Nmkoder.Utils;
 using System;
@@ -67,8 +68,8 @@ namespace Nmkoder.Forms
             grid.Columns[0].ReadOnly = true;
             grid.Columns[1].ReadOnly = true;
             grid.Columns[2].ReadOnly = true;
-            grid.Columns[0].FillWeight = 15;
-            grid.Columns[1].FillWeight = 40;
+            grid.Columns[0].FillWeight = 10;
+            grid.Columns[1].FillWeight = 45;
             grid.Columns[2].FillWeight = 10;
             grid.Columns[3].FillWeight = 15;
             grid.Columns[4].FillWeight = 20;
@@ -81,12 +82,17 @@ namespace Nmkoder.Forms
             {
                 AudioStream s = streams[i];
                 int br = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(s.Channels)).RoundToInt();
-                string title = string.IsNullOrWhiteSpace(s.Title) ? "None" : s.Title.Trunc(30);
+                string title = string.IsNullOrWhiteSpace(s.Title) ? "None" : s.Title.Trunc(35);
+                int newIdx = -1;
 
                 if(currentEntries == null)
-                    grid.Rows.Add($"Track {i + 1}", title, s.Language.ToUpper(), s.Channels, br);
+                    newIdx = grid.Rows.Add($"#{i + 1}", title, s.Language.ToUpper(), s.Channels, br);
                 else
-                    grid.Rows.Add($"Track {i + 1}", title, s.Language.ToUpper(), currentEntries[i].ChannelCount, currentEntries[i].BitrateKbps);
+                    newIdx = grid.Rows.Add($"#{i + 1}", title, s.Language.ToUpper(), currentEntries[i].ChannelCount, currentEntries[i].BitrateKbps);
+
+                //Logger.Log($"Audio Track {newIdx} has Index {s.Index}");
+                //int streamId = TrackList.current.File.AllStreams.
+                grid.Rows[newIdx].Visible = Program.mainForm.streamListBox.GetItemChecked(s.Index);
             }
 
         }

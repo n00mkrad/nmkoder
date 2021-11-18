@@ -58,19 +58,21 @@ namespace Nmkoder.Utils
 
         public static float GetAudioBitrateMultiplier(int channels)
         {
+            float mult = 1f;
+
             if (channels == 1) // Mono
-                return 0.5f;
+                mult = 0.5f;
 
             if (channels == 2) // Stereo
-                return 1f;
+                mult = 1f;
 
             if (channels > 4) // 5.1, etc
-                return 2f;
+                mult = 2f;
 
             if (channels > 6) // 6.1, 7.1, etc
-                return 2.25f;
+                mult = 2.5f;
 
-            return 1f;
+            return mult;
         }
     }
 }

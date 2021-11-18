@@ -243,5 +243,10 @@ namespace Nmkoder.Forms
             else
                 SaveConfig();
         }
+
+        private void encAudChannels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
+        }
     }
 }

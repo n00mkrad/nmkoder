@@ -97,6 +97,9 @@ namespace Nmkoder.UI.Tasks
 
         public static void AudEncoderSelected(int index)
         {
+            if (index < 0)
+                return;
+
             CodecUtils.AudioCodec c = (CodecUtils.AudioCodec)index;
             IEncoder enc = CodecUtils.GetCodec(c);
 

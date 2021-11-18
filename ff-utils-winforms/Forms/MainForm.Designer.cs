@@ -1138,6 +1138,7 @@ namespace Nmkoder.Forms
             this.encAudChannels.Name = "encAudChannels";
             this.encAudChannels.Size = new System.Drawing.Size(250, 23);
             this.encAudChannels.TabIndex = 52;
+            this.encAudChannels.SelectedIndexChanged += new System.EventHandler(this.encAudChannels_SelectedIndexChanged);
             // 
             // encAudQuality
             // 

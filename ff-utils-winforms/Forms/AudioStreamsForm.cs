@@ -90,8 +90,6 @@ namespace Nmkoder.Forms
                 else
                     newIdx = grid.Rows.Add($"#{i + 1}", title, s.Language.ToUpper(), currentEntries[i].ChannelCount, currentEntries[i].BitrateKbps);
 
-                //Logger.Log($"Audio Track {newIdx} has Index {s.Index}");
-                //int streamId = TrackList.current.File.AllStreams.
                 grid.Rows[newIdx].Visible = Program.mainForm.streamListBox.GetItemChecked(s.Index);
             }
 

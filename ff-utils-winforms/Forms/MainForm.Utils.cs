@@ -106,12 +106,19 @@ namespace Nmkoder.Forms
             UpdatePanels();
         }
 
+        private void SelectConcat(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.UtilConcat;
+            UpdatePanels();
+        }
+
         private void UpdatePanels()
         {
             utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsMetricsPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilGetMetrics) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsOcrPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilOcr) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsColorDataPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilColorData) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsConcatPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilConcat) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -233,6 +233,16 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_concat {
+            get {
+                object obj = ResourceManager.GetObject("icon_concat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_delaySync {
             get {
                 object obj = ResourceManager.GetObject("icon_delaySync", resourceCulture);

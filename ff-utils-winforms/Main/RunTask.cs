@@ -16,7 +16,7 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData };
+        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData, UtilConcat };
         //public static TaskType currentTask;
 
         public enum FileListMode { MultiFileInput, BatchProcess };
@@ -50,7 +50,14 @@ namespace Nmkoder.Main
 
             TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
 
-            bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates;
+            if (Program.mainForm.fileListBox.Items.Count < 1)
+            {
+                MessageBox.Show("No input files in file list! Please add one or more files first.", "Error");
+                Program.mainForm.mainTabList.SelectedIndex = 0;
+                return;
+            }
+
+            bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates || taskType == TaskType.UtilOcr;
 
             if (loadedFileRequired && (currentFileListMode == FileListMode.MultiFileInput && TrackList.current == null))
             {
@@ -88,7 +95,10 @@ namespace Nmkoder.Main
             if (taskType == TaskType.UtilColorData)
                 await UtilColorData.Run();
 
-            Logger.Log($"Done - Finished task in {sw}");
+            if (taskType == TaskType.UtilConcat)
+                await UtilConcat.Run();
+
+            Logger.Log($"Done - Finished task in {sw}.");
             Program.mainForm.SetProgress(0);
             Program.mainForm.SetWorking(false);
         }

@@ -47,7 +47,7 @@ namespace Nmkoder.Forms
             this.folderList.ItemHeight = 16;
             this.folderList.Location = new System.Drawing.Point(12, 12);
             this.folderList.Name = "folderList";
-            this.folderList.Size = new System.Drawing.Size(574, 178);
+            this.folderList.Size = new System.Drawing.Size(674, 178);
             this.folderList.TabIndex = 57;
             // 
             // resumeWithSavedSettings
@@ -55,7 +55,7 @@ namespace Nmkoder.Forms
             this.resumeWithSavedSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.resumeWithSavedSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.resumeWithSavedSettings.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.resumeWithSavedSettings.Location = new System.Drawing.Point(592, 12);
+            this.resumeWithSavedSettings.Location = new System.Drawing.Point(692, 12);
             this.resumeWithSavedSettings.Name = "resumeWithSavedSettings";
             this.resumeWithSavedSettings.Size = new System.Drawing.Size(180, 40);
             this.resumeWithSavedSettings.TabIndex = 58;
@@ -68,7 +68,7 @@ namespace Nmkoder.Forms
             this.resumeWithNewSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.resumeWithNewSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.resumeWithNewSettings.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.resumeWithNewSettings.Location = new System.Drawing.Point(592, 58);
+            this.resumeWithNewSettings.Location = new System.Drawing.Point(692, 58);
             this.resumeWithNewSettings.Name = "resumeWithNewSettings";
             this.resumeWithNewSettings.Size = new System.Drawing.Size(180, 40);
             this.resumeWithNewSettings.TabIndex = 59;
@@ -81,7 +81,7 @@ namespace Nmkoder.Forms
             this.DeleteFull.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteFull.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.DeleteFull.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.DeleteFull.Location = new System.Drawing.Point(592, 104);
+            this.DeleteFull.Location = new System.Drawing.Point(692, 104);
             this.DeleteFull.Name = "DeleteFull";
             this.DeleteFull.Size = new System.Drawing.Size(180, 40);
             this.DeleteFull.TabIndex = 60;
@@ -94,7 +94,7 @@ namespace Nmkoder.Forms
             this.DeleteChunks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteChunks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.DeleteChunks.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.DeleteChunks.Location = new System.Drawing.Point(592, 150);
+            this.DeleteChunks.Location = new System.Drawing.Point(692, 150);
             this.DeleteChunks.Name = "DeleteChunks";
             this.DeleteChunks.Size = new System.Drawing.Size(180, 40);
             this.DeleteChunks.TabIndex = 61;
@@ -107,7 +107,7 @@ namespace Nmkoder.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(784, 202);
+            this.ClientSize = new System.Drawing.Size(884, 202);
             this.Controls.Add(this.DeleteChunks);
             this.Controls.Add(this.DeleteFull);
             this.Controls.Add(this.resumeWithNewSettings);

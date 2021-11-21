@@ -29,7 +29,7 @@ namespace Nmkoder.Data.Ui
             jsonInfo = Av1an.LoadJson(DirInfo.Name);
             ChunkFiles = IoUtils.GetFileInfosSorted(Path.Combine(path, "encode"));
 
-            InputFilename = (jsonInfo.ContainsKey("fileName") ? jsonInfo["fileName"] : DirInfo.Name).Trunc(30);
+            InputFilename = (jsonInfo.ContainsKey("fileName") ? jsonInfo["fileName"] : DirInfo.Name).Trunc(35);
 
             if (jsonInfo.ContainsKey("filePath"))
                 InputFile = File.Exists(jsonInfo["filePath"]) ? new FileInfo(jsonInfo["filePath"]) : null;

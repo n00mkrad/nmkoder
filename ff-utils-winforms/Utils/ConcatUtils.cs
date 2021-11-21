@@ -13,12 +13,12 @@ namespace Nmkoder.Utils
 {
     class ConcatUtils
     {
-        public static async Task ConcatFfmpeg ()
+        public static async Task ConcatFfmpeg()
         {
 
         }
 
-        public static async Task ConcatMkvMerge(List<string> paths, string outPath)
+        public static async Task ConcatMkvMerge(List<string> paths, string outPath, bool print = true)
         {
             List<string> commands = new List<string>();
             List<string> superChunkPaths = new List<string>();
@@ -47,7 +47,7 @@ namespace Nmkoder.Utils
                 currList.Add(paths[i]);
                 lists[superChunkIndex] = currList;
 
-                if(i + 1 == paths.Count) // if this is the last iteration
+                if (i + 1 == paths.Count) // if this is the last iteration
                 {
                     superChunkPaths.Add(Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
                     commands.Add(currentCmd);
@@ -56,13 +56,19 @@ namespace Nmkoder.Utils
                 Logger.Log($"Concat: Added chunk #{i} to superchunk {superChunkIndex} - Command length is {currentCmd.Length}", true);
             }
 
-            for(int i = 0; i < commands.Count; i++)
+            for (int i = 0; i < commands.Count; i++)
             {
-                Logger.Log($"Writing chunk {i+1}/{commands.Count}...");
+                if (print)
+                {
+                    Logger.Log($"Writing chunk {i + 1}/{commands.Count}...", false, Logger.LastLine.Contains("Writing chunk"));
+                    int percent = (((float)(i + 1) / commands.Count) * 100f).RoundToInt();
+                    Program.mainForm.SetProgress(percent);
+                }
+
                 await AvProcess.RunMkvMerge(commands[i], false);
             }
 
-            await ConcatMkvMergeSingle(superChunkPaths, outPath);
+            await ConcatMkvMergeSingle(superChunkPaths, outPath, print);
             superChunkPaths.ForEach(x => IoUtils.TryDeleteIfExists(x));
         }
 
@@ -71,20 +77,22 @@ namespace Nmkoder.Utils
             return $" -o {Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv").Wrap()}";
         }
 
-        private static async Task ConcatMkvMergeSingle(List<string> paths, string outPath)
+        private static async Task ConcatMkvMergeSingle(List<string> paths, string outPath, bool print)
         {
             string args = $" -o {outPath.Wrap()}";
 
             for (int i = 0; i < paths.Count; i++)
                 args += $" {(i == 0 ? "" : "+")}{paths[i].Wrap()}";
 
-            if(args.Length > 8000)
+            if (args.Length > 8000)
             {
                 Logger.Log($"Error: Merge command is too long! Try moving Nmkoder to a directory with a shorter path.");
                 return;
             }
 
-            Logger.Log($"Merging...");
+            if (print)
+                Logger.Log($"Merging...");
+
             await AvProcess.RunMkvMerge(args, false);
 
             if (!File.Exists(outPath))

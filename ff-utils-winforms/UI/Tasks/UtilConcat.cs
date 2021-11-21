@@ -27,7 +27,7 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
-                List<string> paths = Program.mainForm.fileListBox.Items.OfType<FileListEntry>().Where(x => x.File.TruePath == x.File.SourcePath).Select(x => x.File.TruePath).ToList();
+                List<string> paths = Program.mainForm.fileListBox.Items.OfType<FileListEntry>().Where(x => x.File.ImportPath == x.File.SourcePath).Select(x => x.File.ImportPath).ToList();
                 string filename = new FileInfo(paths[0]).Directory.Name + "-merge.mkv";
                 string outPath = Path.Combine(new FileInfo(paths[0]).Directory.FullName, filename);
                 IoUtils.TryDeleteIfExists(outPath);

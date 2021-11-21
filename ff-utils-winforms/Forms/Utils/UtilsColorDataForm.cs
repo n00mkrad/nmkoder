@@ -54,7 +54,7 @@ namespace Nmkoder.Forms.Utils
         {
             for (int i = 0; i < fileList.Items.Count; i++)
             {
-                if((((FileListEntry)fileList.Items[i])).File.TruePath == videoPath)
+                if((((FileListEntry)fileList.Items[i])).File.ImportPath == videoPath)
                 {
                     box.SelectedIndex = i;
                     return;
@@ -110,10 +110,10 @@ namespace Nmkoder.Forms.Utils
             TransferHdrData = copyHdrData.Checked;
 
             if(sourceVideo.SelectedItem != null)
-                VideoSrc = ((MediaFile)sourceVideo.SelectedItem).TruePath;
+                VideoSrc = ((MediaFile)sourceVideo.SelectedItem).ImportPath;
 
             if (targetVideo.SelectedItem != null)
-                VideoTarget = ((MediaFile)targetVideo.SelectedItem).TruePath;
+                VideoTarget = ((MediaFile)targetVideo.SelectedItem).ImportPath;
 
             DialogResult = DialogResult.OK;
             pressedOk = true;

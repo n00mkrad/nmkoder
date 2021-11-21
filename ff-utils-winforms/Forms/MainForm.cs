@@ -248,5 +248,41 @@ namespace Nmkoder.Forms
         {
             QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
         }
+
+        private void SetFileListItems(object[] objectCollection)
+        {
+            fileList.Items.Clear();
+            fileList.Items.AddRange(new ListBox.ObjectCollection(fileListBox, objectCollection));
+        }
+
+        private void sortMenuAbcDesc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.SourcePath).ToArray());
+        }
+
+        private void sortMenuAbcAsc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.SourcePath).ToArray());
+        }
+
+        private void sortMenuSizeDesc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.File.Length).ToArray());
+        }
+
+        private void sortMenuSizeAsc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.Length).ToArray());
+        }
+
+        private void sortMenuRecentDesc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.File.LastWriteTime).ToArray());
+        }
+
+        private void sortMenuRecentAsc_Click(object sender, EventArgs e)
+        {
+            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.LastWriteTime).ToArray());
+        }
     }
 }

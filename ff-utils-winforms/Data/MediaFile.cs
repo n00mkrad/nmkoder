@@ -22,7 +22,7 @@ namespace Nmkoder.Data
         public int FileCount;
         public string Name;
         public string SourcePath;
-        public string TruePath;
+        public string ImportPath;
         public string Format;
         public string Title;
         public string Language;
@@ -65,7 +65,7 @@ namespace Nmkoder.Data
                 File = new FileInfo(path);
                 Name = File.Name;
                 SourcePath = File.FullName;
-                TruePath = File.FullName;
+                ImportPath = File.FullName;
                 Format = File.Extension.Remove(".").ToUpper();
                 FileCount = 1;
                 InputRate = new Fraction(-1, 1);
@@ -82,7 +82,7 @@ namespace Nmkoder.Data
                 string seqPath = Path.Combine(Paths.GetFrameSeqPath(), CreationTime.ToString(), "frames.concat");
                 string chosenExt = IoUtils.GetUniqueExtensions(SourcePath).FirstOrDefault();
                 int fileCount = FfmpegUtils.CreateConcatFile(SourcePath, seqPath, new string[] { chosenExt });
-                TruePath = seqPath;
+                ImportPath = seqPath;
                 FileCount = fileCount;
                 Logger.Log($"Created concat file with {fileCount} files.", true);
             }
@@ -99,8 +99,8 @@ namespace Nmkoder.Data
 
             try
             {
-                await LoadFormatInfo(TruePath);
-                AllStreams = await FfmpegUtils.GetStreams(TruePath, progressBar, StreamCount, InputRate);
+                await LoadFormatInfo(ImportPath);
+                AllStreams = await FfmpegUtils.GetStreams(ImportPath, progressBar, StreamCount, InputRate);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();

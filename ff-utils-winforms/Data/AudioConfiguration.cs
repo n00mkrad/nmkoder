@@ -20,7 +20,7 @@ namespace Nmkoder.Data
 
         public List<AudioConfigurationEntry> GetConfig (MediaFile file)
         {
-            if (file.TruePath != CreationFile.TruePath || file.Size != CreationFile.Size)
+            if (file.ImportPath != CreationFile.ImportPath || file.Size != CreationFile.Size)
                 return null; // Return null if the file has changed
             else
                 return _config;

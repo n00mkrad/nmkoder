@@ -456,7 +456,7 @@ namespace Nmkoder.UI.Tasks
             }
 
             if (cfg == 2) // 2 = Strip All
-                return $"-map_metadata{stripStr} {string.Join(" ", argsDispo)}"; 
+                return $"{stripStr} {string.Join(" ", argsDispo)}"; 
 
             bool map = cfg == 0 || cfg == 1;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             List<string> argsMeta = new List<string>();
@@ -525,7 +525,7 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string subFilePath = FormatUtils.GetFilterPath(currFile.TruePath);
+                string subFilePath = FormatUtils.GetFilterPath(currFile.ImportPath);
                 filters.Add($"subtitles={subFilePath}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
             }
 
@@ -536,7 +536,7 @@ namespace Nmkoder.UI.Tasks
             string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
 
             if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
-                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.TruePath, false));
+                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.ImportPath, false));
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));

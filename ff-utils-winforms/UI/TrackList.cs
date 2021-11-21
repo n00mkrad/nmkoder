@@ -69,7 +69,7 @@ namespace Nmkoder.UI
 
         public static async Task LoadFirstFile(MediaFile mediaFile, bool switchToTrackList = true, bool generateThumbs = true)
         {
-            int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.TruePath);
+            int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.ImportPath);
             Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
             PrintFoundStreams(mediaFile);
@@ -109,7 +109,7 @@ namespace Nmkoder.UI
         public static async Task AddStreamsToList(MediaFile mediaFile, bool switchToList, bool silent = false)
         {
             CheckedListBox box = Program.mainForm.streamListBox;
-            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath) select x).Distinct().Count();
+            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.ImportPath) select x).Distinct().Count();
 
             if (!mediaFile.Initialized)
             {
@@ -148,13 +148,13 @@ namespace Nmkoder.UI
 
         public static void Refresh ()
         {
-            List<string> loadedPaths = Program.mainForm.fileListBox.Items.OfType<MediaFile>().Select(x => x.TruePath).ToList();
+            List<string> loadedPaths = Program.mainForm.fileListBox.Items.OfType<MediaFile>().Select(x => x.ImportPath).ToList();
 
             for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
             {
                 MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamListBox.Items[i];
 
-                if (entry.MediaFile == null || !loadedPaths.Contains(entry.MediaFile.TruePath))
+                if (entry.MediaFile == null || !loadedPaths.Contains(entry.MediaFile.ImportPath))
                 {
                     Program.mainForm.streamListBox.Items.Remove(Program.mainForm.streamListBox.Items[i]);
                     i = 0; // Reset loop index, otherwise removing will result in skipped entries
@@ -202,7 +202,7 @@ namespace Nmkoder.UI
 
         public static List<string> GetInputFiles()
         {
-            List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.TruePath).ToList();
+            List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.ImportPath).ToList();
             List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
 
             Logger.Log($"Input Files: {string.Join(", ", pathsUnique)}", true);
@@ -219,9 +219,9 @@ namespace Nmkoder.UI
                 addedFiles.Add(entry.File.SourcePath);
 
                 if (entry.File.IsDirectory)
-                    args.Add($"-safe 0 -f concat -r {entry.File.InputRate} -i {entry.File.TruePath.Wrap()}");
+                    args.Add($"-safe 0 -f concat -r {entry.File.InputRate} -i {entry.File.ImportPath.Wrap()}");
                 else
-                    args.Add($"-i {entry.File.TruePath.Wrap()}");
+                    args.Add($"-i {entry.File.ImportPath.Wrap()}");
             }
 
             Logger.Log($"Input Args: {string.Join(" ", args)}", true);

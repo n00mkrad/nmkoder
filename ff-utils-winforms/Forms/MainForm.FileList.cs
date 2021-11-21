@@ -118,5 +118,10 @@ namespace Nmkoder.Forms
             if (fileList.SelectedItem != null)
                 addTracksFromFileBtn_Click(null, null);
         }
+
+        private void fileListSortBtn_Click(object sender, EventArgs e)
+        {
+            sortFileListContextMenu.Show(Cursor.Position);
+        }
     }
 }

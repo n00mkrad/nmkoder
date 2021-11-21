@@ -50,7 +50,7 @@ namespace Nmkoder.Forms.Utils
         {
             for (int i = 0; i < fileList.Items.Count; i++)
             {
-                if((((FileListEntry)fileList.Items[i])).File.TruePath == videoPath)
+                if((((FileListEntry)fileList.Items[i])).File.ImportPath == videoPath)
                 {
                     box.SelectedIndex = i;
                     return;
@@ -94,8 +94,8 @@ namespace Nmkoder.Forms.Utils
             AlignMode = align.SelectedIndex;
             VmafModel = vmafMdl.SelectedIndex;
             CheckedBoxes = new bool[] { vmaf.Checked, ssim.Checked, psnr.Checked };
-            VideoLq = ((MediaFile)encodedVideo.SelectedItem).TruePath;
-            VideoHq = ((MediaFile)referenceVideo.SelectedItem).TruePath;
+            VideoLq = ((MediaFile)encodedVideo.SelectedItem).ImportPath;
+            VideoHq = ((MediaFile)referenceVideo.SelectedItem).ImportPath;
             DialogResult = DialogResult.OK;
             pressedOk = true;
             Close();

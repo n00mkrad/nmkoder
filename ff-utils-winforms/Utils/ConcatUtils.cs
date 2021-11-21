@@ -23,7 +23,7 @@ namespace Nmkoder.Utils
             List<string> commands = new List<string>();
             List<string> superChunkPaths = new List<string>();
             Dictionary<int, List<string>> lists = new Dictionary<int, List<string>>();
-            string superChunkBasePath = Path.Combine(Paths.GetSessionDataPath(), "mkvmerge-superchunks");
+            string superChunkBasePath = Path.Combine(Paths.GetSessionDataPath(), "mkvchunks");
             Directory.CreateDirectory(superChunkBasePath);
             int superChunkIndex = 0;
             string currentCmd = GetBaseCmd(superChunkBasePath, superChunkIndex);
@@ -33,7 +33,7 @@ namespace Nmkoder.Utils
             {
                 if (currentCmd.Length > 7500)
                 {
-                    superChunkPaths.Add(Path.Combine(superChunkBasePath, $"c{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
+                    superChunkPaths.Add(Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
                     superChunkIndex++;
                     commands.Add(currentCmd);
                     currentCmd = GetBaseCmd(superChunkBasePath, superChunkIndex);
@@ -49,11 +49,11 @@ namespace Nmkoder.Utils
 
                 if(i + 1 == paths.Count) // if this is the last iteration
                 {
-                    superChunkPaths.Add(Path.Combine(superChunkBasePath, $"c{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
+                    superChunkPaths.Add(Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
                     commands.Add(currentCmd);
                 }
 
-                //Logger.Log($"Added chunk #{i} to superchunk {superChunkIndex} - Command length is {currentCmd.Length}");
+                Logger.Log($"Concat: Added chunk #{i} to superchunk {superChunkIndex} - Command length is {currentCmd.Length}", true);
             }
 
             for(int i = 0; i < commands.Count; i++)
@@ -68,7 +68,7 @@ namespace Nmkoder.Utils
 
         private static string GetBaseCmd(string superChunkBasePath, int superChunkIndex)
         {
-            return $" -o {Path.Combine(superChunkBasePath, $"c{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv").Wrap()}";
+            return $" -o {Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv").Wrap()}";
         }
 
         private static async Task ConcatMkvMergeSingle(List<string> paths, string outPath)
@@ -77,6 +77,12 @@ namespace Nmkoder.Utils
 
             for (int i = 0; i < paths.Count; i++)
                 args += $" {(i == 0 ? "" : "+")}{paths[i].Wrap()}";
+
+            if(args.Length > 8000)
+            {
+                Logger.Log($"Error: Merge command is too long! Try moving Nmkoder to a directory with a shorter path.");
+                return;
+            }
 
             Logger.Log($"Merging...");
             await AvProcess.RunMkvMerge(args, false);

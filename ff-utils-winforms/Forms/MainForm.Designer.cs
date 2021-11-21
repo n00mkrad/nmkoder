@@ -45,6 +45,7 @@ namespace Nmkoder.Forms
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.fileListSortBtn = new System.Windows.Forms.Button();
             this.fileListMode = new System.Windows.Forms.ComboBox();
             this.fileListMoveUpBtn = new System.Windows.Forms.Button();
             this.fileListCleanBtn = new System.Windows.Forms.Button();
@@ -205,6 +206,13 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
+            this.sortFileListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.sortMenuAbcDesc = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortMenuAbcAsc = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortMenuSizeDesc = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortMenuSizeAsc = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -245,6 +253,7 @@ namespace Nmkoder.Forms
             this.settingsContainersTab.SuspendLayout();
             this.busyControlsPanel.SuspendLayout();
             this.checkItemsContextMenu.SuspendLayout();
+            this.sortFileListContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -268,7 +277,7 @@ namespace Nmkoder.Forms
             this.formatInfo.Location = new System.Drawing.Point(4, 4);
             this.formatInfo.Margin = new System.Windows.Forms.Padding(4);
             this.formatInfo.Name = "formatInfo";
-            this.formatInfo.Size = new System.Drawing.Size(0, 20);
+            this.formatInfo.Size = new System.Drawing.Size(0, 16);
             this.formatInfo.TabIndex = 28;
             // 
             // streamList
@@ -296,7 +305,7 @@ namespace Nmkoder.Forms
             this.titleLabel.Location = new System.Drawing.Point(12, 9);
             this.titleLabel.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(198, 50);
+            this.titleLabel.Size = new System.Drawing.Size(156, 40);
             this.titleLabel.TabIndex = 10;
             this.titleLabel.Text = "NMKODER";
             // 
@@ -376,7 +385,7 @@ namespace Nmkoder.Forms
             this.label33.Location = new System.Drawing.Point(4, 4);
             this.label33.Margin = new System.Windows.Forms.Padding(4);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(240, 15);
+            this.label33.Size = new System.Drawing.Size(209, 13);
             this.label33.TabIndex = 16;
             this.label33.Text = "Drag and drop a file into this area to load it:";
             // 
@@ -407,6 +416,7 @@ namespace Nmkoder.Forms
             // 
             // fileListPage
             // 
+            this.fileListPage.Controls.Add(this.fileListSortBtn);
             this.fileListPage.Controls.Add(this.fileListMode);
             this.fileListPage.Controls.Add(this.fileListMoveUpBtn);
             this.fileListPage.Controls.Add(this.fileListCleanBtn);
@@ -416,6 +426,20 @@ namespace Nmkoder.Forms
             this.fileListPage.Name = "fileListPage";
             this.fileListPage.Size = new System.Drawing.Size(682, 382);
             this.fileListPage.Text = "File List";
+            // 
+            // fileListSortBtn
+            // 
+            this.fileListSortBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListSortBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListSortBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListSortBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListSortBtn.Location = new System.Drawing.Point(532, 279);
+            this.fileListSortBtn.Name = "fileListSortBtn";
+            this.fileListSortBtn.Size = new System.Drawing.Size(147, 45);
+            this.fileListSortBtn.TabIndex = 43;
+            this.fileListSortBtn.Text = "Sort Files...";
+            this.fileListSortBtn.UseVisualStyleBackColor = false;
+            this.fileListSortBtn.Click += new System.EventHandler(this.fileListSortBtn_Click);
             // 
             // fileListMode
             // 
@@ -502,7 +526,7 @@ namespace Nmkoder.Forms
             this.fileList.ForeColor = System.Drawing.Color.White;
             this.fileList.FormattingEnabled = true;
             this.fileList.IntegralHeight = false;
-            this.fileList.ItemHeight = 20;
+            this.fileList.ItemHeight = 16;
             this.fileList.Location = new System.Drawing.Point(3, 30);
             this.fileList.Name = "fileList";
             this.fileList.Size = new System.Drawing.Size(523, 345);
@@ -583,7 +607,7 @@ namespace Nmkoder.Forms
             this.label7.Location = new System.Drawing.Point(349, 34);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(126, 15);
+            this.label7.Size = new System.Drawing.Size(113, 13);
             this.label7.TabIndex = 48;
             this.label7.Text = "Default Subtitle Track:";
             // 
@@ -607,7 +631,7 @@ namespace Nmkoder.Forms
             this.label6.Location = new System.Drawing.Point(4, 34);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(116, 15);
+            this.label6.Size = new System.Drawing.Size(105, 13);
             this.label6.TabIndex = 46;
             this.label6.Text = "Default Audio Track:";
             // 
@@ -668,7 +692,7 @@ namespace Nmkoder.Forms
             this.label30.Location = new System.Drawing.Point(14, 331);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(191, 15);
+            this.label30.Size = new System.Drawing.Size(168, 13);
             this.label30.TabIndex = 52;
             this.label30.Text = "Custom Arguments (Input/Output):";
             // 
@@ -777,7 +801,7 @@ namespace Nmkoder.Forms
             this.encQualMode.FormattingEnabled = true;
             this.encQualMode.Location = new System.Drawing.Point(336, 38);
             this.encQualMode.Name = "encQualMode";
-            this.encQualMode.Size = new System.Drawing.Size(134, 28);
+            this.encQualMode.Size = new System.Drawing.Size(134, 23);
             this.encQualMode.TabIndex = 65;
             this.toolTip.SetToolTip(this.encQualMode, "Select how the quality/filesize will be controlled");
             this.encQualMode.SelectedIndexChanged += new System.EventHandler(this.encQualityMode_SelectedIndexChanged);
@@ -789,7 +813,7 @@ namespace Nmkoder.Forms
             this.label4.Location = new System.Drawing.Point(477, 130);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(172, 20);
+            this.label4.Size = new System.Drawing.Size(138, 15);
             this.label4.TabIndex = 64;
             this.label4.Text = "Unchanged if left empty.";
             // 
@@ -800,7 +824,7 @@ namespace Nmkoder.Forms
             this.label3.Location = new System.Drawing.Point(477, 160);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(172, 20);
+            this.label3.Size = new System.Drawing.Size(138, 15);
             this.label3.TabIndex = 63;
             this.label3.Text = "Unchanged if left empty.";
             // 
@@ -811,7 +835,7 @@ namespace Nmkoder.Forms
             this.presetInfo.Location = new System.Drawing.Point(477, 70);
             this.presetInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.presetInfo.Name = "presetInfo";
-            this.presetInfo.Size = new System.Drawing.Size(0, 20);
+            this.presetInfo.Size = new System.Drawing.Size(0, 15);
             this.presetInfo.TabIndex = 62;
             // 
             // qInfo
@@ -821,7 +845,7 @@ namespace Nmkoder.Forms
             this.qInfo.Location = new System.Drawing.Point(477, 40);
             this.qInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.qInfo.Name = "qInfo";
-            this.qInfo.Size = new System.Drawing.Size(0, 20);
+            this.qInfo.Size = new System.Drawing.Size(0, 15);
             this.qInfo.TabIndex = 61;
             // 
             // encScaleH
@@ -832,7 +856,7 @@ namespace Nmkoder.Forms
             this.encScaleH.Location = new System.Drawing.Point(360, 157);
             this.encScaleH.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleH.Name = "encScaleH";
-            this.encScaleH.Size = new System.Drawing.Size(110, 27);
+            this.encScaleH.Size = new System.Drawing.Size(110, 23);
             this.encScaleH.TabIndex = 60;
             this.toolTip.SetToolTip(this.encScaleH, "Examples:\r\n\"720\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the width.\r\n" +
         "");
@@ -845,7 +869,7 @@ namespace Nmkoder.Forms
             this.encScaleW.Location = new System.Drawing.Point(220, 157);
             this.encScaleW.MinimumSize = new System.Drawing.Size(4, 21);
             this.encScaleW.Name = "encScaleW";
-            this.encScaleW.Size = new System.Drawing.Size(110, 27);
+            this.encScaleW.Size = new System.Drawing.Size(110, 23);
             this.encScaleW.TabIndex = 59;
             this.toolTip.SetToolTip(this.encScaleW, "Examples:\r\n\"1280\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the height." +
         "");
@@ -857,7 +881,7 @@ namespace Nmkoder.Forms
             this.label29.Location = new System.Drawing.Point(339, 160);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(16, 20);
+            this.label29.Size = new System.Drawing.Size(13, 15);
             this.label29.TabIndex = 58;
             this.label29.Text = "x";
             // 
@@ -873,7 +897,7 @@ namespace Nmkoder.Forms
             "Automatic"});
             this.encCropMode.Location = new System.Drawing.Point(220, 187);
             this.encCropMode.Name = "encCropMode";
-            this.encCropMode.Size = new System.Drawing.Size(250, 28);
+            this.encCropMode.Size = new System.Drawing.Size(250, 23);
             this.encCropMode.TabIndex = 54;
             // 
             // label27
@@ -883,7 +907,7 @@ namespace Nmkoder.Forms
             this.label27.Location = new System.Drawing.Point(7, 190);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(44, 20);
+            this.label27.Size = new System.Drawing.Size(36, 15);
             this.label27.TabIndex = 53;
             this.label27.Text = "Crop:";
             // 
@@ -898,7 +922,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.encVidQuality.Name = "encVidQuality";
-            this.encVidQuality.Size = new System.Drawing.Size(110, 27);
+            this.encVidQuality.Size = new System.Drawing.Size(110, 23);
             this.encVidQuality.TabIndex = 52;
             this.toolTip.SetToolTip(this.encVidQuality, "Set the video quality/filesize");
             this.encVidQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
@@ -910,7 +934,7 @@ namespace Nmkoder.Forms
             this.label61.Location = new System.Drawing.Point(7, 160);
             this.label61.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(54, 20);
+            this.label61.Size = new System.Drawing.Size(42, 15);
             this.label61.TabIndex = 51;
             this.label61.Text = "Resize:";
             // 
@@ -922,7 +946,7 @@ namespace Nmkoder.Forms
             this.encVidFps.Location = new System.Drawing.Point(220, 127);
             this.encVidFps.MinimumSize = new System.Drawing.Size(4, 21);
             this.encVidFps.Name = "encVidFps";
-            this.encVidFps.Size = new System.Drawing.Size(250, 27);
+            this.encVidFps.Size = new System.Drawing.Size(250, 23);
             this.encVidFps.TabIndex = 49;
             this.toolTip.SetToolTip(this.encVidFps, "This allows you to resample the frame rate without changing the video speed or lo" +
         "sing audio sync.");
@@ -936,7 +960,7 @@ namespace Nmkoder.Forms
             this.encVidColors.FormattingEnabled = true;
             this.encVidColors.Location = new System.Drawing.Point(220, 97);
             this.encVidColors.Name = "encVidColors";
-            this.encVidColors.Size = new System.Drawing.Size(250, 28);
+            this.encVidColors.Size = new System.Drawing.Size(250, 23);
             this.encVidColors.TabIndex = 48;
             this.toolTip.SetToolTip(this.encVidColors, "Allows encoding without color subsampling (YUV444) or 10-bit encoding.\r\nKeep in m" +
         "ind that anything that\'s not YUV420P will not work on every media player!");
@@ -951,7 +975,7 @@ namespace Nmkoder.Forms
             this.encVidPreset.FormattingEnabled = true;
             this.encVidPreset.Location = new System.Drawing.Point(220, 67);
             this.encVidPreset.Name = "encVidPreset";
-            this.encVidPreset.Size = new System.Drawing.Size(250, 28);
+            this.encVidPreset.Size = new System.Drawing.Size(250, 23);
             this.encVidPreset.TabIndex = 47;
             this.toolTip.SetToolTip(this.encVidPreset, "This determines how fast or slow the encoding will be.\r\nThe slower it is, the bet" +
         "ter the video compression (quality per filesize/bitrate) is.");
@@ -966,7 +990,7 @@ namespace Nmkoder.Forms
             this.encVidCodec.FormattingEnabled = true;
             this.encVidCodec.Location = new System.Drawing.Point(220, 7);
             this.encVidCodec.Name = "encVidCodec";
-            this.encVidCodec.Size = new System.Drawing.Size(250, 28);
+            this.encVidCodec.Size = new System.Drawing.Size(250, 23);
             this.encVidCodec.TabIndex = 45;
             this.toolTip.SetToolTip(this.encVidCodec, "Select which video codec and encoder to use.");
             this.encVidCodec.SelectedIndexChanged += new System.EventHandler(this.encVidCodec_SelectedIndexChanged);
@@ -978,7 +1002,7 @@ namespace Nmkoder.Forms
             this.label51.Location = new System.Drawing.Point(7, 130);
             this.label51.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(87, 20);
+            this.label51.Size = new System.Drawing.Size(69, 15);
             this.label51.TabIndex = 21;
             this.label51.Text = "Frame Rate:";
             // 
@@ -989,7 +1013,7 @@ namespace Nmkoder.Forms
             this.label50.Location = new System.Drawing.Point(7, 100);
             this.label50.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(99, 20);
+            this.label50.Size = new System.Drawing.Size(80, 15);
             this.label50.TabIndex = 20;
             this.label50.Text = "Color Format:";
             // 
@@ -1000,7 +1024,7 @@ namespace Nmkoder.Forms
             this.label49.Location = new System.Drawing.Point(7, 70);
             this.label49.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(108, 20);
+            this.label49.Size = new System.Drawing.Size(85, 15);
             this.label49.TabIndex = 19;
             this.label49.Text = "Speed (Preset):";
             // 
@@ -1011,7 +1035,7 @@ namespace Nmkoder.Forms
             this.label48.Location = new System.Drawing.Point(7, 40);
             this.label48.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(112, 20);
+            this.label48.Size = new System.Drawing.Size(91, 15);
             this.label48.TabIndex = 18;
             this.label48.Text = "Quality Control:";
             // 
@@ -1022,7 +1046,7 @@ namespace Nmkoder.Forms
             this.label38.Location = new System.Drawing.Point(5, 10);
             this.label38.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(122, 20);
+            this.label38.Size = new System.Drawing.Size(98, 15);
             this.label38.TabIndex = 17;
             this.label38.Text = "Codec (Encoder):";
             // 
@@ -1085,7 +1109,7 @@ namespace Nmkoder.Forms
             "Advanced - Specify For Each Track"});
             this.encAudConfMode.Location = new System.Drawing.Point(220, 37);
             this.encAudConfMode.Name = "encAudConfMode";
-            this.encAudConfMode.Size = new System.Drawing.Size(250, 28);
+            this.encAudConfMode.Size = new System.Drawing.Size(250, 23);
             this.encAudConfMode.TabIndex = 57;
             this.encAudConfMode.SelectedIndexChanged += new System.EventHandler(this.encAudConfMode_SelectedIndexChanged);
             this.encAudConfMode.VisibleChanged += new System.EventHandler(this.encAudConfMode_VisibleChanged);
@@ -1097,7 +1121,7 @@ namespace Nmkoder.Forms
             this.label39.Location = new System.Drawing.Point(7, 40);
             this.label39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(190, 20);
+            this.label39.Size = new System.Drawing.Size(153, 15);
             this.label39.TabIndex = 56;
             this.label39.Text = "Audio Configuration Mode:";
             // 
@@ -1121,7 +1145,7 @@ namespace Nmkoder.Forms
             this.label11.Location = new System.Drawing.Point(7, 100);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(71, 20);
+            this.label11.Size = new System.Drawing.Size(59, 15);
             this.label11.TabIndex = 53;
             this.label11.Text = "Channels:";
             // 
@@ -1140,7 +1164,7 @@ namespace Nmkoder.Forms
             "8 (7.1)"});
             this.encAudChannels.Location = new System.Drawing.Point(220, 97);
             this.encAudChannels.Name = "encAudChannels";
-            this.encAudChannels.Size = new System.Drawing.Size(250, 28);
+            this.encAudChannels.Size = new System.Drawing.Size(250, 23);
             this.encAudChannels.TabIndex = 52;
             this.encAudChannels.SelectedIndexChanged += new System.EventHandler(this.encAudChannels_SelectedIndexChanged);
             // 
@@ -1155,7 +1179,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.encAudQuality.Name = "encAudQuality";
-            this.encAudQuality.Size = new System.Drawing.Size(221, 27);
+            this.encAudQuality.Size = new System.Drawing.Size(221, 23);
             this.encAudQuality.TabIndex = 51;
             this.encAudQuality.ValueChanged += new System.EventHandler(this.SaveUiConfig);
             // 
@@ -1168,7 +1192,7 @@ namespace Nmkoder.Forms
             this.encAudCodec.FormattingEnabled = true;
             this.encAudCodec.Location = new System.Drawing.Point(220, 7);
             this.encAudCodec.Name = "encAudCodec";
-            this.encAudCodec.Size = new System.Drawing.Size(250, 28);
+            this.encAudCodec.Size = new System.Drawing.Size(250, 23);
             this.encAudCodec.TabIndex = 49;
             this.encAudCodec.SelectedIndexChanged += new System.EventHandler(this.encAudioCodec_SelectedIndexChanged);
             // 
@@ -1179,7 +1203,7 @@ namespace Nmkoder.Forms
             this.label53.Location = new System.Drawing.Point(7, 70);
             this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(170, 20);
+            this.label53.Size = new System.Drawing.Size(135, 15);
             this.label53.TabIndex = 48;
             this.label53.Text = "Quality (Bitrate in Kbps):";
             // 
@@ -1190,7 +1214,7 @@ namespace Nmkoder.Forms
             this.label58.Location = new System.Drawing.Point(5, 10);
             this.label58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(122, 20);
+            this.label58.Size = new System.Drawing.Size(98, 15);
             this.label58.TabIndex = 47;
             this.label58.Text = "Codec (Encoder):";
             // 
@@ -1217,7 +1241,7 @@ namespace Nmkoder.Forms
             this.encSubBurn.FormattingEnabled = true;
             this.encSubBurn.Location = new System.Drawing.Point(220, 37);
             this.encSubBurn.Name = "encSubBurn";
-            this.encSubBurn.Size = new System.Drawing.Size(250, 28);
+            this.encSubBurn.Size = new System.Drawing.Size(250, 23);
             this.encSubBurn.TabIndex = 49;
             // 
             // label25
@@ -1227,7 +1251,7 @@ namespace Nmkoder.Forms
             this.label25.Location = new System.Drawing.Point(7, 40);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(55, 20);
+            this.label25.Size = new System.Drawing.Size(45, 15);
             this.label25.TabIndex = 48;
             this.label25.Text = "Burn In";
             // 
@@ -1240,7 +1264,7 @@ namespace Nmkoder.Forms
             this.encSubCodec.FormattingEnabled = true;
             this.encSubCodec.Location = new System.Drawing.Point(220, 7);
             this.encSubCodec.Name = "encSubCodec";
-            this.encSubCodec.Size = new System.Drawing.Size(250, 28);
+            this.encSubCodec.Size = new System.Drawing.Size(250, 23);
             this.encSubCodec.TabIndex = 47;
             this.encSubCodec.SelectedIndexChanged += new System.EventHandler(this.encSubCodec_SelectedIndexChanged);
             // 
@@ -1251,7 +1275,7 @@ namespace Nmkoder.Forms
             this.label10.Location = new System.Drawing.Point(5, 10);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(122, 20);
+            this.label10.Size = new System.Drawing.Size(98, 15);
             this.label10.TabIndex = 46;
             this.label10.Text = "Codec (Encoder):";
             // 
@@ -1321,7 +1345,7 @@ namespace Nmkoder.Forms
             "Strip All Metadata Including Titles/Languages"});
             this.metaMode.Location = new System.Drawing.Point(220, 37);
             this.metaMode.Name = "metaMode";
-            this.metaMode.Size = new System.Drawing.Size(433, 28);
+            this.metaMode.Size = new System.Drawing.Size(433, 23);
             this.metaMode.TabIndex = 49;
             this.metaMode.SelectedIndexChanged += new System.EventHandler(this.metaMode_SelectedIndexChanged);
             // 
@@ -1332,7 +1356,7 @@ namespace Nmkoder.Forms
             this.label21.Location = new System.Drawing.Point(4, 40);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(181, 20);
+            this.label21.Size = new System.Drawing.Size(143, 15);
             this.label21.TabIndex = 18;
             this.label21.Text = "Metadata Handling Mode";
             // 
@@ -1342,7 +1366,7 @@ namespace Nmkoder.Forms
             this.label14.ForeColor = System.Drawing.SystemColors.Control;
             this.label14.Location = new System.Drawing.Point(3, 3);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(783, 20);
+            this.label14.Size = new System.Drawing.Size(616, 15);
             this.label14.TabIndex = 0;
             this.label14.Text = "Here you can edit the title and language tag (ISO 639-2) of each track. Double cl" +
     "ick or press F2 to edit a selected cell.";
@@ -1452,7 +1476,7 @@ namespace Nmkoder.Forms
             this.av1anGrainSynthDenoise.Location = new System.Drawing.Point(402, 131);
             this.av1anGrainSynthDenoise.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.av1anGrainSynthDenoise.Name = "av1anGrainSynthDenoise";
-            this.av1anGrainSynthDenoise.Size = new System.Drawing.Size(85, 24);
+            this.av1anGrainSynthDenoise.Size = new System.Drawing.Size(68, 19);
             this.av1anGrainSynthDenoise.TabIndex = 72;
             this.av1anGrainSynthDenoise.Text = "Denoise";
             this.av1anGrainSynthDenoise.UseVisualStyleBackColor = true;
@@ -1468,7 +1492,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.av1anGrainSynthStrength.Name = "av1anGrainSynthStrength";
-            this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 27);
+            this.av1anGrainSynthStrength.Size = new System.Drawing.Size(173, 23);
             this.av1anGrainSynthStrength.TabIndex = 71;
             this.toolTip.SetToolTip(this.av1anGrainSynthStrength, "Improves encodes of noisy videos by synthesizing grain");
             // 
@@ -1479,7 +1503,7 @@ namespace Nmkoder.Forms
             this.label37.Location = new System.Drawing.Point(7, 130);
             this.label37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(171, 20);
+            this.label37.Size = new System.Drawing.Size(138, 15);
             this.label37.TabIndex = 70;
             this.label37.Text = "Grain Synthesis Strength:";
             // 
@@ -1491,7 +1515,7 @@ namespace Nmkoder.Forms
             this.av1anCustomEncArgs.Location = new System.Drawing.Point(220, 247);
             this.av1anCustomEncArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomEncArgs.Name = "av1anCustomEncArgs";
-            this.av1anCustomEncArgs.Size = new System.Drawing.Size(250, 27);
+            this.av1anCustomEncArgs.Size = new System.Drawing.Size(250, 23);
             this.av1anCustomEncArgs.TabIndex = 69;
             this.toolTip.SetToolTip(this.av1anCustomEncArgs, "Enter custom arguments for the selected encoder.");
             // 
@@ -1502,7 +1526,7 @@ namespace Nmkoder.Forms
             this.label36.Location = new System.Drawing.Point(7, 250);
             this.label36.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(193, 20);
+            this.label36.Size = new System.Drawing.Size(157, 15);
             this.label36.TabIndex = 68;
             this.label36.Text = "Custom Encoder Arguments";
             // 
@@ -1513,7 +1537,7 @@ namespace Nmkoder.Forms
             this.label9.Location = new System.Drawing.Point(477, 160);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(172, 20);
+            this.label9.Size = new System.Drawing.Size(138, 15);
             this.label9.TabIndex = 67;
             this.label9.Text = "Unchanged if left empty.";
             // 
@@ -1525,7 +1549,7 @@ namespace Nmkoder.Forms
             this.av1anFps.Location = new System.Drawing.Point(220, 157);
             this.av1anFps.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anFps.Name = "av1anFps";
-            this.av1anFps.Size = new System.Drawing.Size(250, 27);
+            this.av1anFps.Size = new System.Drawing.Size(250, 23);
             this.av1anFps.TabIndex = 66;
             this.toolTip.SetToolTip(this.av1anFps, "This allows you to resample the frame rate without changing the video speed or lo" +
         "sing audio sync.");
@@ -1537,7 +1561,7 @@ namespace Nmkoder.Forms
             this.label19.Location = new System.Drawing.Point(7, 160);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(87, 20);
+            this.label19.Size = new System.Drawing.Size(69, 15);
             this.label19.TabIndex = 65;
             this.label19.Text = "Frame Rate:";
             // 
@@ -1550,7 +1574,7 @@ namespace Nmkoder.Forms
             this.av1anQualityMode.FormattingEnabled = true;
             this.av1anQualityMode.Location = new System.Drawing.Point(336, 38);
             this.av1anQualityMode.Name = "av1anQualityMode";
-            this.av1anQualityMode.Size = new System.Drawing.Size(134, 28);
+            this.av1anQualityMode.Size = new System.Drawing.Size(134, 23);
             this.av1anQualityMode.TabIndex = 64;
             this.toolTip.SetToolTip(this.av1anQualityMode, "Use either a CRF value or a target VMAF quality level");
             this.av1anQualityMode.SelectedIndexChanged += new System.EventHandler(this.av1anQualityMode_SelectedIndexChanged);
@@ -1562,7 +1586,7 @@ namespace Nmkoder.Forms
             this.label12.Location = new System.Drawing.Point(477, 190);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(172, 20);
+            this.label12.Size = new System.Drawing.Size(138, 15);
             this.label12.TabIndex = 63;
             this.label12.Text = "Unchanged if left empty.";
             // 
@@ -1573,7 +1597,7 @@ namespace Nmkoder.Forms
             this.label13.Location = new System.Drawing.Point(477, 70);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(0, 20);
+            this.label13.Size = new System.Drawing.Size(0, 15);
             this.label13.TabIndex = 62;
             // 
             // label15
@@ -1583,7 +1607,7 @@ namespace Nmkoder.Forms
             this.label15.Location = new System.Drawing.Point(477, 40);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(0, 20);
+            this.label15.Size = new System.Drawing.Size(0, 15);
             this.label15.TabIndex = 61;
             // 
             // av1anScaleH
@@ -1594,7 +1618,7 @@ namespace Nmkoder.Forms
             this.av1anScaleH.Location = new System.Drawing.Point(360, 187);
             this.av1anScaleH.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anScaleH.Name = "av1anScaleH";
-            this.av1anScaleH.Size = new System.Drawing.Size(110, 27);
+            this.av1anScaleH.Size = new System.Drawing.Size(110, 23);
             this.av1anScaleH.TabIndex = 60;
             this.toolTip.SetToolTip(this.av1anScaleH, "Examples:\r\n\"720\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the width.\r\n" +
         "");
@@ -1607,7 +1631,7 @@ namespace Nmkoder.Forms
             this.av1anScaleW.Location = new System.Drawing.Point(220, 187);
             this.av1anScaleW.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anScaleW.Name = "av1anScaleW";
-            this.av1anScaleW.Size = new System.Drawing.Size(110, 27);
+            this.av1anScaleW.Size = new System.Drawing.Size(110, 23);
             this.av1anScaleW.TabIndex = 59;
             this.toolTip.SetToolTip(this.av1anScaleW, "Examples:\r\n\"1280\"\r\n\"50%\"\r\nLeave empty to automatically scale based on the height." +
         "");
@@ -1619,7 +1643,7 @@ namespace Nmkoder.Forms
             this.label16.Location = new System.Drawing.Point(339, 190);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(16, 20);
+            this.label16.Size = new System.Drawing.Size(13, 15);
             this.label16.TabIndex = 58;
             this.label16.Text = "x";
             // 
@@ -1635,7 +1659,7 @@ namespace Nmkoder.Forms
             "Automatic"});
             this.av1anCrop.Location = new System.Drawing.Point(220, 217);
             this.av1anCrop.Name = "av1anCrop";
-            this.av1anCrop.Size = new System.Drawing.Size(250, 28);
+            this.av1anCrop.Size = new System.Drawing.Size(250, 23);
             this.av1anCrop.TabIndex = 54;
             // 
             // label17
@@ -1645,7 +1669,7 @@ namespace Nmkoder.Forms
             this.label17.Location = new System.Drawing.Point(7, 220);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(44, 20);
+            this.label17.Size = new System.Drawing.Size(36, 15);
             this.label17.TabIndex = 53;
             this.label17.Text = "Crop:";
             // 
@@ -1660,7 +1684,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.av1anQuality.Name = "av1anQuality";
-            this.av1anQuality.Size = new System.Drawing.Size(110, 27);
+            this.av1anQuality.Size = new System.Drawing.Size(110, 23);
             this.av1anQuality.TabIndex = 52;
             this.toolTip.SetToolTip(this.av1anQuality, "Set the video quality level (CRF/CQ)");
             // 
@@ -1671,7 +1695,7 @@ namespace Nmkoder.Forms
             this.label18.Location = new System.Drawing.Point(7, 190);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(54, 20);
+            this.label18.Size = new System.Drawing.Size(42, 15);
             this.label18.TabIndex = 51;
             this.label18.Text = "Resize:";
             // 
@@ -1684,7 +1708,7 @@ namespace Nmkoder.Forms
             this.av1anColorSpace.FormattingEnabled = true;
             this.av1anColorSpace.Location = new System.Drawing.Point(220, 97);
             this.av1anColorSpace.Name = "av1anColorSpace";
-            this.av1anColorSpace.Size = new System.Drawing.Size(250, 28);
+            this.av1anColorSpace.Size = new System.Drawing.Size(250, 23);
             this.av1anColorSpace.TabIndex = 48;
             this.toolTip.SetToolTip(this.av1anColorSpace, "Allows encoding without color subsampling (YUV444) or 10-bit encoding.\r\nKeep in m" +
         "ind that anything that\'s not YUV420P will not work on every media player!");
@@ -1698,7 +1722,7 @@ namespace Nmkoder.Forms
             this.av1anPreset.FormattingEnabled = true;
             this.av1anPreset.Location = new System.Drawing.Point(220, 67);
             this.av1anPreset.Name = "av1anPreset";
-            this.av1anPreset.Size = new System.Drawing.Size(250, 28);
+            this.av1anPreset.Size = new System.Drawing.Size(250, 23);
             this.av1anPreset.TabIndex = 47;
             this.toolTip.SetToolTip(this.av1anPreset, "This determines how fast or slow the encoding will be.\r\nThe slower it is, the bet" +
         "ter the video compression (quality per filesize/bitrate) is.");
@@ -1712,7 +1736,7 @@ namespace Nmkoder.Forms
             this.av1anCodec.FormattingEnabled = true;
             this.av1anCodec.Location = new System.Drawing.Point(220, 7);
             this.av1anCodec.Name = "av1anCodec";
-            this.av1anCodec.Size = new System.Drawing.Size(250, 28);
+            this.av1anCodec.Size = new System.Drawing.Size(250, 23);
             this.av1anCodec.TabIndex = 45;
             this.toolTip.SetToolTip(this.av1anCodec, "Select which video codec and encoder to use.");
             this.av1anCodec.SelectedIndexChanged += new System.EventHandler(this.av1anCodec_SelectedIndexChanged);
@@ -1724,7 +1748,7 @@ namespace Nmkoder.Forms
             this.label20.Location = new System.Drawing.Point(7, 100);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(99, 20);
+            this.label20.Size = new System.Drawing.Size(80, 15);
             this.label20.TabIndex = 20;
             this.label20.Text = "Color Format:";
             // 
@@ -1735,7 +1759,7 @@ namespace Nmkoder.Forms
             this.label22.Location = new System.Drawing.Point(7, 70);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(108, 20);
+            this.label22.Size = new System.Drawing.Size(85, 15);
             this.label22.TabIndex = 19;
             this.label22.Text = "Speed (Preset):";
             // 
@@ -1746,7 +1770,7 @@ namespace Nmkoder.Forms
             this.label23.Location = new System.Drawing.Point(7, 40);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(112, 20);
+            this.label23.Size = new System.Drawing.Size(91, 15);
             this.label23.TabIndex = 18;
             this.label23.Text = "Quality Control:";
             // 
@@ -1757,7 +1781,7 @@ namespace Nmkoder.Forms
             this.label24.Location = new System.Drawing.Point(5, 10);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(122, 20);
+            this.label24.Size = new System.Drawing.Size(98, 15);
             this.label24.TabIndex = 17;
             this.label24.Text = "Codec (Encoder):";
             // 
@@ -1784,7 +1808,7 @@ namespace Nmkoder.Forms
             this.label26.Location = new System.Drawing.Point(7, 70);
             this.label26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(71, 20);
+            this.label26.Size = new System.Drawing.Size(59, 15);
             this.label26.TabIndex = 53;
             this.label26.Text = "Channels:";
             // 
@@ -1802,7 +1826,7 @@ namespace Nmkoder.Forms
             "8 (7.1)"});
             this.av1anAudChannels.Location = new System.Drawing.Point(220, 67);
             this.av1anAudChannels.Name = "av1anAudChannels";
-            this.av1anAudChannels.Size = new System.Drawing.Size(250, 28);
+            this.av1anAudChannels.Size = new System.Drawing.Size(250, 23);
             this.av1anAudChannels.TabIndex = 52;
             // 
             // av1anAudQuality
@@ -1816,7 +1840,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.av1anAudQuality.Name = "av1anAudQuality";
-            this.av1anAudQuality.Size = new System.Drawing.Size(250, 27);
+            this.av1anAudQuality.Size = new System.Drawing.Size(250, 23);
             this.av1anAudQuality.TabIndex = 51;
             // 
             // av1anAudCodec
@@ -1828,7 +1852,7 @@ namespace Nmkoder.Forms
             this.av1anAudCodec.FormattingEnabled = true;
             this.av1anAudCodec.Location = new System.Drawing.Point(220, 7);
             this.av1anAudCodec.Name = "av1anAudCodec";
-            this.av1anAudCodec.Size = new System.Drawing.Size(250, 28);
+            this.av1anAudCodec.Size = new System.Drawing.Size(250, 23);
             this.av1anAudCodec.TabIndex = 49;
             this.av1anAudCodec.SelectedIndexChanged += new System.EventHandler(this.av1anAudCodec_SelectedIndexChanged);
             // 
@@ -1839,7 +1863,7 @@ namespace Nmkoder.Forms
             this.label28.Location = new System.Drawing.Point(7, 40);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(170, 20);
+            this.label28.Size = new System.Drawing.Size(135, 15);
             this.label28.TabIndex = 48;
             this.label28.Text = "Quality (Bitrate in Kbps):";
             // 
@@ -1850,7 +1874,7 @@ namespace Nmkoder.Forms
             this.label31.Location = new System.Drawing.Point(5, 10);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(122, 20);
+            this.label31.Size = new System.Drawing.Size(98, 15);
             this.label31.TabIndex = 47;
             this.label31.Text = "Codec (Encoder):";
             // 
@@ -1901,7 +1925,7 @@ namespace Nmkoder.Forms
             this.label42.Location = new System.Drawing.Point(5, 160);
             this.label42.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(114, 20);
+            this.label42.Size = new System.Drawing.Size(91, 15);
             this.label42.TabIndex = 60;
             this.label42.Text = "Resume Encode";
             // 
@@ -1917,7 +1941,7 @@ namespace Nmkoder.Forms
             "mkvmerge"});
             this.av1anOptsConcatMode.Location = new System.Drawing.Point(220, 67);
             this.av1anOptsConcatMode.Name = "av1anOptsConcatMode";
-            this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 28);
+            this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsConcatMode.TabIndex = 59;
             this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk generation method. If you are unsure, use lsmash.");
             // 
@@ -1928,7 +1952,7 @@ namespace Nmkoder.Forms
             this.label41.Location = new System.Drawing.Point(5, 70);
             this.label41.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(165, 20);
+            this.label41.Size = new System.Drawing.Size(135, 15);
             this.label41.TabIndex = 58;
             this.label41.Text = "Chunk Merging Method";
             // 
@@ -1939,7 +1963,7 @@ namespace Nmkoder.Forms
             this.label8.Location = new System.Drawing.Point(5, 130);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(135, 20);
+            this.label8.Size = new System.Drawing.Size(111, 15);
             this.label8.TabIndex = 57;
             this.label8.Text = "Custom Arguments";
             // 
@@ -1959,7 +1983,7 @@ namespace Nmkoder.Forms
             0,
             0});
             this.av1anOptsWorkerCount.Name = "av1anOptsWorkerCount";
-            this.av1anOptsWorkerCount.Size = new System.Drawing.Size(250, 27);
+            this.av1anOptsWorkerCount.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsWorkerCount.TabIndex = 53;
             this.toolTip.SetToolTip(this.av1anOptsWorkerCount, "Set the amount of av1an workers (encoder instances)");
             this.av1anOptsWorkerCount.Value = new decimal(new int[] {
@@ -1977,7 +2001,7 @@ namespace Nmkoder.Forms
             this.av1anCustomArgs.Location = new System.Drawing.Point(220, 127);
             this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomArgs.Name = "av1anCustomArgs";
-            this.av1anCustomArgs.Size = new System.Drawing.Size(442, 27);
+            this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
             this.av1anCustomArgs.TabIndex = 56;
             // 
             // label35
@@ -1987,7 +2011,7 @@ namespace Nmkoder.Forms
             this.label35.Location = new System.Drawing.Point(7, 100);
             this.label35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(139, 20);
+            this.label35.Size = new System.Drawing.Size(113, 15);
             this.label35.TabIndex = 50;
             this.label35.Text = "Amount Of Workers";
             // 
@@ -2000,7 +2024,7 @@ namespace Nmkoder.Forms
             this.av1anOptsChunkMode.FormattingEnabled = true;
             this.av1anOptsChunkMode.Location = new System.Drawing.Point(220, 37);
             this.av1anOptsChunkMode.Name = "av1anOptsChunkMode";
-            this.av1anOptsChunkMode.Size = new System.Drawing.Size(250, 28);
+            this.av1anOptsChunkMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsChunkMode.TabIndex = 49;
             this.toolTip.SetToolTip(this.av1anOptsChunkMode, "Select the chunk generation method. If you are unsure, use lsmash.");
             this.av1anOptsChunkMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
@@ -2012,7 +2036,7 @@ namespace Nmkoder.Forms
             this.label34.Location = new System.Drawing.Point(5, 40);
             this.label34.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(182, 20);
+            this.label34.Size = new System.Drawing.Size(148, 15);
             this.label34.TabIndex = 48;
             this.label34.Text = "Chunk Generation Method";
             // 
@@ -2028,7 +2052,7 @@ namespace Nmkoder.Forms
             "Scene Detection"});
             this.av1anOptsSplitMode.Location = new System.Drawing.Point(220, 7);
             this.av1anOptsSplitMode.Name = "av1anOptsSplitMode";
-            this.av1anOptsSplitMode.Size = new System.Drawing.Size(250, 28);
+            this.av1anOptsSplitMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsSplitMode.TabIndex = 47;
             this.toolTip.SetToolTip(this.av1anOptsSplitMode, "Set how to split the video into chunks");
             this.av1anOptsSplitMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
@@ -2040,7 +2064,7 @@ namespace Nmkoder.Forms
             this.label32.Location = new System.Drawing.Point(5, 10);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(121, 20);
+            this.label32.Size = new System.Drawing.Size(96, 15);
             this.label32.TabIndex = 46;
             this.label32.Text = "Splitting Method";
             // 
@@ -2373,7 +2397,7 @@ namespace Nmkoder.Forms
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Location = new System.Drawing.Point(220, 7);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(250, 28);
+            this.comboBox4.Size = new System.Drawing.Size(250, 23);
             this.comboBox4.TabIndex = 45;
             this.comboBox4.Visible = false;
             // 
@@ -2384,7 +2408,7 @@ namespace Nmkoder.Forms
             this.label43.Location = new System.Drawing.Point(5, 10);
             this.label43.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(122, 20);
+            this.label43.Size = new System.Drawing.Size(98, 15);
             this.label43.TabIndex = 17;
             this.label43.Text = "Codec (Encoder):";
             this.label43.Visible = false;
@@ -2406,7 +2430,7 @@ namespace Nmkoder.Forms
             this.mp4Faststart.AutoSize = true;
             this.mp4Faststart.Location = new System.Drawing.Point(220, 11);
             this.mp4Faststart.Name = "mp4Faststart";
-            this.mp4Faststart.Size = new System.Drawing.Size(18, 17);
+            this.mp4Faststart.Size = new System.Drawing.Size(15, 14);
             this.mp4Faststart.TabIndex = 50;
             this.mp4Faststart.UseVisualStyleBackColor = true;
             // 
@@ -2417,7 +2441,7 @@ namespace Nmkoder.Forms
             this.label64.Location = new System.Drawing.Point(5, 10);
             this.label64.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(149, 20);
+            this.label64.Size = new System.Drawing.Size(119, 15);
             this.label64.TabIndex = 47;
             this.label64.Text = "MP4: Web Optimized";
             // 
@@ -2502,7 +2526,7 @@ namespace Nmkoder.Forms
             this.currentActionLabel.Location = new System.Drawing.Point(13, 524);
             this.currentActionLabel.Margin = new System.Windows.Forms.Padding(4);
             this.currentActionLabel.Name = "currentActionLabel";
-            this.currentActionLabel.Size = new System.Drawing.Size(0, 15);
+            this.currentActionLabel.Size = new System.Drawing.Size(0, 13);
             this.currentActionLabel.TabIndex = 40;
             // 
             // checkItemsContextMenu
@@ -2516,47 +2540,47 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem,
             this.checkAllSubtitleTracksToolStripMenuItem});
             this.checkItemsContextMenu.Name = "checkItemsContextMenu";
-            this.checkItemsContextMenu.Size = new System.Drawing.Size(239, 148);
+            this.checkItemsContextMenu.Size = new System.Drawing.Size(203, 136);
             // 
             // checkAllToolStripMenuItem
             // 
             this.checkAllToolStripMenuItem.Name = "checkAllToolStripMenuItem";
-            this.checkAllToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.checkAllToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.checkAllToolStripMenuItem.Text = "Check All";
             this.checkAllToolStripMenuItem.Click += new System.EventHandler(this.checkAllToolStripMenuItem_Click);
             // 
             // checkNoneToolStripMenuItem
             // 
             this.checkNoneToolStripMenuItem.Name = "checkNoneToolStripMenuItem";
-            this.checkNoneToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.checkNoneToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.checkNoneToolStripMenuItem.Text = "Check None";
             this.checkNoneToolStripMenuItem.Click += new System.EventHandler(this.checkNoneToolStripMenuItem_Click);
             // 
             // invertSelectionToolStripMenuItem
             // 
             this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
-            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.invertSelectionToolStripMenuItem.Text = "Invert Selection";
             this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
             // 
             // checkAllVideoTracksToolStripMenuItem
             // 
             this.checkAllVideoTracksToolStripMenuItem.Name = "checkAllVideoTracksToolStripMenuItem";
-            this.checkAllVideoTracksToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.checkAllVideoTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.checkAllVideoTracksToolStripMenuItem.Text = "Check All Video Tracks";
             this.checkAllVideoTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllVideoTracksToolStripMenuItem_Click);
             // 
             // checkAllAudioTracksToolStripMenuItem
             // 
             this.checkAllAudioTracksToolStripMenuItem.Name = "checkAllAudioTracksToolStripMenuItem";
-            this.checkAllAudioTracksToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.checkAllAudioTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.checkAllAudioTracksToolStripMenuItem.Text = "Check All Audio Tracks";
             this.checkAllAudioTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllAudioTracksToolStripMenuItem_Click);
             // 
             // checkAllSubtitleTracksToolStripMenuItem
             // 
             this.checkAllSubtitleTracksToolStripMenuItem.Name = "checkAllSubtitleTracksToolStripMenuItem";
-            this.checkAllSubtitleTracksToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
+            this.checkAllSubtitleTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.checkAllSubtitleTracksToolStripMenuItem.Text = "Check All Subtitle Tracks";
             this.checkAllSubtitleTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllSubtitleTracksToolStripMenuItem_Click);
             // 
@@ -2578,6 +2602,61 @@ namespace Nmkoder.Forms
             this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
+            // 
+            // sortFileListContextMenu
+            // 
+            this.sortFileListContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.sortFileListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sortMenuAbcDesc,
+            this.sortMenuAbcAsc,
+            this.sortMenuSizeDesc,
+            this.sortMenuSizeAsc,
+            this.sortMenuRecentDesc,
+            this.sortMenuRecentAsc});
+            this.sortFileListContextMenu.Name = "checkItemsContextMenu";
+            this.sortFileListContextMenu.Size = new System.Drawing.Size(262, 158);
+            // 
+            // sortMenuAbcDesc
+            // 
+            this.sortMenuAbcDesc.Name = "sortMenuAbcDesc";
+            this.sortMenuAbcDesc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuAbcDesc.Text = "Sort By Filename (A-Z)";
+            this.sortMenuAbcDesc.Click += new System.EventHandler(this.sortMenuAbcDesc_Click);
+            // 
+            // sortMenuAbcAsc
+            // 
+            this.sortMenuAbcAsc.Name = "sortMenuAbcAsc";
+            this.sortMenuAbcAsc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuAbcAsc.Text = "Sort By Filename (Z-A)";
+            this.sortMenuAbcAsc.Click += new System.EventHandler(this.sortMenuAbcAsc_Click);
+            // 
+            // sortMenuSizeDesc
+            // 
+            this.sortMenuSizeDesc.Name = "sortMenuSizeDesc";
+            this.sortMenuSizeDesc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuSizeDesc.Text = "Sort By Filesize (Large To Small)";
+            this.sortMenuSizeDesc.Click += new System.EventHandler(this.sortMenuSizeDesc_Click);
+            // 
+            // sortMenuSizeAsc
+            // 
+            this.sortMenuSizeAsc.Name = "sortMenuSizeAsc";
+            this.sortMenuSizeAsc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuSizeAsc.Text = "Sort By Filesize (Small To Large)";
+            this.sortMenuSizeAsc.Click += new System.EventHandler(this.sortMenuSizeAsc_Click);
+            // 
+            // sortMenuRecentDesc
+            // 
+            this.sortMenuRecentDesc.Name = "sortMenuRecentDesc";
+            this.sortMenuRecentDesc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuRecentDesc.Text = "Sort By Modified Date (New To Old)";
+            this.sortMenuRecentDesc.Click += new System.EventHandler(this.sortMenuRecentDesc_Click);
+            // 
+            // sortMenuRecentAsc
+            // 
+            this.sortMenuRecentAsc.Name = "sortMenuRecentAsc";
+            this.sortMenuRecentAsc.Size = new System.Drawing.Size(261, 22);
+            this.sortMenuRecentAsc.Text = "Sort By Modified Date (Old To New)";
+            this.sortMenuRecentAsc.Click += new System.EventHandler(this.sortMenuRecentAsc_Click);
             // 
             // MainForm
             // 
@@ -2656,6 +2735,7 @@ namespace Nmkoder.Forms
             this.settingsContainersTab.PerformLayout();
             this.busyControlsPanel.ResumeLayout(false);
             this.checkItemsContextMenu.ResumeLayout(false);
+            this.sortFileListContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2835,6 +2915,14 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Panel utilsConcatPanel;
         private System.Windows.Forms.Label label44;
         private HTAlt.WinForms.HTButton htButton1;
+        private System.Windows.Forms.Button fileListSortBtn;
+        private System.Windows.Forms.ContextMenuStrip sortFileListContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuAbcDesc;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuAbcAsc;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuSizeDesc;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuSizeAsc;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuRecentDesc;
+        private System.Windows.Forms.ToolStripMenuItem sortMenuRecentAsc;
     }
 }
 

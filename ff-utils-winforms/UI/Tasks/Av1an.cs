@@ -33,7 +33,7 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task RunResumeWithNewArgs(string sourceFile, string overrideTempDir = "")
         {
-            if(TrackList.current == null || TrackList.current.File.TruePath != sourceFile)
+            if(TrackList.current == null || TrackList.current.File.ImportPath != sourceFile)
             {
                 Logger.Log($"You first need to load the input file that was used for this encode to resume with new settings!");
                 Program.mainForm.fileListBox.SelectedItem = 0; // Force MFM
@@ -58,7 +58,7 @@ namespace Nmkoder.UI.Tasks
                     CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
                     CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                     bool vmaf = IsUsingVmaf();
-                    inPath = TrackList.current.File.TruePath;
+                    inPath = TrackList.current.File.ImportPath;
                     string outPath = GetOutPath();
                     string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                     string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();

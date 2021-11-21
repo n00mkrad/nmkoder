@@ -35,7 +35,7 @@ namespace Nmkoder.Data.Ui
 
                 if (MediaFile.IsDirectory)
                 {
-                    List<string> exts = File.ReadAllLines(MediaFile.TruePath).Select(x => x.Remove("file '").Remove("'").Split('.').LastOrDefault()).ToList();
+                    List<string> exts = File.ReadAllLines(MediaFile.ImportPath).Select(x => x.Remove("file '").Remove("'").Split('.').LastOrDefault()).ToList();
                     int formatsCount = exts.Select(x => x).Distinct().Count();
                     fileCountStr = formatsCount > 1 ? $" ({MediaFile.FileCount} Files, {formatsCount} Formats)" : $" ({MediaFile.FileCount} Files)";
                 }
@@ -82,7 +82,7 @@ namespace Nmkoder.Data.Ui
         {
             for(int i = 0; i < Program.mainForm.fileListBox.Items.Count; i++)
             {
-                if (((FileListEntry)Program.mainForm.fileListBox.Items[i]).File.TruePath == MediaFile.TruePath)
+                if (((FileListEntry)Program.mainForm.fileListBox.Items[i]).File.ImportPath == MediaFile.ImportPath)
                     return i;
             }
 

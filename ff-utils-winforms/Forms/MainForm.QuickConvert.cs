@@ -145,7 +145,7 @@ namespace Nmkoder.Forms
                 bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
                 bool noAudTracks = streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
-                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.TruePath != TrackList.current.File.TruePath || noAudTracks || noEnc)
+                if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.ImportPath != TrackList.current.File.ImportPath || noAudTracks || noEnc)
                 {
                     TrackList.currentAudioConfig = null;
                     encAudConfMode.SelectedIndex = 0;

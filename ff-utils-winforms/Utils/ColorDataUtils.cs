@@ -151,19 +151,38 @@ namespace Nmkoder.Utils
             try
             {
                 string tmpPath = IoUtils.FilenameSuffix(path, ".tmp");
-                string args = $"-o {tmpPath.Wrap()} " +
-                    $"--colour-matrix 0:{d.ColorMatrixCoeffs} " +
-                    $"--colour-range 0:{d.ColorRange} " +
-                    $"--colour-transfer-characteristics 0:{d.ColorTransfer} " +
-                    $"--colour-primaries 0:{d.ColorPrimaries} " +
-                    $"--max-luminance 0:{d.LumaMax} " +
-                    $"--min-luminance 0:{d.LumaMin} " +
-                    $"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY} " +
-                    $"--max-content-light 0:{d.MaxCll} " +
-                    $"--max-frame-light 0:{d.MaxFall} " +
-                    $"{path.Wrap()}";
+                //string args = $"-o {tmpPath.Wrap()} " +
+                //    $"--colour-matrix 0:{d.ColorMatrixCoeffs} " +
+                //    $"--colour-range 0:{d.ColorRange} " +
+                //    $"--colour-transfer-characteristics 0:{d.ColorTransfer} " +
+                //    $"--colour-primaries 0:{d.ColorPrimaries} " +
+                //    $"--max-luminance 0:{d.LumaMax} " +
+                //    $"--min-luminance 0:{d.LumaMin} " +
+                //    $"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY} " +
+                //    $"--max-content-light 0:{d.MaxCll} " +
+                //    $"--max-frame-light 0:{d.MaxFall} " +
+                //    $"{path.Wrap()}";
 
-                await AvProcess.RunMkvMerge(args, true);
+                List<string> args = new List<string>();
+
+                args.Add($"-o {tmpPath.Wrap()}");
+                args.Add($"--colour-matrix 0:{d.ColorMatrixCoeffs}");
+                args.Add($"--colour-transfer-characteristics 0:{d.ColorTransfer}");
+                args.Add($"--colour-primaries 0:{d.ColorPrimaries}");
+                if (!string.IsNullOrWhiteSpace(d.LumaMax)) args.Add($"--max-luminance 0:{d.LumaMax}");
+                if (!string.IsNullOrWhiteSpace(d.LumaMin)) args.Add($"--min-luminance 0:{d.LumaMin}");
+                if (!string.IsNullOrWhiteSpace(d.RedX)) args.Add($"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY}");
+                if (!string.IsNullOrWhiteSpace(d.MaxCll)) args.Add($"--max-content-light 0:{d.MaxCll}");
+                if (!string.IsNullOrWhiteSpace(d.MaxFall)) args.Add($"--max-frame-light 0:{d.MaxFall}");
+                args.Add($"{path.Wrap()}");
+
+                await AvProcess.RunMkvMerge(string.Join(" ", args), true);
+
+                if (!File.Exists(tmpPath))
+                {
+                    Logger.Log($"Error: Muxing failed.");
+                    return;
+                }
 
                 int filesizeDiffKb = (int)((Math.Abs(new FileInfo(path).Length - new FileInfo(tmpPath).Length)) / 1024);
                 double filesizeFactor = (double)(new FileInfo(tmpPath).Length) / (double)(new FileInfo(path).Length);

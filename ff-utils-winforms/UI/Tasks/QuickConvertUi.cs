@@ -165,7 +165,7 @@ namespace Nmkoder.UI.Tasks
 
             if (enc.QDefault >= 0)
             {
-                form.encAudQualUpDown.Value = (enc.QDefault * MiscUtils.GetAudioBitrateMultiplier(channels)).RoundToInt();
+                form.encAudQualUpDown.Value = enc.QDefault;
                 form.encAudQualUpDown.Text = form.encAudQualUpDown.Value.ToString();
             }
             else

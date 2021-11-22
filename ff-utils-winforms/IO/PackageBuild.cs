@@ -31,7 +31,9 @@ namespace Nmkoder.IO
                 string archivePath1 = Path.Combine(dir, $"Nmkoder{ver}.7z");
                 string archivePath2 = Path.Combine(dir, $"Nmkoder{ver}-NoOCR.7z");
 
-                Process p1 = Process.Start(path7z, $"a {archivePath1.Wrap()} -m0=flzma2 -mx9 {copyDir.Wrap()}");
+                string args = $"a {archivePath1.Wrap()} -m0=flzma2 -mx9 {copyDir.Wrap()}";
+                Logger.Log($"\"{path7z}\" {args}");
+                Process p1 = Process.Start(path7z, args);
                 while (!p1.HasExited) await Task.Delay(100);
                 IoUtils.TryDeleteIfExists(Path.Combine(copyDir, "bin", "SE"));
                 Process.Start(path7z, $"a {archivePath2.Wrap()} -m0=flzma2 -mx9 {copyDir.Wrap()}");

@@ -325,8 +325,6 @@ namespace Nmkoder.UI.Tasks
 
         #region Metadata Tab 
 
-        //public static List<UniqueMetadataEntry> metaEntries = new List<UniqueMetadataEntry>();
-
         public static void LoadMetadataGrid()
         {
             if (TrackList.current == null)
@@ -343,8 +341,6 @@ namespace Nmkoder.UI.Tasks
                 grid.Columns.Add("1", "Title");
                 grid.Columns.Add("2", "Lang");
             }
-
-            //GetMetadata();
 
             grid.Rows.Clear();
 

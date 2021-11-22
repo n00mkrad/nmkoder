@@ -151,17 +151,6 @@ namespace Nmkoder.Utils
             try
             {
                 string tmpPath = IoUtils.FilenameSuffix(path, ".tmp");
-                //string args = $"-o {tmpPath.Wrap()} " +
-                //    $"--colour-matrix 0:{d.ColorMatrixCoeffs} " +
-                //    $"--colour-range 0:{d.ColorRange} " +
-                //    $"--colour-transfer-characteristics 0:{d.ColorTransfer} " +
-                //    $"--colour-primaries 0:{d.ColorPrimaries} " +
-                //    $"--max-luminance 0:{d.LumaMax} " +
-                //    $"--min-luminance 0:{d.LumaMin} " +
-                //    $"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY} " +
-                //    $"--max-content-light 0:{d.MaxCll} " +
-                //    $"--max-frame-light 0:{d.MaxFall} " +
-                //    $"{path.Wrap()}";
 
                 List<string> args = new List<string>();
 

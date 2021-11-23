@@ -49,6 +49,7 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.SetWorking(true);
             string args = "";
             string inPath = "";
+            string outPath = "";
             string timestamp = ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
             try
@@ -59,7 +60,7 @@ namespace Nmkoder.UI.Tasks
                     CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                     bool vmaf = IsUsingVmaf();
                     inPath = TrackList.current.File.ImportPath;
-                    string outPath = GetOutPath();
+                    outPath = GetOutPath();
                     string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                     string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
                     CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
@@ -71,7 +72,7 @@ namespace Nmkoder.UI.Tasks
                     string m = GetChunkGenMethod();
                     string c = GetConcatMethod();
 
-                    args = $"-i {inPath.Wrap()} --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --log-level debug --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {
@@ -79,13 +80,23 @@ namespace Nmkoder.UI.Tasks
                         string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
                         args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
                     }
-
-                    IoUtils.TryDeleteIfExists(outPath);
                 }
                 else
                 {
                     inPath = overrideArgs.Split("-i \"")[1].Split("\"")[0].Trim();
-                    IoUtils.TryDeleteIfExists(overrideArgs.Split(" -o \"").Last().Remove("\"").Trim());
+                    outPath = overrideArgs.Split(" -o \"").Last().Remove("\"").Trim();
+                }
+
+                if(outPath == inPath)
+                {
+                    Logger.Log($"Output path can't be the same as the input path!");
+                    return;
+                }
+
+                if (Path.GetExtension(outPath) == null)
+                {
+                    Logger.Log($"Output path must have a valid file extension!");
+                    return;
                 }
 
                 string tempDirName = !string.IsNullOrWhiteSpace(overrideTempDir) ? overrideTempDir : timestamp;

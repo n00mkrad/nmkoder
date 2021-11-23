@@ -158,6 +158,7 @@ namespace Nmkoder.Utils
                 args.Add($"--colour-matrix 0:{d.ColorMatrixCoeffs}");
                 args.Add($"--colour-transfer-characteristics 0:{d.ColorTransfer}");
                 args.Add($"--colour-primaries 0:{d.ColorPrimaries}");
+                args.Add($"--colour-range 0:{d.ColorRange}");
                 if (!string.IsNullOrWhiteSpace(d.LumaMax)) args.Add($"--max-luminance 0:{d.LumaMax}");
                 if (!string.IsNullOrWhiteSpace(d.LumaMin)) args.Add($"--min-luminance 0:{d.LumaMin}");
                 if (!string.IsNullOrWhiteSpace(d.RedX)) args.Add($"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY}");

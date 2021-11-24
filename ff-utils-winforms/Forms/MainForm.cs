@@ -249,10 +249,14 @@ namespace Nmkoder.Forms
             QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
         }
 
+        #region FileList
+
         private void SetFileListItems(object[] objectCollection)
         {
             fileList.Items.Clear();
-            fileList.Items.AddRange(new ListBox.ObjectCollection(fileListBox, objectCollection));
+
+            foreach (object o in objectCollection)
+                fileList.Items.Add(o);
         }
 
         private void sortMenuAbcDesc_Click(object sender, EventArgs e)
@@ -284,5 +288,7 @@ namespace Nmkoder.Forms
         {
             SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.LastWriteTime).ToArray());
         }
+
+        #endregion
     }
 }

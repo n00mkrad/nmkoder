@@ -22,18 +22,18 @@ namespace Nmkoder.UI.Tasks
             QuickConvertUi.Init();
         }
 
-        public static async Task Run ()
+        public static async Task Run()
         {
             Program.mainForm.SetWorking(true);
             string args = "";
-            
+
             try
             {
                 IEncoder vCodec = CodecUtils.GetCodec(GetCurrentCodecV());
                 CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
                 bool crf = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.Crf;
-                bool twoPass = vCodec.SupportsTwoPass && !crf;
+                bool twoPass = vCodec.SupportsTwoPass && (vCodec.ForceTwoPass || !crf);
                 Dictionary<string, string> videoArgs = vCodec.DoesNotEncode ? new Dictionary<string, string>() : GetVideoArgsFromUi(!crf);
 
                 string inFiles = TrackList.GetInputFilesString();
@@ -46,7 +46,7 @@ namespace Nmkoder.UI.Tasks
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
                 string muxing = GetMuxingArgsFromUi();
 
-                if(twoPass)
+                if (twoPass)
                 {
                     CodecArgs codecArgsPass1 = vCodec.GetArgs(videoArgs, TrackList.current.File, Pass.OneOfTwo);
                     string v1 = codecArgsPass1.Arguments;
@@ -67,7 +67,7 @@ namespace Nmkoder.UI.Tasks
                     args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"Error creating FFmpeg command: {e.Message}\n{e.StackTrace}");
                 return;

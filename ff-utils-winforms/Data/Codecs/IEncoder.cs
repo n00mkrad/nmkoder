@@ -24,6 +24,7 @@ namespace Nmkoder.Data.Codecs
         string PresetInfo { get; }
 
         bool SupportsTwoPass { get; }
+        bool ForceTwoPass { get; }
         bool DoesNotEncode { get; }
         bool IsFixedFormat { get; }
         bool IsSequence { get; }

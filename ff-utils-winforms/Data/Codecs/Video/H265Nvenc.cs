@@ -12,7 +12,7 @@ namespace Nmkoder.Data.Codecs
         public string FriendlyName { get; } = "H.265 / HEVC (NVIDIA NVENC)";
         public string[] Presets { get; } = new string[] { "p7", "p6", "p5", "p4", "p3", "p2", "p1" };
         public int PresetDefault { get; } = 0;
-        public string[] ColorFormats  { get; } = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
+        public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
         public int ColorFormatDefault { get; } = 0;
         public int QMin { get; } = 0;
         public int QMax { get; } = 51;
@@ -21,7 +21,8 @@ namespace Nmkoder.Data.Codecs
         public string PresetInfo { get; } = "Higher = Better compression";
 
         public bool SupportsTwoPass { get; } = false;
-		public bool DoesNotEncode { get; } = false;
+        public bool ForceTwoPass { get; } = false;
+        public bool DoesNotEncode { get; } = false;
         public bool IsFixedFormat { get; } = false;
         public bool IsSequence { get; } = false;
 

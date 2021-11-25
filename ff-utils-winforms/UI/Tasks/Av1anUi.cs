@@ -286,17 +286,18 @@ namespace Nmkoder.UI.Tasks
             if (form.av1anContainerBox.SelectedIndex < 0)
                 return;
 
-            CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
+            IEncoder aCodec = CodecUtils.GetCodec((CodecUtils.AudioCodec)form.av1anAudCodecBox.SelectedIndex);
+            Containers.Container c = (Containers.Container)Enum.Parse(typeof(Containers.Container), form.av1anContainerBox.Text, true);
 
-            Containers.Container c = (Containers.Container)form.av1anContainerBox.SelectedIndex;
-
-            if (!Containers.ContainerSupports(c, CodecUtils.GetCodec(aCodec)))
+            if (!Containers.ContainerSupports(c, aCodec))
             {
                 Containers.Container supported = Containers.Container.Mkv;
 
                 for (int i = 0; i < form.av1anContainerBox.Items.Count; i++)
                     if (form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
                         form.av1anContainerBox.SelectedIndex = i;
+
+                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.", Logger.LastLine.Contains(aCodec.FriendlyName));
             }
 
             Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.av1anContainerBox.Text);

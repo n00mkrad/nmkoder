@@ -122,7 +122,7 @@ namespace Nmkoder.Data
             Language = await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "TAG:language");
             DurationMs = FfmpegCommands.GetDurationMs(path);
             StreamCount = await FfmpegUtils.GetStreamCount(path);
-            TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1024;
+            TotalKbits = (await GetVideoInfo.GetFfprobeInfoAsync(path, GetVideoInfo.FfprobeMode.ShowFormat, "bit_rate")).GetInt() / 1000;
         }
 
         public string GetName()

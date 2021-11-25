@@ -74,7 +74,7 @@ namespace Nmkoder.Forms
         private void av1anContainer_SelectedIndexChanged(object sender, EventArgs e)
         {
             SaveConfigAv1an();
-            QuickConvertUi.ValidateContainer();
+            Av1anUi.ValidateContainer();
         }
 
         public void LoadConfigAv1an()

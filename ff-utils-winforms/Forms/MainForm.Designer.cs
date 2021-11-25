@@ -1943,7 +1943,7 @@ namespace Nmkoder.Forms
             this.av1anOptsConcatMode.Name = "av1anOptsConcatMode";
             this.av1anOptsConcatMode.Size = new System.Drawing.Size(250, 28);
             this.av1anOptsConcatMode.TabIndex = 59;
-            this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk generation method. If you are unsure, use lsmash.");
+            this.toolTip.SetToolTip(this.av1anOptsConcatMode, "Select the chunk merging method. Use mkvmerge if ffmpeg doesn't work correctly.");
             // 
             // label41
             // 

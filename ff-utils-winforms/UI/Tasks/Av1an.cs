@@ -72,7 +72,7 @@ namespace Nmkoder.UI.Tasks
                     string m = GetChunkGenMethod();
                     string c = GetConcatMethod();
 
-                    args = $"-i {inPath.Wrap()} -y --log-level debug --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {

@@ -113,7 +113,7 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadQualityLevel(IEncoder enc)
         {
-            if (form.encQualModeBox.SelectedIndex == 0)
+            if(form.encQualModeBox.SelectedIndex == 0)
             {
                 if (enc.QMax > 0)
                     form.encVidQualityBox.Maximum = enc.QMax;
@@ -179,26 +179,40 @@ namespace Nmkoder.UI.Tasks
 
         public static void ValidateContainer()
         {
-            if (form.av1anContainerBox.SelectedIndex < 0)
+            if (form.ffmpegContainerBox.SelectedIndex < 0)
                 return;
 
-            CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.av1anAudCodecBox.SelectedIndex;
+            CodecUtils.VideoCodec vCodec = (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
+            CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.encAudCodecBox.SelectedIndex;
+            CodecUtils.SubtitleCodec sCodec = (CodecUtils.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
+            IEncoder encV = CodecUtils.GetCodec(vCodec);
             IEncoder encA = CodecUtils.GetCodec(aCodec);
+            IEncoder encS = CodecUtils.GetCodec(sCodec);
 
-            Containers.Container c = (Containers.Container)form.av1anContainerBox.SelectedIndex;
+            Containers.Container c = (Containers.Container)form.ffmpegContainerBox.SelectedIndex;
 
-            if (!Containers.ContainerSupports(c, encA))
+            if (!(Containers.ContainerSupports(c, encV) && Containers.ContainerSupports(c, encA) && Containers.ContainerSupports(c, encS)))
             {
-                Containers.Container supported = Containers.Container.Mkv;
+                Containers.Container supported = Containers.GetSupportedContainer(encV, encA, encS);
 
-                for (int i = 0; i < form.av1anContainerBox.Items.Count; i++)
-                    if (form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-                        form.av1anContainerBox.SelectedIndex = i;
+                for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
+                    if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
+                        form.ffmpegContainerBox.SelectedIndex = i;
             }
 
-            Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.av1anContainerBox.Text);
-            Program.mainForm.av1anOutputPathBox.Text = Path.ChangeExtension(form.av1anOutputPathBox.Text.Trim(), current.ToString().ToLower());
+            bool fixedFormat = CodecUtils.GetCodec(vCodec).IsFixedFormat;
 
+            if (fixedFormat)
+            {
+                string format = vCodec.ToString().ToLower();
+                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), format);
+            }
+            else
+            {
+                Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
+                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), current.ToString().ToLower());
+            }
+            
             ValidatePath();
         }
 
@@ -209,7 +223,7 @@ namespace Nmkoder.UI.Tasks
 
             //string ext = Program.mainForm.containerBox.Text.ToLower();
 
-            if (File.Exists(Program.mainForm.ffmpegOutputBox.Text))
+            if(File.Exists(Program.mainForm.ffmpegOutputBox.Text))
                 Program.mainForm.ffmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.ffmpegOutputBox.Text);
         }
 
@@ -240,7 +254,7 @@ namespace Nmkoder.UI.Tasks
                 dict.Add("bitrate", GetVideoKbps().ToString());
             else
                 dict.Add("q", form.encVidQualityBox.Value.ToString());
-
+                
             dict.Add("preset", form.encVidPresetBox.Text.ToLower());
             dict.Add("pixFmt", form.encVidColorsBox.Text.ToLower());
             dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
@@ -251,7 +265,7 @@ namespace Nmkoder.UI.Tasks
 
         private static int GetVideoKbps()
         {
-            if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
+            if((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
             {
                 string br = form.encVidQualityBox.Text.ToLower().Trim();
                 if (br.EndsWith("k")) return br.GetInt() * 1024;
@@ -267,7 +281,7 @@ namespace Nmkoder.UI.Tasks
                 int audioBps = aud ? ((int)form.encAudQualUpDown.Value * 1024) * audioTracks : 0;
                 double durationSecs = TrackList.current.File.DurationMs / (double)1000;
                 float targetMbytes = form.encVidQualityBox.Text.GetFloat();
-                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024);
+                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024); 
                 int targetVidBitrate = (int)Math.Floor(targetBits / durationSecs) - audioBps; // Round down since undershooting is better than overshooting here
                 string brTotal = (((float)targetVidBitrate + audioBps) / 1024).ToString("0.0");
                 string brVid = ((float)targetVidBitrate / 1024).ToString("0");
@@ -353,7 +367,7 @@ namespace Nmkoder.UI.Tasks
             grid.Columns[2].FillWeight = 6;
         }
 
-        public static void SaveMetadata()
+        public static void SaveMetadata ()
         {
             DataGridView grid = Program.mainForm.metaGrid;
             Logger.Log($"Saving metadata.", true);
@@ -403,7 +417,7 @@ namespace Nmkoder.UI.Tasks
             {
                 stripStr = "-map_metadata -1";
             }
-
+            
 
             int cfg = Config.GetInt(Config.Key.metaMode);
             DataGridView grid = form.metaGrid;
@@ -436,7 +450,7 @@ namespace Nmkoder.UI.Tasks
             }
 
             if (cfg == 2) // 2 = Strip All
-                return $"{stripStr} {string.Join(" ", argsDispo)}";
+                return $"{stripStr} {string.Join(" ", argsDispo)}"; 
 
             bool map = cfg == 0 || cfg == 1;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             List<string> argsMeta = new List<string>();
@@ -462,7 +476,7 @@ namespace Nmkoder.UI.Tasks
 
                     if (cfg == 0 && entry.LanguageEdited.Trim() != entry.Language)
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
-                    else if (cfg == 1)
+                    else if(cfg == 1)
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
                 }
             }
@@ -529,7 +543,7 @@ namespace Nmkoder.UI.Tasks
                 return "";
         }
 
-        public static string GetOutPath(IEncoder c)
+        public static string GetOutPath (IEncoder c)
         {
             string uiPath = Program.mainForm.ffmpegOutputBox.Text.Trim();
 

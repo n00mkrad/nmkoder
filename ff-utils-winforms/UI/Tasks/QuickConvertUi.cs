@@ -198,6 +198,8 @@ namespace Nmkoder.UI.Tasks
                 for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
                     if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
                         form.ffmpegContainerBox.SelectedIndex = i;
+
+                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{encA.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.", Logger.LastLine.Contains(encA.FriendlyName));
             }
 
             bool fixedFormat = CodecUtils.GetCodec(vCodec).IsFixedFormat;

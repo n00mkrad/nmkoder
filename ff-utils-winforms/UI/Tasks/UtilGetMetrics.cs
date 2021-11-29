@@ -46,7 +46,7 @@ namespace Nmkoder.UI.Tasks
 
                 string r = fixRate ? "-r 24" : "";
                 string f = await GetAlignFilters();
-                FfmpegOutputHandler.overrideTargetDurationMs = FfmpegCommands.GetDurationMs(vidLq);
+                FfmpegOutputHandler.overrideTargetDurationMs = await FfmpegCommands.GetDurationMs(vidLq);
 
                 if (runVmaf)
                 {
@@ -116,7 +116,7 @@ namespace Nmkoder.UI.Tasks
 
         static bool ReplaceLastLine ()
         {
-            return (new[] { "...", FfmpegOutputHandler.prefix }).Any(c => Logger.LastLine.Contains(c));
+            return (new[] { "...", FfmpegOutputHandler.prefix }).Any(c => Logger.LastUiLine.Contains(c));
         }
 
         private static async Task<string> GetAlignFilters ()

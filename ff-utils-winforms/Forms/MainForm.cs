@@ -19,6 +19,7 @@ using Nmkoder.Main;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Utils;
+using Nmkoder.Forms.Utils;
 
 namespace Nmkoder.Forms
 {
@@ -62,7 +63,7 @@ namespace Nmkoder.Forms
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
+        private async void MainForm_Shown(object sender, EventArgs e)
         {
             QuickConvert.Init();
             Av1an.Init();
@@ -74,7 +75,7 @@ namespace Nmkoder.Forms
             initialized = true;
 
             if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
-                PackageBuild.Run(Program.args.Where(x => x.StartsWith("package=")).First().Split('=')[1]);
+                await PackageBuild.Run(Program.args.Where(x => x.StartsWith("package=")).First().Split('=')[1]);
         }
 
         void LoadUiConfig()
@@ -290,5 +291,7 @@ namespace Nmkoder.Forms
         }
 
         #endregion
+
+        
     }
 }

@@ -60,7 +60,7 @@ namespace Nmkoder.Utils
             {
                 if (print)
                 {
-                    Logger.Log($"Writing chunk {i + 1}/{commands.Count}...", false, Logger.LastLine.Contains("Writing chunk"));
+                    Logger.Log($"Writing chunk {i + 1}/{commands.Count}...", false, Logger.LastUiLine.Contains("Writing chunk"));
                     int percent = (((float)(i + 1) / commands.Count) * 100f).RoundToInt();
                     Program.mainForm.SetProgress(percent);
                 }

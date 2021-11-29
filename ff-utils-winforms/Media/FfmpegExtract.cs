@@ -310,7 +310,7 @@ namespace Nmkoder.Media
 
         public static async Task ExtractThumbs(string inputFile, string outputDir, int amount, int maxH = 360, string format = "jpg")
         {
-            long duration = (int)Math.Floor((float)GetDurationMs(inputFile) / 1000);
+            long duration = (int)Math.Floor((float)(await GetDurationMs(inputFile)) / 1000);
             int interval = (int)Math.Floor((float)duration / amount);
 
             Logger.Log($"Thumbnail Interval: {duration}/{amount} = {interval}", true);

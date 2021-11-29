@@ -97,7 +97,7 @@ namespace Nmkoder.Media
                     
                     string etaStr = encodedChunks > workers ? $" ETA: <{FormatUtils.Time(new TimeSpan(0, 0, etaSecs), false)}" : "";
 
-                    Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).{etaStr}", false, Logger.LastLine.Contains("Encoded"));
+                    Logger.Log($"AV1AN is running - Encoded {encodedChunks}/{currentQueueSize} chunks ({ratio}%).{etaStr}", false, Logger.LastUiLine.Contains("Encoded"));
 
                     for (int i = 100; i > 0; i--)
                     {

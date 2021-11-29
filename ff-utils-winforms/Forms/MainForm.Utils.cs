@@ -112,6 +112,12 @@ namespace Nmkoder.Forms
             UpdatePanels();
         }
 
+        private void SelectBitratePlotUtil(object sender, EventArgs e)
+        {
+            currentTask = RunTask.TaskType.PlotBitrate;
+            UpdatePanels();
+        }
+
         private void UpdatePanels()
         {
             utilsBitratesPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilReadBitrates) ? BorderStyle.FixedSingle : BorderStyle.None;
@@ -119,6 +125,7 @@ namespace Nmkoder.Forms
             utilsOcrPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilOcr) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsColorDataPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilColorData) ? BorderStyle.FixedSingle : BorderStyle.None;
             utilsConcatPanel.BorderStyle = (currentTask == RunTask.TaskType.UtilConcat) ? BorderStyle.FixedSingle : BorderStyle.None;
+            utilsBitratePlotPanel.BorderStyle = (currentTask == RunTask.TaskType.PlotBitrate) ? BorderStyle.FixedSingle : BorderStyle.None;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Nmkoder.UI
                     await FfmpegExtract.ExtractSingleFrame(path, imgPath, 1, 360);
                     await LoadThumbnailsOnce();
 
-                    int duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
+                    int duration = (int)Math.Floor((float)(await FfmpegCommands.GetDurationMs(path)) / 1000);
 
                     if (duration > randThumbs)   // Only generate random thumbs if duration is long enough
                     {

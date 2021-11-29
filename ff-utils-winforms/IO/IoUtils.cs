@@ -365,7 +365,7 @@ namespace Nmkoder.IO
             {
 				if (!IsPathDirectory(path))     // If path is video
 				{
-					res = GetVideoRes(path);
+					res = await GetVideoRes(path);
 				}
 				else     // Path is frame folder
 				{
@@ -381,13 +381,13 @@ namespace Nmkoder.IO
 			return res;
 		}
 
-		public static Size GetVideoRes (string path)
+		public static async Task<Size> GetVideoRes (string path)
 		{
 			Size size = new Size(0, 0);
 
 			try
 			{
-				size = FfmpegCommands.GetSize(path);
+				size = await FfmpegCommands.GetSize(path);
 				Logger.Log($"Detected video size of {Path.GetFileName(path)} as {size.Width}x{size.Height}", true);
 			}
 			catch

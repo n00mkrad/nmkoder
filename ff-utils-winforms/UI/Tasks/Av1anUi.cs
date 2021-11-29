@@ -297,7 +297,7 @@ namespace Nmkoder.UI.Tasks
                     if (form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
                         form.av1anContainerBox.SelectedIndex = i;
 
-                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.", Logger.LastLine.Contains(aCodec.FriendlyName));
+                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.", Logger.LastUiLine.Contains(aCodec.FriendlyName));
             }
 
             Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.av1anContainerBox.Text);

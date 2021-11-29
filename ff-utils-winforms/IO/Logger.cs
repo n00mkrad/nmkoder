@@ -19,7 +19,10 @@ namespace Nmkoder.IO
         public const string defaultLogName = "sessionlog";
         public static long id;
 
-        public static string LastLine { get { return GetLastLine(); } }
+        private static string _lastUi = "";
+        public static string LastUiLine { get { return _lastUi; } }
+        private static string _lastLog = "";
+        public static string LastLogLine { get { return _lastLog; } }
 
         public struct LogEntry
         {
@@ -58,7 +61,14 @@ namespace Nmkoder.IO
             if (string.IsNullOrWhiteSpace(entry.logMessage))
                 return;
 
-            Console.WriteLine(entry.logMessage);
+            string msg = entry.logMessage;
+
+            _lastLog = msg;
+
+            if (!entry.hidden)
+                _lastUi = msg;
+
+            Console.WriteLine(msg);
 
             try
             {
@@ -71,21 +81,21 @@ namespace Nmkoder.IO
             }
             catch { }
 
-            entry.logMessage = entry.logMessage.Replace("\n", Environment.NewLine);
+            msg = msg.Replace("\n", Environment.NewLine);
 
             if (!entry.hidden && textbox != null)
-                textbox.AppendText((textbox.Text.Length > 1 ? Environment.NewLine : "") + entry.logMessage);
+                textbox.AppendText((textbox.Text.Length > 1 ? Environment.NewLine : "") + msg);
 
             if (entry.replaceLastLine)
             {
                 textbox.Resume();
-                entry.logMessage = "[REPL] " + entry.logMessage;
+                msg = "[REPL] " + msg;
             }
 
             if (!entry.hidden)
-                entry.logMessage = "[UI] " + entry.logMessage;
+                msg = "[UI] " + msg;
 
-            LogToFile(entry.logMessage, false, entry.filename);
+            LogToFile(msg, false, entry.filename);
         }
 
         public static void LogToFile(string logStr, bool noLineBreak, string filename)
@@ -149,14 +159,21 @@ namespace Nmkoder.IO
             textbox.Text = "";
         }
 
-        private static string GetLastLine()
+        private static string GetLastLine(bool includeHidden = false)
         {
-            string[] lines = textbox.Text.SplitIntoLines();
+            if (includeHidden)
+            {
+                return _lastUi;
+            }
+            else
+            {
+                string[] lines = textbox.Text.SplitIntoLines();
 
-            if (lines.Length < 1)
-                return "";
+                if (lines.Length > 0)
+                    return lines.Last();
+            }
 
-            return lines.Last();
+            return "";
         }
 
         public static void RemoveLastLine()

@@ -19,7 +19,7 @@ namespace Nmkoder.Utils
         {
             VideoColorData data = new VideoColorData();
 
-            string infoFfprobe = AvProcess.GetFfprobeOutput($"-v quiet -show_frames -read_intervals \"%+#1\" {path.Wrap()}");
+            string infoFfprobe = await AvProcess.RunFfprobe($"-v quiet -show_frames -read_intervals \"%+#1\" {path.Wrap()}");
 
             string[] linesFfprobe = infoFfprobe.SplitIntoLines();
 

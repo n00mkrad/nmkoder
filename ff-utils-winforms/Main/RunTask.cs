@@ -16,7 +16,7 @@ namespace Nmkoder.Main
 {
     public class RunTask
     {
-        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData, UtilConcat };
+        public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData, UtilConcat, PlotBitrate };
         //public static TaskType currentTask;
 
         public enum FileListMode { MultiFileInput, BatchProcess };
@@ -77,26 +77,14 @@ namespace Nmkoder.Main
             FfmpegOutputHandler.overrideTargetDurationMs = -1;
             NmkdStopwatch sw = new NmkdStopwatch();
 
-            if (taskType == TaskType.Convert)
-                await QuickConvert.Run();
-
-            if (taskType == TaskType.Av1an)
-                await Av1an.Run();
-
-            if (taskType == TaskType.UtilReadBitrates)
-                await UtilReadBitrates.Run();
-
-            if (taskType == TaskType.UtilGetMetrics)
-                await UtilGetMetrics.Run();
-
-            if (taskType == TaskType.UtilOcr)
-                await UtilOcr.Run();
-
-            if (taskType == TaskType.UtilColorData)
-                await UtilColorData.Run();
-
-            if (taskType == TaskType.UtilConcat)
-                await UtilConcat.Run();
+            if (taskType == TaskType.Convert) await QuickConvert.Run();
+            else if (taskType == TaskType.Av1an) await Av1an.Run();
+            else if (taskType == TaskType.UtilReadBitrates) await UtilReadBitrates.Run();
+            else if (taskType == TaskType.UtilGetMetrics) await UtilGetMetrics.Run();
+            else if (taskType == TaskType.UtilOcr) await UtilOcr.Run();
+            else if (taskType == TaskType.UtilColorData) await UtilColorData.Run();
+            else if (taskType == TaskType.UtilConcat) await UtilConcat.Run();
+            else if (taskType == TaskType.PlotBitrate) await UtilPlotBitrate.Run();
 
             Logger.Log($"Done - Finished task in {sw}.");
             Program.mainForm.SetProgress(0);

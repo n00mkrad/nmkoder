@@ -172,7 +172,7 @@ namespace Nmkoder.Media
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
             int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 10);
-            long duration = (int)Math.Floor((float)FfmpegCommands.GetDurationMs(path) / 1000);
+            long duration = (int)Math.Floor((float)(await FfmpegCommands.GetDurationMs(path)) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();
             List<Task> tasks = new List<Task>();
@@ -203,7 +203,7 @@ namespace Nmkoder.Media
             string chosen = commonCertainty > 85 ? mostCommon : largest; // Use most common if it's >85% common, otherwise use largest to be safe (thanks Nolan)
             Logger.Log($"GetCurrentAutoCrop - Largest: {largest} - Smallest: {detectedCrops.Last()} - Most Common: {mostCommon} ({commonCertainty}%) - Chosen: {chosen} [T = {sw}]", true);
             string[] cropVals = chosen.Split(':');
-            bool repl = Logger.LastLine.Contains(msg);
+            bool repl = Logger.LastUiLine.Contains(msg);
             Logger.Log($"Automatically detected crop: {cropVals[0]}x{cropVals[1]} (X = {cropVals[2]}, Y = {cropVals[3]})", quiet, !quiet && repl);
 
             return $"crop={chosen}";

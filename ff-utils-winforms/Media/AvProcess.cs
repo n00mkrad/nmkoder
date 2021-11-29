@@ -96,9 +96,6 @@ namespace Nmkoder.Media
                 ffmpeg.BeginErrorReadLine();
             }
 
-            //while (!ffmpeg.HasExited)
-            //    await Task.Delay(10);
-
             while (!ffmpeg.HasExited) await Task.Delay(10);
             while (reliableOutput && timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
 
@@ -114,34 +111,57 @@ namespace Nmkoder.Media
             string output = await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", true, progressBar);
             if (setBusy) Program.mainForm.SetWorking(false);
             return output;
-            //timeSinceLastOutput.Restart();
-            //if (Program.busy) setBusy = false;
-            //lastOutputFfmpeg = "";
-            //showProgressBar = progressBar;
-            //Process ffmpeg = OsUtils.NewProcess(true);
-            //lastAvProcess = ffmpeg;
-            //ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe -hide_banner -y -stats {args}";
-            //Logger.Log($"ffmpeg {args}", true, false, "ffmpeg");
-            //if (setBusy) Program.mainForm.SetWorking(true);
-            //lastOutputFfmpeg = await OsUtils.GetOutputAsync(ffmpeg);
-            //while (!ffmpeg.HasExited) await Task.Delay(50);
-            //while (timeSinceLastOutput.ElapsedMilliseconds < 200) await Task.Delay(50);
-            //if (setBusy) Program.mainForm.SetWorking(false);
-            //return lastOutputFfmpeg;
         }
 
-        public static string GetFfprobeOutput(string args)
+        public static async Task<string> RunFfprobe(string args, LogMode logMode = LogMode.Hidden, string loglevel = "quiet")
         {
-            Process ffprobe = OsUtils.NewProcess(true);
-            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe.exe {args}";
-            Logger.Log($"ffprobe {args}", true, false, "ffmpeg");
+            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            string processOutput = "";
+            Process ffprobe = OsUtils.NewProcess(!show);
+            NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
+            lastAvProcess = ffprobe;
+
+            if (string.IsNullOrWhiteSpace(loglevel))
+                loglevel = defLogLevel;
+
+            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe -v {loglevel} {args}";
+
+            if (logMode != LogMode.Hidden) Logger.Log("Running FFprobe...", false);
+            Logger.Log($"ffprobe -v {loglevel} {args}", true, false, "ffmpeg");
+
+            if (!show)
+            {
+                ffprobe.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
+                ffprobe.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
+            }
+
             ffprobe.Start();
-            ffprobe.WaitForExit();
-            string output = ffprobe.StandardOutput.ReadToEnd();
-            string err = ffprobe.StandardError.ReadToEnd();
-            if (!string.IsNullOrWhiteSpace(err)) output += "\n" + err;
-            return output;
+            ffprobe.PriorityClass = ProcessPriorityClass.BelowNormal;
+
+            if (!show)
+            {
+                ffprobe.BeginOutputReadLine();
+                ffprobe.BeginErrorReadLine();
+            }
+
+            while (!ffprobe.HasExited) await Task.Delay(10);
+            while (timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
+
+            return processOutput;
         }
+
+        // public static string RunFfprobe(string args)
+        // {
+        //     Process ffprobe = OsUtils.NewProcess(true);
+        //     ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe.exe {args}";
+        //     Logger.Log($"ffprobe {args}", true, false, "ffmpeg");
+        //     ffprobe.Start();
+        //     ffprobe.WaitForExit();
+        //     string output = ffprobe.StandardOutput.ReadToEnd();
+        //     string err = ffprobe.StandardError.ReadToEnd();
+        //     if (!string.IsNullOrWhiteSpace(err)) output += "\n" + err;
+        //     return output;
+        // }
 
         #endregion
 
@@ -273,7 +293,7 @@ namespace Nmkoder.Media
                 mkvm.OutputDataReceived += (sender, outLine) => {
                     string s = (outLine != null && outLine.Data != null) ? outLine.Data : "";
                     processOutput += Environment.NewLine + s;
-                    Logger.Log($"[mkvmerge] {s}", !log || s.Trim().Length < 1, Logger.LastLine.Trim().EndsWith("%"), "mkvmerge");
+                    Logger.Log($"[mkvmerge] {s}", !log || s.Trim().Length < 1, Logger.LastUiLine.Trim().EndsWith("%"), "mkvmerge");
                 };
 
                 mkvm.ErrorDataReceived += (sender, outLine) => {

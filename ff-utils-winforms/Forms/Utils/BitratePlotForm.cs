@@ -69,7 +69,7 @@ namespace Nmkoder.Forms.Utils
 
             infoLabel.Text = $"Selected {spanStart.ToString(@"hh\:mm\:ss")} to {spanEnd.ToString(@"hh\:mm\:ss")} ({selectedBitrates.Count} Samples) - " +
                 $"Start: {KbitsFromPoint(pointStart)}k - End: {KbitsFromPoint(pointEnd)}k - " +
-                $"Min: {selectedBitrates.Min()}k - Max: {selectedBitrates.Max()}k - Average: {selectedBitrates.Average()}k";
+                $"Min: {selectedBitrates.Min()}k - Max: {selectedBitrates.Max()}k - Average: {((float)selectedBitrates.Average()).RoundToInt()}k";
         }
 
         private int KbitsFromPoint(System.Windows.Forms.DataVisualization.Charting.DataPoint point)

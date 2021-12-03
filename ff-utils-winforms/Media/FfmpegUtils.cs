@@ -45,7 +45,6 @@ namespace Nmkoder.Media
                 {
                     try
                     {
-                        Logger.Log($"Found Stream: {streamStr}", true);
                         int idx = streamStr.Split(':')[1].Split('[')[0].Split('(')[0].GetInt();
 
                         if (progressBar)
@@ -126,6 +125,7 @@ namespace Nmkoder.Media
                             continue;
                         }
 
+                        Logger.Log($"Unknown stream (not vid/aud/sub/data/attach): {streamStr}", true);
                         Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, Type = Stream.StreamType.Unknown };
                         streamList.Add(stream);
                     }

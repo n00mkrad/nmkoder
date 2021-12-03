@@ -66,7 +66,7 @@ namespace Nmkoder.Forms
             for (int i = 0; i < fileList.Items.Count; i++)
             {
                 if (fileList.GetItemChecked(i))
-                    ImportFiles.Add(((FileListEntry)fileList.Items[i]).File.File.FullName);
+                    ImportFiles.Add(((FileListEntry)fileList.Items[i]).File.SourcePath);
             }
 
             DialogResult = DialogResult.OK;

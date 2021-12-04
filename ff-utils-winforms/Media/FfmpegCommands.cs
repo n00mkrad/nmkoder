@@ -183,7 +183,7 @@ namespace Nmkoder.Media
             return frameCountRounded;
         }
 
-        static async Task<int> ReadFrameCountFfprobePacketCount(string filePath)
+        public static async Task<int> ReadFrameCountFfprobePacketCount(string filePath)
         {
             string output = await RunFfprobe($"-select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 {filePath.Wrap()}", LogMode.Hidden, "error");
             string[] lines = output.SplitIntoLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
@@ -194,7 +194,7 @@ namespace Nmkoder.Media
             return lines.Last().GetInt();
         }
 
-        static async Task<int> ReadFrameCountFfprobe(string filePath)
+        public static async Task<int> ReadFrameCountFfprobe(string filePath)
         {
             string args = $" -v panic {filePath.GetConcStr()} -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {filePath.Wrap()}";
             string info = await RunFfprobe(args);

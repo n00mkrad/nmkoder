@@ -18,7 +18,7 @@ namespace Nmkoder.Media
 
         public static void LogOutput(string line, ref string appendStr, string logFilename, LogMode logMode, bool showProgressBar)
         {
-            if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Length < 6)
+            if (RunTask.canceled || string.IsNullOrWhiteSpace(line) || line.Trim().Length < 1)
                 return;
 
             bool hidden = logMode == LogMode.Hidden;

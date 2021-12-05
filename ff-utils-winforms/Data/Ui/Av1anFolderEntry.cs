@@ -22,6 +22,8 @@ namespace Nmkoder.Data.Ui
         public string Args { get; } = "";
         public DateTime CreationDate { get; }
         public DateTime LastRunDate { get; }
+        public TimeSpan TimeSinceCreation { get;  }
+        public TimeSpan TimeSinceLastRun { get; }
 
         public Av1anFolderEntry(string path)
         {
@@ -49,6 +51,9 @@ namespace Nmkoder.Data.Ui
 
             if (jsonInfo.ContainsKey("args"))
                 Args = jsonInfo["args"];
+
+            TimeSinceCreation = DateTime.Now - CreationDate;
+            TimeSinceLastRun = DateTime.Now - LastRunDate;
         }
 
         public override string ToString()
@@ -56,18 +61,12 @@ namespace Nmkoder.Data.Ui
             string created = "???";
 
             if (CreationDate != new DateTime(1970, 1, 1, 0, 0, 0, 0))
-            {
-                TimeSpan delta = DateTime.Now - CreationDate;
-                created = $"{(delta.TotalMinutes >= 120 ? $"{delta.TotalHours.RoundToInt()}h" : $"{delta.TotalMinutes.RoundToInt()}m")} ago";
-            }
+                created = $"{(TimeSinceCreation.TotalMinutes >= 120 ? $"{TimeSinceCreation.TotalHours.RoundToInt()}h" : $"{TimeSinceCreation.TotalMinutes.RoundToInt()}m")} ago";
 
             string lastRun = "???";
 
             if (LastRunDate != new DateTime(1970, 1, 1, 0, 0, 0, 0))
-            {
-                TimeSpan delta = DateTime.Now - LastRunDate;
-                lastRun = $"{(delta.TotalMinutes >= 120 ? $"{delta.TotalHours.RoundToInt()}h" : $"{delta.TotalMinutes.RoundToInt()}m")} ago";
-            }
+                lastRun = $"{(TimeSinceLastRun.TotalMinutes >= 120 ? $"{TimeSinceLastRun.TotalHours.RoundToInt()}h" : $"{TimeSinceLastRun.TotalMinutes.RoundToInt()}m")} ago";
 
             string chunks = $"{ChunkFiles.Length} Chunks - {FormatUtils.Bytes(ChunkFiles.Sum(x => x.Length))}";
             return $"{InputFilename} - {chunks} - Created: {created} - Last Run: {lastRun}";

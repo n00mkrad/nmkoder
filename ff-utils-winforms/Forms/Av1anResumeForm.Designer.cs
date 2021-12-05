@@ -59,7 +59,7 @@ namespace Nmkoder.Forms
             this.resumeWithSavedSettings.Name = "resumeWithSavedSettings";
             this.resumeWithSavedSettings.Size = new System.Drawing.Size(180, 40);
             this.resumeWithSavedSettings.TabIndex = 58;
-            this.resumeWithSavedSettings.Text = "Resume\r\n(Use Original Settings)";
+            this.resumeWithSavedSettings.Text = "Resume\r\n(Use Saved Original Settings)";
             this.resumeWithSavedSettings.UseVisualStyleBackColor = false;
             this.resumeWithSavedSettings.Click += new System.EventHandler(this.resumeWithSavedSettings_Click);
             // 
@@ -72,7 +72,7 @@ namespace Nmkoder.Forms
             this.resumeWithNewSettings.Name = "resumeWithNewSettings";
             this.resumeWithNewSettings.Size = new System.Drawing.Size(180, 40);
             this.resumeWithNewSettings.TabIndex = 59;
-            this.resumeWithNewSettings.Text = "Resume\r\n(Use Current Settings)";
+            this.resumeWithNewSettings.Text = "Resume\r\n(Use Current GUI Settings)";
             this.resumeWithNewSettings.UseVisualStyleBackColor = false;
             this.resumeWithNewSettings.Click += new System.EventHandler(this.resumeWithNewSettings_Click);
             // 

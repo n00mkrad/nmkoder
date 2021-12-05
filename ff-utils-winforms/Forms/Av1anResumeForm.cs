@@ -40,7 +40,7 @@ namespace Nmkoder.Forms
         {
             folderList.Items.Clear();
             string av1anDir = Paths.GetAv1anTempPath();
-            folderList.Items.AddRange(new DirectoryInfo(av1anDir).GetDirectories().Select(x => new Av1anFolderEntry(x.FullName)).ToArray());
+            folderList.Items.AddRange(new DirectoryInfo(av1anDir).GetDirectories().Select(x => new Av1anFolderEntry(x.FullName)).OrderBy(x => x.TimeSinceLastRun.TotalMilliseconds).ToArray());
 
             if(folderList.Items.Count > 0)
                 folderList.SelectedIndex = 0;

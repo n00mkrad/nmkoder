@@ -58,7 +58,7 @@ namespace Nmkoder.Data.Ui
             if (CreationDate != new DateTime(1970, 1, 1, 0, 0, 0, 0))
             {
                 TimeSpan delta = DateTime.Now - CreationDate;
-                created = $"{delta.Hours:00}:{delta.Minutes:00}:{delta.Seconds:00} Ago";
+                created = $"{(delta.TotalMinutes >= 120 ? $"{delta.TotalHours.RoundToInt()}h" : $"{delta.TotalMinutes.RoundToInt()}m")} ago";
             }
 
             string lastRun = "???";
@@ -66,7 +66,7 @@ namespace Nmkoder.Data.Ui
             if (LastRunDate != new DateTime(1970, 1, 1, 0, 0, 0, 0))
             {
                 TimeSpan delta = DateTime.Now - LastRunDate;
-                lastRun = $"{delta.Hours:00}:{delta.Minutes:00}:{delta.Seconds:00} Ago";
+                lastRun = $"{(delta.TotalMinutes >= 120 ? $"{delta.TotalHours.RoundToInt()}h" : $"{delta.TotalMinutes.RoundToInt()}m")} ago";
             }
 
             string chunks = $"{ChunkFiles.Length} Chunks - {FormatUtils.Bytes(ChunkFiles.Sum(x => x.Length))}";

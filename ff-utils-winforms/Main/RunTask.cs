@@ -97,7 +97,7 @@ namespace Nmkoder.Main
 
             if (batchTask == TaskType.None)
             {
-                MessageBox.Show("No task selected for batch processing! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+                MessageBox.Show("No task selected for batch processing! Please select an option (Quick Encode, AV1AN or one of the actions in Utilities).", "Error");
                 return;
             }
 
@@ -116,7 +116,6 @@ namespace Nmkoder.Main
                 TrackList.ClearCurrentFile();
                 await TrackList.LoadFirstFile(mf, false, false); // Load file info
                 await Start(batchTask); // Run task
-                fileList.Items.RemoveAt(0);
             }
 
             runningBatch = false;

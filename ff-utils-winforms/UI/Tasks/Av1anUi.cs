@@ -231,11 +231,11 @@ namespace Nmkoder.UI.Tasks
             string scaleW = form.av1anScaleBoxW.Text.Trim().ToLower();
             string scaleH = form.av1anScaleBoxH.Text.Trim().ToLower();
 
-            if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
-                filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
-
             if (form.av1anCropBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.File.ImportPath, false));
+
+            if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
+                filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 

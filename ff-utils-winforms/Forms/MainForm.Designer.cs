@@ -119,6 +119,8 @@ namespace Nmkoder.Forms
             this.av1anContainer = new System.Windows.Forms.ComboBox();
             this.av1anTabControl = new HTAlt.WinForms.HTTabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.av1anThreads = new System.Windows.Forms.NumericUpDown();
+            this.label46 = new System.Windows.Forms.Label();
             this.av1anGrainSynthDenoise = new System.Windows.Forms.CheckBox();
             this.av1anGrainSynthStrength = new System.Windows.Forms.NumericUpDown();
             this.label37 = new System.Windows.Forms.Label();
@@ -216,8 +218,6 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
-            this.av1anThreads = new System.Windows.Forms.NumericUpDown();
-            this.label46 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -239,6 +239,7 @@ namespace Nmkoder.Forms
             this.av1anPage.SuspendLayout();
             this.av1anTabControl.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -260,7 +261,6 @@ namespace Nmkoder.Forms
             this.busyControlsPanel.SuspendLayout();
             this.checkItemsContextMenu.SuspendLayout();
             this.sortFileListContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).BeginInit();
             this.SuspendLayout();
             // 
             // logTbox
@@ -701,7 +701,7 @@ namespace Nmkoder.Forms
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(168, 13);
             this.label30.TabIndex = 52;
-            this.label30.Text = "Custom Arguments (Input/Output):";
+            this.label30.Text = "Custom Arguments (Input/Output)";
             // 
             // outputPath
             // 
@@ -914,9 +914,9 @@ namespace Nmkoder.Forms
             this.label27.Location = new System.Drawing.Point(7, 190);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(36, 15);
+            this.label27.Size = new System.Drawing.Size(33, 15);
             this.label27.TabIndex = 53;
-            this.label27.Text = "Crop:";
+            this.label27.Text = "Crop";
             // 
             // encVidQuality
             // 
@@ -941,9 +941,9 @@ namespace Nmkoder.Forms
             this.label61.Location = new System.Drawing.Point(7, 160);
             this.label61.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(42, 15);
+            this.label61.Size = new System.Drawing.Size(39, 15);
             this.label61.TabIndex = 51;
-            this.label61.Text = "Resize:";
+            this.label61.Text = "Resize";
             // 
             // encVidFps
             // 
@@ -1009,9 +1009,9 @@ namespace Nmkoder.Forms
             this.label51.Location = new System.Drawing.Point(7, 130);
             this.label51.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(69, 15);
+            this.label51.Size = new System.Drawing.Size(66, 15);
             this.label51.TabIndex = 21;
-            this.label51.Text = "Frame Rate:";
+            this.label51.Text = "Frame Rate";
             // 
             // label50
             // 
@@ -1020,9 +1020,9 @@ namespace Nmkoder.Forms
             this.label50.Location = new System.Drawing.Point(7, 100);
             this.label50.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(80, 15);
+            this.label50.Size = new System.Drawing.Size(77, 15);
             this.label50.TabIndex = 20;
-            this.label50.Text = "Color Format:";
+            this.label50.Text = "Color Format";
             // 
             // label49
             // 
@@ -1031,9 +1031,9 @@ namespace Nmkoder.Forms
             this.label49.Location = new System.Drawing.Point(7, 70);
             this.label49.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(85, 15);
+            this.label49.Size = new System.Drawing.Size(82, 15);
             this.label49.TabIndex = 19;
-            this.label49.Text = "Speed (Preset):";
+            this.label49.Text = "Speed (Preset)";
             // 
             // label48
             // 
@@ -1042,9 +1042,9 @@ namespace Nmkoder.Forms
             this.label48.Location = new System.Drawing.Point(7, 40);
             this.label48.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(91, 15);
+            this.label48.Size = new System.Drawing.Size(88, 15);
             this.label48.TabIndex = 18;
-            this.label48.Text = "Quality Control:";
+            this.label48.Text = "Quality Control";
             // 
             // label38
             // 
@@ -1053,9 +1053,9 @@ namespace Nmkoder.Forms
             this.label38.Location = new System.Drawing.Point(5, 10);
             this.label38.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(98, 15);
+            this.label38.Size = new System.Drawing.Size(95, 15);
             this.label38.TabIndex = 17;
-            this.label38.Text = "Codec (Encoder):";
+            this.label38.Text = "Codec (Encoder)";
             // 
             // tabPage2
             // 
@@ -1130,7 +1130,7 @@ namespace Nmkoder.Forms
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(153, 15);
             this.label39.TabIndex = 56;
-            this.label39.Text = "Audio Configuration Mode:";
+            this.label39.Text = "Audio Configuration Mode";
             // 
             // label11
             // 
@@ -1141,7 +1141,7 @@ namespace Nmkoder.Forms
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(59, 15);
             this.label11.TabIndex = 53;
-            this.label11.Text = "Channels:";
+            this.label11.Text = "Channels";
             // 
             // encAudChannels
             // 
@@ -1199,7 +1199,7 @@ namespace Nmkoder.Forms
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(121, 15);
             this.label53.TabIndex = 48;
-            this.label53.Text = "Quality (Stereo Kbps):";
+            this.label53.Text = "Quality (Stereo Kbps)";
             // 
             // label58
             // 
@@ -1210,7 +1210,7 @@ namespace Nmkoder.Forms
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(98, 15);
             this.label58.TabIndex = 47;
-            this.label58.Text = "Codec (Encoder):";
+            this.label58.Text = "Codec (Encoder)";
             // 
             // pictureBox1
             // 
@@ -1284,7 +1284,7 @@ namespace Nmkoder.Forms
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(98, 15);
             this.label10.TabIndex = 46;
-            this.label10.Text = "Codec (Encoder):";
+            this.label10.Text = "Codec (Encoder)";
             // 
             // encMetaTab
             // 
@@ -1477,6 +1477,37 @@ namespace Nmkoder.Forms
             this.tabPage3.Size = new System.Drawing.Size(668, 318);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Video";
+            // 
+            // av1anThreads
+            // 
+            this.av1anThreads.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anThreads.ForeColor = System.Drawing.Color.White;
+            this.av1anThreads.Location = new System.Drawing.Point(220, 248);
+            this.av1anThreads.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.av1anThreads.Name = "av1anThreads";
+            this.av1anThreads.Size = new System.Drawing.Size(250, 23);
+            this.av1anThreads.TabIndex = 74;
+            this.toolTip.SetToolTip(this.av1anThreads, "Improves encodes of noisy videos by synthesizing grain");
+            this.av1anThreads.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.ForeColor = System.Drawing.Color.White;
+            this.label46.Location = new System.Drawing.Point(7, 250);
+            this.label46.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(109, 15);
+            this.label46.TabIndex = 73;
+            this.label46.Text = "Threads Per Worker";
             // 
             // av1anGrainSynthDenoise
             // 
@@ -1819,7 +1850,7 @@ namespace Nmkoder.Forms
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(59, 15);
             this.label26.TabIndex = 53;
-            this.label26.Text = "Channels:";
+            this.label26.Text = "Channels";
             // 
             // av1anAudChannels
             // 
@@ -1874,7 +1905,7 @@ namespace Nmkoder.Forms
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(135, 15);
             this.label28.TabIndex = 48;
-            this.label28.Text = "Quality (Bitrate in Kbps):";
+            this.label28.Text = "Quality (Bitrate in Kbps)";
             // 
             // label31
             // 
@@ -1885,7 +1916,7 @@ namespace Nmkoder.Forms
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(98, 15);
             this.label31.TabIndex = 47;
-            this.label31.Text = "Codec (Encoder):";
+            this.label31.Text = "Codec (Encoder)";
             // 
             // tabPage5
             // 
@@ -2461,7 +2492,7 @@ namespace Nmkoder.Forms
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(98, 15);
             this.label43.TabIndex = 17;
-            this.label43.Text = "Codec (Encoder):";
+            this.label43.Text = "Codec (Encoder)";
             this.label43.Visible = false;
             // 
             // settingsContainersTab
@@ -2709,37 +2740,6 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // av1anThreads
-            // 
-            this.av1anThreads.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anThreads.ForeColor = System.Drawing.Color.White;
-            this.av1anThreads.Location = new System.Drawing.Point(220, 248);
-            this.av1anThreads.Maximum = new decimal(new int[] {
-            5000,
-            0,
-            0,
-            0});
-            this.av1anThreads.Name = "av1anThreads";
-            this.av1anThreads.Size = new System.Drawing.Size(250, 23);
-            this.av1anThreads.TabIndex = 74;
-            this.toolTip.SetToolTip(this.av1anThreads, "Improves encodes of noisy videos by synthesizing grain");
-            this.av1anThreads.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.ForeColor = System.Drawing.Color.White;
-            this.label46.Location = new System.Drawing.Point(7, 250);
-            this.label46.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(109, 15);
-            this.label46.TabIndex = 73;
-            this.label46.Text = "Threads Per Worker";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2794,6 +2794,7 @@ namespace Nmkoder.Forms
             this.av1anTabControl.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -2819,7 +2820,6 @@ namespace Nmkoder.Forms
             this.busyControlsPanel.ResumeLayout(false);
             this.checkItemsContextMenu.ResumeLayout(false);
             this.sortFileListContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

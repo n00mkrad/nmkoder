@@ -50,8 +50,8 @@ namespace Nmkoder.UI.Tasks
             string args = "";
             string inPath = "";
             string outPath = "";
-            string timestamp = ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
             string tempDir = "";
+            string timestamp = ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
 
             try
             {
@@ -74,7 +74,7 @@ namespace Nmkoder.UI.Tasks
                     string c = GetConcatMethod();
                     string thr = Program.mainForm.av1anThreadsUpDown.Value.ToString();
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --log-level debug --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {

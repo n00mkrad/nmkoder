@@ -189,12 +189,13 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetVideoArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
             dict.Add("q", form.av1anQualityUpDown.Value.ToString());
             dict.Add("preset", form.av1anPresetBox.Text.ToLower());
             dict.Add("pixFmt", form.av1anColorsBox.Text.ToLower());
             dict.Add("grainSynthStrength", form.av1anGrainSynthStrengthUpDown.Value.ToString());
             dict.Add("grainSynthDenoise", form.av1anGrainSynthDenoiseBox.Checked.ToString());
-            dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
+            dict.Add("threads", form.av1anThreadsUpDown.Value.ToString());
             dict.Add("custom", form.av1anCustomEncArgsBox.Text);
             return dict;
         }
@@ -297,7 +298,7 @@ namespace Nmkoder.UI.Tasks
                     if (form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
                         form.av1anContainerBox.SelectedIndex = i;
 
-                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.", Logger.LastUiLine.Contains(aCodec.FriendlyName));
+                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
             }
 
             Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.av1anContainerBox.Text);

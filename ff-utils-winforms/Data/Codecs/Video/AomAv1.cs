@@ -35,10 +35,16 @@ namespace Nmkoder.Data.Codecs
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             string grain = encArgs.ContainsKey("grainSynthStrength") ? encArgs["grainSynthStrength"] : "0";
+            string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
             string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-columns=", "--tile-rows=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e aom -v \" --end-usage=q --cpu-used={preset} --cq-level={q} --kf-min-dist=12 --kf-max-dist={g} --threads=4 --enable-dnl-denoising={denoise} --denoise-noise-level={grain} {tiles} --enable-keyframe-filtering=0 {cust} \" --pix-format {pixFmt}");
+
+            return new CodecArgs($" -e aom -v \" " +
+                $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
+                $"--kf-min-dist=12 --kf-max-dist={g} " +
+                $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} " +
+                $"--enable-keyframe-filtering=0 --threads={thr} {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

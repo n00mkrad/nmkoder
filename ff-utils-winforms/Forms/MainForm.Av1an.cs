@@ -29,6 +29,7 @@ namespace Nmkoder.Forms
         public TextBox av1anCustomEncArgsBox { get { return av1anCustomEncArgs; } }
         public NumericUpDown av1anGrainSynthStrengthUpDown { get { return av1anGrainSynthStrength; } }
         public CheckBox av1anGrainSynthDenoiseBox { get { return av1anGrainSynthDenoise; } }
+        public NumericUpDown av1anThreadsUpDown { get { return av1anThreads; } }
 
 
         public ComboBox av1anAudCodecBox { get { return av1anAudCodec; } }
@@ -85,6 +86,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(av1anOptsChunkMode);
             ConfigParser.LoadComboxIndex(av1anOptsConcatMode);
             ConfigParser.LoadGuiElement(av1anOptsWorkerCount, false);
+            ConfigParser.LoadGuiElement(av1anThreads, false);
         }
 
         public void SaveConfigAv1an(object sender = null, EventArgs e = null)
@@ -98,6 +100,7 @@ namespace Nmkoder.Forms
             ConfigParser.SaveComboxIndex(av1anOptsChunkMode);
             ConfigParser.SaveComboxIndex(av1anOptsConcatMode);
             ConfigParser.SaveGuiElement(av1anOptsWorkerCount);
+            ConfigParser.SaveGuiElement(av1anThreads);
         }
 
         private void av1anAudCodec_SelectedIndexChanged(object sender, EventArgs e)

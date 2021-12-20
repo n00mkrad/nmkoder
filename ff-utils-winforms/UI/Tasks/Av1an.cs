@@ -71,8 +71,9 @@ namespace Nmkoder.UI.Tasks
                     string s = GetSplittingMethod();
                     string m = GetChunkGenMethod();
                     string c = GetConcatMethod();
+                    string thr = Program.mainForm.av1anThreadsUpDown.Value.ToString();
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep --split-method {s} -m {m} -c {c} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --log-level debug --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} --sc-downscale-height 900 {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {
@@ -80,11 +81,22 @@ namespace Nmkoder.UI.Tasks
                         string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
                         args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
                     }
+
+                    int totalThreads = w.GetInt() * thr.GetInt();
+                    Logger.Log($"Using {w} workers with {thr} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
                 }
                 else
                 {
                     inPath = overrideArgs.Split("-i \"")[1].Split("\"")[0].Trim();
                     outPath = overrideArgs.Split(" -o \"").Last().Remove("\"").Trim();
+
+                    try
+                    {
+                        int w = overrideArgs.Split("-y ")[1].Split("-w ")[1].Split(" ")[0].GetInt();
+                        int thr = overrideArgs.Split("-y ")[1].Split("--set-thread-affinity ")[1].Split(" ")[0].GetInt();
+                        Logger.Log($"Resuming with {w} workers with {thr} threads each = {w * thr} threads total. {((w * thr) <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
+                    }
+                    catch { } // Allow this to fail, it's just some ugly string parsing and not crucial anyway
                 }
 
                 if(outPath == inPath)

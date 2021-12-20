@@ -33,6 +33,7 @@ namespace Nmkoder.Data.Codecs
             bool vmaf = encArgs.ContainsKey("qMode") && (UI.Tasks.Av1an.QualityMode)encArgs["qMode"].GetInt() == UI.Tasks.Av1an.QualityMode.TargetVmaf;
             string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
+            string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             bool is420 = !(pixFmt.Contains("444") || pixFmt.Contains("422"));
             int b = pixFmt.Split('p').LastOrDefault().GetInt();
@@ -40,7 +41,10 @@ namespace Nmkoder.Data.Codecs
             int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
             string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-columns=", "--tile-rows=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} --end-usage=q --cpu-used={preset} --cq-level={q} --kf-max-dist={g} {tiles} {cust} \" --pix-format {pixFmt}");
+
+            return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} " +
+                $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
+                $"--kf-max-dist={g} --threads={thr} --row-mt=1 {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

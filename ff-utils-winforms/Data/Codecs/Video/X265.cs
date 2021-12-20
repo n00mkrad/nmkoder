@@ -32,8 +32,9 @@ namespace Nmkoder.Data.Codecs
             string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
+            string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads 1 {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

@@ -267,6 +267,7 @@ namespace Nmkoder.IO
             if (key == Key.av1anOptsChunkMode)          return WriteDefault(key, $"1");
             if (key == Key.defaultKeyIntSecs)           return WriteDefault(key, $"10");
             if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
+            if (key == Key.av1anThreads)                return WriteDefault(key, $"2");
             if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
             if (key == Key.metaMode)                    return WriteDefault(key, "1");
 
@@ -291,6 +292,7 @@ namespace Nmkoder.IO
         {
             autoCropSamples,
             av1anCmdVisible,
+            av1anThreads,
             av1anOptsChunkMode,
             av1anOptsWorkerCount,
             cmdDebugMode,

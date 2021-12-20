@@ -207,7 +207,7 @@ namespace Nmkoder.Media
                 }
 
                 Logger.Log($"cmd {av1an.StartInfo.Arguments}", true, false, "av1an");
-                Task.Run(() => Av1anOutputHandler.ParseProgressLoop());
+                //Task.Run(() => Av1anOutputHandler.ParseProgressLoop());
                 av1an.Start();
                 av1an.PriorityClass = ProcessPriorityClass.BelowNormal;
 

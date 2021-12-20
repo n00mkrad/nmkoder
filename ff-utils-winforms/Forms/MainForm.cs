@@ -20,6 +20,7 @@ using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Utils;
 using Nmkoder.Forms.Utils;
+using Paths = Nmkoder.Data.Paths;
 
 namespace Nmkoder.Forms
 {
@@ -76,6 +77,9 @@ namespace Nmkoder.Forms
 
             if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
                 await PackageBuild.Run(Program.args.Where(x => x.StartsWith("package=")).First().Split('=')[1]);
+
+            if (Paths.GetExe().Length > 150)
+                Logger.Log($"Warning: Nmkoder's installation path is very long ({Paths.GetExe().Length} characters) - This can lead to problems. It is recommended to move it to a higher directory to reduce the path length.");
         }
 
         void LoadUiConfig()

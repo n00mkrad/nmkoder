@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Ui;
+using Nmkoder.Extensions;
 using Nmkoder.IO;
 using System;
 using System.Collections.Generic;
@@ -97,7 +98,26 @@ namespace Nmkoder.Forms
                     return;
 
                 Av1anFolderEntry entry = (Av1anFolderEntry)folderList.SelectedItem;
-                IoUtils.DeleteIfExists(Path.Combine(entry.DirInfo.FullName, "encode"));
+                IoUtils.DeleteContentsOfDir(Path.Combine(entry.DirInfo.FullName, "encode"));
+
+                string doneJsonPath = Path.Combine(entry.DirInfo.FullName, "done.json");
+
+                if (File.Exists(doneJsonPath))
+                {
+                    string doneJsonContent = File.ReadAllText(doneJsonPath);
+
+                    try
+                    {
+                        string before = doneJsonContent.Split("\"done\":{")[0] + "\"done\":{";
+                        string after = "},\"audio_done\"" + doneJsonContent.Split("},\"audio_done\"")[1];
+                        string newDoneJsonContent = before + after;
+                        File.WriteAllText(doneJsonPath, newDoneJsonContent);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log($"Warning: Failed to reset done.json progress file: {ex.Message}");
+                    }
+                }
             }
             catch (Exception ex)
             {

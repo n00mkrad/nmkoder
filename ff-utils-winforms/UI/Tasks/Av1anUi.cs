@@ -327,8 +327,17 @@ namespace Nmkoder.UI.Tasks
             if (string.IsNullOrWhiteSpace(dir))
                 return;
 
+            int minKbytes = 4; // If the temp folder is smaller than this, delete it without asking
             var dirSize = IoUtils.GetDirSize(dir, true);
-            DialogResult dialog = MessageBox.Show($"Do you want to delete the temporary folder ({FormatUtils.Bytes(dirSize)}) of this encode?", "Delete temp folder?", MessageBoxButtons.YesNo);
+
+            if (!Directory.Exists(Path.Combine(dir, "split")) || !File.Exists(Path.Combine(dir, "scenes.json")) || dirSize < minKbytes * 1024)
+            {
+                Logger.Log($"Temp folder has no scene detection data or is <{minKbytes}kb, deleting without asking");
+                IoUtils.TryDeleteIfExists(dir);
+                return;
+            }
+
+            DialogResult dialog = MessageBox.Show($"Av1an has finished.\nDo you want to delete the temporary folder ({FormatUtils.Bytes(dirSize)}) of this encode?", "Delete av1an temp folder?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 
             if (dialog == DialogResult.Yes)
                 IoUtils.TryDeleteIfExists(dir);

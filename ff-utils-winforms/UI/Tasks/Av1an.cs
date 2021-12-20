@@ -73,7 +73,7 @@ namespace Nmkoder.UI.Tasks
                     string c = GetConcatMethod();
                     string thr = Program.mainForm.av1anThreadsUpDown.Value.ToString();
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --log-level debug --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} --sc-downscale-height 900 {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --log-level debug --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {
@@ -148,6 +148,24 @@ namespace Nmkoder.UI.Tasks
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);
 
             Program.mainForm.SetWorking(false);
+        }
+
+        private static string GetScDownscaleArg ()
+        {
+            if (TrackList.current.File == null || TrackList.current.File.VideoStreams.Count < 1)
+                return "";
+
+            int h = TrackList.current.File.VideoStreams[0].Resolution.Height;
+            float mult = 1f;
+
+            if (h >=  720) mult = 0.7500f;
+            if (h >=  900) mult = 0.7083f;
+            if (h >= 1080) mult = 0.6667f;
+            if (h >= 1440) mult = 0.5000f;
+            if (h >= 2160) mult = 0.4166f;
+            if (h >= 4320) mult = 0.3333f;
+
+            return $"--sc-downscale-height {(h * mult).RoundToInt().Clamp(360, 2160)}"; // Apply multiplicator but clamp to sane values
         }
 
         private static void SaveJson(string inputFilePath, string tempFolderName, string args, string creationTimestamp, string lastRunTimestamp)

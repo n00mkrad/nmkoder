@@ -12,7 +12,7 @@ namespace Nmkoder.Data.Codecs
         public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AV1 (SVT-AV1)";
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-        public int PresetDefault { get; } = 5;
+        public int PresetDefault { get; } = 7;
         public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le" };
         public int ColorFormatDefault { get; } = 1;
         public int QMin { get; } = 0;

@@ -51,6 +51,7 @@ namespace Nmkoder.UI.Tasks
             string inPath = "";
             string outPath = "";
             string timestamp = ((long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds).ToString();
+            string tempDir = "";
 
             try
             {
@@ -112,7 +113,7 @@ namespace Nmkoder.UI.Tasks
                 }
 
                 string tempDirName = !string.IsNullOrWhiteSpace(overrideTempDir) ? overrideTempDir : timestamp;
-                string tempDir = Path.Combine(Paths.GetAv1anTempPath(), tempDirName);
+                tempDir = Path.Combine(Paths.GetAv1anTempPath(), tempDirName);
                 AvProcess.lastTempDirAv1an = tempDir;
                 string tmp = $"--temp {tempDir.Wrap()}";
                 Directory.CreateDirectory(tempDir);
@@ -148,6 +149,8 @@ namespace Nmkoder.UI.Tasks
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);
 
             Program.mainForm.SetWorking(false);
+
+            AskDeleteTempFolder(tempDir);
         }
 
         private static string GetScDownscaleArg ()

@@ -324,9 +324,13 @@ namespace Nmkoder.UI.Tasks
 
         public static void AskDeleteTempFolder (string dir)
         {
-            DialogResult dialog = MessageBox.Show($"Do you want to keep the temporary folder of this video for resuming?", "Keep temp folder?", MessageBoxButtons.YesNo);
+            if (string.IsNullOrWhiteSpace(dir))
+                return;
 
-            if (dialog == DialogResult.No)
+            var dirSize = IoUtils.GetDirSize(dir, true);
+            DialogResult dialog = MessageBox.Show($"Do you want to delete the temporary folder ({FormatUtils.Bytes(dirSize)}) of this encode?", "Delete temp folder?", MessageBoxButtons.YesNo);
+
+            if (dialog == DialogResult.Yes)
                 IoUtils.TryDeleteIfExists(dir);
         }
 

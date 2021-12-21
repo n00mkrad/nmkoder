@@ -330,9 +330,9 @@ namespace Nmkoder.UI.Tasks
             int minKbytes = 4; // If the temp folder is smaller than this, delete it without asking
             var dirSize = IoUtils.GetDirSize(dir, true);
 
-            if (!Directory.Exists(Path.Combine(dir, "split")) || !File.Exists(Path.Combine(dir, "scenes.json")) || dirSize < minKbytes * 1024)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess || RunTask.runningBatch || !Directory.Exists(Path.Combine(dir, "split")) || !File.Exists(Path.Combine(dir, "scenes.json")) || dirSize < minKbytes * 1024)
             {
-                Logger.Log($"Temp folder has no scene detection data or is <{minKbytes}kb, deleting without asking");
+                Logger.Log($"Temp folder has no scene detection data or is <{minKbytes}kb, deleting without asking", true);
                 IoUtils.TryDeleteIfExists(dir);
                 return;
             }

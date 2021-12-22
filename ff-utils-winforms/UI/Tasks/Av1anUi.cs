@@ -23,6 +23,7 @@ namespace Nmkoder.UI.Tasks
     class Av1anUi
     {
         private static MainForm form;
+        public static int[] currentCropValues;
 
         public static void Init()
         {
@@ -232,7 +233,10 @@ namespace Nmkoder.UI.Tasks
             string scaleW = form.av1anScaleBoxW.Text.Trim().ToLower();
             string scaleH = form.av1anScaleBoxH.Text.Trim().ToLower();
 
-            if (form.av1anCropBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
+            if (Program.mainForm.av1anCropBox.Text.ToLower().Contains("manual") && currentCropValues != null && currentCropValues.Length == 4) // Check Filter: Manual Crop
+                filters.Add($"crop={currentCropValues[0]}:{currentCropValues[1]}:{currentCropValues[2]}:{currentCropValues[3]}");
+
+            if (Program.mainForm.av1anCropBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.File.ImportPath, false));
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
@@ -334,6 +338,7 @@ namespace Nmkoder.UI.Tasks
             {
                 Logger.Log($"Temp folder has no scene detection data or is <{minKbytes}kb, deleting without asking", true);
                 IoUtils.TryDeleteIfExists(dir);
+                IoUtils.DeleteIfExists(dir + ".json");
                 return;
             }
 
@@ -342,7 +347,10 @@ namespace Nmkoder.UI.Tasks
             DialogResult dialog = MessageBox.Show($"Av1an has finished.\nDo you want to delete the temporary folder of this encode? It's {size} and contains {chunks}.", "Delete av1an temp folder?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
 
             if (dialog == DialogResult.Yes)
+            {
                 IoUtils.TryDeleteIfExists(dir);
+                IoUtils.DeleteIfExists(dir + ".json");
+            }
         }
 
         public static bool IsUsingVmaf ()

@@ -249,10 +249,6 @@ namespace Nmkoder.Forms
                 SaveConfig();
         }
 
-        private void encAudChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
-        }
 
         #region FileList
 
@@ -294,8 +290,54 @@ namespace Nmkoder.Forms
             SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.LastWriteTime).ToArray());
         }
 
+
         #endregion
 
-        
+        #region Quick Convert
+
+        private void encAudChannels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
+        }
+
+        private void encCropMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            encCropConfBtn.Visible = encCropMode.Text.ToLower().Contains("manual");
+        }
+
+        private void encCropConfBtn_Click(object sender, EventArgs e)
+        {
+            Size res = new Size();
+
+            if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
+                res = TrackList.current.File.VideoStreams[0].Resolution;
+
+            CropForm form = new CropForm(res);
+            form.ShowDialog();
+
+            if (form.DialogResult == DialogResult.OK)
+                QuickConvertUi.currentCropValues = form.CropValues;
+        }
+
+        #endregion
+
+        private void av1anCrop_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            av1anCropConfBtn.Visible = encCropMode.Text.ToLower().Contains("manual");
+        }
+
+        private void av1anCropConfBtn_Click(object sender, EventArgs e)
+        {
+            Size res = new Size();
+
+            if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
+                res = TrackList.current.File.VideoStreams[0].Resolution;
+
+            CropForm form = new CropForm(res);
+            form.ShowDialog();
+
+            if (form.DialogResult == DialogResult.OK)
+                QuickConvertUi.currentCropValues = form.CropValues;
+        }
     }
 }

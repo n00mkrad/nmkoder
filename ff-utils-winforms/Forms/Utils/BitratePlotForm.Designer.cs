@@ -76,7 +76,7 @@ namespace Nmkoder.Forms.Utils
             this.chart.Name = "chart";
             series1.BorderWidth = 0;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series1.LabelForeColor = System.Drawing.Color.Silver;
             series1.Name = "KbpsSeries";
             series1.YValuesPerPoint = 2;

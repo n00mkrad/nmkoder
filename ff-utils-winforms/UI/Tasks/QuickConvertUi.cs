@@ -23,6 +23,7 @@ namespace Nmkoder.UI.Tasks
     partial class QuickConvertUi : QuickConvert
     {
         private static MainForm form;
+        public static int[] currentCropValues;
 
         public static void Init()
         {
@@ -531,7 +532,10 @@ namespace Nmkoder.UI.Tasks
             string scaleW = Program.mainForm.encScaleBoxW.Text.Trim().ToLower();
             string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
 
-            if (Program.mainForm.encCropModeBox.SelectedIndex > 0) // Check Filter: Crop/Cropdetect
+            if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("manual") && currentCropValues != null && currentCropValues.Length == 4) // Check Filter: Manual Crop
+                filters.Add($"crop={currentCropValues[0]}:{currentCropValues[1]}:{currentCropValues[2]}:{currentCropValues[3]}");
+
+            if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.ImportPath, false));
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale

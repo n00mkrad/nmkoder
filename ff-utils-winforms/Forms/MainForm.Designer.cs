@@ -69,6 +69,7 @@ namespace Nmkoder.Forms
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVid = new System.Windows.Forms.TabPage();
+            this.encCropConfBtn = new HTAlt.WinForms.HTButton();
             this.encQualMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -119,6 +120,7 @@ namespace Nmkoder.Forms
             this.av1anContainer = new System.Windows.Forms.ComboBox();
             this.av1anTabControl = new HTAlt.WinForms.HTTabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.av1anCropConfBtn = new HTAlt.WinForms.HTButton();
             this.av1anThreads = new System.Windows.Forms.NumericUpDown();
             this.label46 = new System.Windows.Forms.Label();
             this.av1anGrainSynthDenoise = new System.Windows.Forms.CheckBox();
@@ -686,10 +688,10 @@ namespace Nmkoder.Forms
             this.encCustomArgsOut.AllowDrop = true;
             this.encCustomArgsOut.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.encCustomArgsOut.ForeColor = System.Drawing.Color.White;
-            this.encCustomArgsOut.Location = new System.Drawing.Point(353, 328);
+            this.encCustomArgsOut.Location = new System.Drawing.Point(425, 328);
             this.encCustomArgsOut.MinimumSize = new System.Drawing.Size(4, 21);
             this.encCustomArgsOut.Name = "encCustomArgsOut";
-            this.encCustomArgsOut.Size = new System.Drawing.Size(209, 20);
+            this.encCustomArgsOut.Size = new System.Drawing.Size(250, 20);
             this.encCustomArgsOut.TabIndex = 54;
             // 
             // label30
@@ -699,7 +701,7 @@ namespace Nmkoder.Forms
             this.label30.Location = new System.Drawing.Point(14, 331);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(168, 13);
+            this.label30.Size = new System.Drawing.Size(165, 13);
             this.label30.TabIndex = 52;
             this.label30.Text = "Custom Arguments (Input/Output)";
             // 
@@ -719,10 +721,10 @@ namespace Nmkoder.Forms
             this.encCustomArgsIn.AllowDrop = true;
             this.encCustomArgsIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.encCustomArgsIn.ForeColor = System.Drawing.Color.White;
-            this.encCustomArgsIn.Location = new System.Drawing.Point(227, 328);
+            this.encCustomArgsIn.Location = new System.Drawing.Point(189, 328);
             this.encCustomArgsIn.MinimumSize = new System.Drawing.Size(4, 21);
             this.encCustomArgsIn.Name = "encCustomArgsIn";
-            this.encCustomArgsIn.Size = new System.Drawing.Size(120, 20);
+            this.encCustomArgsIn.Size = new System.Drawing.Size(230, 20);
             this.encCustomArgsIn.TabIndex = 50;
             // 
             // containers
@@ -771,6 +773,7 @@ namespace Nmkoder.Forms
             // encVid
             // 
             this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVid.Controls.Add(this.encCropConfBtn);
             this.encVid.Controls.Add(this.encQualMode);
             this.encVid.Controls.Add(this.label4);
             this.encVid.Controls.Add(this.label3);
@@ -798,6 +801,24 @@ namespace Nmkoder.Forms
             this.encVid.Size = new System.Drawing.Size(668, 288);
             this.encVid.TabIndex = 0;
             this.encVid.Text = "Video";
+            // 
+            // encCropConfBtn
+            // 
+            this.encCropConfBtn.AutoColor = true;
+            this.encCropConfBtn.ButtonImage = null;
+            this.encCropConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encCropConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.encCropConfBtn.DrawImage = false;
+            this.encCropConfBtn.ForeColor = System.Drawing.Color.White;
+            this.encCropConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.encCropConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.encCropConfBtn.Location = new System.Drawing.Point(480, 187);
+            this.encCropConfBtn.Name = "encCropConfBtn";
+            this.encCropConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.encCropConfBtn.Size = new System.Drawing.Size(150, 23);
+            this.encCropConfBtn.TabIndex = 66;
+            this.encCropConfBtn.Text = "Configure...";
+            this.encCropConfBtn.Click += new System.EventHandler(this.encCropConfBtn_Click);
             // 
             // encQualMode
             // 
@@ -901,11 +922,13 @@ namespace Nmkoder.Forms
             this.encCropMode.FormattingEnabled = true;
             this.encCropMode.Items.AddRange(new object[] {
             "Disable",
+            "Manual",
             "Automatic"});
             this.encCropMode.Location = new System.Drawing.Point(220, 187);
             this.encCropMode.Name = "encCropMode";
             this.encCropMode.Size = new System.Drawing.Size(250, 23);
             this.encCropMode.TabIndex = 54;
+            this.encCropMode.SelectedIndexChanged += new System.EventHandler(this.encCropMode_SelectedIndexChanged);
             // 
             // label27
             // 
@@ -1128,7 +1151,7 @@ namespace Nmkoder.Forms
             this.label39.Location = new System.Drawing.Point(7, 40);
             this.label39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(153, 15);
+            this.label39.Size = new System.Drawing.Size(150, 15);
             this.label39.TabIndex = 56;
             this.label39.Text = "Audio Configuration Mode";
             // 
@@ -1139,7 +1162,7 @@ namespace Nmkoder.Forms
             this.label11.Location = new System.Drawing.Point(7, 100);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 15);
+            this.label11.Size = new System.Drawing.Size(56, 15);
             this.label11.TabIndex = 53;
             this.label11.Text = "Channels";
             // 
@@ -1197,7 +1220,7 @@ namespace Nmkoder.Forms
             this.label53.Location = new System.Drawing.Point(7, 70);
             this.label53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(121, 15);
+            this.label53.Size = new System.Drawing.Size(118, 15);
             this.label53.TabIndex = 48;
             this.label53.Text = "Quality (Stereo Kbps)";
             // 
@@ -1208,7 +1231,7 @@ namespace Nmkoder.Forms
             this.label58.Location = new System.Drawing.Point(5, 10);
             this.label58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(98, 15);
+            this.label58.Size = new System.Drawing.Size(95, 15);
             this.label58.TabIndex = 47;
             this.label58.Text = "Codec (Encoder)";
             // 
@@ -1282,7 +1305,7 @@ namespace Nmkoder.Forms
             this.label10.Location = new System.Drawing.Point(5, 10);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(98, 15);
+            this.label10.Size = new System.Drawing.Size(95, 15);
             this.label10.TabIndex = 46;
             this.label10.Text = "Codec (Encoder)";
             // 
@@ -1443,6 +1466,7 @@ namespace Nmkoder.Forms
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage3.Controls.Add(this.av1anCropConfBtn);
             this.tabPage3.Controls.Add(this.av1anThreads);
             this.tabPage3.Controls.Add(this.label46);
             this.tabPage3.Controls.Add(this.av1anGrainSynthDenoise);
@@ -1477,6 +1501,24 @@ namespace Nmkoder.Forms
             this.tabPage3.Size = new System.Drawing.Size(668, 318);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Video";
+            // 
+            // av1anCropConfBtn
+            // 
+            this.av1anCropConfBtn.AutoColor = true;
+            this.av1anCropConfBtn.ButtonImage = null;
+            this.av1anCropConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.av1anCropConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.av1anCropConfBtn.DrawImage = false;
+            this.av1anCropConfBtn.ForeColor = System.Drawing.Color.White;
+            this.av1anCropConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.av1anCropConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.av1anCropConfBtn.Location = new System.Drawing.Point(480, 217);
+            this.av1anCropConfBtn.Name = "av1anCropConfBtn";
+            this.av1anCropConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.av1anCropConfBtn.Size = new System.Drawing.Size(150, 23);
+            this.av1anCropConfBtn.TabIndex = 75;
+            this.av1anCropConfBtn.Text = "Configure...";
+            this.av1anCropConfBtn.Click += new System.EventHandler(this.av1anCropConfBtn_Click);
             // 
             // av1anThreads
             // 
@@ -1696,11 +1738,13 @@ namespace Nmkoder.Forms
             this.av1anCrop.FormattingEnabled = true;
             this.av1anCrop.Items.AddRange(new object[] {
             "Disable",
+            "Manual",
             "Automatic"});
             this.av1anCrop.Location = new System.Drawing.Point(220, 217);
             this.av1anCrop.Name = "av1anCrop";
             this.av1anCrop.Size = new System.Drawing.Size(250, 23);
             this.av1anCrop.TabIndex = 54;
+            this.av1anCrop.SelectedIndexChanged += new System.EventHandler(this.av1anCrop_SelectedIndexChanged);
             // 
             // label17
             // 
@@ -1848,7 +1892,7 @@ namespace Nmkoder.Forms
             this.label26.Location = new System.Drawing.Point(7, 70);
             this.label26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(59, 15);
+            this.label26.Size = new System.Drawing.Size(56, 15);
             this.label26.TabIndex = 53;
             this.label26.Text = "Channels";
             // 
@@ -1903,7 +1947,7 @@ namespace Nmkoder.Forms
             this.label28.Location = new System.Drawing.Point(7, 40);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(135, 15);
+            this.label28.Size = new System.Drawing.Size(132, 15);
             this.label28.TabIndex = 48;
             this.label28.Text = "Quality (Bitrate in Kbps)";
             // 
@@ -1914,7 +1958,7 @@ namespace Nmkoder.Forms
             this.label31.Location = new System.Drawing.Point(5, 10);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(98, 15);
+            this.label31.Size = new System.Drawing.Size(95, 15);
             this.label31.TabIndex = 47;
             this.label31.Text = "Codec (Encoder)";
             // 
@@ -2490,7 +2534,7 @@ namespace Nmkoder.Forms
             this.label43.Location = new System.Drawing.Point(5, 10);
             this.label43.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(98, 15);
+            this.label43.Size = new System.Drawing.Size(95, 15);
             this.label43.TabIndex = 17;
             this.label43.Text = "Codec (Encoder)";
             this.label43.Visible = false;
@@ -3012,6 +3056,8 @@ namespace Nmkoder.Forms
         private HTAlt.WinForms.HTButton htButton4;
         private System.Windows.Forms.NumericUpDown av1anThreads;
         private System.Windows.Forms.Label label46;
+        private HTAlt.WinForms.HTButton encCropConfBtn;
+        private HTAlt.WinForms.HTButton av1anCropConfBtn;
     }
 }
 

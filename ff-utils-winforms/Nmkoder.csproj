@@ -319,6 +319,12 @@
     <Compile Include="Forms\Av1anResumeForm.Designer.cs">
       <DependentUpon>Av1anResumeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CropForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CropForm.Designer.cs">
+      <DependentUpon>CropForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditCommandForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Av1anResumeForm.resx">
       <DependentUpon>Av1anResumeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CropForm.resx">
+      <DependentUpon>CropForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditCommandForm.resx">
       <DependentUpon>EditCommandForm.cs</DependentUpon>

@@ -15,8 +15,8 @@ namespace Nmkoder.Data.Codecs
         public string[] ColorFormats { get; }
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 32;
-        public int QMax { get; } = 640;
-        public int QDefault { get; } = 192;
+        public int QMax { get; } = 960;
+        public int QDefault { get; } = 160;
         public string QInfo { get; }
         public string PresetInfo { get; }
 
@@ -28,7 +28,7 @@ namespace Nmkoder.Data.Codecs
 
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
-            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "96k";
+            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : $"{QDefault}k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
             List<string> extraArgs = new List<string>();
             return new CodecArgs($"-c:a libvorbis {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt(), extraArgs)}");

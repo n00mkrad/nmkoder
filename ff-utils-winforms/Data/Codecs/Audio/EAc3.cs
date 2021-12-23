@@ -5,17 +5,17 @@ using System.Collections.Generic;
 
 namespace Nmkoder.Data.Codecs
 {
-    class Mp3 : IEncoder
+    class EAc3 : IEncoder
     {
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Audio;
-        public string Name { get { return GetType().Name; } }
-        public string FriendlyName { get; } = "MP3";
-        public string[] Presets { get; }
+        public string Name { get { return "E-AC-3"; } }
+        public string FriendlyName { get; } = "E-AC-3 (Dolby Digital Plus)";
+        public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }
         public string[] ColorFormats { get; }
         public int ColorFormatDefault { get; }
-        public int QMin { get; } = 32;
-        public int QMax { get; } = 1280;
+        public int QMin { get; } = 64;
+        public int QMax { get; } = 6144;
         public int QDefault { get; } = 256;
         public string QInfo { get; }
         public string PresetInfo { get; }
@@ -30,7 +30,7 @@ namespace Nmkoder.Data.Codecs
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : $"{QDefault}k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a libmp3lame {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
+            return new CodecArgs($"-c:a aac -aac_coder twoloop {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Nmkoder.Data.Codecs
 
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
-            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "128k";
+            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : $"{QDefault}k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
             return new CodecArgs($"-c:a aac -aac_coder twoloop {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
         }

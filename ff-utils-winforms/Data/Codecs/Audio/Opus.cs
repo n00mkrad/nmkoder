@@ -28,7 +28,7 @@ namespace Nmkoder.Data.Codecs
 
         public CodecArgs GetArgs(Dictionary<string, string> encArgs = null, MediaFile mediaFile = null, Pass pass = Pass.OneOfOne)
         {
-            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "96k";
+            string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : $"{QDefault}k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
             List<string> extraArgs = new List<string>();
             extraArgs.Add("-mapping_family 1");

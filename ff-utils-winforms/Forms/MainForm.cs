@@ -323,7 +323,7 @@ namespace Nmkoder.Forms
 
         private void av1anCrop_SelectedIndexChanged(object sender, EventArgs e)
         {
-            av1anCropConfBtn.Visible = encCropMode.Text.ToLower().Contains("manual");
+            av1anCropConfBtn.Visible = av1anCrop.Text.ToLower().Contains("manual");
         }
 
         private void av1anCropConfBtn_Click(object sender, EventArgs e)

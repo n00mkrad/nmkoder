@@ -192,16 +192,16 @@ namespace Nmkoder.UI.Tasks
 
             Containers.Container c = (Containers.Container)form.ffmpegContainerBox.SelectedIndex;
 
-            if (!(Containers.ContainerSupports(c, encV) && Containers.ContainerSupports(c, encA) && Containers.ContainerSupports(c, encS)))
-            {
-                Containers.Container supported = Containers.GetSupportedContainer(encV, encA, encS);
-
-                for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
-                    if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-                        form.ffmpegContainerBox.SelectedIndex = i;
-
-                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{encA.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
-            }
+            // if (!(Containers.ContainerSupports(c, encV) && Containers.ContainerSupports(c, encA) && Containers.ContainerSupports(c, encS)))
+            // {
+            //     Containers.Container supported = Containers.GetSupportedContainer(encV, encA, encS);
+            // 
+            //     for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
+            //         if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
+            //             form.ffmpegContainerBox.SelectedIndex = i;
+            // 
+            //     Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{encA.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
+            // }
 
             bool fixedFormat = CodecUtils.GetCodec(vCodec).IsFixedFormat;
 

@@ -23,12 +23,6 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveConfig();
-            Program.Cleanup();
-        }
-
         public void SaveConfig ()
         {
             //Logger.Log($"SaveConfig");

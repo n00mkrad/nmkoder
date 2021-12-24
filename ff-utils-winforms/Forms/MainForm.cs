@@ -21,6 +21,8 @@ using Nmkoder.Data.Ui;
 using Nmkoder.Utils;
 using Nmkoder.Forms.Utils;
 using Paths = Nmkoder.Data.Paths;
+using Nmkoder.OS;
+using System.Windows.Input;
 
 namespace Nmkoder.Forms
 {
@@ -80,6 +82,27 @@ namespace Nmkoder.Forms
 
             if (Paths.GetExe().Length > 150)
                 Logger.Log($"Warning: Nmkoder's installation path is very long ({Paths.GetExe().Length} characters) - This can lead to problems. It is recommended to move it to a higher directory to reduce the path length.");
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveConfig();
+
+            if (Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Shift)
+            {
+                string msg = "The Shift key was held when trying to close Nmkoder. This gives you the option to leave all subprocesses (e.g. av1an) running even after closing the GUI. " +
+                    "Are you sure you want to close Nmkoder without stopping its subprocesses?";
+                DialogResult dialog = MessageBox.Show(msg, "Keep subprocesses running?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+
+                if (dialog == DialogResult.No)
+                    SubProcesses.KillAll();
+            }
+            else
+            {
+                SubProcesses.KillAll();
+            }
+
+            Program.Cleanup();
         }
 
         void LoadUiConfig()
@@ -152,7 +175,7 @@ namespace Nmkoder.Forms
 
         public RunTask.TaskType GetCurrentTaskType()
         {
-            if(tabList.SelectedPage == quickConvertPage)
+            if (tabList.SelectedPage == quickConvertPage)
                 return RunTask.TaskType.Convert;
 
             if (tabList.SelectedPage == av1anPage)
@@ -179,7 +202,7 @@ namespace Nmkoder.Forms
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             bool anyFilesLoaded = fileList.Items.Count > 0;
 
-            if(files.Length > 1 || anyFilesLoaded)
+            if (files.Length > 1 || anyFilesLoaded)
             {
                 FileImportForm form = new FileImportForm(files, anyFilesLoaded);
                 form.ShowDialog();
@@ -248,7 +271,6 @@ namespace Nmkoder.Forms
             else
                 SaveConfig();
         }
-
 
         #region FileList
 
@@ -321,6 +343,8 @@ namespace Nmkoder.Forms
 
         #endregion
 
+        #region AV1AN
+
         private void av1anCrop_SelectedIndexChanged(object sender, EventArgs e)
         {
             av1anCropConfBtn.Visible = av1anCrop.Text.ToLower().Contains("manual");
@@ -339,5 +363,7 @@ namespace Nmkoder.Forms
             if (form.DialogResult == DialogResult.OK)
                 QuickConvertUi.currentCropValues = form.CropValues;
         }
+
+        #endregion
     }
 }

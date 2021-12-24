@@ -84,8 +84,9 @@ namespace Nmkoder.OS
 
         public static Process NewProcess(bool hidden, string filename = "cmd.exe")
         {
-            Process proc = new Process();
-            return SetStartInfo(proc, hidden, filename);
+            Process p = new Process();
+            SubProcesses.RegisterProcess(p);
+            return SetStartInfo(p, hidden, filename);
         }
 
         public static void KillProcessTree(int pid)

@@ -344,7 +344,8 @@ namespace Nmkoder.UI.Tasks
 
             string size = FormatUtils.Bytes(dirSize);
             string chunks = $"{IoUtils.GetFileInfosSorted(Path.Combine(dir, "encode"), false, "*.*").Where(x => x.Length >= 1024).Count()} encoded video chunks";
-            DialogResult dialog = MessageBox.Show($"Av1an has finished.\nDo you want to delete the temporary folder of this encode? It's {size} and contains {chunks}.", "Delete av1an temp folder?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            string msg = $"Av1an has finished.\nDo you want to delete the temporary folder of this encode? It's {size} and contains {chunks}.";
+            DialogResult dialog = MessageBox.Show(msg, "Delete av1an temp folder?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
 
             if (dialog == DialogResult.Yes)
             {

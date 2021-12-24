@@ -361,7 +361,7 @@ namespace Nmkoder.Forms
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)
-                QuickConvertUi.currentCropValues = form.CropValues;
+                Av1anUi.currentCropValues = form.CropValues;
         }
 
         #endregion

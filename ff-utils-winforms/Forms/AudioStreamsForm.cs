@@ -74,13 +74,14 @@ namespace Nmkoder.Forms
             grid.Columns[3].FillWeight = 15;
             grid.Columns[4].FillWeight = 20;
 
-            List<AudioStream> streams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+            List<ListViewItem> streamItems = Program.mainForm.streamList.Items.Cast<ListViewItem>().ToList();
+            List<AudioStream> audStreams = streamItems.Select(x => (MediaStreamListEntry)x.Tag).Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
 
             List<AudioConfigurationEntry> currentEntries = TrackList.currentAudioConfig?.GetConfig(current);
 
-            for (int i = 0; i < streams.Count; i++)
+            for (int i = 0; i < audStreams.Count; i++)
             {
-                AudioStream s = streams[i];
+                AudioStream s = audStreams[i];
                 int br = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(s.Channels)).RoundToInt();
                 string title = string.IsNullOrWhiteSpace(s.Title) ? "None" : s.Title.Trunc(35);
                 int newIdx = -1;
@@ -90,7 +91,7 @@ namespace Nmkoder.Forms
                 else
                     newIdx = grid.Rows.Add($"#{i + 1}", title, s.Language.ToUpper(), currentEntries[i].ChannelCount, currentEntries[i].BitrateKbps);
 
-                grid.Rows[newIdx].Visible = Program.mainForm.streamListBox.GetItemChecked(s.Index);
+                grid.Rows[newIdx].Visible = Program.mainForm.streamList.Items[s.Index].Checked;
             }
 
         }

@@ -34,7 +34,7 @@ namespace Nmkoder.Forms
 
         // General
         public ListBox fileListBox;
-        public CheckedListBox streamListBox;
+        //public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
         public Label thumbLabel;
@@ -58,12 +58,14 @@ namespace Nmkoder.Forms
             ffmpegOutputBox = outputPath;
 
             fileListBox = fileList;
-            streamListBox = streamList;
+            //streamListBox = streamList;
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
             thumbLabel = thumbInfo;
 
             CheckForIllegalCrossThreadCalls = false;
+
+            streamList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private async void MainForm_Shown(object sender, EventArgs e)

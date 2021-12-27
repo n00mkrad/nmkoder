@@ -34,7 +34,6 @@ namespace Nmkoder.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.logTbox = new System.Windows.Forms.TextBox();
             this.formatInfo = new System.Windows.Forms.Label();
-            this.streamList = new System.Windows.Forms.CheckedListBox();
             this.titleLabel = new System.Windows.Forms.Label();
             this.inputPanel = new System.Windows.Forms.Panel();
             this.thumbInfo = new System.Windows.Forms.Label();
@@ -61,6 +60,8 @@ namespace Nmkoder.Forms
             this.label6 = new System.Windows.Forms.Label();
             this.trackListDefaultAudio = new System.Windows.Forms.ComboBox();
             this.streamDetails = new System.Windows.Forms.TextBox();
+            this.streamListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.quickConvertPage = new Cyotek.Windows.Forms.TabListPage();
             this.encCustomArgsOut = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -289,23 +290,6 @@ namespace Nmkoder.Forms
             this.formatInfo.Size = new System.Drawing.Size(0, 16);
             this.formatInfo.TabIndex = 28;
             // 
-            // streamList
-            // 
-            this.streamList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.streamList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.streamList.ForeColor = System.Drawing.Color.White;
-            this.streamList.FormattingEnabled = true;
-            this.streamList.IntegralHeight = false;
-            this.streamList.Location = new System.Drawing.Point(3, 57);
-            this.streamList.Name = "streamList";
-            this.streamList.ScrollAlwaysVisible = true;
-            this.streamList.Size = new System.Drawing.Size(679, 216);
-            this.streamList.TabIndex = 27;
-            this.streamList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.streamList_ItemCheck);
-            this.streamList.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
-            this.streamList.Leave += new System.EventHandler(this.streamList_Leave);
-            this.streamList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
-            // 
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
@@ -422,6 +406,7 @@ namespace Nmkoder.Forms
             this.tabList.Size = new System.Drawing.Size(840, 390);
             this.tabList.TabIndex = 35;
             this.tabList.SelectedIndexChanged += new System.EventHandler(this.tabList_SelectedIndexChanged);
+            this.tabList.Leave += new System.EventHandler(this.streamList_Leave);
             // 
             // fileListPage
             // 
@@ -554,7 +539,7 @@ namespace Nmkoder.Forms
             this.streamListPage.Controls.Add(this.trackListDefaultAudio);
             this.streamListPage.Controls.Add(this.streamDetails);
             this.streamListPage.Controls.Add(this.formatInfo);
-            this.streamListPage.Controls.Add(this.streamList);
+            this.streamListPage.Controls.Add(this.streamListView);
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
@@ -567,7 +552,7 @@ namespace Nmkoder.Forms
             this.trackListCheckTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListCheckTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListCheckTracksBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(629, 62);
+            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(644, 62);
             this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
             this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListCheckTracksBtn.TabIndex = 51;
@@ -583,7 +568,7 @@ namespace Nmkoder.Forms
             this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveUpBtn.Location = new System.Drawing.Point(594, 238);
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(609, 233);
             this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
             this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveUpBtn.TabIndex = 50;
@@ -600,7 +585,7 @@ namespace Nmkoder.Forms
             this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveDownBtn.Location = new System.Drawing.Point(629, 238);
+            this.trackListMoveDownBtn.Location = new System.Drawing.Point(644, 233);
             this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
             this.trackListMoveDownBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveDownBtn.TabIndex = 49;
@@ -670,6 +655,28 @@ namespace Nmkoder.Forms
             this.streamDetails.ReadOnly = true;
             this.streamDetails.Size = new System.Drawing.Size(679, 100);
             this.streamDetails.TabIndex = 29;
+            // 
+            // streamListView
+            // 
+            this.streamListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.streamListView.CheckBoxes = true;
+            this.streamListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.streamListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.streamListView.ForeColor = System.Drawing.Color.White;
+            this.streamListView.FullRowSelect = true;
+            this.streamListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.streamListView.HideSelection = false;
+            this.streamListView.LabelWrap = false;
+            this.streamListView.Location = new System.Drawing.Point(3, 57);
+            this.streamListView.Name = "streamListView";
+            this.streamListView.Size = new System.Drawing.Size(676, 211);
+            this.streamListView.TabIndex = 52;
+            this.streamListView.UseCompatibleStateImageBehavior = false;
+            this.streamListView.View = System.Windows.Forms.View.Details;
+            this.streamListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.streamList_ItemCheck);
+            this.streamListView.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
+            this.streamListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
             // 
             // quickConvertPage
             // 
@@ -2878,7 +2885,6 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Button runBtn;
         private HTAlt.WinForms.HTProgressBar progBar;
         private System.Windows.Forms.ComboBox taskMode;
-        private System.Windows.Forms.CheckedListBox streamList;
         private System.Windows.Forms.Label formatInfo;
         private Cyotek.Windows.Forms.TabList tabList;
         private Cyotek.Windows.Forms.TabListPage streamListPage;
@@ -3058,6 +3064,8 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label label46;
         private HTAlt.WinForms.HTButton encCropConfBtn;
         private HTAlt.WinForms.HTButton av1anCropConfBtn;
+        private System.Windows.Forms.ListView streamListView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 

@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Nmkoder.Data
 {
@@ -84,15 +85,20 @@ namespace Nmkoder.Data
         public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels, List<string> extraArgs = null)
         {
             List<string> args = new List<string>();
-            List<AudioStream> allAudioStreams = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
-            List<AudioStream> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+
+            List<MediaStreamListEntry> allEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToList();
+            List<MediaStreamListEntry> checkedEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Where(x => x.Checked).Select(x => (MediaStreamListEntry)x.Tag).ToList();
+
+            List<AudioStream> allAudStreams = allEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+            List<AudioStream> checkedAudStreams = checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+            
             List<AudioConfigurationEntry> audioConf = TrackList.currentAudioConfig != null ? TrackList.currentAudioConfig.GetConfig(mf) : null;
             bool perTrack = Program.mainForm.encAudConfModeBox.SelectedIndex == 1;
 
-            foreach (AudioStream s in checkedStreams)
+            foreach (AudioStream s in checkedAudStreams)
             {
-                int indexTotal = allAudioStreams.IndexOf(s);
-                int indexChecked = checkedStreams.IndexOf(s);
+                int indexTotal = allAudStreams.IndexOf(s);
+                int indexChecked = checkedAudStreams.IndexOf(s);
                 int ac = overrideChannels > 0 ? overrideChannels : s.Channels;
 
                 if (perTrack && audioConf != null)

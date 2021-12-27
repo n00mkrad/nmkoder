@@ -52,7 +52,7 @@ namespace Nmkoder.UI
         {
             current = null;
             Program.mainForm.ffmpegOutputBox.Text = "";
-            Program.mainForm.streamListBox.Items.Clear();
+            Program.mainForm.streamList.Items.Clear();
             Program.mainForm.streamDetailsBox.Text = "";
             Program.mainForm.formatInfoLabel.Text = "";
             Program.mainForm.metaGrid.Columns.Clear();
@@ -80,7 +80,7 @@ namespace Nmkoder.UI
             string br = current.File.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.File.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(current.File.DurationMs);
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
-            Program.mainForm.streamListBox.Items.Clear();
+            Program.mainForm.streamList.Items.Clear();
             currentAudioConfig = null;
             await AddStreamsToList(current.File, switchToTrackList);
 
@@ -109,8 +109,8 @@ namespace Nmkoder.UI
 
         public static async Task AddStreamsToList(MediaFile mediaFile, bool switchToList, bool silent = false)
         {
-            CheckedListBox box = Program.mainForm.streamListBox;
-            int uniqueFileCount = (from x in box.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.ImportPath) select x).Distinct().Count();
+            ListView list = Program.mainForm.streamList;
+            int uniqueFileCount = (from x in list.Items.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag).MediaFile.ImportPath) select x).Distinct().Count();
 
             if (!mediaFile.Initialized)
             {
@@ -123,16 +123,20 @@ namespace Nmkoder.UI
                     PrintFoundStreams(mediaFile);
             }
 
-            bool alreadyHasVidStream = box.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).Count() > 0;
+            bool alreadyHasVidStream = list.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).Count() > 0;
+
+            Random r = new Random();
 
             foreach (Stream s in mediaFile.AllStreams)
             {
                 try
                 {
-                    box.Items.Add(new MediaStreamListEntry(mediaFile, s));
+                    MediaStreamListEntry entry = new MediaStreamListEntry(mediaFile, s);
+                    //Color randomColor = Color.FromArgb(r.Next(0, 64), r.Next(0, 64), r.Next(0, 64));
+                    list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry });
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
                     Program.mainForm.ignoreNextStreamListItemCheck = true;
-                    box.SetItemChecked(box.Items.Count - 1, check);
+                    list.Items.Cast<ListViewItem>().Last().Checked = check;
                 }
                 catch (Exception e)
                 {
@@ -151,13 +155,13 @@ namespace Nmkoder.UI
         {
             List<string> loadedPaths = Program.mainForm.fileListBox.Items.OfType<MediaFile>().Select(x => x.ImportPath).ToList();
 
-            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
-                MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamListBox.Items[i];
+                MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag;
 
                 if (entry.MediaFile == null || !loadedPaths.Contains(entry.MediaFile.ImportPath))
                 {
-                    Program.mainForm.streamListBox.Items.Remove(Program.mainForm.streamListBox.Items[i]);
+                    Program.mainForm.streamList.Items.Remove(Program.mainForm.streamList.Items[i]);
                     i = 0; // Reset loop index, otherwise removing will result in skipped entries
                 }
             }
@@ -203,7 +207,7 @@ namespace Nmkoder.UI
 
         public static List<string> GetInputFiles()
         {
-            List<string> paths = Program.mainForm.streamListBox.Items.OfType<MediaStreamListEntry>().Select(x => x.MediaFile.ImportPath).ToList();
+            List<string> paths = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag).MediaFile.ImportPath).ToList();
             List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
 
             Logger.Log($"Input Files: {string.Join(", ", pathsUnique)}", true);
@@ -234,10 +238,12 @@ namespace Nmkoder.UI
             List<string> args = new List<string>();
             List<int> fileIndexesToMap = new List<int>();
 
-            foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
+            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
             {
-                if (Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
+                if (item.Checked)
                 {
+                    MediaStreamListEntry entry = (MediaStreamListEntry)item.Tag;
+
                     int fileIdx = entry.ToString().Split('-')[0].GetInt() - 1;
 
                     if (!fileIndexesToMap.Contains(fileIdx))
@@ -254,29 +260,38 @@ namespace Nmkoder.UI
 
         public static void CheckAll (bool check)
         {
-            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
-                Program.mainForm.streamListBox.SetItemChecked(i, check);
-            }
+            // for (int i = 0; i < Program.mainForm.streamListNew.Items.Count; i++)
+            // {
+            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListNew.Items.Count - 1);
+            //     Program.mainForm.streamListNew.CheckedItems(i, check);
+            // }
+
+            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
+                item.Checked = check;
         }
 
         public static void InvertSelection(object sender = null, EventArgs e = null)
         {
-            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
-                Program.mainForm.streamListBox.SetItemChecked(i, !Program.mainForm.streamListBox.GetItemChecked(i));
-            }
+            // for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            // {
+            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
+            //     Program.mainForm.streamListBox.SetItemChecked(i, !Program.mainForm.streamListBox.GetItemChecked(i));
+            // }
+
+            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
+                item.Checked = !item.Checked;
         }
 
         public static void CheckTracksOfType(Stream.StreamType type)
         {
-            for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
-                Program.mainForm.streamListBox.SetItemChecked(i, ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream.Type == type);
-            }
+            // for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
+            // {
+            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
+            //     Program.mainForm.streamListBox.SetItemChecked(i, ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream.Type == type);
+            // }
+
+            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
+                item.Checked = ((MediaStreamListEntry)item.Tag).Stream.Type == type;
         }
 
         #endregion

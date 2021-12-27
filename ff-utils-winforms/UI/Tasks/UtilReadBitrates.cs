@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -29,12 +30,12 @@ namespace Nmkoder.UI.Tasks
             long totalBytesAud = 0;
             long totalBytesSub = 0;
 
-            foreach (MediaStreamListEntry entry in Program.mainForm.streamListBox.Items)
+            foreach (ListViewItem item in Program.mainForm.streamList.CheckedItems)
             {
-                if (RunTask.canceled || !Program.mainForm.streamListBox.GetItemChecked(Program.mainForm.streamListBox.Items.IndexOf(entry)))
+                if (RunTask.canceled)
                     continue;
 
-                Stream s = entry.Stream;
+                Stream s = ((MediaStreamListEntry)item.Tag).Stream;
                 FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(TrackList.current.File.ImportPath, s.Index);
                 string percent = FormatUtils.RatioFloat(info.Bytes, TrackList.current.File.Size).ToString("0.0");
                 string br = info.Kbps > 1 ? FormatUtils.Bitrate(info.Kbps.RoundToInt()) : info.Kbps.ToString("0.0") + " kbps";

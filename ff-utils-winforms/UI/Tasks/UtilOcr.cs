@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Nmkoder.Data;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
@@ -21,7 +22,7 @@ namespace Nmkoder.UI.Tasks
         public static async Task Run ()
         {
             Program.mainForm.SetWorking(true);
-            List<MediaStreamListEntry> checkedStreams = Program.mainForm.streamListBox.CheckedItems.OfType<MediaStreamListEntry>().ToList();
+            List<MediaStreamListEntry> checkedStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToList();
             List<SubtitleStream> subStreams = checkedStreams.Where(x => x.Stream.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x.Stream).ToList();
             int i = 0;
 

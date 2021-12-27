@@ -22,6 +22,7 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
+        public ListView streamList { get { return streamListView; } }
         public TextBox streamDetailsBox { get { return streamDetails; } }
         public ComboBox trackListDefaultAudioBox { get { return trackListDefaultAudio; } }
         public ComboBox trackListDefaultSubsBox { get { return trackListDefaultSubs; } }
@@ -38,16 +39,22 @@ namespace Nmkoder.Forms
 
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (streamList.SelectedItem == null)
-                return;
+            UpdateTrackListUpDownBtnsState();
 
-            MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItem;
+            if (streamList.SelectedItems.Count < 1)
+            {
+                streamDetails.Text = "";
+                return;
+            }
+                
+
+            MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItems[0].Tag;
             streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
-        public void UpdateTrackListUpDownBtnsState ()
+        public void UpdateTrackListUpDownBtnsState()
         {
-            bool newState = streamList.SelectedItem != null;
+            bool newState = streamList.SelectedItems.Count == 1;
 
             if (trackListMoveUpBtn.Visible != newState)
                 trackListMoveUpBtn.Visible = newState;
@@ -66,21 +73,21 @@ namespace Nmkoder.Forms
                 return;
             }
 
-            if(e.NewValue != e.CurrentValue)
+            if (e.NewValue != e.CurrentValue)
                 this.BeginInvoke((MethodInvoker)(() => OnCheckedStreamsChange()));
         }
 
-        private void OnCheckedStreamsChange ()
+        private void OnCheckedStreamsChange()
         {
             UpdateDefaultStreamsUi();
             QuickConvertUi.LoadMetadataGrid();
         }
 
-        public void UpdateDefaultStreamsUi ()
+        public void UpdateDefaultStreamsUi()
         {
-            List<MediaStreamListEntry> v = streamList.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).ToList();
-            List<MediaStreamListEntry> a = streamList.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Audio).ToList();
-            List<MediaStreamListEntry> s = streamList.CheckedItems.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Subtitle).ToList();
+            List<MediaStreamListEntry> v = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Video)).ToList();
+            List<MediaStreamListEntry> a = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Audio)).ToList();
+            List<MediaStreamListEntry> s = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Subtitle)).ToList();
 
             trackListDefaultAudio.Enabled = a != null && a.Count > 0;
             trackListDefaultSubs.Enabled = s != null && s.Count > 0;
@@ -118,42 +125,59 @@ namespace Nmkoder.Forms
 
         private void streamList_MouseDown(object sender, MouseEventArgs e)
         {
-            if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
-                streamList.SelectedItems.Clear();
+            //if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
+            //    streamList.SelectedItems.Clear();
 
-            UpdateTrackListUpDownBtnsState();
+            //UpdateTrackListUpDownBtnsState();
         }
 
         private void trackListMoveUpBtn_Click(object sender, EventArgs e)
         {
-            MoveTrackListItem(-1);
+            MoveListViewItem(streamList, MoveDirection.Up);
         }
 
         private void trackListMoveDownBtn_Click(object sender, EventArgs e)
         {
-            MoveTrackListItem(1);
+            MoveListViewItem(streamList, MoveDirection.Down);
         }
 
-        private void MoveTrackListItem(int direction)
+        private enum MoveDirection { Up = -1, Down = 1 };
+
+        private static void MoveListViewItem(ListView listView, MoveDirection direction)
         {
-            if (streamList.SelectedItem == null || streamList.SelectedIndex < 0)
+            if (listView.SelectedItems.Count != 1)
                 return;
 
-            int newIndex = streamList.SelectedIndex + direction;
+            ListViewItem selected = listView.SelectedItems[0];
+            int index = selected.Index;
+            int count = listView.Items.Count;
 
-            if (newIndex < 0 || newIndex >= streamList.Items.Count)
-                return; // Index out of range - nothing to do
-
-            bool isChecked = streamList.GetItemChecked(streamList.Items.IndexOf(streamList.SelectedItem));
-            object selected = streamList.SelectedItem;
-
-            streamList.Items.Remove(selected);
-            streamList.Items.Insert(newIndex, selected);
-            //RefreshIndex();
-            streamList.SetSelected(newIndex, true);
-            streamList.SetItemChecked(newIndex, isChecked);
-            UpdateDefaultStreamsUi();
-            QuickConvertUi.LoadMetadataGrid();
+            if (direction == MoveDirection.Up)
+            {
+                if (index == 0)
+                {
+                    listView.Items.Remove(selected);
+                    listView.Items.Insert(count - 1, selected);
+                }
+                else
+                {
+                    listView.Items.Remove(selected);
+                    listView.Items.Insert(index - 1, selected);
+                }
+            }
+            else
+            {
+                if (index == count - 1)
+                {
+                    listView.Items.Remove(selected);
+                    listView.Items.Insert(0, selected);
+                }
+                else
+                {
+                    listView.Items.Remove(selected);
+                    listView.Items.Insert(index + 1, selected);
+                }
+            }
         }
 
         private void trackListCheckTracksBtn_Click(object sender, EventArgs e)

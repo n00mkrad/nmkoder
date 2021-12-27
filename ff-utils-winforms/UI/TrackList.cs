@@ -57,8 +57,9 @@ namespace Nmkoder.UI
             Program.mainForm.formatInfoLabel.Text = "";
             Program.mainForm.metaGrid.Columns.Clear();
             Program.mainForm.metaGrid.Rows.Clear();
-            //QuickConvertUi.metaEntries.Clear();
             ThumbnailView.ClearUi();
+            QuickConvertUi.currentCropValues = null;
+            Av1anUi.currentCropValues = null;
         }
 
         public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)

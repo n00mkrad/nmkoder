@@ -14,15 +14,17 @@ namespace Nmkoder.Forms
 {
     public partial class CropForm : Form
     {
-        public int[] CropValues { get; set; }
-        private Size originalDimensions = new Size();
+        public int[] CropValues { get; set; } // W, H, X, Y
 
+        private Size originalDimensions = new Size();
+        private int[] savedCropValues = null;
         private bool ready = false;
         private bool ignoreNextEvent = false;
 
-        public CropForm(Size resolution)
+        public CropForm(Size resolution, int[] cropValues = null)
         {
             originalDimensions = resolution;
+            savedCropValues = cropValues;
 
             InitializeComponent();
         }
@@ -31,8 +33,8 @@ namespace Nmkoder.Forms
         {
             noVidPanel.Visible = originalDimensions.IsEmpty;
 
-            int originalWidth = originalDimensions.IsEmpty ? 16380 : originalDimensions.Width;
-            int originalHeight = originalDimensions.IsEmpty ? 16380 : originalDimensions.Height;
+            int originalWidth = originalDimensions.IsEmpty ? 16384 : originalDimensions.Width;
+            int originalHeight = originalDimensions.IsEmpty ? 16384 : originalDimensions.Height;
 
             cropAreaX.Maximum = 0;
             cropAreaY.Maximum = 0;
@@ -43,14 +45,30 @@ namespace Nmkoder.Forms
             cropAreaX.Maximum = originalWidth;
             cropAreaY.Maximum = originalHeight;
 
-            cropAreaW.Value = originalWidth;
-            cropAreaH.Value = originalHeight;
+            cropAreaW.Value = savedCropValues == null ? originalWidth : savedCropValues[0];
+            cropAreaH.Value = savedCropValues == null ? originalHeight : savedCropValues[1];
 
-            cropAreaX.Value = 0;
-            cropAreaY.Value = 0;
+            cropAreaX.Value = savedCropValues == null ? 0 : savedCropValues[2];
+            cropAreaY.Value = savedCropValues == null ? 0 : savedCropValues[3];
 
             cropTop.Maximum = cropBot.Maximum = originalHeight;
             cropLeft.Maximum = cropRight.Maximum = originalWidth;
+
+            if(savedCropValues != null)
+            {
+                int w = savedCropValues[0];
+                int h = savedCropValues[1];
+                int x = savedCropValues[2];
+                int y = savedCropValues[3];
+
+                int totalCropH = originalHeight - h;
+                cropTop.Value = y;
+                cropBot.Value = totalCropH - y;
+
+                int totalCropW = originalWidth - w;
+                cropLeft.Value = x;
+                cropRight.Value = totalCropW - x;
+            }
 
             ready = true;
         }

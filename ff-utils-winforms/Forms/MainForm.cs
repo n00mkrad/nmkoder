@@ -334,7 +334,7 @@ namespace Nmkoder.Forms
             if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
                 res = TrackList.current.File.VideoStreams[0].Resolution;
 
-            CropForm form = new CropForm(res);
+            CropForm form = new CropForm(res, QuickConvertUi.currentCropValues);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)
@@ -357,7 +357,7 @@ namespace Nmkoder.Forms
             if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
                 res = TrackList.current.File.VideoStreams[0].Resolution;
 
-            CropForm form = new CropForm(res);
+            CropForm form = new CropForm(res, Av1anUi.currentCropValues);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)

@@ -102,7 +102,7 @@ namespace Nmkoder.Main
             }
 
             TrackList.ClearCurrentFile();
-            System.Windows.Forms.ListBox fileList = Program.mainForm.fileListBox;
+            System.Windows.Forms.ListView fileList = Program.mainForm.fileListBox;
 
             object[] taskFileList = new object[fileList.Items.Count];
             fileList.Items.CopyTo(taskFileList, 0);

@@ -17,7 +17,7 @@ namespace Nmkoder.Data
     public class MediaFile
     {
         public bool IsDirectory;
-        public FileInfo File;
+        public FileInfo FileInfo;
         public DirectoryInfo Directory;
         public int FileCount;
         public string Name;
@@ -62,11 +62,11 @@ namespace Nmkoder.Data
             }
             else
             {
-                File = new FileInfo(path);
-                Name = File.Name;
-                SourcePath = File.FullName;
-                ImportPath = File.FullName;
-                Format = File.Extension.Remove(".").ToUpper();
+                FileInfo = new FileInfo(path);
+                Name = FileInfo.Name;
+                SourcePath = FileInfo.FullName;
+                ImportPath = FileInfo.FullName;
+                Format = FileInfo.Extension.Remove(".").ToUpper();
                 FileCount = 1;
                 InputRate = new Fraction(-1, 1);
             }
@@ -130,7 +130,7 @@ namespace Nmkoder.Data
             if (IsDirectory)
                 return Directory.Name;
             else
-                return File.Name;
+                return FileInfo.Name;
         }
 
         public string GetPath()
@@ -138,7 +138,7 @@ namespace Nmkoder.Data
             if (IsDirectory)
                 return Directory.FullName;
             else
-                return File.FullName;
+                return FileInfo.FullName;
         }
 
         public long GetSize()
@@ -146,7 +146,7 @@ namespace Nmkoder.Data
             if (IsDirectory)
                 return IoUtils.GetDirSize(GetPath(), true);
             else
-                return File.Length;
+                return FileInfo.Length;
         }
 
         public override string ToString()

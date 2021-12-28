@@ -133,51 +133,12 @@ namespace Nmkoder.Forms
 
         private void trackListMoveUpBtn_Click(object sender, EventArgs e)
         {
-            MoveListViewItem(streamList, MoveDirection.Up);
+            UiUtils.MoveListViewItem(streamList, UiUtils.MoveDirection.Up);
         }
 
         private void trackListMoveDownBtn_Click(object sender, EventArgs e)
         {
-            MoveListViewItem(streamList, MoveDirection.Down);
-        }
-
-        private enum MoveDirection { Up = -1, Down = 1 };
-
-        private static void MoveListViewItem(ListView listView, MoveDirection direction)
-        {
-            if (listView.SelectedItems.Count != 1)
-                return;
-
-            ListViewItem selected = listView.SelectedItems[0];
-            int index = selected.Index;
-            int count = listView.Items.Count;
-
-            if (direction == MoveDirection.Up)
-            {
-                if (index == 0)
-                {
-                    listView.Items.Remove(selected);
-                    listView.Items.Insert(count - 1, selected);
-                }
-                else
-                {
-                    listView.Items.Remove(selected);
-                    listView.Items.Insert(index - 1, selected);
-                }
-            }
-            else
-            {
-                if (index == count - 1)
-                {
-                    listView.Items.Remove(selected);
-                    listView.Items.Insert(0, selected);
-                }
-                else
-                {
-                    listView.Items.Remove(selected);
-                    listView.Items.Insert(index + 1, selected);
-                }
-            }
+            UiUtils.MoveListViewItem(streamList, UiUtils.MoveDirection.Down);
         }
 
         private void trackListCheckTracksBtn_Click(object sender, EventArgs e)

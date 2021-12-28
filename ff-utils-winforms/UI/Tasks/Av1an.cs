@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using Nmkoder.Data;
@@ -36,9 +37,10 @@ namespace Nmkoder.UI.Tasks
             if(TrackList.current == null || TrackList.current.File.ImportPath != sourceFile)
             {
                 Logger.Log($"You first need to load the input file that was used for this encode to resume with new settings!");
-                Program.mainForm.fileListBox.SelectedItem = 0; // Force MFM
+                Program.mainForm.fileListBox.Items.Cast<ListViewItem>().ToList().ForEach(x => x.Selected = false); 
+                Program.mainForm.fileListBox.Items.Cast<ListViewItem>().First().Selected = true; // Force MFM
                 FileList.LoadFiles(new string[1] { sourceFile }, true); // Add input file
-                await TrackList.LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0]).File); // Load file
+                await TrackList.LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File); // Load file
             }
 
             await Run(true, overrideTempDir, "");

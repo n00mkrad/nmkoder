@@ -42,7 +42,7 @@ namespace Nmkoder.UI
             FileList.LoadFiles(paths, clearExisting);
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
-                await LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0]).File);
+                await LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File);
 
             if (runInstantly)
                 Program.mainForm.runBtn_Click();
@@ -82,7 +82,7 @@ namespace Nmkoder.UI
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
             Program.mainForm.streamList.Items.Clear();
             currentAudioConfig = null;
-            await AddStreamsToList(current.File, switchToTrackList);
+            await AddStreamsToList(current.File, Color.FromArgb(64, 64, 64), switchToTrackList);
 
             QuickConvertUi.InitFile(current.File.SourcePath);
             Av1anUi.InitFile(current.File.SourcePath);
@@ -107,7 +107,7 @@ namespace Nmkoder.UI
                 Logger.Log($"Found no media streams in '{mediaFile.Name}'!");
         }
 
-        public static async Task AddStreamsToList(MediaFile mediaFile, bool switchToList, bool silent = false)
+        public static async Task AddStreamsToList(MediaFile mediaFile, Color color, bool switchToList, bool silent = false)
         {
             ListView list = Program.mainForm.streamList;
             int uniqueFileCount = (from x in list.Items.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag).MediaFile.ImportPath) select x).Distinct().Count();
@@ -123,7 +123,7 @@ namespace Nmkoder.UI
                     PrintFoundStreams(mediaFile);
             }
 
-            bool alreadyHasVidStream = list.Items.OfType<MediaStreamListEntry>().Where(x => x.Stream.Type == Stream.StreamType.Video).Count() > 0;
+            bool alreadyHasVidStream = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).Count() > 0;
 
             Random r = new Random();
 
@@ -132,8 +132,7 @@ namespace Nmkoder.UI
                 try
                 {
                     MediaStreamListEntry entry = new MediaStreamListEntry(mediaFile, s);
-                    //Color randomColor = Color.FromArgb(r.Next(0, 64), r.Next(0, 64), r.Next(0, 64));
-                    list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry });
+                    list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry, BackColor = color });
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
                     Program.mainForm.ignoreNextStreamListItemCheck = true;
                     list.Items.Cast<ListViewItem>().Last().Checked = check;
@@ -153,7 +152,7 @@ namespace Nmkoder.UI
 
         public static void Refresh ()
         {
-            List<string> loadedPaths = Program.mainForm.fileListBox.Items.OfType<MediaFile>().Select(x => x.ImportPath).ToList();
+            List<string> loadedPaths = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((MediaFile)x.Tag).ImportPath).ToList();
 
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
@@ -219,8 +218,9 @@ namespace Nmkoder.UI
             List<string> args = new List<string>();
             List<string> addedFiles = new List<string>();
 
-            foreach (FileListEntry entry in Program.mainForm.fileListBox.Items)
+            foreach ( ListViewItem item in Program.mainForm.fileListBox.Items)
             {
+                FileListEntry entry = (FileListEntry)item.Tag;
                 addedFiles.Add(entry.File.SourcePath);
 
                 if (entry.File.IsDirectory)

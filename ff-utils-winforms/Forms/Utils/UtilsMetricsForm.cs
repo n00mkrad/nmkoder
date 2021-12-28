@@ -26,7 +26,7 @@ namespace Nmkoder.Forms.Utils
 
         private bool closeRightAway = false;
 
-        ListBox fileList = Program.mainForm.fileListBox;
+        ListView fileList = Program.mainForm.fileListBox;
 
         public UtilsMetricsForm(bool close = false)
         {
@@ -50,7 +50,7 @@ namespace Nmkoder.Forms.Utils
         {
             for (int i = 0; i < fileList.Items.Count; i++)
             {
-                if((((FileListEntry)fileList.Items[i])).File.ImportPath == videoPath)
+                if((((FileListEntry)fileList.Items[i].Tag)).File.ImportPath == videoPath)
                 {
                     box.SelectedIndex = i;
                     return;
@@ -65,7 +65,7 @@ namespace Nmkoder.Forms.Utils
 
         private void UtilsMetricsForm_Shown(object sender, EventArgs e)
         {
-            ListBox fileList = Program.mainForm.fileListBox;
+            ListView fileList = Program.mainForm.fileListBox;
 
             foreach(FileListEntry entry in fileList.Items)
             {

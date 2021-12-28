@@ -44,13 +44,14 @@ namespace Nmkoder.Forms
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.fileList = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileListSortBtn = new System.Windows.Forms.Button();
             this.fileListMode = new System.Windows.Forms.ComboBox();
             this.fileListMoveUpBtn = new System.Windows.Forms.Button();
             this.fileListCleanBtn = new System.Windows.Forms.Button();
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
-            this.fileList = new System.Windows.Forms.ListBox();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
             this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
             this.trackListMoveUpBtn = new System.Windows.Forms.Button();
@@ -410,16 +411,40 @@ namespace Nmkoder.Forms
             // 
             // fileListPage
             // 
+            this.fileListPage.Controls.Add(this.fileList);
             this.fileListPage.Controls.Add(this.fileListSortBtn);
             this.fileListPage.Controls.Add(this.fileListMode);
             this.fileListPage.Controls.Add(this.fileListMoveUpBtn);
             this.fileListPage.Controls.Add(this.fileListCleanBtn);
             this.fileListPage.Controls.Add(this.fileListMoveDownBtn);
             this.fileListPage.Controls.Add(this.addTracksFromFileBtn);
-            this.fileListPage.Controls.Add(this.fileList);
             this.fileListPage.Name = "fileListPage";
             this.fileListPage.Size = new System.Drawing.Size(682, 382);
             this.fileListPage.Text = "File List";
+            // 
+            // fileList
+            // 
+            this.fileList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.fileList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fileList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.fileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.fileList.ForeColor = System.Drawing.Color.White;
+            this.fileList.FullRowSelect = true;
+            this.fileList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.fileList.HideSelection = false;
+            this.fileList.LabelWrap = false;
+            this.fileList.Location = new System.Drawing.Point(3, 30);
+            this.fileList.Name = "fileList";
+            this.fileList.Size = new System.Drawing.Size(523, 345);
+            this.fileList.TabIndex = 53;
+            this.fileList.UseCompatibleStateImageBehavior = false;
+            this.fileList.View = System.Windows.Forms.View.Details;
+            this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged);
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 500;
             // 
             // fileListSortBtn
             // 
@@ -512,21 +537,6 @@ namespace Nmkoder.Forms
             this.addTracksFromFileBtn.Text = "Load Tracks Into List";
             this.addTracksFromFileBtn.UseVisualStyleBackColor = false;
             this.addTracksFromFileBtn.Click += new System.EventHandler(this.addTracksFromFileBtn_Click);
-            // 
-            // fileList
-            // 
-            this.fileList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.fileList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.fileList.ForeColor = System.Drawing.Color.White;
-            this.fileList.FormattingEnabled = true;
-            this.fileList.IntegralHeight = false;
-            this.fileList.ItemHeight = 16;
-            this.fileList.Location = new System.Drawing.Point(3, 30);
-            this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(523, 345);
-            this.fileList.TabIndex = 0;
-            this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged);
-            this.fileList.DoubleClick += new System.EventHandler(this.fileList_DoubleClick);
             // 
             // streamListPage
             // 
@@ -659,6 +669,7 @@ namespace Nmkoder.Forms
             // streamListView
             // 
             this.streamListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.streamListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.streamListView.CheckBoxes = true;
             this.streamListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
@@ -677,6 +688,10 @@ namespace Nmkoder.Forms
             this.streamListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.streamList_ItemCheck);
             this.streamListView.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
             this.streamListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 650;
             // 
             // quickConvertPage
             // 
@@ -2933,7 +2948,6 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ComboBox encSubBurn;
         private System.Windows.Forms.Label label25;
         private Cyotek.Windows.Forms.TabListPage fileListPage;
-        private System.Windows.Forms.ListBox fileList;
         private System.Windows.Forms.Button fileListMoveUpBtn;
         private System.Windows.Forms.Button fileListCleanBtn;
         private System.Windows.Forms.Button fileListMoveDownBtn;
@@ -3066,6 +3080,8 @@ namespace Nmkoder.Forms
         private HTAlt.WinForms.HTButton av1anCropConfBtn;
         private System.Windows.Forms.ListView streamListView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ListView fileList;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 

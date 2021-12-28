@@ -424,6 +424,7 @@
     <Compile Include="UI\Tasks\QuickConvert.cs" />
     <Compile Include="UI\Tasks\QuickConvertUi.cs" />
     <Compile Include="UI\ThumbnailView.cs" />
+    <Compile Include="UI\UiUtils.cs" />
     <Compile Include="Utils\BitratePlottingUtils.cs" />
     <Compile Include="Utils\ColorDataUtils.cs" />
     <Compile Include="Utils\ConcatUtils.cs" />

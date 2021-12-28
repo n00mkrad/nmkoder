@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -27,7 +28,8 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
-                List<string> paths = Program.mainForm.fileListBox.Items.OfType<FileListEntry>().Where(x => x.File.ImportPath == x.File.SourcePath).Select(x => x.File.ImportPath).ToList();
+                List<FileListEntry> fileListEntries = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => (FileListEntry)x.Tag).ToList();
+                List<string> paths = fileListEntries.Where(x => x.File.ImportPath == x.File.SourcePath).Select(x => x.File.ImportPath).ToList();
                 string filename = new FileInfo(paths[0]).Directory.Name + "-merge.mkv";
                 string outPath = Path.Combine(new FileInfo(paths[0]).Directory.FullName, filename);
                 IoUtils.TryDeleteIfExists(outPath);

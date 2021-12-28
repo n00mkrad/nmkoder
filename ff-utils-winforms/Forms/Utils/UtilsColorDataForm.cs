@@ -22,7 +22,7 @@ namespace Nmkoder.Forms.Utils
 
         private bool batchMode = false;
         private bool closeRightAway = false;
-        ListBox fileList = Program.mainForm.fileListBox;
+        ListView fileList = Program.mainForm.fileListBox;
 
         public UtilsColorDataForm(bool close = false)
         {
@@ -54,7 +54,7 @@ namespace Nmkoder.Forms.Utils
         {
             for (int i = 0; i < fileList.Items.Count; i++)
             {
-                if((((FileListEntry)fileList.Items[i])).File.ImportPath == videoPath)
+                if((((FileListEntry)fileList.Items[i].Tag)).File.ImportPath == videoPath)
                 {
                     box.SelectedIndex = i;
                     return;
@@ -69,7 +69,7 @@ namespace Nmkoder.Forms.Utils
 
         private void UtilsColorDataForm_Shown(object sender, EventArgs e)
         {
-            ListBox fileList = Program.mainForm.fileListBox;
+            ListView fileList = Program.mainForm.fileListBox;
 
             if (batchMode)
             {

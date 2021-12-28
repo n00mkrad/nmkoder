@@ -409,7 +409,7 @@ namespace Nmkoder.UI.Tasks
             {
                 for (int i = 0; i < form.fileListBox.Items.Count; i++)
                 {
-                    MediaFile file = ((FileListEntry)form.fileListBox.Items[i]).File;
+                    MediaFile file = ((FileListEntry)form.fileListBox.Items[i].Tag).File;
 
                     bool hasAttachments = checkedEntries.Where(x => x.MediaFile.SourcePath == file.SourcePath).Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
 

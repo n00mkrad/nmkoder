@@ -82,7 +82,7 @@ namespace Nmkoder.Data.Ui
         {
             for(int i = 0; i < Program.mainForm.fileListBox.Items.Count; i++)
             {
-                if (((FileListEntry)Program.mainForm.fileListBox.Items[i]).File.ImportPath == MediaFile.ImportPath)
+                if (((FileListEntry)Program.mainForm.fileListBox.Items[i].Tag).File.ImportPath == MediaFile.ImportPath)
                     return i;
             }
 

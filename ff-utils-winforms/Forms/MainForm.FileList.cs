@@ -19,13 +19,14 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
+        public ListView fileListBox { get { return fileList; } }
         public ComboBox fileListModeBox { get { return fileListMode; } }
 
         public void RefreshFileListUi ()
         {
             bool mfm = RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput;
 
-            addTracksFromFileBtn.Visible = mfm && (FileListEntry)fileList.SelectedItem != null;
+            addTracksFromFileBtn.Visible = mfm && fileList.SelectedItems.Count > 0;
             addTracksFromFileBtn.Text = AreAnyTracksLoaded() ? "Add Tracks To List" : "Load File";
         }
 
@@ -49,7 +50,7 @@ namespace Nmkoder.Forms
             if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
-                    await TrackList.LoadFirstFile(((FileListEntry)fileList.Items[0]).File);
+                    await TrackList.LoadFirstFile(((FileListEntry)fileList.Items[0].Tag).File);
             }
         }
 
@@ -57,10 +58,13 @@ namespace Nmkoder.Forms
         {
             addTracksFromFileBtn.Enabled = false;
 
-            if (AreAnyTracksLoaded())
-                await TrackList.AddStreamsToList(((FileListEntry)fileList.SelectedItem).File, true);
-            else
-                await TrackList.LoadFirstFile((((FileListEntry)fileList.SelectedItem)).File.SourcePath);
+            foreach (ListViewItem item in fileList.SelectedItems.Cast<ListViewItem>())
+            {
+                if (AreAnyTracksLoaded())
+                    await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
+                else
+                    await TrackList.LoadFirstFile(((FileListEntry)item.Tag).File.SourcePath);
+            }
 
             QuickConvertUi.LoadMetadataGrid();
             addTracksFromFileBtn.Enabled = true;
@@ -73,50 +77,25 @@ namespace Nmkoder.Forms
 
         private void fileListCleanBtn_Click(object sender, EventArgs e)
         {
-            if(fileList.SelectedIndex >= 0 && fileList.SelectedIndex < fileList.Items.Count)
-                fileList.Items.RemoveAt(fileList.SelectedIndex);
+            foreach(ListViewItem item in fileList.SelectedItems)
+                fileList.Items.Remove(item);
 
             TrackList.Refresh();
         }
 
         private void fileListMoveUpBtn_Click(object sender, EventArgs e)
         {
-            MoveFileListItem(-1);
+            UiUtils.MoveListViewItem(fileList, UiUtils.MoveDirection.Up);
         }
 
         private void fileListMoveDownBtn_Click(object sender, EventArgs e)
         {
-            MoveFileListItem(1);
-        }
-
-        private void MoveFileListItem(int direction)
-        {
-            if (fileList.SelectedItem == null || fileList.SelectedIndex < 0)
-                return;
-
-            int newIndex = fileList.SelectedIndex + direction;
-
-            if (newIndex < 0 || newIndex >= fileList.Items.Count)
-                return; // Index out of range - nothing to do
-
-            object selected = fileList.SelectedItem;
-
-            fileList.Items.Remove(selected);
-            fileList.Items.Insert(newIndex, selected);
-            //RefreshIndex();
-            fileList.SetSelected(newIndex, true);
+            UiUtils.MoveListViewItem(fileList, UiUtils.MoveDirection.Down);
         }
 
         private bool AreAnyTracksLoaded ()
         {
             return streamList.Items.Count > 0;
-        }
-
-
-        private void fileList_DoubleClick(object sender, EventArgs e)
-        {
-            if (fileList.SelectedItem != null)
-                addTracksFromFileBtn_Click(null, null);
         }
 
         private void fileListSortBtn_Click(object sender, EventArgs e)

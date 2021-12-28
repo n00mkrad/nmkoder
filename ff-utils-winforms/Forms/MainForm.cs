@@ -31,10 +31,6 @@ namespace Nmkoder.Forms
         bool initialized = false;
 
         public Cyotek.Windows.Forms.TabList mainTabList;
-
-        // General
-        public ListBox fileListBox;
-        //public CheckedListBox streamListBox;
         public PictureBox thumbnailBox;
         public Label formatInfoLabel;
         public Label thumbLabel;
@@ -57,15 +53,11 @@ namespace Nmkoder.Forms
             metaGrid = metadataGrid;
             ffmpegOutputBox = outputPath;
 
-            fileListBox = fileList;
-            //streamListBox = streamList;
             thumbnailBox = thumbnail;
             formatInfoLabel = formatInfo;
             thumbLabel = thumbInfo;
 
             CheckForIllegalCrossThreadCalls = false;
-
-            streamList.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private async void MainForm_Shown(object sender, EventArgs e)
@@ -276,42 +268,42 @@ namespace Nmkoder.Forms
 
         #region FileList
 
-        private void SetFileListItems(object[] objectCollection)
+        private void SetFileListItems(ListViewItem[] items)
         {
             fileList.Items.Clear();
 
-            foreach (object o in objectCollection)
-                fileList.Items.Add(o);
+            foreach (ListViewItem item in items)
+                fileList.Items.Add(item);
         }
 
         private void sortMenuAbcDesc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.SourcePath).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderBy(x => ((FileListEntry)x.Tag).File.SourcePath).ToArray());
         }
 
         private void sortMenuAbcAsc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.SourcePath).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderByDescending(x => ((FileListEntry)x.Tag).File.SourcePath).ToArray());
         }
 
         private void sortMenuSizeDesc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.File.Length).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderByDescending(x => ((FileListEntry)x.Tag).File.FileInfo.Length).ToArray());
         }
 
         private void sortMenuSizeAsc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.Length).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderBy(x => ((FileListEntry)x.Tag).File.FileInfo.Length).ToArray());
         }
 
         private void sortMenuRecentDesc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderByDescending(x => x.File.File.LastWriteTime).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderByDescending(x => ((FileListEntry)x.Tag).File.FileInfo.LastWriteTime).ToArray());
         }
 
         private void sortMenuRecentAsc_Click(object sender, EventArgs e)
         {
-            SetFileListItems(fileList.Items.OfType<FileListEntry>().OrderBy(x => x.File.File.LastWriteTime).ToArray());
+            SetFileListItems(fileList.Items.Cast<ListViewItem>().OrderBy(x => ((FileListEntry)x.Tag).File.FileInfo.LastWriteTime).ToArray());
         }
 
 

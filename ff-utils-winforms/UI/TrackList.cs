@@ -261,38 +261,29 @@ namespace Nmkoder.UI
 
         public static void CheckAll (bool check)
         {
-            // for (int i = 0; i < Program.mainForm.streamListNew.Items.Count; i++)
-            // {
-            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListNew.Items.Count - 1);
-            //     Program.mainForm.streamListNew.CheckedItems(i, check);
-            // }
-
-            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
-                item.Checked = check;
+            for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.streamList.Items[i].Checked = check;
+            }
         }
 
         public static void InvertSelection(object sender = null, EventArgs e = null)
         {
-            // for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            // {
-            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
-            //     Program.mainForm.streamListBox.SetItemChecked(i, !Program.mainForm.streamListBox.GetItemChecked(i));
-            // }
-
-            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
-                item.Checked = !item.Checked;
+            for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.streamList.Items[i].Checked = !Program.mainForm.streamList.Items[i].Checked;
+            }
         }
 
         public static void CheckTracksOfType(Stream.StreamType type)
         {
-            // for (int i = 0; i < Program.mainForm.streamListBox.Items.Count; i++)
-            // {
-            //     Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamListBox.Items.Count - 1);
-            //     Program.mainForm.streamListBox.SetItemChecked(i, ((MediaStreamListEntry)Program.mainForm.streamListBox.Items[i]).Stream.Type == type);
-            // }
-
-            foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
-                item.Checked = ((MediaStreamListEntry)item.Tag).Stream.Type == type;
+            for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
+            {
+                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.streamList.Items[i].Checked = ((MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag).Stream.Type == type;
+            }
         }
 
         #endregion

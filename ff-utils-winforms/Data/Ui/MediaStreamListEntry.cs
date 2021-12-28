@@ -25,7 +25,7 @@ namespace Nmkoder.Data.Ui
             string codec = FormatUtils.CapsIfShort(Stream.Codec, 5);
             const int maxChars = 50;
             int fileIndex = GetFileIndex();
-            string str = $"[File {fileIndex + 1} - Track {Stream.Index + 1}]:";
+            string str = $"[Track {Stream.Index + 1}]:";
 
             if (Stream.Type == Stream.StreamType.Video)
             {

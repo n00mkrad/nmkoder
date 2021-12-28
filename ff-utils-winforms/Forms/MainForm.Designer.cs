@@ -562,7 +562,7 @@ namespace Nmkoder.Forms
             this.trackListCheckTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListCheckTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListCheckTracksBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(644, 62);
+            this.trackListCheckTracksBtn.Location = new System.Drawing.Point(626, 62);
             this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
             this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListCheckTracksBtn.TabIndex = 51;
@@ -578,7 +578,7 @@ namespace Nmkoder.Forms
             this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveUpBtn.Location = new System.Drawing.Point(609, 233);
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(591, 233);
             this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
             this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveUpBtn.TabIndex = 50;
@@ -595,7 +595,7 @@ namespace Nmkoder.Forms
             this.trackListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveDownBtn.Location = new System.Drawing.Point(644, 233);
+            this.trackListMoveDownBtn.Location = new System.Drawing.Point(626, 233);
             this.trackListMoveDownBtn.Name = "trackListMoveDownBtn";
             this.trackListMoveDownBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveDownBtn.TabIndex = 49;

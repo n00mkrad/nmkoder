@@ -42,7 +42,7 @@ namespace Nmkoder.UI
             FileList.LoadFiles(paths, clearExisting);
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
-                await LoadFirstFile(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File);
+                await LoadFirstFile(Program.mainForm.fileListBox.Items[0]);
 
             if (runInstantly)
                 Program.mainForm.runBtn_Click();
@@ -62,14 +62,15 @@ namespace Nmkoder.UI
             Av1anUi.currentCropValues = null;
         }
 
-        public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
-        {
-            MediaFile mediaFile = new MediaFile(path);
-            await LoadFirstFile(mediaFile, switchToTrackList, generateThumbs);
-        }
+        // public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
+        // {
+        //     MediaFile mediaFile = new MediaFile(path);
+        //     await LoadFirstFile(mediaFile, switchToTrackList, generateThumbs);
+        // }
 
-        public static async Task LoadFirstFile(MediaFile mediaFile, bool switchToTrackList = true, bool generateThumbs = true)
+        public static async Task LoadFirstFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
         {
+            MediaFile mediaFile = ((FileListEntry)item.Tag).File;
             int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.ImportPath);
             Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();
@@ -82,7 +83,7 @@ namespace Nmkoder.UI
             Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
             Program.mainForm.streamList.Items.Clear();
             currentAudioConfig = null;
-            await AddStreamsToList(current.File, Color.FromArgb(64, 64, 64), switchToTrackList);
+            await AddStreamsToList(current.File, item.BackColor, switchToTrackList);
 
             QuickConvertUi.InitFile(current.File.SourcePath);
             Av1anUi.InitFile(current.File.SourcePath);

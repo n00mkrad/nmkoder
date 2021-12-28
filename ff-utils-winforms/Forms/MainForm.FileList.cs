@@ -50,7 +50,7 @@ namespace Nmkoder.Forms
             if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
-                    await TrackList.LoadFirstFile(((FileListEntry)fileList.Items[0].Tag).File);
+                    await TrackList.LoadFirstFile(fileList.Items[0]);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Nmkoder.Forms
                 if (AreAnyTracksLoaded())
                     await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
                 else
-                    await TrackList.LoadFirstFile(((FileListEntry)item.Tag).File.SourcePath);
+                    await TrackList.LoadFirstFile(item);
             }
 
             QuickConvertUi.LoadMetadataGrid();

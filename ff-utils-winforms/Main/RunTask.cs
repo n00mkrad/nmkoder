@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Nmkoder.Main
 {
@@ -104,23 +106,23 @@ namespace Nmkoder.Main
             TrackList.ClearCurrentFile();
             System.Windows.Forms.ListView fileList = Program.mainForm.fileListBox;
 
-            object[] taskFileList = new object[fileList.Items.Count];
-            fileList.Items.CopyTo(taskFileList, 0);
+            ListViewItem[] taskItems = new ListViewItem[fileList.Items.Count];
+            fileList.Items.CopyTo(taskItems, 0);
 
             runningBatch = true;
 
-            for (int i = 0; i < taskFileList.Length; i++)
+            for (int i = 0; i < taskItems.Length; i++)
             {
-                MediaFile mf = ((FileListEntry)taskFileList[i]).File;
-                Logger.Log($"Queue: Starting task {i + 1}/{taskFileList.Length} for {mf.Name}.");
+                FileListEntry entry = (FileListEntry)taskItems[i].Tag;
+                Logger.Log($"Queue: Starting task {i + 1}/{taskItems.Length} for {entry.File.Name}.");
                 TrackList.ClearCurrentFile();
-                await TrackList.LoadFirstFile(mf, false, false); // Load file info
+                await TrackList.LoadFirstFile(taskItems[i], false, false); // Load file info
                 await Start(batchTask); // Run task
             }
 
             runningBatch = false;
 
-            Logger.Log($"Queue: Completed {taskFileList.Length} tasks.");
+            Logger.Log($"Queue: Completed {taskItems.Length} tasks.");
         }
 
         public static bool RunInstantly ()

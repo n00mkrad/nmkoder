@@ -245,7 +245,8 @@ namespace Nmkoder.UI
                 {
                     MediaStreamListEntry entry = (MediaStreamListEntry)item.Tag;
 
-                    int fileIdx = entry.ToString().Split('-')[0].GetInt() - 1;
+                    ListViewItem correspodingFileEntry = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Where(x => ((FileListEntry)x.Tag).File == entry.MediaFile).First();
+                    int fileIdx = Program.mainForm.fileListBox.Items.IndexOf(correspodingFileEntry);
 
                     if (!fileIndexesToMap.Contains(fileIdx))
                         fileIndexesToMap.Add(fileIdx);

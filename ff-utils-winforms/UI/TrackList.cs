@@ -153,7 +153,7 @@ namespace Nmkoder.UI
 
         public static void Refresh ()
         {
-            List<string> loadedPaths = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((MediaFile)x.Tag).ImportPath).ToList();
+            List<string> loadedPaths = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File.ImportPath).ToList();
 
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {

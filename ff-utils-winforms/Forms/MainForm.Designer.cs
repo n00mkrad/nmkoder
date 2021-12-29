@@ -441,6 +441,7 @@ namespace Nmkoder.Forms
             this.fileList.UseCompatibleStateImageBehavior = false;
             this.fileList.View = System.Windows.Forms.View.Details;
             this.fileList.SelectedIndexChanged += new System.EventHandler(this.fileList_SelectedIndexChanged);
+            this.fileList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.fileList_MouseDoubleClick);
             // 
             // columnHeader2
             // 

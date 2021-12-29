@@ -102,5 +102,13 @@ namespace Nmkoder.Forms
         {
             sortFileListContextMenu.Show(Cursor.Position);
         }
+
+        private void fileList_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            ListViewItem item = fileList.HitTest(e.X, e.Y).Item;
+
+            if (item != null)
+                addTracksFromFileBtn_Click(null, null);
+        }
     }
 }

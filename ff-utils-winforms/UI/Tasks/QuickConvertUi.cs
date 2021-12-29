@@ -467,7 +467,7 @@ namespace Nmkoder.UI.Tasks
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
                     argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
-                var streamEntries = form.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
+                var streamEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
 
                 for (int i = 0; i < streamEntries.Count(); i++)
                 {

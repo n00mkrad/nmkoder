@@ -298,6 +298,9 @@ namespace Nmkoder.Forms
 
             fileCountLabel.Text = $"{count} file{(count != 1 ? "s" : "")} loaded. " +
                 $"{(count > 1 && RunTask.currentFileListMode == RunTask.FileListMode.Mux ? "Double click any of them or use the Load Tracks button to load their tracks." : "")}";
+
+            if (TrackList.current != null && !fileList.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag)).Any(x => x.File.Equals(TrackList.current.File)))
+                TrackList.ClearCurrentFile();
         }
 
         private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)

@@ -135,6 +135,8 @@ namespace Nmkoder.UI
                     i = 0; // Reset loop index, otherwise removing will result in skipped entries
                 }
             }
+
+            Program.mainForm.RefreshFileListUi();
         }
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)

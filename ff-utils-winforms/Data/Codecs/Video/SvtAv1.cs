@@ -11,7 +11,7 @@ namespace Nmkoder.Data.Codecs
         public Streams.Stream.StreamType Type { get; } = Streams.Stream.StreamType.Video;
         public string Name { get { return GetType().Name; } }
         public string FriendlyName { get; } = "AV1 (SVT-AV1)";
-        public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+        public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
         public int PresetDefault { get; } = 5;
         public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le" };
         public int ColorFormatDefault { get; } = 1;

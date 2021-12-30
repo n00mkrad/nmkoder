@@ -72,7 +72,7 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating SSIM...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}ssim -f null -";
-                    string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
+                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
                     List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
                     if (ssimLines.Count < 1)
@@ -82,7 +82,7 @@ namespace Nmkoder.UI.Tasks
                     else
                     {
                         string scoreStr = ssimLines[0].Split(" All:").LastOrDefault();
-                        Logger.Log($"SSIM Score: {scoreStr}", false, ReplaceLastLine());
+                        Logger.Log($"SSIM Score: {scoreStr.Replace("inf", "Infinite")}", false, ReplaceLastLine());
                     }
                 }
 
@@ -91,7 +91,7 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating PSNR...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}psnr -f null -";
-                    string output = await AvProcess.GetFfmpegOutputAsync(args, false, true);
+                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
                     List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 
                     if (psnrLines.Count < 1)
@@ -101,7 +101,7 @@ namespace Nmkoder.UI.Tasks
                     else
                     {
                         string scoreStr = psnrLines[0].Split("average:").LastOrDefault().Split(' ')[0];
-                        Logger.Log($"PSNR Score: {scoreStr}", false, ReplaceLastLine());
+                        Logger.Log($"PSNR Score: {scoreStr.Replace("inf", "Infinite")}", false, ReplaceLastLine());
                     }
                 }
             }

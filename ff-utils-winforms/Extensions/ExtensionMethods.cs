@@ -254,12 +254,12 @@ namespace Nmkoder.Extensions
         public static string GetConcStr (this string filePath, int rate = -1)
         {
             string rateStr = rate >= 0 ? $"-r {rate} " : "";
-            return filePath.IsConcatFile() ? $"{rateStr}-safe 0 -f concat" : "";
+            return filePath.IsConcatFile() ? $"{rateStr}-safe 0 -f concat " : "";
         }
 
         public static string GetFfmpegInputArg(this string filePath)
         {
-            return "-i " + (filePath.IsConcatFile() ? filePath.GetConcStr() : "") + filePath.Wrap();
+            return $"{(filePath.IsConcatFile() ? filePath.GetConcStr() : "")} -i {filePath.Wrap()}";
         }
 
         public static int CountOccurences (this List<string> list, string stringToLookFor)

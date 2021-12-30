@@ -56,8 +56,6 @@ namespace Nmkoder.Data
                 if (FileCount < 1)
                     return;
 
-                Logger.Log($"MediaFile ctor");
-
                 if(requestFpsInputIfUnset && InputRate == null)
                 {
                     PromptForm form = new PromptForm("Enter Frame Rate", $"Please enter a frame rate to use for the image sequence '{Name.Trunc(80)}'.", "30");

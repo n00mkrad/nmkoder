@@ -103,7 +103,7 @@ namespace Nmkoder.Media
                 if (TrackList.current == null && overrideTargetDurationMs < 0)
                     return;
 
-                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : TrackList.current.File.DurationMs;
+                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : (TrackList.current != null ? TrackList.current.File.DurationMs : 0);
 
                 if (currInDuration < 1)
                 {
@@ -124,7 +124,7 @@ namespace Nmkoder.Media
 
         static bool HideMessage(string msg)
         {
-            string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid", "Non-monotonous" };
+            string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid", "Non-monotonous", "not enough frames to estimate rate", "invalid dropping", "message repeated" };
 
             foreach (string str in hiddenMsgs)
                 if (msg.MatchesWildcard($"*{str}*"))

@@ -24,30 +24,6 @@ namespace Nmkoder.UI
         public static FileListEntry current;
         public static AudioConfiguration currentAudioConfig = null;
 
-        public static async Task HandleFiles(string[] paths, bool clearExisting)
-        {
-            if (clearExisting)
-            {
-                ThumbnailView.ClearUi();
-                ClearCurrentFile();
-                Logger.ClearLogBox();
-            }
-
-            bool runInstantly = RunTask.RunInstantly();
-
-            if(!runInstantly)
-                Program.mainForm.MainTabList.SelectedIndex = 0;
-
-            Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
-            FileList.LoadFiles(paths, clearExisting);
-
-            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
-                await LoadFirstFile(Program.mainForm.fileListBox.Items[0]);
-
-            if (runInstantly)
-                Program.mainForm.runBtn_Click();
-        }
-
         public static void ClearCurrentFile()
         {
             current = null;
@@ -61,12 +37,6 @@ namespace Nmkoder.UI
             QuickConvertUi.currentCropValues = null;
             Av1anUi.currentCropValues = null;
         }
-
-        // public static async Task LoadFirstFile(string path, bool switchToTrackList = true, bool generateThumbs = true)
-        // {
-        //     MediaFile mediaFile = new MediaFile(path);
-        //     await LoadFirstFile(mediaFile, switchToTrackList, generateThumbs);
-        // }
 
         public static async Task LoadFirstFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
         {

@@ -492,6 +492,8 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\icon_extract.png" />
+    <None Include="Resources\icon_sort.png" />
     <None Include="Resources\icon_plot.png" />
     <None Include="Resources\icon_concat.png" />
     <None Include="Resources\icon_videocolor.png" />

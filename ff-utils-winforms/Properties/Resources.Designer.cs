@@ -253,6 +253,16 @@ namespace Nmkoder.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_extract {
+            get {
+                object obj = ResourceManager.GetObject("icon_extract", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_imgStack {
             get {
                 object obj = ResourceManager.GetObject("icon_imgStack", resourceCulture);
@@ -306,6 +316,16 @@ namespace Nmkoder.Properties {
         internal static System.Drawing.Bitmap icon_plot {
             get {
                 object obj = ResourceManager.GetObject("icon_plot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_sort {
+            get {
+                object obj = ResourceManager.GetObject("icon_sort", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

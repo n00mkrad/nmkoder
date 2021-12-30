@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Ui;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -28,6 +29,32 @@ namespace Nmkoder.UI
                 Color color = Program.mainForm.fileListBox.Items.Count == 0 ? Color.FromArgb(64, 64, 64) : Color.FromArgb(r.Next(16, 128), r.Next(16, 128), r.Next(16, 128));
                 Program.mainForm.fileListBox.Items.Add(new ListViewItem() { Text = entry.ToString(), Tag = entry, BackColor = color });
             }
+
+            Program.mainForm.RefreshFileListUi();
+        }
+
+        public static async Task HandleFiles(string[] paths, bool clearExisting)
+        {
+            if (clearExisting)
+            {
+                ThumbnailView.ClearUi();
+                TrackList.ClearCurrentFile();
+                Logger.ClearLogBox();
+            }
+
+            bool runInstantly = RunTask.RunInstantly();
+
+            if (!runInstantly)
+                Program.mainForm.MainTabList.SelectedIndex = 0;
+
+            Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
+            LoadFiles(paths, clearExisting);
+
+            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
+                await TrackList.LoadFirstFile(Program.mainForm.fileListBox.Items[0]);
+
+            if (runInstantly)
+                Program.mainForm.runBtn_Click();
         }
     }
 }

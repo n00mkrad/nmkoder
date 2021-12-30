@@ -23,6 +23,23 @@ using Nmkoder.Forms.Utils;
 using Paths = Nmkoder.Data.Paths;
 using Nmkoder.OS;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ImageMagick;
+using Nmkoder.UI.Tasks;
+using Nmkoder.Main;
+using Nmkoder.Data;
+using Nmkoder.Data.Ui;
+using Nmkoder.Properties;
+using System;
+using Nmkoder.UI;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Nmkoder.Forms
 {
@@ -61,6 +78,7 @@ namespace Nmkoder.Forms
             encAudioCodec_SelectedIndexChanged(null, null);
             encSubCodec_SelectedIndexChanged(null, null);
             av1anAudCodec_SelectedIndexChanged(null, null);
+            RefreshFileListUi();
             initialized = true;
 
             if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
@@ -194,11 +212,11 @@ namespace Nmkoder.Forms
                 form.ShowDialog();
 
                 if (form.ImportFiles.Count > 0)
-                    TrackList.HandleFiles(form.ImportFiles.ToArray(), form.Clear);
+                    FileList.HandleFiles(form.ImportFiles.ToArray(), form.Clear);
             }
             else
             {
-                TrackList.HandleFiles(files, false);
+                FileList.HandleFiles(files, false);
             }
         }
 
@@ -258,7 +276,108 @@ namespace Nmkoder.Forms
                 SaveConfig();
         }
 
+        public void SetButtonActive(Control c, bool state)
+        {
+            c.Enabled = state;
+            c.ForeColor = state ? Color.White : Color.FromArgb(48, 48, 48);
+        }
+
         #region FileList
+
+        public void RefreshFileListUi()
+        {
+            bool anySelected = fileList.SelectedItems.Count > 0;
+            bool oneSelected = fileList.SelectedItems.Count == 1;
+
+            SetButtonActive(fileListMoveUpBtn, oneSelected);
+            SetButtonActive(fileListMoveDownBtn, oneSelected);
+            SetButtonActive(fileListRemoveBtn, anySelected);
+            SetButtonActive(addTracksFromFileBtn, RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && anySelected);
+
+            int count = Program.mainForm.fileListBox.Items.Count;
+
+            fileCountLabel.Text = $"{count} file{(count != 1 ? "s" : "")} loaded. " +
+                $"{(count > 1 && RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput ? "Double click any of them or use the Load Tracks button to load their tracks." : "")}";
+        }
+
+        private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RunTask.FileListMode oldMode = RunTask.currentFileListMode;
+            RunTask.FileListMode newMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
+
+            if (oldMode == RunTask.FileListMode.MultiFileInput && newMode == RunTask.FileListMode.BatchProcess)
+                TrackList.ClearCurrentFile();
+
+            RunTask.currentFileListMode = newMode;
+
+            Text = $"NMKODER [{(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput ? "MFM" : "BPM")}]";
+
+            SaveUiConfig();
+            RefreshFileListUi();
+
+            if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
+            {
+                if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
+                    await TrackList.LoadFirstFile(fileList.Items[0]);
+            }
+        }
+
+        private async void addTracksFromFileBtn_Click(object sender, EventArgs e)
+        {
+            addTracksFromFileBtn.Enabled = false;
+
+            foreach (ListViewItem item in fileList.SelectedItems.Cast<ListViewItem>())
+            {
+                if (AreAnyTracksLoaded())
+                    await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
+                else
+                    await TrackList.LoadFirstFile(item);
+            }
+
+            QuickConvertUi.LoadMetadataGrid();
+            addTracksFromFileBtn.Enabled = true;
+        }
+
+        private void fileList_SelectedIndexChanged(object sender = null, EventArgs e = null)
+        {
+            RefreshFileListUi();
+        }
+
+        private void fileListCleanBtn_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in fileList.SelectedItems)
+                fileList.Items.Remove(item);
+
+            TrackList.Refresh();
+        }
+
+        private void fileListMoveUpBtn_Click(object sender, EventArgs e)
+        {
+            UiUtils.MoveListViewItem(fileList, UiUtils.MoveDirection.Up);
+        }
+
+        private void fileListMoveDownBtn_Click(object sender, EventArgs e)
+        {
+            UiUtils.MoveListViewItem(fileList, UiUtils.MoveDirection.Down);
+        }
+
+        private bool AreAnyTracksLoaded()
+        {
+            return streamList.Items.Count > 0;
+        }
+
+        private void fileListSortBtn_Click(object sender, EventArgs e)
+        {
+            sortFileListContextMenu.Show(System.Windows.Forms.Cursor.Position);
+        }
+
+        private void fileList_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            ListViewItem item = fileList.HitTest(e.X, e.Y).Item;
+
+            if (item != null && RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
+                addTracksFromFileBtn_Click(null, null);
+        }
 
         private void SetFileListItems(ListViewItem[] items)
         {

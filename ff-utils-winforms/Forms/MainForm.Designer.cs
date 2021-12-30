@@ -44,12 +44,13 @@ namespace Nmkoder.Forms
             this.progBar = new HTAlt.WinForms.HTProgressBar();
             this.tabList = new Cyotek.Windows.Forms.TabList();
             this.fileListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.fileCountLabel = new System.Windows.Forms.Label();
             this.fileList = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileListSortBtn = new System.Windows.Forms.Button();
             this.fileListMode = new System.Windows.Forms.ComboBox();
             this.fileListMoveUpBtn = new System.Windows.Forms.Button();
-            this.fileListCleanBtn = new System.Windows.Forms.Button();
+            this.fileListRemoveBtn = new System.Windows.Forms.Button();
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
@@ -411,16 +412,28 @@ namespace Nmkoder.Forms
             // 
             // fileListPage
             // 
+            this.fileListPage.Controls.Add(this.fileCountLabel);
             this.fileListPage.Controls.Add(this.fileList);
             this.fileListPage.Controls.Add(this.fileListSortBtn);
             this.fileListPage.Controls.Add(this.fileListMode);
             this.fileListPage.Controls.Add(this.fileListMoveUpBtn);
-            this.fileListPage.Controls.Add(this.fileListCleanBtn);
+            this.fileListPage.Controls.Add(this.fileListRemoveBtn);
             this.fileListPage.Controls.Add(this.fileListMoveDownBtn);
             this.fileListPage.Controls.Add(this.addTracksFromFileBtn);
             this.fileListPage.Name = "fileListPage";
             this.fileListPage.Size = new System.Drawing.Size(682, 382);
             this.fileListPage.Text = "File List";
+            // 
+            // fileCountLabel
+            // 
+            this.fileCountLabel.AutoSize = true;
+            this.fileCountLabel.ForeColor = System.Drawing.Color.White;
+            this.fileCountLabel.Location = new System.Drawing.Point(0, 31);
+            this.fileCountLabel.Margin = new System.Windows.Forms.Padding(4);
+            this.fileCountLabel.Name = "fileCountLabel";
+            this.fileCountLabel.Size = new System.Drawing.Size(80, 13);
+            this.fileCountLabel.TabIndex = 54;
+            this.fileCountLabel.Text = "No files loaded.";
             // 
             // fileList
             // 
@@ -434,9 +447,9 @@ namespace Nmkoder.Forms
             this.fileList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.fileList.HideSelection = false;
             this.fileList.LabelWrap = false;
-            this.fileList.Location = new System.Drawing.Point(3, 30);
+            this.fileList.Location = new System.Drawing.Point(3, 49);
             this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(523, 345);
+            this.fileList.Size = new System.Drawing.Size(676, 326);
             this.fileList.TabIndex = 53;
             this.fileList.UseCompatibleStateImageBehavior = false;
             this.fileList.View = System.Windows.Forms.View.Details;
@@ -445,19 +458,21 @@ namespace Nmkoder.Forms
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Width = 500;
+            this.columnHeader2.Width = 650;
             // 
             // fileListSortBtn
             // 
             this.fileListSortBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListSortBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_sort;
+            this.fileListSortBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.fileListSortBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileListSortBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileListSortBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListSortBtn.Location = new System.Drawing.Point(532, 279);
+            this.fileListSortBtn.Location = new System.Drawing.Point(642, 3);
             this.fileListSortBtn.Name = "fileListSortBtn";
-            this.fileListSortBtn.Size = new System.Drawing.Size(147, 45);
+            this.fileListSortBtn.Size = new System.Drawing.Size(40, 40);
             this.fileListSortBtn.TabIndex = 43;
-            this.fileListSortBtn.Text = "Sort Files...";
+            this.toolTip.SetToolTip(this.fileListSortBtn, "Sort...");
             this.fileListSortBtn.UseVisualStyleBackColor = false;
             this.fileListSortBtn.Click += new System.EventHandler(this.fileListSortBtn_Click);
             // 
@@ -473,7 +488,7 @@ namespace Nmkoder.Forms
             "Batch Processing Mode - Create One Output File For Each Input File"});
             this.fileListMode.Location = new System.Drawing.Point(3, 3);
             this.fileListMode.Name = "fileListMode";
-            this.fileListMode.Size = new System.Drawing.Size(523, 21);
+            this.fileListMode.Size = new System.Drawing.Size(449, 21);
             this.fileListMode.TabIndex = 42;
             this.fileListMode.SelectedIndexChanged += new System.EventHandler(this.fileListMode_SelectedIndexChanged);
             // 
@@ -485,29 +500,29 @@ namespace Nmkoder.Forms
             this.fileListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListMoveUpBtn.Location = new System.Drawing.Point(583, 330);
+            this.fileListMoveUpBtn.Location = new System.Drawing.Point(458, 3);
             this.fileListMoveUpBtn.Name = "fileListMoveUpBtn";
-            this.fileListMoveUpBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListMoveUpBtn.Size = new System.Drawing.Size(40, 40);
             this.fileListMoveUpBtn.TabIndex = 41;
             this.toolTip.SetToolTip(this.fileListMoveUpBtn, "Move Up");
             this.fileListMoveUpBtn.UseVisualStyleBackColor = false;
             this.fileListMoveUpBtn.Click += new System.EventHandler(this.fileListMoveUpBtn_Click);
             // 
-            // fileListCleanBtn
+            // fileListRemoveBtn
             // 
-            this.fileListCleanBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.fileListCleanBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
-            this.fileListCleanBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.fileListCleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.fileListCleanBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileListCleanBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListCleanBtn.Location = new System.Drawing.Point(532, 330);
-            this.fileListCleanBtn.Name = "fileListCleanBtn";
-            this.fileListCleanBtn.Size = new System.Drawing.Size(45, 45);
-            this.fileListCleanBtn.TabIndex = 40;
-            this.toolTip.SetToolTip(this.fileListCleanBtn, "Remove This File From The List");
-            this.fileListCleanBtn.UseVisualStyleBackColor = false;
-            this.fileListCleanBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
+            this.fileListRemoveBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.fileListRemoveBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_clear;
+            this.fileListRemoveBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.fileListRemoveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileListRemoveBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileListRemoveBtn.ForeColor = System.Drawing.Color.White;
+            this.fileListRemoveBtn.Location = new System.Drawing.Point(550, 3);
+            this.fileListRemoveBtn.Name = "fileListRemoveBtn";
+            this.fileListRemoveBtn.Size = new System.Drawing.Size(40, 40);
+            this.fileListRemoveBtn.TabIndex = 40;
+            this.toolTip.SetToolTip(this.fileListRemoveBtn, "Remove this file from the list. Also removes all loaded tracks.");
+            this.fileListRemoveBtn.UseVisualStyleBackColor = false;
+            this.fileListRemoveBtn.Click += new System.EventHandler(this.fileListCleanBtn_Click);
             // 
             // fileListMoveDownBtn
             // 
@@ -517,9 +532,9 @@ namespace Nmkoder.Forms
             this.fileListMoveDownBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileListMoveDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileListMoveDownBtn.ForeColor = System.Drawing.Color.White;
-            this.fileListMoveDownBtn.Location = new System.Drawing.Point(634, 330);
+            this.fileListMoveDownBtn.Location = new System.Drawing.Point(504, 3);
             this.fileListMoveDownBtn.Name = "fileListMoveDownBtn";
-            this.fileListMoveDownBtn.Size = new System.Drawing.Size(45, 45);
+            this.fileListMoveDownBtn.Size = new System.Drawing.Size(40, 40);
             this.fileListMoveDownBtn.TabIndex = 39;
             this.toolTip.SetToolTip(this.fileListMoveDownBtn, "Move Down");
             this.fileListMoveDownBtn.UseVisualStyleBackColor = false;
@@ -528,14 +543,16 @@ namespace Nmkoder.Forms
             // addTracksFromFileBtn
             // 
             this.addTracksFromFileBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.addTracksFromFileBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_extract;
+            this.addTracksFromFileBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.addTracksFromFileBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addTracksFromFileBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addTracksFromFileBtn.ForeColor = System.Drawing.Color.White;
-            this.addTracksFromFileBtn.Location = new System.Drawing.Point(532, 3);
+            this.addTracksFromFileBtn.Location = new System.Drawing.Point(596, 3);
             this.addTracksFromFileBtn.Name = "addTracksFromFileBtn";
-            this.addTracksFromFileBtn.Size = new System.Drawing.Size(147, 45);
+            this.addTracksFromFileBtn.Size = new System.Drawing.Size(40, 40);
             this.addTracksFromFileBtn.TabIndex = 38;
-            this.addTracksFromFileBtn.Text = "Load Tracks Into List";
+            this.toolTip.SetToolTip(this.addTracksFromFileBtn, "Load all tracks from the selected file into the track list.");
             this.addTracksFromFileBtn.UseVisualStyleBackColor = false;
             this.addTracksFromFileBtn.Click += new System.EventHandler(this.addTracksFromFileBtn_Click);
             // 
@@ -2836,6 +2853,7 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             this.tabList.ResumeLayout(false);
             this.fileListPage.ResumeLayout(false);
+            this.fileListPage.PerformLayout();
             this.streamListPage.ResumeLayout(false);
             this.streamListPage.PerformLayout();
             this.quickConvertPage.ResumeLayout(false);
@@ -2950,7 +2968,7 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label label25;
         private Cyotek.Windows.Forms.TabListPage fileListPage;
         private System.Windows.Forms.Button fileListMoveUpBtn;
-        private System.Windows.Forms.Button fileListCleanBtn;
+        private System.Windows.Forms.Button fileListRemoveBtn;
         private System.Windows.Forms.Button fileListMoveDownBtn;
         private System.Windows.Forms.Button addTracksFromFileBtn;
         private System.Windows.Forms.Label label30;
@@ -3083,6 +3101,7 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ListView fileList;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Label fileCountLabel;
     }
 }
 

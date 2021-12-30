@@ -381,7 +381,6 @@
     <Compile Include="GuiHelpers\ComparisonHelper.cs" />
     <Compile Include="GuiHelpers\EncodeTabHelper.cs" />
     <Compile Include="Extensions\ExtensionMethods.cs" />
-    <Compile Include="FfmpegCommandsOld.cs" />
     <Compile Include="FFmpegStrings.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -399,7 +398,6 @@
     <Compile Include="Media\Av1anOutputHandler.cs" />
     <Compile Include="Media\AvProcess.cs" />
     <Compile Include="Media\FfmpegCommands.cs" />
-    <Compile Include="Media\FfmpegEncode.cs" />
     <Compile Include="Media\FfmpegExtract.cs" />
     <Compile Include="Media\FfmpegOutputHandler.cs" />
     <Compile Include="Media\FfmpegUtils.cs" />

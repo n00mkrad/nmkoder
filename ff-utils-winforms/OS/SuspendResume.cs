@@ -65,6 +65,9 @@ namespace Nmkoder.OS
                     if (excludeCmd && (process.ProcessName == "conhost" || process.ProcessName == "cmd"))
                         continue;
 
+                    if (freeze && (process.ProcessName == "av1an"))
+                        Logger.Log($"Warning: Pausing {process.ProcessName} might not work correctly. Use at your own risk.");
+
                     Logger.Log($"Suspending {process.ProcessName} {process.StartInfo.Arguments.Trunc(100)}", true);
 
                     process.Suspend();

@@ -24,9 +24,7 @@ namespace Nmkoder.Forms
 
         public void RefreshFileListUi ()
         {
-            bool mfm = RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput;
-
-            addTracksFromFileBtn.Visible = mfm && fileList.SelectedItems.Count > 0;
+            addTracksFromFileBtn.Visible = RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && fileList.SelectedItems.Count > 0;
             addTracksFromFileBtn.Text = AreAnyTracksLoaded() ? "Add Tracks To List" : "Load File";
         }
 
@@ -107,7 +105,7 @@ namespace Nmkoder.Forms
         {
             ListViewItem item = fileList.HitTest(e.X, e.Y).Item;
 
-            if (item != null)
+            if (item != null && RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
                 addTracksFromFileBtn_Click(null, null);
         }
     }

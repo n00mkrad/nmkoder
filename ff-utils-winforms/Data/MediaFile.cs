@@ -26,7 +26,7 @@ namespace Nmkoder.Data
         public string Format;
         public string Title;
         public string Language;
-        public Fraction InputRate = new Fraction(25, 1);
+        public Fraction? InputRate = null;
         public long DurationMs;
         public int StreamCount;
         public int TotalKbits;
@@ -40,7 +40,7 @@ namespace Nmkoder.Data
         public long CreationTime;
         public bool Initialized = false;
 
-        public MediaFile(string path)
+        public MediaFile(string path, bool requestFpsInputIfUnset = true)
         {
             CreationTime = (long)(DateTime.Now - new DateTime(1970, 1, 1)).TotalMilliseconds; // Unix Timestamp as UID
 
@@ -56,9 +56,14 @@ namespace Nmkoder.Data
                 if (FileCount < 1)
                     return;
 
-                PromptForm form = new PromptForm("Enter Frame Rate", $"Please enter a frame rate to use for the image sequence '{Name.Trunc(30)}'.", "30");
-                form.ShowDialog();
-                InputRate = new Fraction(form.EnteredText);
+                Logger.Log($"MediaFile ctor");
+
+                if(requestFpsInputIfUnset && InputRate == null)
+                {
+                    PromptForm form = new PromptForm("Enter Frame Rate", $"Please enter a frame rate to use for the image sequence '{Name.Trunc(80)}'.", "30");
+                    form.ShowDialog();
+                    InputRate = new Fraction(form.EnteredText);
+                }
             }
             else
             {
@@ -100,7 +105,7 @@ namespace Nmkoder.Data
             try
             {
                 await LoadFormatInfo(ImportPath);
-                AllStreams = await FfmpegUtils.GetStreams(ImportPath, progressBar, StreamCount, InputRate);
+                AllStreams = await FfmpegUtils.GetStreams(ImportPath, progressBar, StreamCount, (Fraction)InputRate);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();
                 AudioStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x).ToList();
                 SubtitleStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x).ToList();

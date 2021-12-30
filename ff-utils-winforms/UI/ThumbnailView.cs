@@ -26,16 +26,16 @@ namespace Nmkoder.UI
         public static void ClearUi()
         {
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-            Program.mainForm.thumbnailBox.Image = placeholderImg;
-            Program.mainForm.thumbLabel.Text = "";
+            Program.mainForm.ThumbnailBox.Image = placeholderImg;
+            Program.mainForm.ThumbLabel.Text = "";
             busy = false;
         }
 
         public static void LoadUi()
         {
             IoUtils.DeleteContentsOfDir(Paths.GetThumbsPath());
-            Program.mainForm.thumbnailBox.Image = loadingImg;
-            Program.mainForm.thumbLabel.Text = "Loading Thumbnails...";
+            Program.mainForm.ThumbnailBox.Image = loadingImg;
+            Program.mainForm.ThumbLabel.Text = "Loading Thumbnails...";
             busy = true;
         }
 
@@ -111,8 +111,8 @@ namespace Nmkoder.UI
 
         static void Fail()
         {
-            Program.mainForm.thumbnailBox.Image = placeholderImg;
-            Program.mainForm.thumbLabel.Text = $"Failed to extract thumbnails.";
+            Program.mainForm.ThumbnailBox.Image = placeholderImg;
+            Program.mainForm.ThumbLabel.Text = $"Failed to extract thumbnails.";
         }
 
         public static async Task LoadThumbnailsOnce(string format = "*")
@@ -137,7 +137,7 @@ namespace Nmkoder.UI
 
         public static void ThumbnailClick()
         {
-            if (busy || Program.mainForm.thumbnailBox.Image == placeholderImg || Program.mainForm.thumbnailBox.Image == loadingImg)
+            if (busy || Program.mainForm.ThumbnailBox.Image == placeholderImg || Program.mainForm.ThumbnailBox.Image == loadingImg)
                 return;
 
             ShowThumb(true);
@@ -148,7 +148,7 @@ namespace Nmkoder.UI
             if (currThumbs == null || currThumbs.Count < 1)
                 return;
 
-            Program.mainForm.thumbnailBox.Enabled = true;
+            Program.mainForm.ThumbnailBox.Enabled = true;
 
             if (next)
             {
@@ -164,14 +164,14 @@ namespace Nmkoder.UI
             {
                 int s = currThumbs.ElementAt(currThumbIndex).Key.Split("-s")[1].GetInt();
                 string time = TimeSpan.FromSeconds(s).ToString(@"hh\:mm\:ss");
-                Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}).{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
+                Program.mainForm.ThumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count} ({time}).{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
             }
             else
             {
-                Program.mainForm.thumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count}.{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
+                Program.mainForm.ThumbLabel.Text = $"Showing Thumbnail {currThumbIndex + 1}/{currThumbs.Count}.{(currThumbs.Count > 1 ? $" Click for next thumbnail." : "")}";
             }
 
-            Program.mainForm.thumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
+            Program.mainForm.ThumbnailBox.Image = currThumbs.ElementAt(currThumbIndex).Value;
         }
 
         public static async Task SlideshowLoop(int interval = 2)

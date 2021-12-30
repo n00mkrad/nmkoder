@@ -58,7 +58,7 @@ namespace Nmkoder.UI.Tasks
         {
             try
             {
-                Program.mainForm.ffmpegOutputBox.Text = path;
+                Program.mainForm.FfmpegOutputBox.Text = path;
 
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
@@ -208,12 +208,12 @@ namespace Nmkoder.UI.Tasks
             if (fixedFormat)
             {
                 string format = vCodec.ToString().ToLower();
-                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), format);
+                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(form.FfmpegOutputBox.Text.Trim(), format);
             }
             else
             {
                 Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
-                Program.mainForm.ffmpegOutputBox.Text = Path.ChangeExtension(form.ffmpegOutputBox.Text.Trim(), current.ToString().ToLower());
+                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(form.FfmpegOutputBox.Text.Trim(), current.ToString().ToLower());
             }
             
             ValidatePath();
@@ -226,8 +226,8 @@ namespace Nmkoder.UI.Tasks
 
             //string ext = Program.mainForm.containerBox.Text.ToLower();
 
-            if(File.Exists(Program.mainForm.ffmpegOutputBox.Text))
-                Program.mainForm.ffmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.ffmpegOutputBox.Text);
+            if(File.Exists(Program.mainForm.FfmpegOutputBox.Text))
+                Program.mainForm.FfmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.FfmpegOutputBox.Text);
         }
 
         #region Get Current Codec
@@ -332,7 +332,7 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             Logger.Log($"Reloading metadata grid.", true);
-            DataGridView grid = Program.mainForm.metaGrid;
+            DataGridView grid = Program.mainForm.MetaGrid;
             MediaFile c = TrackList.current.File;
 
             if (grid.Columns.Count != 3)
@@ -372,7 +372,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void SaveMetadata ()
         {
-            DataGridView grid = Program.mainForm.metaGrid;
+            DataGridView grid = Program.mainForm.MetaGrid;
             Logger.Log($"Saving metadata.", true);
 
             for (int i = 0; i < grid.Rows.Count; i++)
@@ -424,7 +424,7 @@ namespace Nmkoder.UI.Tasks
             
 
             int cfg = Config.GetInt(Config.Key.metaMode);
-            DataGridView grid = form.metaGrid;
+            DataGridView grid = form.MetaGrid;
             int defaultAudio = form.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = form.trackListDefaultSubsBox.SelectedIndex - 1;
             List<string> argsDispo = new List<string>();
@@ -552,7 +552,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetOutPath (IEncoder c)
         {
-            string uiPath = Program.mainForm.ffmpegOutputBox.Text.Trim();
+            string uiPath = Program.mainForm.FfmpegOutputBox.Text.Trim();
 
             if (c.IsSequence)
             {

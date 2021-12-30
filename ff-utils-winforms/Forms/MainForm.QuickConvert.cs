@@ -46,8 +46,8 @@ namespace Nmkoder.Forms
         public ComboBox encSubCodecBox { get { return encSubCodec; } }
         public ComboBox encSubBurnBox { get { return encSubBurn; } }
         // Quick Convert - Other
-        public DataGridView metaGrid;
-        public TextBox ffmpegOutputBox;
+        public DataGridView MetaGrid { get { return metadataGrid; } }
+        public TextBox FfmpegOutputBox { get { return outputPath; } }
         public TextBox customArgsInBox { get { return encCustomArgsIn; } }
         public TextBox customArgsOutBox { get { return encCustomArgsOut; } }
 

@@ -67,8 +67,9 @@ namespace Nmkoder.Forms.Utils
         {
             ListView fileList = Program.mainForm.fileListBox;
 
-            foreach(FileListEntry entry in fileList.Items)
+            foreach(ListViewItem item in fileList.Items)
             {
+                FileListEntry entry = (FileListEntry)item.Tag;
                 encodedVideo.Items.Add(entry.File);
                 referenceVideo.Items.Add(entry.File);
             }

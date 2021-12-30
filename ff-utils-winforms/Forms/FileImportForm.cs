@@ -41,7 +41,7 @@ namespace Nmkoder.Forms
 
             foreach (string file in files)
             {
-                FileListEntry entry = new FileListEntry(new Data.MediaFile(file));
+                FileListEntry entry = new FileListEntry(new Data.MediaFile(file, false));
                 fileList.Items.Add(entry);
                 fileList.SetItemChecked(fileList.Items.Count - 1, true);
             }

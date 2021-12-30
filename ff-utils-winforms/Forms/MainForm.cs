@@ -30,10 +30,11 @@ namespace Nmkoder.Forms
     {
         bool initialized = false;
 
-        public Cyotek.Windows.Forms.TabList mainTabList;
-        public PictureBox thumbnailBox;
-        public Label formatInfoLabel;
-        public Label thumbLabel;
+        public Cyotek.Windows.Forms.TabList MainTabList { get { return tabList; } }
+        public PictureBox ThumbnailBox { get { return thumbnail; } }
+        public Label FormatInfoLabel { get { return formatInfo; } }
+        public Label ThumbLabel { get { return thumbInfo; } }
+        public Button PauseBtn { get { return pauseBtn; } }
 
         public MainForm()
         {
@@ -45,17 +46,8 @@ namespace Nmkoder.Forms
             Program.mainForm = this;
             Logger.textbox = logTbox;
 
-            mainTabList = tabList;
-
             InitQuickConvert();
             InitAv1an();
-
-            metaGrid = metadataGrid;
-            ffmpegOutputBox = outputPath;
-
-            thumbnailBox = thumbnail;
-            formatInfoLabel = formatInfo;
-            thumbLabel = thumbInfo;
 
             CheckForIllegalCrossThreadCalls = false;
         }
@@ -241,7 +233,7 @@ namespace Nmkoder.Forms
 
         private void pauseBtn_Click(object sender, EventArgs e)
         {
-            Logger.Log($"Not implemented yet.");
+            SuspendResume.SuspendProcs(!SuspendResume.frozen);
         }
 
         private void metaMode_SelectedIndexChanged(object sender, EventArgs e)

@@ -55,7 +55,7 @@ namespace Nmkoder.Main
             if (Program.mainForm.fileListBox.Items.Count < 1)
             {
                 MessageBox.Show("No input files in file list! Please add one or more files first.", "Error");
-                Program.mainForm.mainTabList.SelectedIndex = 0;
+                Program.mainForm.MainTabList.SelectedIndex = 0;
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace Nmkoder.Main
             }
 
             TrackList.ClearCurrentFile();
-            System.Windows.Forms.ListView fileList = Program.mainForm.fileListBox;
+            ListView fileList = Program.mainForm.fileListBox;
 
             ListViewItem[] taskItems = new ListViewItem[fileList.Items.Count];
             fileList.Items.CopyTo(taskItems, 0);

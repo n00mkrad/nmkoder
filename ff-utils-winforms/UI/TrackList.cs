@@ -36,7 +36,7 @@ namespace Nmkoder.UI
             bool runInstantly = RunTask.RunInstantly();
 
             if(!runInstantly)
-                Program.mainForm.mainTabList.SelectedIndex = 0;
+                Program.mainForm.MainTabList.SelectedIndex = 0;
 
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
             FileList.LoadFiles(paths, clearExisting);
@@ -51,12 +51,12 @@ namespace Nmkoder.UI
         public static void ClearCurrentFile()
         {
             current = null;
-            Program.mainForm.ffmpegOutputBox.Text = "";
+            Program.mainForm.FfmpegOutputBox.Text = "";
             Program.mainForm.streamList.Items.Clear();
             Program.mainForm.streamDetailsBox.Text = "";
-            Program.mainForm.formatInfoLabel.Text = "";
-            Program.mainForm.metaGrid.Columns.Clear();
-            Program.mainForm.metaGrid.Rows.Clear();
+            Program.mainForm.FormatInfoLabel.Text = "";
+            Program.mainForm.MetaGrid.Columns.Clear();
+            Program.mainForm.MetaGrid.Rows.Clear();
             ThumbnailView.ClearUi();
             QuickConvertUi.currentCropValues = null;
             Av1anUi.currentCropValues = null;
@@ -80,7 +80,7 @@ namespace Nmkoder.UI
             string titleStr = current.Title.Trim().Length > 2 ? $"Title: {current.Title.Trunc(30)} - " : "";
             string br = current.File.TotalKbits > 0 ? $" - Bitrate: {FormatUtils.Bitrate(current.File.TotalKbits)}" : "";
             string dur = FormatUtils.MsToTimestamp(current.File.DurationMs);
-            Program.mainForm.formatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
+            Program.mainForm.FormatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
             Program.mainForm.streamList.Items.Clear();
             currentAudioConfig = null;
             await AddStreamsToList(current.File, item.BackColor, switchToTrackList);
@@ -145,7 +145,7 @@ namespace Nmkoder.UI
             }
 
             if (switchToList && !RunTask.RunInstantly())
-                Program.mainForm.mainTabList.SelectedIndex = 1;
+                Program.mainForm.MainTabList.SelectedIndex = 1;
 
             Program.mainForm.UpdateDefaultStreamsUi();
             Program.mainForm.UpdateTrackListUpDownBtnsState();

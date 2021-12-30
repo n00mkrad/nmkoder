@@ -17,9 +17,9 @@ namespace Nmkoder.UI.Tasks
     {
         public static async Task Run()
         {
-            if (RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Batch)
             {
-                Logger.Log($"Bitrate Plot Utility: Didn't run because this util only works in Multi File Mode!");
+                Logger.Log($"Bitrate Plot Utility: Didn't run because this util only works in Muxing Mode!");
                 return;
             }
 

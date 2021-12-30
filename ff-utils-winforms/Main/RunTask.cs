@@ -21,7 +21,7 @@ namespace Nmkoder.Main
         public enum TaskType { Null, None, Convert, Av1an, UtilReadBitrates, UtilGetMetrics, UtilOcr, UtilColorData, UtilConcat, PlotBitrate };
         //public static TaskType currentTask;
 
-        public enum FileListMode { MultiFileInput, BatchProcess };
+        public enum FileListMode { Mux, Batch };
         public static FileListMode currentFileListMode;
 
         public static bool runningBatch = false;
@@ -61,7 +61,7 @@ namespace Nmkoder.Main
 
             bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates || taskType == TaskType.UtilOcr;
 
-            if (loadedFileRequired && (currentFileListMode == FileListMode.MultiFileInput && TrackList.current == null))
+            if (loadedFileRequired && (currentFileListMode == FileListMode.Mux && TrackList.current == null))
             {
                 MessageBox.Show("No input file loaded! Please load one first (File List).", "Error");
                 return;

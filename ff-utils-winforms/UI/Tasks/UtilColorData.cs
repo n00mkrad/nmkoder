@@ -21,12 +21,6 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run()
         {
-            // if (RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
-            // {
-            //     Logger.Log($"Color Data Utility: Didn't run because this util only works in Multi File Mode!");
-            //     return;
-            // }
-
             Program.mainForm.SetWorking(true);
 
             try

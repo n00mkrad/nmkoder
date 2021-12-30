@@ -28,9 +28,9 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run(bool fixRate = true)
         {
-            if(RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
+            if(RunTask.currentFileListMode == RunTask.FileListMode.Batch)
             {
-                Logger.Log($"Metrics Utility: Didn't run because this util only works in Multi File Mode!");
+                Logger.Log($"Metrics Utility: Didn't run because this util only works in Muxing Mode!");
                 return;
             }
 

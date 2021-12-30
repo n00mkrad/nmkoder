@@ -484,8 +484,8 @@ namespace Nmkoder.Forms
             this.fileListMode.ForeColor = System.Drawing.Color.White;
             this.fileListMode.FormattingEnabled = true;
             this.fileListMode.Items.AddRange(new object[] {
-            "Multi File Mode - Create One Output File From Any Amount Of Input Files",
-            "Batch Processing Mode - Create One Output File For Each Input File"});
+            "Muxing Mode - Create One Output File From One Or More Input File(s)",
+            "Batch Processing Mode - Run The Same Action On All Input Files"});
             this.fileListMode.Location = new System.Drawing.Point(3, 3);
             this.fileListMode.Name = "fileListMode";
             this.fileListMode.Size = new System.Drawing.Size(449, 21);

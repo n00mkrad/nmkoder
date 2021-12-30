@@ -222,7 +222,7 @@ namespace Nmkoder.Forms
 
         public void runBtn_Click(object sender = null, EventArgs e = null)
         {
-            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Mux)
                 RunTask.Start();
             else
                 RunTask.StartBatch();
@@ -292,12 +292,12 @@ namespace Nmkoder.Forms
             SetButtonActive(fileListMoveUpBtn, oneSelected);
             SetButtonActive(fileListMoveDownBtn, oneSelected);
             SetButtonActive(fileListRemoveBtn, anySelected);
-            SetButtonActive(addTracksFromFileBtn, RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && anySelected);
+            SetButtonActive(addTracksFromFileBtn, RunTask.currentFileListMode == RunTask.FileListMode.Mux && anySelected);
 
             int count = Program.mainForm.fileListBox.Items.Count;
 
             fileCountLabel.Text = $"{count} file{(count != 1 ? "s" : "")} loaded. " +
-                $"{(count > 1 && RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput ? "Double click any of them or use the Load Tracks button to load their tracks." : "")}";
+                $"{(count > 1 && RunTask.currentFileListMode == RunTask.FileListMode.Mux ? "Double click any of them or use the Load Tracks button to load their tracks." : "")}";
         }
 
         private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -305,17 +305,17 @@ namespace Nmkoder.Forms
             RunTask.FileListMode oldMode = RunTask.currentFileListMode;
             RunTask.FileListMode newMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
 
-            if (oldMode == RunTask.FileListMode.MultiFileInput && newMode == RunTask.FileListMode.BatchProcess)
+            if (oldMode == RunTask.FileListMode.Mux && newMode == RunTask.FileListMode.Batch)
                 TrackList.ClearCurrentFile();
 
             RunTask.currentFileListMode = newMode;
 
-            Text = $"NMKODER [{(RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput ? "MFM" : "BPM")}]";
+            Text = $"NMKODER [{(RunTask.currentFileListMode == RunTask.FileListMode.Mux ? "Mux" : "Batch")}]";
 
             SaveUiConfig();
             RefreshFileListUi();
 
-            if (oldMode == RunTask.FileListMode.BatchProcess && newMode == RunTask.FileListMode.MultiFileInput)
+            if (oldMode == RunTask.FileListMode.Batch && newMode == RunTask.FileListMode.Mux)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
                     await TrackList.LoadFirstFile(fileList.Items[0]);
@@ -375,7 +375,7 @@ namespace Nmkoder.Forms
         {
             ListViewItem item = fileList.HitTest(e.X, e.Y).Item;
 
-            if (item != null && RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput)
+            if (item != null && RunTask.currentFileListMode == RunTask.FileListMode.Mux)
                 addTracksFromFileBtn_Click(null, null);
         }
 

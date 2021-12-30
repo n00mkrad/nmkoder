@@ -27,7 +27,7 @@ namespace Nmkoder.Forms.Utils
         public UtilsColorDataForm(bool close = false)
         {
             InitializeComponent();
-            batchMode = RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess;
+            batchMode = RunTask.currentFileListMode == RunTask.FileListMode.Batch;
             closeRightAway = close || batchMode;
 
             if (closeRightAway)
@@ -36,7 +36,7 @@ namespace Nmkoder.Forms.Utils
             if (batchMode)
             {
                 if(!close)
-                    Logger.Log($"In batch processing mode, this util can only be used to read the metadata! Use the Multi File Mode for transferring.");
+                    Logger.Log($"In batch processing mode, this util can only be used to read the metadata! Use the Muxing Mode for transferring.");
 
                 if (TrackList.current == null)
                 {

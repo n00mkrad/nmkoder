@@ -31,7 +31,7 @@ namespace Nmkoder.Forms
         {
             string note = "Stream selection is not available in Batch Processing Mode.";
 
-            if (RunTask.currentFileListMode == RunTask.FileListMode.BatchProcess)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Batch)
                 formatInfo.Text = note;
             else if (formatInfo.Text == note)
                 formatInfo.Text = "";

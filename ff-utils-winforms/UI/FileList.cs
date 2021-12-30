@@ -50,7 +50,7 @@ namespace Nmkoder.UI
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
             LoadFiles(paths, clearExisting);
 
-            if (RunTask.currentFileListMode == RunTask.FileListMode.MultiFileInput && Program.mainForm.fileListBox.Items.Count == 1)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Mux && Program.mainForm.fileListBox.Items.Count == 1)
                 await TrackList.LoadFirstFile(Program.mainForm.fileListBox.Items[0]);
 
             if (runInstantly)

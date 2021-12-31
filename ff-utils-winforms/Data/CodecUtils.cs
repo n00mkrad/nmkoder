@@ -131,7 +131,7 @@ namespace Nmkoder.Data
             return string.Join(" ", args);
         }
 
-        public static string GetTilingArgs(Size resolution, string colArg, string rowArg)
+        public static string GetTilingArgs(Size resolution, string rowArg, string colArg)
         {
             int cols = 0;
             if (resolution.Width >= 1920) cols = 1;
@@ -144,7 +144,7 @@ namespace Nmkoder.Data
             if (resolution.Height >= 6400) rows = 3;
 
             Logger.Log($"GetTilingArgs: Video resolution is {resolution.Width}x{resolution.Height} - Using 2^{cols} columns, 2^{rows} rows (=> {Math.Pow(2, cols)}x{Math.Pow(2, rows)} = {Math.Pow(2, cols) * Math.Pow(2, rows)} Tiles)", true);
-            return $"{colArg}{cols} {rowArg}{rows}";
+            return $"{rowArg}{rows} {colArg}{cols}";
         }
     }
 }

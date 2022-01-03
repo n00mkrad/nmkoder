@@ -226,7 +226,7 @@ namespace Nmkoder.UI
                     MediaStreamListEntry entry = (MediaStreamListEntry)item.Tag;
 
                     ListViewItem correspodingFileEntry = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Where(x => ((FileListEntry)x.Tag).File == entry.MediaFile).First();
-                    int fileIdx = Program.mainForm.fileListBox.Items.IndexOf(correspodingFileEntry);
+                    int fileIdx = RunTask.currentFileListMode == RunTask.FileListMode.Batch ? 0 : Program.mainForm.fileListBox.Items.IndexOf(correspodingFileEntry);
 
                     if (!fileIndexesToMap.Contains(fileIdx))
                         fileIndexesToMap.Add(fileIdx);

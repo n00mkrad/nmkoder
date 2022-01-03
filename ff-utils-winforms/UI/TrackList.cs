@@ -121,7 +121,7 @@ namespace Nmkoder.UI
             Program.mainForm.UpdateTrackListUpDownBtnsState();
         }
 
-        public static void Refresh ()
+        public static void Refresh()
         {
             List<string> loadedPaths = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File.ImportPath).ToList();
 
@@ -188,10 +188,18 @@ namespace Nmkoder.UI
 
         public static string GetInputFilesString()
         {
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Batch)
+            {
+                if (current.File.IsDirectory)
+                    return $"-safe 0 -f concat -r {current.File.InputRate} -i {current.File.ImportPath.Wrap()}";
+                else
+                    return $"-i {current.File.ImportPath.Wrap()}";
+            }
+
             List<string> args = new List<string>();
             List<string> addedFiles = new List<string>();
 
-            foreach ( ListViewItem item in Program.mainForm.fileListBox.Items)
+            foreach (ListViewItem item in Program.mainForm.fileListBox.Items)
             {
                 FileListEntry entry = (FileListEntry)item.Tag;
                 addedFiles.Add(entry.File.SourcePath);
@@ -232,7 +240,7 @@ namespace Nmkoder.UI
 
         #region Stream Selection
 
-        public static void CheckAll (bool check)
+        public static void CheckAll(bool check)
         {
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {

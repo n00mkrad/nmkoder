@@ -98,15 +98,16 @@ namespace Nmkoder.UI
 
             Random r = new Random();
 
+            Program.mainForm.ignoreStreamListCheck = true;
+            list.BeginUpdate();
+
             foreach (Stream s in mediaFile.AllStreams)
             {
                 try
                 {
                     MediaStreamListEntry entry = new MediaStreamListEntry(mediaFile, s);
-                    list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry, BackColor = color });
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
-                    Program.mainForm.ignoreNextStreamListItemCheck = true;
-                    list.Items.Cast<ListViewItem>().Last().Checked = check;
+                    list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry, BackColor = color, Checked = check });
                 }
                 catch (Exception e)
                 {
@@ -114,9 +115,13 @@ namespace Nmkoder.UI
                 }
             }
 
+            list.EndUpdate();
+
             if (switchToList && !RunTask.RunInstantly())
                 Program.mainForm.MainTabList.SelectedIndex = 1;
 
+            Program.mainForm.OnCheckedStreamsChange();
+            Program.mainForm.ignoreStreamListCheck = false;
             Program.mainForm.UpdateDefaultStreamsUi();
             Program.mainForm.UpdateTrackListUpDownBtnsState();
         }
@@ -244,7 +249,7 @@ namespace Nmkoder.UI
         {
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = check;
             }
         }
@@ -253,7 +258,7 @@ namespace Nmkoder.UI
         {
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = !Program.mainForm.streamList.Items[i].Checked;
             }
         }
@@ -262,7 +267,7 @@ namespace Nmkoder.UI
         {
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
-                Program.mainForm.ignoreNextStreamListItemCheck = i < (Program.mainForm.streamList.Items.Count - 1);
+                Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = ((MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag).Stream.Type == type;
             }
         }

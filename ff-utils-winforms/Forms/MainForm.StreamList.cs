@@ -63,21 +63,18 @@ namespace Nmkoder.Forms
                 trackListMoveDownBtn.Visible = newState;
         }
 
-        public bool ignoreNextStreamListItemCheck;
+        public bool ignoreStreamListCheck;
 
         private void streamList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (ignoreNextStreamListItemCheck)
-            {
-                ignoreNextStreamListItemCheck = false;
+            if (ignoreStreamListCheck)
                 return;
-            }
 
             if (e.NewValue != e.CurrentValue)
                 this.BeginInvoke((MethodInvoker)(() => OnCheckedStreamsChange()));
         }
 
-        private void OnCheckedStreamsChange()
+        public void OnCheckedStreamsChange()
         {
             UpdateDefaultStreamsUi();
             QuickConvertUi.LoadMetadataGrid();

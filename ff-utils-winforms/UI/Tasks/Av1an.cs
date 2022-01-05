@@ -146,6 +146,17 @@ namespace Nmkoder.UI.Tasks
                 args = form.Args;
             }
 
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to create output folder: {e.Message}");
+                Program.mainForm.SetWorking(false);
+                return;
+            }
+
             Logger.Log($"Running:\nav1an {args}", true, false, "av1an");
 
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);

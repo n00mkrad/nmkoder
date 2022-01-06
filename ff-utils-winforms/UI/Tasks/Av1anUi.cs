@@ -250,17 +250,21 @@ namespace Nmkoder.UI.Tasks
                 return "";
         }
 
-        public static string GetSplittingMethod()
+        public static string GetSplittingMethodArgs()
         {
+            string s = "";
+
             if (form.av1anOptsSplitModeBox.SelectedIndex == 0)
-                return $"none";
+                s = $"none";
             else
-                return $"av-scenechange";
+                s = $"av-scenechange";
+
+            return $"--split-method {s}";
         }
 
         public static string GetChunkGenMethod()
         {
-            return form.av1anOptsChunkModeBox.Text.ToLower().Trim();
+            return $"-m {form.av1anOptsChunkModeBox.Text.ToLower().Trim()}";
 
             // switch (form.av1anOptsChunkModeBox.SelectedIndex)
             // {
@@ -274,9 +278,19 @@ namespace Nmkoder.UI.Tasks
             // return "";
         }
 
-        public static string GetConcatMethod()
+        public static string GetConcatMethodArgs()
         {
-            return form.av1anOptsConcatModeBox.Text.ToLower().Trim();
+            return $"-c {form.av1anOptsConcatModeBox.Text.ToLower().Trim()}";
+        }
+
+        public static string GetChunkOrderArgs()
+        {
+            return $"--chunk-order {form.av1anOptsChunkOrderBox.Text.Split('(')[0].ToLower().Trim()}";
+        }
+
+        public static string GetThreadAffArgs()
+        {
+            return $"--set-thread-affinity {form.av1anThreadsUpDown.Value}";
         }
 
         public static string GetOutPath()

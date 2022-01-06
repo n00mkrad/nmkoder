@@ -91,6 +91,7 @@ namespace Nmkoder.Forms
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfig();
+            SaveConfigAv1an();
 
             if (Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Shift)
             {

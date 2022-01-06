@@ -71,12 +71,13 @@ namespace Nmkoder.UI.Tasks
                     string vf = await GetVideoFilterArgs(codecArgs);
                     string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
                     string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
-                    string s = GetSplittingMethod();
+                    string s = GetSplittingMethodArgs();
                     string m = GetChunkGenMethod();
-                    string c = GetConcatMethod();
-                    string thr = Program.mainForm.av1anThreadsUpDown.Value.ToString();
+                    string c = GetConcatMethodArgs();
+                    string o = GetChunkOrderArgs();
+                    string thr = GetThreadAffArgs(); 
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep --split-method {s} -m {m} -c {c} --set-thread-affinity {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {

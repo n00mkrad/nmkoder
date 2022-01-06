@@ -223,6 +223,8 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
+            this.label47 = new System.Windows.Forms.Label();
+            this.av1anOptsChunkOrder = new System.Windows.Forms.ComboBox();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -2010,6 +2012,8 @@ namespace Nmkoder.Forms
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage5.Controls.Add(this.av1anOptsChunkOrder);
+            this.tabPage5.Controls.Add(this.label47);
             this.tabPage5.Controls.Add(this.av1anResumeBtn);
             this.tabPage5.Controls.Add(this.label42);
             this.tabPage5.Controls.Add(this.av1anOptsConcatMode);
@@ -2039,7 +2043,7 @@ namespace Nmkoder.Forms
             this.av1anResumeBtn.ForeColor = System.Drawing.Color.White;
             this.av1anResumeBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
             this.av1anResumeBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
-            this.av1anResumeBtn.Location = new System.Drawing.Point(220, 156);
+            this.av1anResumeBtn.Location = new System.Drawing.Point(220, 186);
             this.av1anResumeBtn.Name = "av1anResumeBtn";
             this.av1anResumeBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
             this.av1anResumeBtn.Size = new System.Drawing.Size(250, 23);
@@ -2051,7 +2055,7 @@ namespace Nmkoder.Forms
             // 
             this.label42.AutoSize = true;
             this.label42.ForeColor = System.Drawing.Color.White;
-            this.label42.Location = new System.Drawing.Point(5, 160);
+            this.label42.Location = new System.Drawing.Point(5, 190);
             this.label42.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(91, 15);
@@ -2089,7 +2093,7 @@ namespace Nmkoder.Forms
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(5, 130);
+            this.label8.Location = new System.Drawing.Point(5, 160);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(111, 15);
@@ -2100,7 +2104,7 @@ namespace Nmkoder.Forms
             // 
             this.av1anOptsWorkerCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anOptsWorkerCount.ForeColor = System.Drawing.Color.White;
-            this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 100);
+            this.av1anOptsWorkerCount.Location = new System.Drawing.Point(220, 130);
             this.av1anOptsWorkerCount.Maximum = new decimal(new int[] {
             24,
             0,
@@ -2120,14 +2124,13 @@ namespace Nmkoder.Forms
             0,
             0,
             0});
-            this.av1anOptsWorkerCount.ValueChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // av1anCustomArgs
             // 
             this.av1anCustomArgs.AllowDrop = true;
             this.av1anCustomArgs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.av1anCustomArgs.ForeColor = System.Drawing.Color.White;
-            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 127);
+            this.av1anCustomArgs.Location = new System.Drawing.Point(220, 157);
             this.av1anCustomArgs.MinimumSize = new System.Drawing.Size(4, 21);
             this.av1anCustomArgs.Name = "av1anCustomArgs";
             this.av1anCustomArgs.Size = new System.Drawing.Size(442, 23);
@@ -2137,7 +2140,7 @@ namespace Nmkoder.Forms
             // 
             this.label35.AutoSize = true;
             this.label35.ForeColor = System.Drawing.Color.White;
-            this.label35.Location = new System.Drawing.Point(7, 100);
+            this.label35.Location = new System.Drawing.Point(7, 130);
             this.label35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(113, 15);
@@ -2156,7 +2159,6 @@ namespace Nmkoder.Forms
             this.av1anOptsChunkMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsChunkMode.TabIndex = 49;
             this.toolTip.SetToolTip(this.av1anOptsChunkMode, "Select the chunk generation method. If you are unsure, use lsmash.");
-            this.av1anOptsChunkMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // label34
             // 
@@ -2184,7 +2186,6 @@ namespace Nmkoder.Forms
             this.av1anOptsSplitMode.Size = new System.Drawing.Size(250, 23);
             this.av1anOptsSplitMode.TabIndex = 47;
             this.toolTip.SetToolTip(this.av1anOptsSplitMode, "Set how to split the video into chunks");
-            this.av1anOptsSplitMode.SelectedIndexChanged += new System.EventHandler(this.SaveConfigAv1an);
             // 
             // label32
             // 
@@ -2829,6 +2830,35 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.ForeColor = System.Drawing.Color.White;
+            this.label47.Location = new System.Drawing.Point(7, 100);
+            this.label47.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(128, 15);
+            this.label47.TabIndex = 62;
+            this.label47.Text = "Chunk Encoding Order";
+            // 
+            // av1anOptsChunkOrder
+            // 
+            this.av1anOptsChunkOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsChunkOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsChunkOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsChunkOrder.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsChunkOrder.FormattingEnabled = true;
+            this.av1anOptsChunkOrder.Items.AddRange(new object[] {
+            "Long-to-Short (Best CPU utilization)",
+            "Short-to-Long (Not very useful)",
+            "Sequential (Same order as input video)",
+            "Random (Most accurate filesize estimation)"});
+            this.av1anOptsChunkOrder.Location = new System.Drawing.Point(220, 97);
+            this.av1anOptsChunkOrder.Name = "av1anOptsChunkOrder";
+            this.av1anOptsChunkOrder.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsChunkOrder.TabIndex = 63;
+            this.toolTip.SetToolTip(this.av1anOptsChunkOrder, "Select the chunk merging method. Use mkvmerge if ffmpeg doesn\'t work correctly.");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3107,6 +3137,8 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ListView fileList;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Label fileCountLabel;
+        private System.Windows.Forms.ComboBox av1anOptsChunkOrder;
+        private System.Windows.Forms.Label label47;
     }
 }
 

@@ -42,10 +42,10 @@ namespace Nmkoder.Main
             Logger.LogIfLastLineDoesNotContainMsg("Canceled.");
 
             if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
-                MessageBox.Show($"Canceled:\n\n{reason}", "Message");
+                System.Windows.Forms.MessageBox.Show($"Canceled:\n\n{reason}", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, System.Windows.Forms.MessageBoxOptions.ServiceNotification);
         }
 
-        public static async Task Start (TaskType batchTask = TaskType.Null)
+        public static async Task Start(TaskType batchTask = TaskType.Null)
         {
             if (batchTask == TaskType.Null)
                 runningBatch = false;
@@ -69,7 +69,7 @@ namespace Nmkoder.Main
 
             if (taskType == TaskType.None)
             {
-                if(!RunInstantly())
+                if (!RunInstantly())
                     MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
 
                 return;
@@ -93,7 +93,7 @@ namespace Nmkoder.Main
             Program.mainForm.SetWorking(false);
         }
 
-        public static async Task StartBatch ()
+        public static async Task StartBatch()
         {
             TaskType batchTask = Program.mainForm.GetCurrentTaskType();
 
@@ -125,7 +125,7 @@ namespace Nmkoder.Main
             Logger.Log($"Queue: Completed {taskItems.Length} tasks.");
         }
 
-        public static bool RunInstantly ()
+        public static bool RunInstantly()
         {
             return Config.GetInt("taskMode") == 1;
         }

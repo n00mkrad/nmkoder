@@ -83,8 +83,9 @@ namespace Nmkoder.Media
 
             if (!show)
             {
-                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
-                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
+                string[] ignore = GetIgnoreStringsFromFfmpegCmd(args);
+                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
             }
 
             ffmpeg.Start();
@@ -103,6 +104,15 @@ namespace Nmkoder.Media
                 Program.mainForm.SetProgress(0);
 
             return processOutput;
+        }
+
+        private static string[] GetIgnoreStringsFromFfmpegCmd (string cmd)
+        {
+            string inputPath = cmd.Split(" -i ")[1].Split("\"")[1].Trim();
+            string[] splitByQuotes = cmd.Split("\"");
+            string outPath = splitByQuotes[splitByQuotes.Length - 2];
+            Logger.Log($"Filtering out input path ({inputPath}) and output path ({outPath})");
+            return new string[] { inputPath, outPath };
         }
 
         public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)
@@ -131,8 +141,9 @@ namespace Nmkoder.Media
 
             if (!show)
             {
-                ffprobe.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
-                ffprobe.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
+                string[] ignore = new string[0];
+                ffprobe.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
+                ffprobe.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
             }
 
             ffprobe.Start();

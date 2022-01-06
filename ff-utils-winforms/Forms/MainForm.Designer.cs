@@ -1566,14 +1566,19 @@ namespace Nmkoder.Forms
             this.av1anThreads.ForeColor = System.Drawing.Color.White;
             this.av1anThreads.Location = new System.Drawing.Point(220, 248);
             this.av1anThreads.Maximum = new decimal(new int[] {
-            5000,
+            64,
+            0,
+            0,
+            0});
+            this.av1anThreads.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.av1anThreads.Name = "av1anThreads";
             this.av1anThreads.Size = new System.Drawing.Size(250, 23);
             this.av1anThreads.TabIndex = 74;
-            this.toolTip.SetToolTip(this.av1anThreads, "Improves encodes of noisy videos by synthesizing grain");
+            this.toolTip.SetToolTip(this.av1anThreads, "Amount of threads that each encoder instance (worker) can use");
             this.av1anThreads.Value = new decimal(new int[] {
             4,
             0,

@@ -9,6 +9,7 @@ using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
 using Nmkoder.Media;
+using Nmkoder.OS;
 using static Nmkoder.UI.Tasks.QuickConvertUi;
 
 namespace Nmkoder.UI.Tasks
@@ -25,6 +26,7 @@ namespace Nmkoder.UI.Tasks
         public static async Task Run()
         {
             Program.mainForm.SetWorking(true);
+            SuspendResume.SetPauseButtonStyle(false);
             string args = "";
 
             try

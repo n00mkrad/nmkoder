@@ -108,11 +108,22 @@ namespace Nmkoder.Media
 
         private static string[] GetIgnoreStringsFromFfmpegCmd (string cmd)
         {
-            string inputPath = cmd.Split(" -i ")[1].Split("\"")[1].Trim();
-            string[] splitByQuotes = cmd.Split("\"");
-            string outPath = splitByQuotes[splitByQuotes.Length - 2];
-            Logger.Log($"Filtering out input path ({inputPath}) and output path ({outPath})");
-            return new string[] { inputPath, outPath };
+            List<string> strs = new List<string>();
+            
+            try
+            {
+                strs.Add(cmd.Split(" -i ")[1].Split("\"")[1].Trim());
+            }
+            catch { }
+
+            try
+            {
+                string[] splitByQuotes = cmd.Split("\"");
+                strs.Add(splitByQuotes[splitByQuotes.Length - 2]);
+            }
+            catch { }
+            
+            return strs.ToArray();
         }
 
         public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)

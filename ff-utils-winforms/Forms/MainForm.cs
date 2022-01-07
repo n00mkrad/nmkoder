@@ -78,7 +78,7 @@ namespace Nmkoder.Forms
             encAudioCodec_SelectedIndexChanged(null, null);
             encSubCodec_SelectedIndexChanged(null, null);
             av1anAudCodec_SelectedIndexChanged(null, null);
-            RefreshFileListUi();
+            await RefreshFileListUi();
             initialized = true;
 
             if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
@@ -285,7 +285,7 @@ namespace Nmkoder.Forms
 
         #region FileList
 
-        public void RefreshFileListUi()
+        public async Task RefreshFileListUi()
         {
             bool anySelected = fileList.SelectedItems.Count > 0;
             bool oneSelected = fileList.SelectedItems.Count == 1;
@@ -301,7 +301,12 @@ namespace Nmkoder.Forms
                 $"{(count > 1 && RunTask.currentFileListMode == RunTask.FileListMode.Mux ? "Double click any of them or use the Load Tracks button to load their tracks." : "")}";
 
             if (TrackList.current != null && !fileList.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag)).Any(x => x.File.Equals(TrackList.current.File)))
+            {
                 TrackList.ClearCurrentFile();
+
+                if (RunTask.currentFileListMode == RunTask.FileListMode.Mux)
+                    await TrackList.SetAsMainFile(fileList.Items[0], false);
+            }
         }
 
         private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -317,12 +322,12 @@ namespace Nmkoder.Forms
             Text = $"NMKODER [{(RunTask.currentFileListMode == RunTask.FileListMode.Mux ? "Mux" : "Batch")}]";
 
             SaveUiConfig();
-            RefreshFileListUi();
+            await RefreshFileListUi();
 
             if (oldMode == RunTask.FileListMode.Batch && newMode == RunTask.FileListMode.Mux)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
-                    await TrackList.LoadFirstFile(fileList.Items[0]);
+                    await TrackList.SetAsMainFile(fileList.Items[0]);
             }
         }
 
@@ -332,10 +337,13 @@ namespace Nmkoder.Forms
 
             foreach (ListViewItem item in fileList.SelectedItems.Cast<ListViewItem>())
             {
-                if (AreAnyTracksLoaded())
+                //if (AreAnyTracksLoaded())
                     await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
-                else
-                    await TrackList.LoadFirstFile(item);
+                //else
+                //    await TrackList.SetAsMainFile(item);
+
+                if (TrackList.current == null)
+                    await TrackList.SetAsMainFile(item);
             }
 
             QuickConvertUi.LoadMetadataGrid();

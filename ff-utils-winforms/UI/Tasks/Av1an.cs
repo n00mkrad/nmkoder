@@ -40,7 +40,7 @@ namespace Nmkoder.UI.Tasks
                 Program.mainForm.fileListBox.Items.Cast<ListViewItem>().ToList().ForEach(x => x.Selected = false); 
                 Program.mainForm.fileListBox.Items.Cast<ListViewItem>().First().Selected = true; // Force MFM
                 FileList.LoadFiles(new string[1] { sourceFile }, true); // Add input file
-                await TrackList.LoadFirstFile(Program.mainForm.fileListBox.Items[0]); // Load file
+                await TrackList.SetAsMainFile(Program.mainForm.fileListBox.Items[0]); // Load file
             }
 
             await Run(true, overrideTempDir, "");

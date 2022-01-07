@@ -79,16 +79,14 @@ namespace Nmkoder.UI
 
                     foreach (FileInfo pick in picks)
                     {
-
                         pick.CopyTo(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}{pick.Extension}"));
-                        //IoUtils.GetImage(pick.FullName).Save(Path.Combine(Paths.GetThumbsPath(), $"thumb{idx}.{format}"), ImageFormat.Jpeg);
                         idx++;
                     }
                 }
             }
             catch (Exception e)
             {
-                Logger.Log("GetThumbnails Error: " + e.Message, true);
+                Logger.Log($"GetThumbnails Error: {e.Message}\n{e.StackTrace}", true);
             }
 
             RemoveInvalidImages();

@@ -28,7 +28,7 @@ namespace Nmkoder.UI
         {
             current = null;
             Program.mainForm.FfmpegOutputBox.Text = "";
-            Program.mainForm.streamList.Items.Clear();
+            //Program.mainForm.streamList.Items.Clear();
             Program.mainForm.streamDetailsBox.Text = "";
             Program.mainForm.FormatInfoLabel.Text = "";
             Program.mainForm.MetaGrid.Columns.Clear();
@@ -38,7 +38,7 @@ namespace Nmkoder.UI
             Av1anUi.currentCropValues = null;
         }
 
-        public static async Task LoadFirstFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
+        public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
         {
             MediaFile mediaFile = ((FileListEntry)item.Tag).File;
             int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.ImportPath);
@@ -53,7 +53,7 @@ namespace Nmkoder.UI
             Program.mainForm.FormatInfoLabel.Text = $"{titleStr}Format: {current.File.Format} - Duration: {dur}{br} - Size: {FormatUtils.Bytes(current.File.Size)}";
             Program.mainForm.streamList.Items.Clear();
             currentAudioConfig = null;
-            await AddStreamsToList(current.File, item.BackColor, switchToTrackList);
+            //await AddStreamsToList(current.File, item.BackColor, switchToTrackList);
 
             QuickConvertUi.InitFile(current.File.SourcePath);
             Av1anUi.InitFile(current.File.SourcePath);

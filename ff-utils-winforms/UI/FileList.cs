@@ -51,7 +51,10 @@ namespace Nmkoder.UI
             LoadFiles(paths, clearExisting);
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.Mux && Program.mainForm.fileListBox.Items.Count == 1)
-                await TrackList.LoadFirstFile(Program.mainForm.fileListBox.Items[0]);
+            {
+                await TrackList.SetAsMainFile(Program.mainForm.fileListBox.Items[0]);
+                await TrackList.AddStreamsToList(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File, Program.mainForm.fileListBox.Items[0].BackColor, true);
+            }
 
             if (runInstantly)
                 Program.mainForm.runBtn_Click();

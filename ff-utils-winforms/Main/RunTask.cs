@@ -116,7 +116,7 @@ namespace Nmkoder.Main
                 FileListEntry entry = (FileListEntry)taskItems[i].Tag;
                 Logger.Log($"Queue: Starting task {i + 1}/{taskItems.Length} for {entry.File.Name}.");
                 TrackList.ClearCurrentFile();
-                await TrackList.LoadFirstFile(taskItems[i], false, false); // Load file info
+                await TrackList.SetAsMainFile(taskItems[i], false, false); // Load file info
                 await Start(batchTask); // Run task
             }
 

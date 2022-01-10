@@ -328,12 +328,14 @@ namespace Nmkoder.UI.Tasks
 
         public static void LoadMetadataGrid()
         {
-            if (TrackList.current == null)
+            FileListEntry curr = TrackList.current;
+
+            if (curr == null)
                 return;
 
             Logger.Log($"Reloading metadata grid.", true);
             DataGridView grid = Program.mainForm.MetaGrid;
-            MediaFile c = TrackList.current.File;
+            MediaFile c = curr.File;
 
             if (grid.Columns.Count != 3)
             {
@@ -345,8 +347,7 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Clear();
 
-            if (TrackList.current != null)
-                grid.Rows.Add($"Output File", TrackList.current.Title, TrackList.current.Language);
+            grid.Rows.Add($"Output File", (!string.IsNullOrWhiteSpace(curr.TitleEdited)) ? curr.TitleEdited : curr.Title, (!string.IsNullOrWhiteSpace(curr.LanguageEdited)) ? curr.LanguageEdited : curr.Language);
 
             var streamEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
 

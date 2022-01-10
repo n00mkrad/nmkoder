@@ -12,9 +12,9 @@ namespace Nmkoder.Data.Ui
     {
         public MediaFile File { get; }
         public string Title { get { return File.Title; } }
-        public string TitleEdited { get; set; } = "";
+        public string TitleEdited { get; set; } = null;
         public string Language { get { return File.Language; } }
-        public string LanguageEdited { get; set; } = "";
+        public string LanguageEdited { get; set; } = null;
 
         public FileListEntry ()
         {

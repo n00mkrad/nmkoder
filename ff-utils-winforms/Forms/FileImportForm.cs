@@ -73,5 +73,16 @@ namespace Nmkoder.Forms
             Close();
             Program.mainForm.BringToFront();
         }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            if (ModifierKeys == Keys.None && keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+
+            return base.ProcessDialogKey(keyData);
+        }
     }
 }

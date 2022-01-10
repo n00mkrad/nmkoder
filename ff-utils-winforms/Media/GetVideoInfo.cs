@@ -126,5 +126,10 @@ namespace Nmkoder.Media
 
             return "";
         }
+
+        public static void ClearCache ()
+        {
+            cmdCache.Clear();
+        }
     }
 }

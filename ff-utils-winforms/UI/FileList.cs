@@ -35,6 +35,10 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles(string[] paths, bool clearExisting)
         {
+            Media.GetFrameCountCached.ClearCache();
+            Media.GetMediaResolutionCached.ClearCache();
+            Media.GetVideoInfo.ClearCache();
+
             if (clearExisting)
             {
                 ThumbnailView.ClearUi();

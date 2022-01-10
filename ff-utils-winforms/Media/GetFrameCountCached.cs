@@ -58,5 +58,10 @@ namespace Nmkoder.Media
 
             return 0;
         }
+
+        public static void ClearCache()
+        {
+            cache.Clear();
+        }
     }
 }

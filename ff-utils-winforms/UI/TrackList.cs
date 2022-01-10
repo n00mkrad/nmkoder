@@ -252,6 +252,8 @@ namespace Nmkoder.UI
                 Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = check;
             }
+
+            Program.mainForm.OnCheckedStreamsChange();
         }
 
         public static void InvertSelection(object sender = null, EventArgs e = null)
@@ -261,6 +263,8 @@ namespace Nmkoder.UI
                 Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = !Program.mainForm.streamList.Items[i].Checked;
             }
+
+            Program.mainForm.OnCheckedStreamsChange();
         }
 
         public static void CheckTracksOfType(Stream.StreamType type)
@@ -270,6 +274,8 @@ namespace Nmkoder.UI
                 Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
                 Program.mainForm.streamList.Items[i].Checked = ((MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag).Stream.Type == type;
             }
+
+            Program.mainForm.OnCheckedStreamsChange();
         }
 
         #endregion

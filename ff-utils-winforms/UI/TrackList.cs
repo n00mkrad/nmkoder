@@ -278,6 +278,48 @@ namespace Nmkoder.UI
             Program.mainForm.OnCheckedStreamsChange();
         }
 
+        public static void CheckFirstOfEachType()
+        {
+            ListView list = Program.mainForm.streamList;
+            var firstVid = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).FirstOrDefault();
+            var firstAud = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).FirstOrDefault();
+            var firstSub = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Subtitle).FirstOrDefault();
+
+            for (int i = 0; i < list.Items.Count; i++)
+            {
+                Program.mainForm.ignoreStreamListCheck = i < (list.Items.Count - 1);
+                list.Items[i].Checked = list.Items[i] == firstVid || list.Items[i] == firstAud || list.Items[i] == firstSub;
+            }
+
+            Program.mainForm.OnCheckedStreamsChange();
+        }
+
+        public static void CheckFirstOfEachLangOfEachType()
+        {
+            ListView list = Program.mainForm.streamList;
+            List<string> checkedLangs = new List<string>();
+
+            for (int i = 0; i < list.Items.Count; i++)
+            {
+                Program.mainForm.ignoreStreamListCheck = i < (list.Items.Count - 1);
+
+                MediaStreamListEntry entry = (MediaStreamListEntry)list.Items[i].Tag;
+                string hash = $"{entry.Stream.Type}{entry.Stream.Language}";
+
+                if (checkedLangs.Contains(hash))
+                {
+                    list.Items[i].Checked = false;
+                }
+                else
+                {
+                    list.Items[i].Checked = true;
+                    checkedLangs.Add(hash);
+                }
+            }
+
+            Program.mainForm.OnCheckedStreamsChange();
+        }
+
         #endregion
     }
 }

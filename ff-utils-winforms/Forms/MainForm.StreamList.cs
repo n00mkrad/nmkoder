@@ -120,14 +120,6 @@ namespace Nmkoder.Forms
             QuickConvertUi.LoadMetadataGrid();
         }
 
-        private void streamList_MouseDown(object sender, MouseEventArgs e)
-        {
-            //if (streamList.IndexFromPoint(new Point(e.X, e.Y)) <= -1) // if no item was clicked
-            //    streamList.SelectedItems.Clear();
-
-            //UpdateTrackListUpDownBtnsState();
-        }
-
         private void trackListMoveUpBtn_Click(object sender, EventArgs e)
         {
             UiUtils.MoveListViewItem(streamList, UiUtils.MoveDirection.Up);
@@ -171,6 +163,16 @@ namespace Nmkoder.Forms
         private void checkAllSubtitleTracksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TrackList.CheckTracksOfType(Stream.StreamType.Subtitle);
+        }
+
+        private void checkFirstTrackOfEachTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckFirstOfEachType();
+        }
+
+        private void checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.CheckFirstOfEachLangOfEachType();
         }
     }
 }

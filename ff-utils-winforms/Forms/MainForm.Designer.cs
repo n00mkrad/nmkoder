@@ -160,6 +160,8 @@ namespace Nmkoder.Forms
             this.label28 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.av1anOptsChunkOrder = new System.Windows.Forms.ComboBox();
+            this.label47 = new System.Windows.Forms.Label();
             this.av1anResumeBtn = new HTAlt.WinForms.HTButton();
             this.label42 = new System.Windows.Forms.Label();
             this.av1anOptsConcatMode = new System.Windows.Forms.ComboBox();
@@ -215,6 +217,7 @@ namespace Nmkoder.Forms
             this.checkAllVideoTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkFirstTrackOfEachTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortFileListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sortMenuAbcDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuAbcAsc = new System.Windows.Forms.ToolStripMenuItem();
@@ -223,8 +226,7 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
-            this.label47 = new System.Windows.Forms.Label();
-            this.av1anOptsChunkOrder = new System.Windows.Forms.ComboBox();
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -707,7 +709,6 @@ namespace Nmkoder.Forms
             this.streamListView.View = System.Windows.Forms.View.Details;
             this.streamListView.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.streamList_ItemCheck);
             this.streamListView.SelectedIndexChanged += new System.EventHandler(this.streamList_SelectedIndexChanged);
-            this.streamListView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.streamList_MouseDown);
             // 
             // columnHeader1
             // 
@@ -2033,6 +2034,35 @@ namespace Nmkoder.Forms
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Av1an Options";
             // 
+            // av1anOptsChunkOrder
+            // 
+            this.av1anOptsChunkOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anOptsChunkOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.av1anOptsChunkOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.av1anOptsChunkOrder.ForeColor = System.Drawing.Color.White;
+            this.av1anOptsChunkOrder.FormattingEnabled = true;
+            this.av1anOptsChunkOrder.Items.AddRange(new object[] {
+            "Long-to-Short (Best CPU utilization)",
+            "Short-to-Long (Not very useful)",
+            "Sequential (Same order as input video)",
+            "Random (Most accurate filesize estimation)"});
+            this.av1anOptsChunkOrder.Location = new System.Drawing.Point(220, 97);
+            this.av1anOptsChunkOrder.Name = "av1anOptsChunkOrder";
+            this.av1anOptsChunkOrder.Size = new System.Drawing.Size(250, 23);
+            this.av1anOptsChunkOrder.TabIndex = 63;
+            this.toolTip.SetToolTip(this.av1anOptsChunkOrder, "Select the chunk merging method. Use mkvmerge if ffmpeg doesn\'t work correctly.");
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.ForeColor = System.Drawing.Color.White;
+            this.label47.Location = new System.Drawing.Point(7, 100);
+            this.label47.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(128, 15);
+            this.label47.TabIndex = 62;
+            this.label47.Text = "Chunk Encoding Order";
+            // 
             // av1anResumeBtn
             // 
             this.av1anResumeBtn.AutoColor = true;
@@ -2710,51 +2740,60 @@ namespace Nmkoder.Forms
             this.invertSelectionToolStripMenuItem,
             this.checkAllVideoTracksToolStripMenuItem,
             this.checkAllAudioTracksToolStripMenuItem,
-            this.checkAllSubtitleTracksToolStripMenuItem});
+            this.checkAllSubtitleTracksToolStripMenuItem,
+            this.checkFirstTrackOfEachTypeToolStripMenuItem,
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem});
             this.checkItemsContextMenu.Name = "checkItemsContextMenu";
-            this.checkItemsContextMenu.Size = new System.Drawing.Size(203, 136);
+            this.checkItemsContextMenu.Size = new System.Drawing.Size(309, 202);
             // 
             // checkAllToolStripMenuItem
             // 
             this.checkAllToolStripMenuItem.Name = "checkAllToolStripMenuItem";
-            this.checkAllToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkAllToolStripMenuItem.Text = "Check All";
             this.checkAllToolStripMenuItem.Click += new System.EventHandler(this.checkAllToolStripMenuItem_Click);
             // 
             // checkNoneToolStripMenuItem
             // 
             this.checkNoneToolStripMenuItem.Name = "checkNoneToolStripMenuItem";
-            this.checkNoneToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkNoneToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkNoneToolStripMenuItem.Text = "Check None";
             this.checkNoneToolStripMenuItem.Click += new System.EventHandler(this.checkNoneToolStripMenuItem_Click);
             // 
             // invertSelectionToolStripMenuItem
             // 
             this.invertSelectionToolStripMenuItem.Name = "invertSelectionToolStripMenuItem";
-            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.invertSelectionToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.invertSelectionToolStripMenuItem.Text = "Invert Selection";
             this.invertSelectionToolStripMenuItem.Click += new System.EventHandler(this.invertSelectionToolStripMenuItem_Click);
             // 
             // checkAllVideoTracksToolStripMenuItem
             // 
             this.checkAllVideoTracksToolStripMenuItem.Name = "checkAllVideoTracksToolStripMenuItem";
-            this.checkAllVideoTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllVideoTracksToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkAllVideoTracksToolStripMenuItem.Text = "Check All Video Tracks";
             this.checkAllVideoTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllVideoTracksToolStripMenuItem_Click);
             // 
             // checkAllAudioTracksToolStripMenuItem
             // 
             this.checkAllAudioTracksToolStripMenuItem.Name = "checkAllAudioTracksToolStripMenuItem";
-            this.checkAllAudioTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllAudioTracksToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkAllAudioTracksToolStripMenuItem.Text = "Check All Audio Tracks";
             this.checkAllAudioTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllAudioTracksToolStripMenuItem_Click);
             // 
             // checkAllSubtitleTracksToolStripMenuItem
             // 
             this.checkAllSubtitleTracksToolStripMenuItem.Name = "checkAllSubtitleTracksToolStripMenuItem";
-            this.checkAllSubtitleTracksToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.checkAllSubtitleTracksToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkAllSubtitleTracksToolStripMenuItem.Text = "Check All Subtitle Tracks";
             this.checkAllSubtitleTracksToolStripMenuItem.Click += new System.EventHandler(this.checkAllSubtitleTracksToolStripMenuItem_Click);
+            // 
+            // checkFirstTrackOfEachTypeToolStripMenuItem
+            // 
+            this.checkFirstTrackOfEachTypeToolStripMenuItem.Name = "checkFirstTrackOfEachTypeToolStripMenuItem";
+            this.checkFirstTrackOfEachTypeToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
+            this.checkFirstTrackOfEachTypeToolStripMenuItem.Text = "Check First Track Of Each Type";
+            this.checkFirstTrackOfEachTypeToolStripMenuItem.Click += new System.EventHandler(this.checkFirstTrackOfEachTypeToolStripMenuItem_Click);
             // 
             // sortFileListContextMenu
             // 
@@ -2830,34 +2869,12 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // label47
+            // checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem
             // 
-            this.label47.AutoSize = true;
-            this.label47.ForeColor = System.Drawing.Color.White;
-            this.label47.Location = new System.Drawing.Point(7, 100);
-            this.label47.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(128, 15);
-            this.label47.TabIndex = 62;
-            this.label47.Text = "Chunk Encoding Order";
-            // 
-            // av1anOptsChunkOrder
-            // 
-            this.av1anOptsChunkOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anOptsChunkOrder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.av1anOptsChunkOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.av1anOptsChunkOrder.ForeColor = System.Drawing.Color.White;
-            this.av1anOptsChunkOrder.FormattingEnabled = true;
-            this.av1anOptsChunkOrder.Items.AddRange(new object[] {
-            "Long-to-Short (Best CPU utilization)",
-            "Short-to-Long (Not very useful)",
-            "Sequential (Same order as input video)",
-            "Random (Most accurate filesize estimation)"});
-            this.av1anOptsChunkOrder.Location = new System.Drawing.Point(220, 97);
-            this.av1anOptsChunkOrder.Name = "av1anOptsChunkOrder";
-            this.av1anOptsChunkOrder.Size = new System.Drawing.Size(250, 23);
-            this.av1anOptsChunkOrder.TabIndex = 63;
-            this.toolTip.SetToolTip(this.av1anOptsChunkOrder, "Select the chunk merging method. Use mkvmerge if ffmpeg doesn\'t work correctly.");
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Name = "checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem";
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Text = "Check First Track Of Each Language Per Type";
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Click += new System.EventHandler(this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -3139,6 +3156,8 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label fileCountLabel;
         private System.Windows.Forms.ComboBox av1anOptsChunkOrder;
         private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.ToolStripMenuItem checkFirstTrackOfEachTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem;
     }
 }
 

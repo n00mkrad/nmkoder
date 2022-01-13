@@ -78,7 +78,7 @@ namespace Nmkoder.Forms.Utils
             }
             else
             {
-                foreach (FileListEntry entry in fileList.Items)
+                foreach (FileListEntry entry in fileList.Items.Cast<ListViewItem>().Select(x => (FileListEntry)x.Tag))
                 {
                     sourceVideo.Items.Add(entry.File);
                     targetVideo.Items.Add(entry.File);

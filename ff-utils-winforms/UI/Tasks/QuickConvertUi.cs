@@ -347,7 +347,7 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Clear();
 
-            grid.Rows.Add($"Output File", (!string.IsNullOrWhiteSpace(curr.TitleEdited)) ? curr.TitleEdited : curr.Title, (!string.IsNullOrWhiteSpace(curr.LanguageEdited)) ? curr.LanguageEdited : curr.Language);
+            grid.Rows.Add($"Output File", (curr.TitleEdited != null) ? curr.TitleEdited : curr.Title, (curr.LanguageEdited != null) ? curr.LanguageEdited : curr.Language);
 
             var streamEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
 
@@ -386,8 +386,8 @@ namespace Nmkoder.UI.Tasks
 
                 if (idx < 0)
                 {
-                    TrackList.current.TitleEdited = title;
-                    TrackList.current.LanguageEdited = lang;
+                    TrackList.current.TitleEdited = (title == null) ? "" : title;
+                    TrackList.current.LanguageEdited = (lang == null) ? "" : lang;
                 }
                 else
                 {

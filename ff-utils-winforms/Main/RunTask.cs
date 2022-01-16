@@ -95,6 +95,7 @@ namespace Nmkoder.Main
 
         public static async Task StartBatch()
         {
+            canceled = false;
             TaskType batchTask = Program.mainForm.GetCurrentTaskType();
 
             if (batchTask == TaskType.None)
@@ -110,19 +111,25 @@ namespace Nmkoder.Main
             fileList.Items.CopyTo(taskItems, 0);
 
             runningBatch = true;
+            int finishedTasks = 0;
+            NmkdStopwatch sw = new NmkdStopwatch();
 
             for (int i = 0; i < taskItems.Length; i++)
             {
+                if (canceled)
+                    break;
+
                 FileListEntry entry = (FileListEntry)taskItems[i].Tag;
                 Logger.Log($"Queue: Starting task {i + 1}/{taskItems.Length} for {entry.File.Name}.");
                 TrackList.ClearCurrentFile();
                 await TrackList.SetAsMainFile(taskItems[i], false, false); // Load file info
                 await Start(batchTask); // Run task
+                finishedTasks++;
             }
 
             runningBatch = false;
 
-            Logger.Log($"Queue: Completed {taskItems.Length} tasks.");
+            Logger.Log($"Queue: Completed {finishedTasks}/{taskItems.Length} tasks{(canceled ? " (Canceled)" : "")}. Total time: {sw}");
         }
 
         public static bool RunInstantly()

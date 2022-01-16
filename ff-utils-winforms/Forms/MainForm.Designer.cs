@@ -218,6 +218,7 @@ namespace Nmkoder.Forms
             this.checkAllAudioTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkAllSubtitleTracksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkFirstTrackOfEachTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortFileListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sortMenuAbcDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuAbcAsc = new System.Windows.Forms.ToolStripMenuItem();
@@ -226,7 +227,6 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
-            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -405,7 +405,7 @@ namespace Nmkoder.Forms
             this.tabList.Controls.Add(this.quickConvertPage);
             this.tabList.Controls.Add(this.av1anPage);
             this.tabList.Controls.Add(this.utilsPage);
-            this.tabList.Controls.Add(this.settingsPage);
+            //this.tabList.Controls.Add(this.settingsPage);
             this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
             this.tabList.Location = new System.Drawing.Point(332, 62);
             this.tabList.Name = "tabList";
@@ -2744,7 +2744,7 @@ namespace Nmkoder.Forms
             this.checkFirstTrackOfEachTypeToolStripMenuItem,
             this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem});
             this.checkItemsContextMenu.Name = "checkItemsContextMenu";
-            this.checkItemsContextMenu.Size = new System.Drawing.Size(309, 202);
+            this.checkItemsContextMenu.Size = new System.Drawing.Size(309, 180);
             // 
             // checkAllToolStripMenuItem
             // 
@@ -2794,6 +2794,13 @@ namespace Nmkoder.Forms
             this.checkFirstTrackOfEachTypeToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.checkFirstTrackOfEachTypeToolStripMenuItem.Text = "Check First Track Of Each Type";
             this.checkFirstTrackOfEachTypeToolStripMenuItem.Click += new System.EventHandler(this.checkFirstTrackOfEachTypeToolStripMenuItem_Click);
+            // 
+            // checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem
+            // 
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Name = "checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem";
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Text = "Check First Track Of Each Language Per Type";
+            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Click += new System.EventHandler(this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem_Click);
             // 
             // sortFileListContextMenu
             // 
@@ -2868,13 +2875,6 @@ namespace Nmkoder.Forms
             this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
-            // 
-            // checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem
-            // 
-            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Name = "checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem";
-            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
-            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Text = "Check First Track Of Each Language Per Type";
-            this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem.Click += new System.EventHandler(this.checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem_Click);
             // 
             // MainForm
             // 

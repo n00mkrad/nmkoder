@@ -315,7 +315,7 @@ namespace Nmkoder.Forms
             RunTask.FileListMode newMode = (RunTask.FileListMode)fileListMode.SelectedIndex;
 
             if (oldMode == RunTask.FileListMode.Mux && newMode == RunTask.FileListMode.Batch)
-                TrackList.ClearCurrentFile();
+                TrackList.ClearCurrentFile(true);
 
             RunTask.currentFileListMode = newMode;
 
@@ -337,10 +337,7 @@ namespace Nmkoder.Forms
 
             foreach (ListViewItem item in fileList.SelectedItems.Cast<ListViewItem>())
             {
-                //if (AreAnyTracksLoaded())
-                    await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
-                //else
-                //    await TrackList.SetAsMainFile(item);
+                await TrackList.AddStreamsToList(((FileListEntry)item.Tag).File, item.BackColor, true);
 
                 if (TrackList.current == null)
                     await TrackList.SetAsMainFile(item);

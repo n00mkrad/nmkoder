@@ -24,11 +24,14 @@ namespace Nmkoder.UI
         public static FileListEntry current;
         public static AudioConfiguration currentAudioConfig = null;
 
-        public static void ClearCurrentFile()
+        public static void ClearCurrentFile(bool clearStreamList = false)
         {
             current = null;
             Program.mainForm.FfmpegOutputBox.Text = "";
-            //Program.mainForm.streamList.Items.Clear();
+
+            if(clearStreamList)
+                Program.mainForm.streamList.Items.Clear();
+
             Program.mainForm.streamDetailsBox.Text = "";
             Program.mainForm.FormatInfoLabel.Text = "";
             Program.mainForm.MetaGrid.Columns.Clear();

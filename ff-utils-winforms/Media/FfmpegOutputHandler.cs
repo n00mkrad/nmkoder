@@ -42,10 +42,11 @@ namespace Nmkoder.Media
             }
 
             string lineWithoutPath = RemoveStringsFromLine(line, ignoreStrings);
+            string log = $"Last 4 log lines:\n{string.Join(Environment.NewLine, Logger.GetSessionLogLastLines("ffmpeg", 4))}"; 
 
             if (lineWithoutPath.Contains("Error ") || lineWithoutPath.Contains("Unable to ") || lineWithoutPath.Contains("Could not open file"))
             {
-                RunTask.Cancel($"Error: {line}");
+                RunTask.Cancel($"Error: {line}\n\n{log}");
                 return;
             }
 

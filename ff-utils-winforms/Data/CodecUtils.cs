@@ -74,13 +74,13 @@ namespace Nmkoder.Data
             return null;
         }
 
-        public static string GetKeyIntArg(MediaFile mediaFile, int intervalSeconds, string arg = "-g ")
+        public static string GetKeyIntArg(MediaFile mediaFile, int intervalSeconds, string arg = "-g ", int max = 480)
         {
             if (mediaFile == null || mediaFile.VideoStreams.Count < 1)
                 return "";
 
             int keyInt = ((float)(mediaFile?.VideoStreams.FirstOrDefault().Rate.GetFloat() * intervalSeconds)).RoundToInt();
-            return $"{arg}{keyInt.Clamp(20, 480)}";
+            return $"{arg}{keyInt.Clamp(12, max)}";
         }
 
         public static string GetAudioArgsForEachStream(MediaFile mf, int baseBitrate, int overrideChannels, List<string> extraArgs = null)

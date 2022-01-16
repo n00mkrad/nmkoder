@@ -327,7 +327,10 @@ namespace Nmkoder.Forms
             if (oldMode == RunTask.FileListMode.Batch && newMode == RunTask.FileListMode.Mux)
             {
                 if (fileList.Items.Count == 1 && !AreAnyTracksLoaded())
+                {
                     await TrackList.SetAsMainFile(fileList.Items[0]);
+                    await TrackList.AddStreamsToList(((FileListEntry)fileListBox.Items[0].Tag).File, fileListBox.Items[0].BackColor, true);
+                }
             }
         }
 

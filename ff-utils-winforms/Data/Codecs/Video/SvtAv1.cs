@@ -39,7 +39,15 @@ namespace Nmkoder.Data.Codecs
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string tiles = ""; // TEMP DISABLED AS IT SEEMS TO SLOW THINGS DOWN // = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows ", "--tile-columns ");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp {thr} --film-grain {grain} {tiles} {cust} \" --pix-format {pixFmt}");
+            string colors = "";
+
+            if (mediaFile != null && mediaFile.ColorData != null)
+            {
+                int range = mediaFile.ColorData.ColorRange == 2 ? 1 : 0; // SVT range is 0 (tv) and 1 (full), not 0 (unspecified), 1 (tv), 2 (full) like in VideoColorData
+                colors = $"--color-primaries {mediaFile.ColorData.ColorPrimaries} --transfer-characteristics {mediaFile.ColorData.ColorTransfer} --matrix-coefficients {mediaFile.ColorData.ColorMatrixCoeffs} --color-range {range}";
+            }
+
+            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp {thr} --film-grain {grain} {colors} {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

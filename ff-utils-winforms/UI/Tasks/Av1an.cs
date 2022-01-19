@@ -12,7 +12,9 @@ using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using Nmkoder.Media;
+using Nmkoder.Utils;
 using static Nmkoder.UI.Tasks.Av1anUi;
 
 namespace Nmkoder.UI.Tasks
@@ -48,6 +50,12 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run(bool resume = false, string overrideTempDir = "", string overrideArgs = "")
         {
+            if (TrackList.current.File.IsDirectory)
+            {
+                RunTask.Cancel("Av1an cannot use image sequence inputs!");
+                return;
+            }
+
             Program.mainForm.SetWorking(true);
             string args = "";
             string inPath = "";
@@ -66,6 +74,7 @@ namespace Nmkoder.UI.Tasks
                     outPath = GetOutPath();
                     string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
                     string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
+                    TrackList.current.File.ColorData = await ColorDataUtils.GetColorData(TrackList.current.File.SourcePath);
                     CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
                     string v = codecArgs.Arguments;
                     string vf = await GetVideoFilterArgs(codecArgs);

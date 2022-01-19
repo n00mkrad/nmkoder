@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +40,24 @@ namespace Nmkoder.Data.Codecs
             string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
             string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows=", "--tile-columns=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
+            string colors = "";
+
+            if(mediaFile != null && mediaFile.ColorData != null)
+            {
+                string prims = ColorDataUtils.GetColorPrimariesString(mediaFile.ColorData.ColorPrimaries);
+                string transfer = ColorDataUtils.GetColorTransferString(mediaFile.ColorData.ColorTransfer);
+                string matrixCoeffs = ColorDataUtils.GetColorMatrixCoeffsString(mediaFile.ColorData.ColorMatrixCoeffs);
+                colors = $"{(prims != "" ? $"--color-primaries={prims}" : "")} {(transfer != "" ? $"--transfer-characteristics={transfer}" : "")} {(matrixCoeffs != "" ? $"--matrix-coefficients={matrixCoeffs}" : "")}";
+
+                if (mediaFile.ColorData.ColorPrimaries == 9)
+                    colors += " --deltaq-mode=5 --enable-chroma-deltaq=1";
+            }
 
             return new CodecArgs($" -e aom -v \" " +
                 $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
-                $"--kf-min-dist=12 --kf-max-dist={g} " +
+                $"--disable-kf --kf-min-dist=12 --kf-max-dist={g} " +
                 $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} " +
-                $"--enable-keyframe-filtering=0 --threads={thr} {tiles} {cust} \" --pix-format {pixFmt}");
+                $"--enable-keyframe-filtering=0 {colors} --threads={thr} {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

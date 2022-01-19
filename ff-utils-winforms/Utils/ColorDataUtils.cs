@@ -258,6 +258,82 @@ namespace Nmkoder.Utils
             return 0; // Fallback: Unspecified
         }
 
+        #region Get string from int
+
+        public static string GetColorPrimariesString(int n)
+        {
+            switch (n)
+            {
+                case 1: return "bt709";
+                case 4: return "bt470m";
+                case 5: return "bt470bg";
+                case 6: return "bt610";
+                case 7: return "smpte240m";
+                case 8: return "film";
+                case 9: return "bt2020";
+                case 10: return "smpte428";
+                case 11: return "smpte431";
+                case 12: return "smpte432";
+            }
+
+            return "";
+        }
+
+        public static string GetColorTransferString(int n)
+        {
+            switch (n)
+            {
+                case 1: return "bt709";
+                case 4: return "gamma22"; // "bt470m"
+                case 5: return "gamma28"; // "bt470bg"
+                case 6: return "bt610"; // "smpte170m"
+                case 7: return "smpte240m";
+                case 8: return "linear";
+                case 11: return "iec61966-2-4";
+                case 12: return "bt1361";
+                case 13: return "srgb";
+                case 14: return "bt2020-10";
+                case 15: return "bt2020-12";
+                case 16: return "smpte2084";
+                case 17: return "smpte428";
+                case 18: return "bt2100";
+            }
+
+            return "";
+        }
+
+        public static string GetColorMatrixCoeffsString(int n)
+        {
+            switch (n)
+            {
+                case 1: return "bt709";
+                case 4: return "fcc";
+                case 5: return "bt470bg";
+                case 6: return "bt610";
+                case 7: return "smpte240m";
+                case 8: return "ycgco";
+                case 9: return "bt2020ncl";
+                case 10: return "bt2020";
+            }
+
+            return "";
+        }
+
+        public static string GetColorRangeString(int n)
+        {
+            switch (n)
+            {
+                case 1: return "tv";
+                case 2: return "pc";
+            }
+
+            return "";
+        }
+
+        #endregion
+
+        #region Get friendly name from int
+
         public static string GetColorPrimariesName(int n)
         {
             switch (n)
@@ -338,5 +414,7 @@ namespace Nmkoder.Utils
 
             return "Unknown";
         }
+
+        #endregion
     }
 }

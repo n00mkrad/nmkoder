@@ -37,6 +37,7 @@ namespace Nmkoder.Data
         public List<SubtitleStream> SubtitleStreams = new List<SubtitleStream>();
         public List<DataStream> DataStreams = new List<DataStream>();
         public List<AttachmentStream> AttachmentStreams = new List<AttachmentStream>();
+        public VideoColorData ColorData = null;
         public long CreationTime;
         public bool Initialized = false;
 

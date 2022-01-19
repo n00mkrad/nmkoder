@@ -67,6 +67,7 @@ namespace Nmkoder.UI.Tasks
             {
                 if (string.IsNullOrWhiteSpace(overrideArgs))
                 {
+                    Logger.Log($"Preparing encoding arguments...");
                     CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
                     CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                     bool vmaf = IsUsingVmaf();

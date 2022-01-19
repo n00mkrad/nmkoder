@@ -34,7 +34,15 @@ namespace Nmkoder.Data.Codecs
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {cust} \" --pix-format {pixFmt}");
+            string colors = "";
+
+            if (mediaFile != null && mediaFile.ColorData != null)
+            {
+                string range = mediaFile.ColorData.ColorRange == 2 ? "full" : "limited"; // x265 range is "limited" (tv) and "full", not 0 (unspecified), 1 (tv), 2 (full) like in VideoColorData
+                colors = $"--colorprim {mediaFile.ColorData.ColorPrimaries} --transfer {mediaFile.ColorData.ColorTransfer} --colormatrix {mediaFile.ColorData.ColorMatrixCoeffs} --range {range}";
+            }
+
+            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {colors} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

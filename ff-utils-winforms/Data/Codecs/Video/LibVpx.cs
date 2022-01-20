@@ -19,7 +19,7 @@ namespace Nmkoder.Data.Codecs
         public int QMax { get; } = 63;
         public int QDefault { get; } = 24;
         public string QInfo { get; } = "CRF (0-63 - Lower is better)";
-        public string PresetInfo { get; } = "Higher = Better compression";
+        public string PresetInfo { get; } = "Lower = Better compression";
 
         public bool SupportsTwoPass { get; } = true;
         public bool ForceTwoPass { get; } = true;

@@ -30,6 +30,7 @@ namespace Nmkoder.Forms
         public NumericUpDown av1anGrainSynthStrengthUpDown { get { return av1anGrainSynthStrength; } }
         public CheckBox av1anGrainSynthDenoiseBox { get { return av1anGrainSynthDenoise; } }
         public NumericUpDown av1anThreadsUpDown { get { return av1anThreads; } }
+        public DataGridView Av1anAdvancedArgsGrid { get { return av1anAdvancedArgsGrid; } }
 
 
         public ComboBox av1anAudCodecBox { get { return av1anAudCodec; } }

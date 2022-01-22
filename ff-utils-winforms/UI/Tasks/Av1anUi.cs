@@ -1,4 +1,5 @@
-﻿using Nmkoder.Data;
+﻿using Newtonsoft.Json;
+using Nmkoder.Data;
 using Nmkoder.Data.Codecs;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
@@ -98,6 +99,7 @@ namespace Nmkoder.UI.Tasks
             LoadQualityLevel(enc);
             LoadPresets(enc);
             LoadColorFormats(enc);
+            LoadAdvancedArgsGrid(enc);
         }
 
         public static void AudEncoderSelected(int index)
@@ -171,6 +173,48 @@ namespace Nmkoder.UI.Tasks
                 form.av1anColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt
         }
 
+        public static void LoadAdvancedArgsGrid(IEncoder enc)
+        {
+            string jsonPath = Path.Combine(Paths.GetDataPath(), "encoderArgs", enc.Name + ".json");
+
+            DataGridView grid = Program.mainForm.Av1anAdvancedArgsGrid;
+            grid.Rows.Clear();
+
+            if (!File.Exists(jsonPath))
+                return;
+
+            if (grid.Columns.Count != 3)
+            {
+                grid.Columns.Clear();
+                grid.Columns.Add("0", "Argument");
+                grid.Columns.Add("1", "Value");
+                grid.Columns.Add("2", "Description, Possible Values");
+            }
+
+            List<string[]> args = new List<string[]>();
+            try
+            {
+                args = JsonConvert.DeserializeObject<List<string[]>>(File.ReadAllText(jsonPath));
+            }
+            catch(Exception e)
+            {
+                Logger.Log($"Error loading advanced arg JSON: {e.Message}");
+                args = new List<string[]>();
+            }
+
+            foreach(string[] arg in args)
+                grid.Rows.Add(arg[0], arg[1], arg[2]);
+
+            grid.RowHeadersVisible = false;
+            grid.Columns[0].ReadOnly = true;
+            grid.Columns[2].ReadOnly = true;
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);
+            grid.Columns[0].FillWeight = 25;
+            grid.Columns[1].FillWeight = 20;
+            grid.Columns[2].FillWeight = 55;
+        }
+
         #endregion
 
         #region Get Current Codec
@@ -187,6 +231,8 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
+        #region Get Args From UI
+
         public static Dictionary<string, string> GetVideoArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -198,6 +244,7 @@ namespace Nmkoder.UI.Tasks
             dict.Add("grainSynthDenoise", form.av1anGrainSynthDenoiseBox.Checked.ToString());
             dict.Add("threads", form.av1anThreadsUpDown.Value.ToString());
             dict.Add("custom", form.av1anCustomEncArgsBox.Text);
+            dict.Add("advanced", string.Join(" ", form.Av1anAdvancedArgsGrid.Rows.Cast<DataGridViewRow>().Select(x => $"--{x.Cells[0].Value}={x.Cells[1].Value}")));
             return dict;
         }
 
@@ -208,6 +255,8 @@ namespace Nmkoder.UI.Tasks
             dict.Add("ac", form.av1anAudChannelsBox.Text.Split(' ')[0].Trim());
             return dict;
         }
+
+        #endregion
 
         #region Get Args
 
@@ -252,14 +301,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetSplittingMethodArgs()
         {
-            string s = "";
-
-            if (form.av1anOptsSplitModeBox.SelectedIndex == 0)
-                s = $"none";
-            else
-                s = $"av-scenechange";
-
-            return $"--split-method {s}";
+            return $"--split-method {(form.av1anOptsSplitModeBox.SelectedIndex == 0 ? "none" : "av-scenechange")}";
         }
 
         public static string GetChunkGenMethod()
@@ -299,6 +341,7 @@ namespace Nmkoder.UI.Tasks
         }
 
         #endregion
+
 
         public static void ValidateContainer()
         {

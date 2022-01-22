@@ -174,6 +174,9 @@ namespace Nmkoder.Forms
             this.label34 = new System.Windows.Forms.Label();
             this.av1anOptsSplitMode = new System.Windows.Forms.ComboBox();
             this.label32 = new System.Windows.Forms.Label();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.av1anAdvancedArgsGrid = new System.Windows.Forms.DataGridView();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
@@ -227,6 +230,7 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
+            this.label52 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -255,6 +259,9 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).BeginInit();
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
@@ -405,7 +412,6 @@ namespace Nmkoder.Forms
             this.tabList.Controls.Add(this.quickConvertPage);
             this.tabList.Controls.Add(this.av1anPage);
             this.tabList.Controls.Add(this.utilsPage);
-            //this.tabList.Controls.Add(this.settingsPage);
             this.tabList.ForeColor = System.Drawing.Color.DodgerBlue;
             this.tabList.Location = new System.Drawing.Point(332, 62);
             this.tabList.Name = "tabList";
@@ -1483,6 +1489,7 @@ namespace Nmkoder.Forms
             this.av1anTabControl.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.av1anTabControl.BorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.av1anTabControl.Controls.Add(this.tabPage3);
+            this.av1anTabControl.Controls.Add(this.tabPage6);
             this.av1anTabControl.Controls.Add(this.tabPage4);
             this.av1anTabControl.Controls.Add(this.tabPage5);
             this.av1anTabControl.DisableClose = true;
@@ -2228,6 +2235,47 @@ namespace Nmkoder.Forms
             this.label32.TabIndex = 46;
             this.label32.Text = "Splitting Method";
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage6.Controls.Add(this.label52);
+            this.tabPage6.Controls.Add(this.panel1);
+            this.tabPage6.Location = new System.Drawing.Point(4, 27);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(668, 318);
+            this.tabPage6.TabIndex = 3;
+            this.tabPage6.Text = "Advanced";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.av1anAdvancedArgsGrid);
+            this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel1.Location = new System.Drawing.Point(6, 40);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(656, 205);
+            this.panel1.TabIndex = 8;
+            // 
+            // av1anAdvancedArgsGrid
+            // 
+            this.av1anAdvancedArgsGrid.AllowUserToAddRows = false;
+            this.av1anAdvancedArgsGrid.AllowUserToDeleteRows = false;
+            this.av1anAdvancedArgsGrid.AllowUserToResizeColumns = false;
+            this.av1anAdvancedArgsGrid.AllowUserToResizeRows = false;
+            this.av1anAdvancedArgsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.av1anAdvancedArgsGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.av1anAdvancedArgsGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anAdvancedArgsGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.av1anAdvancedArgsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.av1anAdvancedArgsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.av1anAdvancedArgsGrid.Location = new System.Drawing.Point(0, 0);
+            this.av1anAdvancedArgsGrid.MultiSelect = false;
+            this.av1anAdvancedArgsGrid.Name = "av1anAdvancedArgsGrid";
+            this.av1anAdvancedArgsGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.av1anAdvancedArgsGrid.RowHeadersWidth = 51;
+            this.av1anAdvancedArgsGrid.Size = new System.Drawing.Size(656, 205);
+            this.av1anAdvancedArgsGrid.TabIndex = 1;
+            // 
             // utilsPage
             // 
             this.utilsPage.Controls.Add(this.tableLayoutPanel2);
@@ -2623,7 +2671,7 @@ namespace Nmkoder.Forms
             this.settingsContainersTab.Location = new System.Drawing.Point(4, 27);
             this.settingsContainersTab.Name = "settingsContainersTab";
             this.settingsContainersTab.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsContainersTab.Size = new System.Drawing.Size(668, 288);
+            this.settingsContainersTab.Size = new System.Drawing.Size(192, 69);
             this.settingsContainersTab.TabIndex = 1;
             this.settingsContainersTab.Text = "Containers";
             // 
@@ -2876,6 +2924,16 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.ForeColor = System.Drawing.SystemColors.Control;
+            this.label52.Location = new System.Drawing.Point(3, 3);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(587, 30);
+            this.label52.TabIndex = 9;
+            this.label52.Text = resources.GetString("label52.Text");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2940,6 +2998,10 @@ namespace Nmkoder.Forms
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).EndInit();
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
@@ -3158,6 +3220,10 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.ToolStripMenuItem checkFirstTrackOfEachTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkFirstTrackOfEachLanguagePerTypeToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridView av1anAdvancedArgsGrid;
+        private System.Windows.Forms.Label label52;
     }
 }
 

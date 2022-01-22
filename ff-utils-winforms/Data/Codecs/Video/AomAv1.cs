@@ -40,6 +40,7 @@ namespace Nmkoder.Data.Codecs
             string denoise = encArgs.ContainsKey("grainSynthDenoise") ? (encArgs["grainSynthDenoise"].GetBool() ? "1" : "0") : "0";
             string tiles = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows=", "--tile-columns=");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
+            string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"] : "";
             string colors = "";
 
             if(mediaFile != null && mediaFile.ColorData != null)
@@ -57,7 +58,7 @@ namespace Nmkoder.Data.Codecs
                 $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
                 $"--disable-kf --kf-min-dist=12 --kf-max-dist={g} " +
                 $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} " +
-                $"--enable-keyframe-filtering=0 {colors} --threads={thr} {tiles} {cust} \" --pix-format {pixFmt}");
+                $"{colors} --threads={thr} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

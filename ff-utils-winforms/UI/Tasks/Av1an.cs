@@ -50,7 +50,7 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task Run(bool resume = false, string overrideTempDir = "", string overrideArgs = "")
         {
-            if (TrackList.current.File.IsDirectory)
+            if (overrideTempDir == "" && TrackList.current.File.IsDirectory)
             {
                 RunTask.Cancel("Av1an cannot use image sequence inputs!");
                 return;

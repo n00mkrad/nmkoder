@@ -175,7 +175,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void LoadAdvancedArgsGrid(IEncoder enc)
         {
-            string jsonPath = Path.Combine(Paths.GetDataPath(), "encoderArgs", enc.Name + ".json");
+            string jsonPath = Path.Combine(Paths.GetBinPath(), "av1an", "encoderArgs", enc.Name + ".json");
 
             DataGridView grid = Program.mainForm.Av1anAdvancedArgsGrid;
             grid.Rows.Clear();

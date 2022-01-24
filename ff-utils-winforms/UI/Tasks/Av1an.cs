@@ -87,7 +87,7 @@ namespace Nmkoder.UI.Tasks
                     string o = GetChunkOrderArgs();
                     string thr = GetThreadAffArgs(); 
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {

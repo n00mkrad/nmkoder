@@ -32,7 +32,7 @@ namespace Nmkoder.Data.Codecs
             string q = encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
-            string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}k" : $"-crf {q}";
+            string rc = vbr ? $"-b:v {(encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : "0")}k" : (q.GetInt() > 0 ? $"-crf {q}" : "-x265-params lossless=1");
             string p = pass == Pass.OneOfOne ? "" : (pass == Pass.OneOfTwo ? "-x265-params pass=1" : "-x265-params pass=2");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
             return new CodecArgs($"-c:v libx265 {p} {rc} -preset {preset} {g} -pix_fmt {pixFmt} {cust}");

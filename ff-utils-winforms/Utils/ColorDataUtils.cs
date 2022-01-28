@@ -19,7 +19,8 @@ namespace Nmkoder.Utils
         {
             VideoColorData data = new VideoColorData();
 
-            string infoFfprobe = await AvProcess.RunFfprobe($"-v quiet -show_frames -read_intervals \"%+#1\" {path.Wrap()}");
+            AvProcess.FfprobeSettings settings = new AvProcess.FfprobeSettings() { Args = $"-show_frames -read_intervals \"%+#1\" {path.Wrap()}", LogLevel = "quiet" };
+            string infoFfprobe = await AvProcess.RunFfprobe(settings);
 
             string[] linesFfprobe = infoFfprobe.SplitIntoLines();
 
@@ -74,7 +75,7 @@ namespace Nmkoder.Utils
                     data.MaxFall = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
             }
 
-            string infoMkvinfo = await AvProcess.RunMkvInfo($"{path.Wrap()}");
+            string infoMkvinfo = await AvProcess.RunMkvInfo($"{path.Wrap()}", OS.NmkoderProcess.ProcessType.Secondary);
 
             if (infoMkvinfo.Contains("+ Video track"))
             {
@@ -166,7 +167,7 @@ namespace Nmkoder.Utils
                 if (!string.IsNullOrWhiteSpace(d.MaxFall)) args.Add($"--max-frame-light 0:{d.MaxFall}");
                 args.Add($"{path.Wrap()}");
 
-                await AvProcess.RunMkvMerge(string.Join(" ", args), true);
+                await AvProcess.RunMkvMerge(string.Join(" ", args), OS.NmkoderProcess.ProcessType.Primary, true);
 
                 if (!File.Exists(tmpPath))
                 {

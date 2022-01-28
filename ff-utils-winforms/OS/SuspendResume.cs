@@ -42,7 +42,7 @@ namespace Nmkoder.OS
 
         public static void SuspendProcs(bool freeze, bool excludeCmd = false)
         {
-            if (SubProcesses.RunningSubProcesses.Count < 1)
+            if (ProcessManager.RunningSubProcesses.Count < 1)
                 return;
 
             Logger.Log($"{(freeze ? "Suspending" : "Resuming")} processes!", true);
@@ -51,7 +51,7 @@ namespace Nmkoder.OS
             {
                 List<Process> procs = new List<Process>();
 
-                foreach (Process parent in new List<Process>(SubProcesses.RunningSubProcesses)) // We MUST clone the list here since it might get modifed!
+                foreach (Process parent in new List<Process>(ProcessManager.RunningSubProcesses.Select(x => x.Process))) // We MUST clone the list here since it might get modifed!
                     procs.AddRange(OsUtils.GetChildProcesses(parent));
 
                 frozen = true;

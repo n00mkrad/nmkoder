@@ -19,7 +19,7 @@ namespace Nmkoder.Main
 
             foreach (FileInfo f in chunks)
             {
-                int frames = await Media.FfmpegCommands.ReadFrameCountFfprobePacketCount(f.FullName);
+                int frames = await Media.FfmpegCommands.GetFrameCountAsync(f.FullName);
                 s += $"\"{f.Name.Split('.')[0]}\":{frames},";
                 Logger.Log($"{f.Name} => {frames} frames");
             }

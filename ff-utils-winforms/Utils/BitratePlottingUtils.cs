@@ -45,8 +45,8 @@ namespace Nmkoder.Utils
                 NmkdStopwatch timeSinceLastPrint = new NmkdStopwatch();
                 float durationSecs = await FfmpegCommands.GetDurationMs(videoPath) / 1000f;
                 string t = $"-threads {Environment.ProcessorCount}";
-                string args = $"-select_streams v:0 {t} -print_format xml -show_entries frame=pict_type,pkt_pts_time,best_effort_timestamp_time,pkt_size";
-                Task<string> task = Task.Run(() => AvProcess.RunFfprobe($"{args} {videoPath.Wrap()}", AvProcess.LogMode.Hidden));
+                string args = $"-select_streams v:0 {t} -print_format xml -show_entries frame=pict_type,pkt_pts_time,best_effort_timestamp_time,pkt_size {videoPath.Wrap()}";
+                Task<string> task = Task.Run(() =>  AvProcess.RunFfprobe(new AvProcess.FfprobeSettings() { Args = args }));
 
                 while (!task.IsCompleted)
                 {

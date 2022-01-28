@@ -45,49 +45,44 @@ namespace Nmkoder.Media
 
         #region FFmpeg
 
-        public static async Task<string> RunFfmpeg(string args, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
+        public class FfmpegSettings
         {
-            return await RunFfmpeg(args, "", logMode, defLogLevel, reliableOutput, progressBar);
+            public string Args { get; set; } = "";
+            public string WorkingDir { get; set; } = "";
+            public LogMode LoggingMode { get; set; } = LogMode.Hidden;
+            public string LogLevel { get; set; } = "warning";
+            public bool ReliableOutput { get; set; } = false;
+            public bool SetBusy { get; set;} = false;
+            public bool ProgressBar { get; set; } = false;
+            public NmkoderProcess.ProcessType ProcessType { get; set; } = NmkoderProcess.ProcessType.Primary;
         }
 
-        public static async Task<string> RunFfmpeg(string args, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)
-        {
-            return await RunFfmpeg(args, "", logMode, loglevel, reliableOutput, progressBar);
-        }
-
-        public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, bool reliableOutput = false, bool progressBar = false)
-        {
-            return await RunFfmpeg(args, workingDir, logMode, defLogLevel, reliableOutput, progressBar);
-        }
-
-        public static async Task<string> RunFfmpeg(string args, string workingDir, LogMode logMode, string loglevel, bool reliableOutput = false, bool progressBar = false)
+        public static async Task<string> RunFfmpeg(FfmpegSettings settings)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
-            Process ffmpeg = OsUtils.NewProcess(!show);
+            Process ffmpeg = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
             lastAvProcess = ffmpeg;
 
-            if (string.IsNullOrWhiteSpace(loglevel))
-                loglevel = defLogLevel;
+            string beforeArgs = $"-hide_banner -stats -loglevel {settings.LogLevel} -y";
 
-            string beforeArgs = $"-hide_banner -stats -loglevel {loglevel} -y";
-
-            if (!string.IsNullOrWhiteSpace(workingDir))
-                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {workingDir.Wrap()} & {Path.Combine(GetDir(), "ffmpeg.exe").Wrap()} {beforeArgs} {args}";
+            if (!string.IsNullOrWhiteSpace(settings.WorkingDir))
+                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {settings.WorkingDir.Wrap()} & {Path.Combine(GetDir(), "ffmpeg.exe").Wrap()} {beforeArgs} {settings.Args}";
             else
-                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe {beforeArgs} {args}";
+                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe {beforeArgs} {settings.Args}";
 
-            if (logMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
-            Logger.Log($"ffmpeg {beforeArgs} {args}", true, false, "ffmpeg");
+            if (settings.LoggingMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
+            Logger.Log($"ffmpeg {beforeArgs} {settings.Args}", true, false, "ffmpeg");
 
             if (!show)
             {
-                string[] ignore = GetIgnoreStringsFromFfmpegCmd(args);
-                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
-                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, progressBar); timeSinceLastOutput.sw.Restart(); };
+                string[] ignore = GetIgnoreStringsFromFfmpegCmd(settings.Args);
+                ffmpeg.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", settings.LoggingMode, settings.ProgressBar); timeSinceLastOutput.sw.Restart(); };
+                ffmpeg.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", settings.LoggingMode, settings.ProgressBar); timeSinceLastOutput.sw.Restart(); };
             }
 
+            if (settings.SetBusy) Program.mainForm.SetWorking(true);
             ffmpeg.Start();
             ffmpeg.PriorityClass = ProcessPriorityClass.BelowNormal;
 
@@ -98,9 +93,11 @@ namespace Nmkoder.Media
             }
 
             while (!ffmpeg.HasExited) await Task.Delay(10);
-            while (reliableOutput && timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
+            while (settings.ReliableOutput && timeSinceLastOutput.ElapsedMs < 200) await Task.Delay(50);
 
-            if (progressBar)
+            if (settings.SetBusy) Program.mainForm.SetWorking(false);
+
+            if (settings.ProgressBar)
                 Program.mainForm.SetProgress(0);
 
             return processOutput;
@@ -126,35 +123,33 @@ namespace Nmkoder.Media
             return strs.ToArray();
         }
 
-        public static async Task<string> GetFfmpegOutputAsync(string args, bool setBusy = false, bool progressBar = false)
+        public class FfprobeSettings
         {
-            if (setBusy) Program.mainForm.SetWorking(true);
-            string output = await RunFfmpeg(args, null, LogMode.OnlyLastLine, "error", true, progressBar);
-            if (setBusy) Program.mainForm.SetWorking(false);
-            return output;
+            public string Args { get; set; } = "";
+            public LogMode LoggingMode { get; set; } = LogMode.Hidden;
+            public string LogLevel { get; set; } = "panic";
+            public bool SetBusy { get; set; } = false;
+            public NmkoderProcess.ProcessType ProcessType { get; set; } = NmkoderProcess.ProcessType.Background;
         }
 
-        public static async Task<string> RunFfprobe(string args, LogMode logMode = LogMode.Hidden, string loglevel = "quiet")
+        public static async Task<string> RunFfprobe(FfprobeSettings settings)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
-            Process ffprobe = OsUtils.NewProcess(!show);
+            Process ffprobe = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
             lastAvProcess = ffprobe;
 
-            if (string.IsNullOrWhiteSpace(loglevel))
-                loglevel = defLogLevel;
+            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe -v {settings.LogLevel} {settings.Args}";
 
-            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe -v {loglevel} {args}";
-
-            if (logMode != LogMode.Hidden) Logger.Log("Running FFprobe...", false);
-            Logger.Log($"ffprobe -v {loglevel} {args}", true, false, "ffmpeg");
+            if (settings.LoggingMode != LogMode.Hidden) Logger.Log("Running FFprobe...", false);
+            Logger.Log($"ffprobe -v {settings.LogLevel} {settings.Args}", true, false, "ffmpeg");
 
             if (!show)
             {
                 string[] ignore = new string[0];
-                ffprobe.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
-                ffprobe.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", logMode, false); timeSinceLastOutput.sw.Restart(); };
+                ffprobe.OutputDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", settings.LoggingMode, false); timeSinceLastOutput.sw.Restart(); };
+                ffprobe.ErrorDataReceived += (sender, outLine) => { FfmpegOutputHandler.LogOutput(outLine.Data, ignore, ref processOutput, "ffmpeg", settings.LoggingMode, false); timeSinceLastOutput.sw.Restart(); };
             }
 
             ffprobe.Start();
@@ -172,19 +167,6 @@ namespace Nmkoder.Media
             return processOutput;
         }
 
-        // public static string RunFfprobe(string args)
-        // {
-        //     Process ffprobe = OsUtils.NewProcess(true);
-        //     ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe.exe {args}";
-        //     Logger.Log($"ffprobe {args}", true, false, "ffmpeg");
-        //     ffprobe.Start();
-        //     ffprobe.WaitForExit();
-        //     string output = ffprobe.StandardOutput.ReadToEnd();
-        //     string err = ffprobe.StandardError.ReadToEnd();
-        //     if (!string.IsNullOrWhiteSpace(err)) output += "\n" + err;
-        //     return output;
-        // }
-
         #endregion
 
         #region av1an
@@ -199,10 +181,9 @@ namespace Nmkoder.Media
             try
             {
                 string dir = Path.Combine(GetDir(), "av1an");
-                //IoUtils.TryDeleteIfExists(Paths.GetAv1anTempPath());
                 bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
                 lastOutputAv1an = "";
-                Process av1an = OsUtils.NewProcess(!show);
+                Process av1an = OsUtils.NewProcess(!show, NmkoderProcess.ProcessType.Primary);
                 lastAvProcess = av1an;
 
                 string vsynthPath = Path.Combine(dir, "vsynth");
@@ -269,14 +250,14 @@ namespace Nmkoder.Media
 
         #region MkvToolNix
 
-        public static async Task<string> RunMkvExtract(string args)
+        public static async Task<string> RunMkvExtract(string args, NmkoderProcess.ProcessType processType)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
 
             try
             {
-                Process mkve = OsUtils.NewProcess(!show);
+                Process mkve = OsUtils.NewProcess(!show, processType);
 
                 mkve.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvextract.exe {args}";
 
@@ -300,14 +281,14 @@ namespace Nmkoder.Media
             return processOutput;
         }
 
-        public static async Task<string> RunMkvMerge(string args, bool log = false)
+        public static async Task<string> RunMkvMerge(string args, NmkoderProcess.ProcessType processType, bool log = false)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
 
             try
             {
-                Process mkvm = OsUtils.NewProcess(!show);
+                Process mkvm = OsUtils.NewProcess(!show, processType);
 
                 mkvm.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvmerge.exe {args}";
 
@@ -340,7 +321,7 @@ namespace Nmkoder.Media
             return processOutput;
         }
 
-        public static async Task<string> RunMkvInfo(string args, bool log = false)
+        public static async Task<string> RunMkvInfo(string args, NmkoderProcess.ProcessType processType, bool log = false)
         {
             bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
             string processOutput = "";
@@ -348,7 +329,7 @@ namespace Nmkoder.Media
 
             try
             {
-                Process mkvi = OsUtils.NewProcess(!show);
+                Process mkvi = OsUtils.NewProcess(!show, processType);
 
                 mkvi.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvinfo.exe {args}";
 

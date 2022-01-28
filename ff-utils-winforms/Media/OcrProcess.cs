@@ -15,31 +15,10 @@ namespace Nmkoder.Media
 {
     class OcrProcess
     {
-        //public static Process lastOcrProcess;
-        //public static string lastOutputSubEdit;
-
-        //public static void Kill()
-        //{
-        //    if (lastOcrProcess == null) return;
-        //
-        //    try
-        //    {
-        //        OsUtils.KillProcessTree(lastOcrProcess.Id);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.Log($"Failed to kill lastOcrProcess process tree: {e.Message}", true);
-        //    }
-        //}
-
         public static async Task RunSubtitleEdit(string args, bool hidden = false, bool trackProgress = false)
         {
             bool show = false; // Config.GetInt(Config.Key.cmdDebugMode) > 0;
-            //lastOutputSubEdit = "";
-            Process subEdit = OsUtils.NewProcess(!show);
-            //timeSinceLastOutput.Restart();
-            //lastOcrProcess = subEdit;
-            //lastTask = taskType;
+            Process subEdit = OsUtils.NewProcess(!show, NmkoderProcess.ProcessType.Primary);
 
             subEdit.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & SubtitleEdit {args}";
             Logger.Log($"cmd {subEdit.StartInfo.Arguments}", true, false);

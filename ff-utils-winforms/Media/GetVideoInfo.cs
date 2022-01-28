@@ -8,6 +8,7 @@ using Nmkoder.Data;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.OS;
+using PT = Nmkoder.OS.NmkoderProcess.ProcessType;
 
 namespace Nmkoder.Media
 {
@@ -18,30 +19,30 @@ namespace Nmkoder.Media
 
         static Dictionary<QueryInfo, string> cmdCache = new Dictionary<QueryInfo, string>();
 
-        public static async Task<string> GetFfmpegInfoAsync(string path, string lineFilter = "", bool noCache = false)
+        public static async Task<string> GetFfmpegInfoAsync(string path, string lineFilter = "", bool noCache = false, PT processType = PT.Background)
         {
-            return await GetFfmpegOutputAsync(path, "", lineFilter, noCache);
+            return await GetFfmpegOutputAsync(path, "", lineFilter, noCache, processType);
         }
 
-        public static async Task<string> GetFfmpegOutputAsync(string path, string args, string lineFilter = "", bool noCache = false)
+        public static async Task<string> GetFfmpegOutputAsync(string path, string args, string lineFilter = "", bool noCache = false, PT processType = PT.Background)
         {
-            return await GetFfmpegOutputAsync(path, "", args, lineFilter, noCache);
+            return await GetFfmpegOutputAsync(path, "", args, lineFilter, noCache, processType);
         }
 
-        public static async Task<string> GetFfmpegOutputAsync(string path, string argsIn, string argsOut, string lineFilter = "", bool noCache = false)
+        public static async Task<string> GetFfmpegOutputAsync(string path, string argsIn, string argsOut, string lineFilter = "", bool noCache = false, PT processType = PT.Background)
         {
-            Process process = OsUtils.NewProcess(true);
+            Process process = OsUtils.NewProcess(true, processType);
             process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & " +
                 $"ffmpeg.exe -hide_banner -y {argsIn} {path.GetConcStr()} -i {path.Wrap()} {argsOut}";
             return await GetInfoAsync(path, process, lineFilter, noCache);
         }
 
-        public static async Task<string> GetFfprobeInfoAsync(string path, FfprobeMode mode, string lineFilter = "", int streamIndex = -1, bool stripKeyName = true)
+        public static async Task<string> GetFfprobeInfoAsync(string path, FfprobeMode mode, string lineFilter = "", int streamIndex = -1, bool stripKeyName = true, PT processType = PT.Background)
         {
-            Process process = OsUtils.NewProcess(true);
+            Process process = OsUtils.NewProcess(true, processType);
             string showFormat = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowFormat ? "-show_format" : "";
             string showStreams = mode == FfprobeMode.ShowBoth || mode == FfprobeMode.ShowStreams ? "-show_streams" : "";
-            //string streamSelect = (streamIndex >= 0) ? $"-select_streams {streamIndex}" : "";
+
             process.StartInfo.Arguments = $"/C cd /D {Paths.GetBinPath().Wrap()} & " +
                 $"ffprobe -v quiet {path.GetConcStr()} {showFormat} {showStreams} {path.Wrap()}";
 

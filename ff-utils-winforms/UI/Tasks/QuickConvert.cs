@@ -91,7 +91,8 @@ namespace Nmkoder.UI.Tasks
 
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 
-            await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, false, true);
+            AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, ProgressBar = true };
+            await AvProcess.RunFfmpeg(settings);
         }
     }
 }

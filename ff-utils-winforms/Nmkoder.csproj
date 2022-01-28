@@ -406,8 +406,9 @@
     <Compile Include="Media\GetVideoInfo.cs" />
     <Compile Include="Media\OcrProcess.cs" />
     <Compile Include="Media\OcrUtils.cs" />
+    <Compile Include="OS\NmkoderProcess.cs" />
     <Compile Include="OS\OsUtils.cs" />
-    <Compile Include="OS\SubProcesses.cs" />
+    <Compile Include="OS\ProcessManager.cs" />
     <Compile Include="OS\SuspendResume.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.OS;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,8 @@ namespace Nmkoder.Media
             string loopStr = (looptimes > 0) ? $"-stream_loop {looptimes}" : "";
             string vfrFilename = Path.GetFileName(concatFile);
             string args = $" {loopStr} -vsync 1 -f concat -i {vfrFilename} -c copy -movflags +faststart -fflags +genpts {outPath.Wrap()}";
-            await RunFfmpeg(args, concatFile.GetParentDir(), LogMode.Hidden);
+            FfmpegSettings settings = new FfmpegSettings() { Args = args, WorkingDir = concatFile.GetParentDir(), LoggingMode = LogMode.Hidden };
+            await RunFfmpeg(settings);
         }
 
         public static async Task LoopVideo(string inputFile, int times, bool delSrc = false)
@@ -56,7 +58,9 @@ namespace Nmkoder.Media
             string outpath = $"{pathNoExt}{loopSuffix}{ext}";
             IoUtils.RenameExistingFile(outpath);
             string args = $" -stream_loop {times} -i {inputFile.Wrap()} -c copy {outpath.Wrap()}";
-            await RunFfmpeg(args, LogMode.Hidden);
+
+            FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.Hidden };
+            await RunFfmpeg(settings);
 
             if (delSrc)
                 DeleteSource(inputFile);
@@ -69,7 +73,10 @@ namespace Nmkoder.Media
             float val = newSpeedPercent / 100f;
             string speedVal = (1f / val).ToString("0.0000").Replace(",", ".");
             string args = " -itsscale " + speedVal + " -i \"" + inputFile + "\" -c copy \"" + pathNoExt + "-" + newSpeedPercent + "pcSpeed" + ext + "\"";
-            await RunFfmpeg(args, LogMode.OnlyLastLine);
+
+            FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.OnlyLastLine };
+            await RunFfmpeg(settings);
+
             if (delSrc)
                 DeleteSource(inputFile);
         }
@@ -77,8 +84,10 @@ namespace Nmkoder.Media
         public static async Task<long> GetDurationMs(string inputFile)
         {
             Logger.Log($"GetDuration({inputFile}) - Reading Duration using ffprobe.", true, false, "ffmpeg");
-            string args = $" -v panic -select_streams v:0 -show_entries format=duration -of csv=s=x:p=0 -sexagesimal {inputFile.Wrap()}";
-            string output = await RunFfprobe(args);
+            string args = $"-select_streams v:0 -show_entries format=duration -of csv=s=x:p=0 -sexagesimal {inputFile.Wrap()}";
+            FfprobeSettings settings = new FfprobeSettings() { Args = args };
+            string output = await RunFfprobe(settings);
+
             return FormatUtils.TimestampToMs(output);
         }
 
@@ -140,10 +149,11 @@ namespace Nmkoder.Media
         public static async Task<Size> GetSize(string filePath)
         {
             Logger.Log($"GetSize('{filePath}')", true, false, "ffmpeg");
-            string args = $" -v panic {filePath.GetConcStr()} -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {filePath.Wrap()}";
-            string[] outputLines = (await RunFfprobe(args)).SplitIntoLines();
+            string args = $"{filePath.GetConcStr()} -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 {filePath.Wrap()}";
+            FfprobeSettings settings = new FfprobeSettings() { Args = args };
+            string[] outputLines = (await RunFfprobe(settings)).SplitIntoLines();
 
-            foreach(string line in outputLines)
+            foreach (string line in outputLines)
             {
                 if (!line.Contains("x") || line.Trim().Length < 3)
                     continue;
@@ -155,92 +165,52 @@ namespace Nmkoder.Media
             return new Size(0, 0);
         }
 
-        public static async Task<int> GetFrameCountAsync(string inputFile)
+        public static async Task<int> GetFrameCountAsync(string path, bool tryPacketCount = true, bool tryFfprobe = true, bool tryFfmpeg = true, NmkoderProcess.ProcessType processType = NmkoderProcess.ProcessType.Secondary)
         {
-            Logger.Log($"GetFrameCountAsync('{inputFile}') - Trying ffprobe packet counting first (fastest).", true, false, "ffmpeg");
-            int frames = await ReadFrameCountFfprobePacketCount(inputFile);      // Try reading frame count with ffprobe packet counting
-            if (frames > 0) return frames;
+            if (tryPacketCount)
+            {
+                string a = $"-select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 {path.Wrap()}";
+                string o = await RunFfprobe(new FfprobeSettings() { Args = a, ProcessType = processType });
+                string[] lines = o.SplitIntoLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                if (lines != null && lines.Length > 0 && lines.Last().GetInt() > 0) return lines.Last().GetInt();
+            }
 
-            Logger.Log($"GetFrameCountAsync('{inputFile}') - Trying ffprobe decoding now.", true, false, "ffmpeg");
+            if (tryFfprobe)
+            {
+                string a = $"{path.GetConcStr()} -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {path.Wrap()}";
+                string o = await RunFfprobe(new FfprobeSettings() { Args = a, ProcessType = processType });
+                string[] entries = o.SplitIntoLines();
 
-            frames = await ReadFrameCountFfprobe(inputFile);      // Try reading frame count with ffprobe decoding
-            if (frames > 0) return frames;
+                foreach (string entry in entries)
+                    if (entry.Contains("nb_frames=") && entry.GetInt() > 0)
+                        return entry.GetInt();
+            }
 
-            Logger.Log($"Failed to get frame count using ffprobe (frames = {frames}). Trying to read with ffmpeg.", true, false, "ffmpeg");
-            frames = await ReadFrameCountFfmpegAsync(inputFile);       // Try reading frame count with ffmpeg
-            if (frames > 0) return frames;
+            if (tryFfmpeg)
+            {
+                string a = $"{path.GetConcStr()} -i {path.Wrap()} -map 0:v:0 -c copy -f null - ";
+                FfmpegSettings settings = new FfmpegSettings() { Args = a, LoggingMode = LogMode.Hidden, SetBusy = true, LogLevel = "panic", ReliableOutput = true, ProcessType = processType };
+                string[] lines = (await RunFfmpeg(settings)).SplitIntoLines();
+
+                try
+                {
+                    string lastLine = lines.Last().ToLower();
+                    int fr = lastLine.Substring(0, lastLine.IndexOf("fps")).GetInt();
+                    if (fr > 0) return fr;
+                } 
+                catch { }
+            }
 
             Logger.Log("Failed to get total frame count of video.");
             return 0;
         }
 
-        static int ReadFrameCountFromDuration (string inputFile, long durationMs, float fps)
-        {
-            float durationSeconds = durationMs / 1000f;
-            float frameCount = durationSeconds * fps;
-            int frameCountRounded = frameCount.RoundToInt();
-            Logger.Log($"ReadFrameCountFromDuration: Got frame count of {frameCount}, rounded to {frameCountRounded}");
-            return frameCountRounded;
-        }
-
-        public static async Task<int> ReadFrameCountFfprobePacketCount(string filePath)
-        {
-            string output = await RunFfprobe($"-select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0 {filePath.Wrap()}", LogMode.Hidden, "error");
-            string[] lines = output.SplitIntoLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-            if (lines == null || lines.Length < 1)
-                return 0;
-
-            return lines.Last().GetInt();
-        }
-
-        public static async Task<int> ReadFrameCountFfprobe(string filePath)
-        {
-            string args = $" -v panic {filePath.GetConcStr()} -threads 0 -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1 {filePath.Wrap()}";
-            string info = await RunFfprobe(args);
-            string[] entries = info.SplitIntoLines();
-
-            try
-            {
-                foreach (string entry in entries)
-                {
-                    if (entry.Contains("nb_frames="))
-                        return entry.GetInt();
-                }
-            }
-            catch { }
-
-            return -1;
-        }
-
-        public static async Task<int> ReadFrameCountFfmpegAsync (string filePath)
-        {
-            string args = $" -loglevel panic -stats {filePath.GetConcStr()} -i {filePath.Wrap()} -map 0:v:0 -c copy -f null - ";
-            string info = await GetFfmpegOutputAsync(args, true, false);
-            try
-            {
-                string[] lines = info.SplitIntoLines();
-                string lastLine = lines.Last().ToLower();
-                return lastLine.Substring(0, lastLine.IndexOf("fps")).GetInt();
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        // public static async Task<VidExtraData> GetVidExtraInfo(string inputFile)
-        // {
-        //     string ffprobeOutput = await GetVideoInfoCached.GetFfprobeInfoAsync(inputFile);
-        //     VidExtraData data = new VidExtraData(ffprobeOutput);
-        //     return data;
-        // }
-
         public static async Task<bool> IsEncoderCompatible(string enc)
         {
             Logger.Log($"IsEncoderCompatible('{enc}')", true, false, "ffmpeg");
             string args = $"-loglevel error -f lavfi -i color=black:s=540x540 -vframes 1 -an -c:v {enc} -f null -";
-            string output = await GetFfmpegOutputAsync(args);
+            FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.Hidden, LogLevel = "error", ReliableOutput = true };
+            string output = await RunFfmpeg(settings);
             return !output.ToLower().Contains("error");
         }
 

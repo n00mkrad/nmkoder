@@ -13,11 +13,6 @@ namespace Nmkoder.Utils
 {
     class ConcatUtils
     {
-        public static async Task ConcatFfmpeg()
-        {
-
-        }
-
         public static async Task ConcatMkvMerge(List<string> paths, string outPath, bool print = true)
         {
             List<string> commands = new List<string>();
@@ -65,7 +60,7 @@ namespace Nmkoder.Utils
                     Program.mainForm.SetProgress(percent);
                 }
 
-                await AvProcess.RunMkvMerge(commands[i], false);
+                await AvProcess.RunMkvMerge(commands[i], OS.NmkoderProcess.ProcessType.Secondary, false);
             }
 
             await ConcatMkvMergeSingle(superChunkPaths, outPath, print);
@@ -93,7 +88,7 @@ namespace Nmkoder.Utils
             if (print)
                 Logger.Log($"Merging...");
 
-            await AvProcess.RunMkvMerge(args, false);
+            await AvProcess.RunMkvMerge(args, OS.NmkoderProcess.ProcessType.Secondary, false);
 
             if (!File.Exists(outPath))
                 Logger.Log($"Failed to merge (output file does not exist). Check the mkvmerge.txt log for details.");

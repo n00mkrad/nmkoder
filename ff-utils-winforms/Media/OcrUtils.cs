@@ -29,7 +29,8 @@ namespace Nmkoder.Media
             IoUtils.DeleteContentsOfDir(tempDir);
             Logger.Log($"Muxing subs from input to all-subs.mkv", true, false, "ocr");
             string ffArgs = $"-i {inPath.Wrap()} -map 0:s -c copy \"{tempDir}/subs.mkv\"";
-            await AvProcess.RunFfmpeg(ffArgs, AvProcess.LogMode.Hidden);
+            AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = ffArgs, LoggingMode = AvProcess.LogMode.Hidden };
+            await AvProcess.RunFfmpeg(settings);
 
             Logger.Log($"starting {streams.Count} ocr tasks", true, false, "ocr");
 

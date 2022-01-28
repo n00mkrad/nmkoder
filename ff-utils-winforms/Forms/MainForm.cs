@@ -100,11 +100,11 @@ namespace Nmkoder.Forms
                 DialogResult dialog = MessageBox.Show(msg, "Keep subprocesses running?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
 
                 if (dialog == DialogResult.No)
-                    SubProcesses.KillAll();
+                    ProcessManager.KillAll();
             }
             else
             {
-                SubProcesses.KillAll();
+                ProcessManager.KillAll();
             }
 
             Program.Cleanup();

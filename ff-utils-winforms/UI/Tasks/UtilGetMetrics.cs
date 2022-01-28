@@ -53,7 +53,8 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating VMAF...");
                     string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}:n_subsample={subsample}";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{vmafFilter} -f null -";
-                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
+                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await AvProcess.RunFfmpeg(settings);
                     List<string> vmafLines = output.SplitIntoLines().Where(x => x.Contains("VMAF score: ")).ToList();
 
                     if (vmafLines.Count < 1)
@@ -72,7 +73,8 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating SSIM...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}ssim -f null -";
-                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
+                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await AvProcess.RunFfmpeg(settings);
                     List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
                     if (ssimLines.Count < 1)
@@ -91,7 +93,8 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating PSNR...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}psnr -f null -";
-                    string output = await AvProcess.RunFfmpeg(args, AvProcess.LogMode.OnlyLastLine, "info", true, true);
+                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await AvProcess.RunFfmpeg(settings);
                     List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 
                     if (psnrLines.Count < 1)

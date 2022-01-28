@@ -82,11 +82,11 @@ namespace Nmkoder.OS
             }
         }
 
-        public static Process NewProcess(bool hidden, string filename = "cmd.exe")
+        public static Process NewProcess(bool hidden, NmkoderProcess.ProcessType type, string filename = "cmd.exe")
         {
-            Process p = new Process();
-            SubProcesses.RegisterProcess(p);
-            return SetStartInfo(p, hidden, filename);
+            NmkoderProcess p = new NmkoderProcess(new Process(), type);
+            ProcessManager.RegisterProcess(p);
+            return SetStartInfo(p.Process, hidden, filename);
         }
 
         public static void KillProcessTree(int pid)
@@ -237,7 +237,7 @@ namespace Nmkoder.OS
 
         public static void Shutdown()
         {
-            Process proc = NewProcess(true);
+            Process proc = NewProcess(true, NmkoderProcess.ProcessType.Secondary);
             proc.StartInfo.Arguments = "/C shutdown -s -t 0";
             proc.Start();
         }

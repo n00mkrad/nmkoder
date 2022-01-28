@@ -204,6 +204,9 @@ namespace Nmkoder.Forms
 
         private void inputPanel_DragDrop(object sender, DragEventArgs e)
         {
+            if (Program.busy)
+                return;
+
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             bool anyFilesLoaded = fileList.Items.Count > 0;
 

@@ -8,6 +8,7 @@ using Nmkoder.Data.Codecs;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
+using Nmkoder.Main;
 using Nmkoder.Media;
 using Nmkoder.OS;
 using static Nmkoder.UI.Tasks.QuickConvertUi;
@@ -88,6 +89,8 @@ namespace Nmkoder.UI.Tasks
 
                 args = form.Args;
             }
+
+            if (RunTask.canceled) return;
 
             Logger.Log($"Running:\nffmpeg {args}", true, false, "ffmpeg");
 

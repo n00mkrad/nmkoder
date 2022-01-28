@@ -184,7 +184,7 @@ namespace Nmkoder.Media
 
                 int t = interval * (i + 1) - (interval > 1 ? 1 : 0);
 
-                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -r 10 -ss {t}", "-an -sn -sn -vf cropdetect=round=2 -vframes 6 -r 1/10 -f null - 2>&1 1>nul | findstr crop=", "");
+                string output = await GetFfmpegOutputAsync(path, $"-skip_frame nokey -r 10 -ss {t}", "-an -sn -sn -vf cropdetect=round=2 -vframes 6 -r 1/10 -f null - 2>&1 1>nul | findstr crop=", "", false, OS.NmkoderProcess.ProcessType.Secondary);
 
                 foreach (string l in output.SplitIntoLines().Where(x => x.MatchesWildcard("*:*:*:*")))
                     detectedCrops.Add(l.Split(" crop=").Last());

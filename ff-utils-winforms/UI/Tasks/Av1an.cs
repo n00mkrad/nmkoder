@@ -85,7 +85,9 @@ namespace Nmkoder.UI.Tasks
                     string m = GetChunkGenMethod();
                     string c = GetConcatMethodArgs();
                     string o = GetChunkOrderArgs();
-                    string thr = GetThreadAffArgs(); 
+                    string thr = GetThreadAffArgs();
+
+                    if (RunTask.canceled) return;
 
                     args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
 

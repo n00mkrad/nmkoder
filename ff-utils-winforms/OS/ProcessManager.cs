@@ -78,20 +78,25 @@ namespace Nmkoder.OS
 
         public static void Kill (List<NmkoderProcess> list)
         {
-            Logger.Log($"SubProcesses: Killing {list.Count} subprocesses ({string.Join(", ", list.Select(x => x.Process.StartInfo.FileName))})", true);
+            if (list.Count < 1)
+                return;
+
+            Logger.Log($"ProcMan: Killing {list.Count} subprocesses ({string.Join(", ", list.Select(x => x.Process.StartInfo.FileName))})", true);
 
             foreach(NmkoderProcess np in list)
             {
                 Process p = np.Process;
 
+                Logger.Log($"ProcMan: Killing {p.StartInfo.FileName} ({np.Type})...", true);
+
                 try
                 {
                     OsUtils.KillProcessTree(p.Id);
-                    Logger.Log($"SubProcesses: Killed process tree for {p.StartInfo.FileName} {p.StartInfo.Arguments.Trunc(150)}", true);
+                    Logger.Log($"ProcMan: Killed process tree for {p.StartInfo.FileName} {p.StartInfo.Arguments.Trunc(150)}", true);
                 }
                 catch(Exception e)
                 {
-                    Logger.Log($"SubProcesses: Failed to kill process tree for {p.StartInfo.FileName} {p.StartInfo.Arguments.Trunc(150)}: {e.Message}", true);
+                    Logger.Log($"ProcMan: Failed to kill process tree for {p.StartInfo.FileName} {p.StartInfo.Arguments.Trunc(150)}: {e.Message}", true);
                 }
             }
         }

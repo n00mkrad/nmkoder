@@ -2,6 +2,7 @@
 using Nmkoder.Data.Ui;
 using Nmkoder.IO;
 using Nmkoder.Media;
+using Nmkoder.OS;
 using Nmkoder.UI;
 using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
@@ -35,7 +36,9 @@ namespace Nmkoder.Main
             canceled = true;
             Program.mainForm.SetStatus("Canceled.");
             Program.mainForm.SetProgress(0);
-            AvProcess.Kill();
+
+            ProcessManager.KillPrimary();
+            ProcessManager.KillSecondary();
 
             Program.mainForm.SetWorking(false);
             // Program.mainForm.SetTab("interpolation");

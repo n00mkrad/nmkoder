@@ -18,30 +18,10 @@ namespace Nmkoder.Media
 {
     class AvProcess
     {
-        public static Process lastAvProcess;
-
         public static string lastOutputAv1an;
         public static string lastTempDirAv1an;
 
         public enum LogMode { Visible, OnlyLastLine, Hidden }
-        //public static LogMode currentLogMode;
-        //static bool showProgressBar;
-
-        static readonly string defLogLevel = "warning";
-
-        public static void Kill()
-        {
-            if (lastAvProcess == null) return;
-
-            try
-            {
-                OsUtils.KillProcessTree(lastAvProcess.Id);
-            }
-            catch (Exception e)
-            {
-                Logger.Log($"Failed to kill lastAvProcess process tree: {e.Message}", true);
-            }
-        }
 
         #region FFmpeg
 
@@ -63,7 +43,6 @@ namespace Nmkoder.Media
             string processOutput = "";
             Process ffmpeg = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
-            lastAvProcess = ffmpeg;
 
             string beforeArgs = $"-hide_banner -stats -loglevel {settings.LogLevel} -y";
 
@@ -138,7 +117,6 @@ namespace Nmkoder.Media
             string processOutput = "";
             Process ffprobe = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
-            lastAvProcess = ffprobe;
 
             ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe -v {settings.LogLevel} {settings.Args}";
 
@@ -184,7 +162,6 @@ namespace Nmkoder.Media
                 bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
                 lastOutputAv1an = "";
                 Process av1an = OsUtils.NewProcess(!show, NmkoderProcess.ProcessType.Primary);
-                lastAvProcess = av1an;
 
                 string vsynthPath = Path.Combine(dir, "vsynth");
                 string encPath = Path.Combine(dir, "enc");
@@ -369,15 +346,6 @@ namespace Nmkoder.Media
                 return "/K";
             else
                 return "/C";
-        }
-
-        public static async Task SetBusyWhileRunning()
-        {
-            if (Program.busy) return;
-
-            await Task.Delay(100);
-            while (!lastAvProcess.HasExited)
-                await Task.Delay(10);
         }
     }
 }

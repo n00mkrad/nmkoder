@@ -153,13 +153,14 @@ namespace Nmkoder.UI
                 return "";
 
             List<string> lines = new List<string>();
-            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileName(mediaFile.SourcePath) : "Unknown")}");
+            string ext = Path.GetExtension(mediaFile.SourcePath);
+            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileName(mediaFile.SourcePath).Trunc(90 - ext.Length) + ext : "Unknown")}");
             lines.Add($"Codec: {stream.CodecLong}");
 
             if (stream.Type == Stream.StreamType.Video)
             {
                 VideoStream v = (VideoStream)stream;
-                lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title : "None")}");
+                lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title.Trunc(90) : "None")}");
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
                 lines.Add($"Color Space: {v.ColorSpace}{(v.ColorSpace.ToLower().Contains("p10") ? " (10-bit)" : " (8-bit)")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
@@ -168,17 +169,17 @@ namespace Nmkoder.UI
             if (stream.Type == Stream.StreamType.Audio)
             {
                 AudioStream a = (AudioStream)stream;
-                lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title : "None")}");
+                lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title.Trunc(90) : "None")}");
                 lines.Add($"Sample Rate: {((a.SampleRate > 1) ? $"{a.SampleRate} KHz" : "None")}");
                 lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {a.Layout.ToTitleCase()}" : "")}");
-                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(a.Language, 4)}" : "Unknown")}");
+                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageName(a.Language)} ({a.Language})" : "Unknown")}");
             }
 
             if (stream.Type == Stream.StreamType.Subtitle)
             {
                 SubtitleStream s = (SubtitleStream)stream;
-                lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title : "None")}");
-                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{FormatUtils.CapsIfShort(s.Language, 4)}" : "Unknown")}");
+                lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title.Trunc(90) : "None")}");
+                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageName(s.Language)} ({s.Language})" : "Unknown")}");
                 lines.Add($"Type: {((s.Bitmap) ? $"Bitmap-based" : "Text-based")}");
             }
 

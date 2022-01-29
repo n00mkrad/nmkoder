@@ -404,6 +404,7 @@
     <Compile Include="Media\GetFrameCountCached.cs" />
     <Compile Include="Media\GetMediaResolutionCached.cs" />
     <Compile Include="Media\GetVideoInfo.cs" />
+    <Compile Include="Media\Iso639.cs" />
     <Compile Include="Media\OcrProcess.cs" />
     <Compile Include="Media\OcrUtils.cs" />
     <Compile Include="OS\NmkoderProcess.cs" />

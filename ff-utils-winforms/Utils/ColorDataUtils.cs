@@ -259,6 +259,11 @@ namespace Nmkoder.Utils
             return 0; // Fallback: Unspecified
         }
 
+        public static string FormatForAom (string colorspace)
+        {
+            return colorspace.Replace("bt2020-10", "bt2020-10bit").Replace("bt2020-12", "bt2020-12bit");
+        }
+
         #region Get string from int
 
         public static string GetColorPrimariesString(int n)

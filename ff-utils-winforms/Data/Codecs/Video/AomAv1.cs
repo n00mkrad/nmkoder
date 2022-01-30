@@ -45,9 +45,9 @@ namespace Nmkoder.Data.Codecs
 
             if(mediaFile != null && mediaFile.ColorData != null)
             {
-                string prims = ColorDataUtils.GetColorPrimariesString(mediaFile.ColorData.ColorPrimaries);
-                string transfer = ColorDataUtils.GetColorTransferString(mediaFile.ColorData.ColorTransfer);
-                string matrixCoeffs = ColorDataUtils.GetColorMatrixCoeffsString(mediaFile.ColorData.ColorMatrixCoeffs);
+                string prims = ColorDataUtils.FormatForAom(ColorDataUtils.GetColorPrimariesString(mediaFile.ColorData.ColorPrimaries));
+                string transfer = ColorDataUtils.FormatForAom(ColorDataUtils.GetColorTransferString(mediaFile.ColorData.ColorTransfer));
+                string matrixCoeffs = ColorDataUtils.FormatForAom(ColorDataUtils.GetColorMatrixCoeffsString(mediaFile.ColorData.ColorMatrixCoeffs));
                 colors = $"{(prims != "" ? $"--color-primaries={prims}" : "")} {(transfer != "" ? $"--transfer-characteristics={transfer}" : "")} {(matrixCoeffs != "" ? $"--matrix-coefficients={matrixCoeffs}" : "")}";
 
                 if (mediaFile.ColorData.ColorPrimaries == 9)

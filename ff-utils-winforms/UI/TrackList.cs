@@ -154,15 +154,16 @@ namespace Nmkoder.UI
 
             List<string> lines = new List<string>();
             string ext = Path.GetExtension(mediaFile.SourcePath);
-            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileName(mediaFile.SourcePath).Trunc(90 - ext.Length) + ext : "Unknown")}");
-            lines.Add($"Codec: {stream.CodecLong}");
+            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileNameWithoutExtension(mediaFile.SourcePath).Trunc(90 - ext.Length) + ext : "Unknown")}");
+            lines.Add($"Codec: {stream.CodecLong} ({stream.Codec})");
 
             if (stream.Type == Stream.StreamType.Video)
             {
                 VideoStream v = (VideoStream)stream;
                 lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title.Trunc(90) : "None")}");
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
-                lines.Add($"Color Space: {v.ColorSpace}{(v.ColorSpace.ToLower().Contains("p10") ? " (10-bit)" : " (8-bit)")}");
+                int bitDepth = GetBitDepthFromPixelFormat(v.PixelFormat);
+                lines.Add($"Color Space: {v.PixelFormat}{(bitDepth > 0 ? $" ({bitDepth}-bit)" : "")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
             }
 
@@ -172,27 +173,28 @@ namespace Nmkoder.UI
                 lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title.Trunc(90) : "None")}");
                 lines.Add($"Sample Rate: {((a.SampleRate > 1) ? $"{a.SampleRate} KHz" : "None")}");
                 lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {a.Layout.ToTitleCase()}" : "")}");
-                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageString(a.Language)}" : "Unknown")}");
+                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Aliases.GetLanguageString(a.Language)}" : "Unknown")}");
             }
 
             if (stream.Type == Stream.StreamType.Subtitle)
             {
                 SubtitleStream s = (SubtitleStream)stream;
                 lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title.Trunc(90) : "None")}");
-                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageString(s.Language)}" : "Unknown")}");
+                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Aliases.GetLanguageString(s.Language)}" : "Unknown")}");
                 lines.Add($"Type: {((s.Bitmap) ? $"Bitmap-based" : "Text-based")}");
             }
 
             return string.Join(Environment.NewLine, lines);
         }
 
-        public static List<string> GetInputFiles()
+        private static int GetBitDepthFromPixelFormat(string pixFmt)
         {
-            List<string> paths = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag).MediaFile.ImportPath).ToList();
-            List<string> pathsUnique = paths.Select(x => x).Distinct().ToList();
-
-            Logger.Log($"Input Files: {string.Join(", ", pathsUnique)}", true);
-            return pathsUnique;
+            pixFmt = pixFmt.ToLower();
+            if (pixFmt.MatchesWildcard("yuv*p")) return 8;
+            if (pixFmt.MatchesWildcard("*p10?e")) return 10;
+            if (pixFmt.MatchesWildcard("*p12?e")) return 12;
+            if (pixFmt.MatchesWildcard("*p16?e")) return 16;
+            return 0;
         }
 
         public static string GetInputFilesString()

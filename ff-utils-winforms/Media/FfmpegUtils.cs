@@ -62,7 +62,6 @@ namespace Nmkoder.Media
                             Size sar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "sample_aspect_ratio", idx));
                             Size dar = SizeFromString(await GetFfprobeInfoAsync(path, showStreams, "display_aspect_ratio", idx));
                             Fraction fps = path.IsConcatFile() ? defaultFps : await IoUtils.GetVideoFramerate(path);
-                            //int frames = await GetFrameCountCached.GetFrameCountAsync(path);
                             VideoStream vStream = new VideoStream(lang, title, codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                             vStream.Index = idx;
                             Logger.Log($"Added video stream to list: {vStream}", true);

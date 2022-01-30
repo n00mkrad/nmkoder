@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using Nmkoder.Data;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace Nmkoder.Media
 {
-    class Iso639
+    class Aliases
     {
+        #region ISO-639 Languages
+
         public static List<IsoLanguage> languages = new List<IsoLanguage>();
 
         public class IsoLanguage
@@ -22,13 +25,13 @@ namespace Nmkoder.Media
             public string[] IsoCodes { get; set; }
         }
 
-        private static void Init()
+        private static void LoadLangsIfNotLoaded()
         {
             if (languages == null || languages.Count == 0)
-                LoadFromCsv();
+                LoadLangsFromCsv();
         }
 
-        private static void LoadFromCsv()
+        private static void LoadLangsFromCsv()
         {
             string csvPath = Path.Combine(Paths.GetBinPath(), "iso639.csv");
             languages.Clear();
@@ -55,7 +58,7 @@ namespace Nmkoder.Media
 
         public static IsoLanguage GetLanguage(string isoCode)
         {
-            Init();
+            LoadLangsIfNotLoaded();
 
             foreach (IsoLanguage lang in languages)
                 if (lang.IsoCodes.Contains(isoCode))
@@ -71,7 +74,35 @@ namespace Nmkoder.Media
 
         public static string GetLanguageString(IsoLanguage lang, bool includeNativeName = true, bool includeIsoCodes = true)
         {
-            return $"{lang.EnglishName}{(includeNativeName ? $"/{lang.NativeName}" : "")}{(includeIsoCodes ? $" ({string.Join("/", lang.IsoCodes)})" : "")}";
+            return $"{lang.EnglishName}{(includeNativeName && lang.NativeName != lang.EnglishName ? $"/{lang.NativeName}" : "")}{(includeIsoCodes ? $" ({string.Join("/", lang.IsoCodes)})" : "")}";
         }
+
+        #endregion
+
+        #region Codec Names
+
+        public static string GetNicerCodecName (string codecName)
+        {
+            string lower = codecName.ToLower();
+
+            if (lower.StartsWith("hdmv_pgs")) return "PGS";
+            if (lower.StartsWith("subrip")) return "SRT";
+            if (lower == "truehd") return "TrueHD";
+            if (lower == "opus") return "Opus";
+            if (lower.StartsWith("pcm")) return codecName.ToUpper();
+            if (lower == "vc1") return "VC-1";
+            if (lower == "mjpeg") return "MJPEG";
+            if (lower == "mpeg4") return "MPEG-4";
+            if (lower == "msmpeg4v3") return "MS MPEG-4 V3";
+            if (lower == "timed_id3") return "Timed ID3";
+            if (lower == "rawvideo") return "Raw Video";
+            if (lower == "msrle") return "MS RLE";
+            if (lower == "wmav2") return "WMAV2";
+            if (lower == "wmapro") return "WMA Pro";
+
+            return FormatUtils.CapsIfShort(codecName, 5);
+        }
+
+        #endregion
     }
 }

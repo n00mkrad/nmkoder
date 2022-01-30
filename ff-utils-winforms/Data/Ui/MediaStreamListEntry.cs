@@ -1,6 +1,7 @@
 ﻿using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Media;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Nmkoder.Data.Ui
 
         public override string ToString()
         {
-            string codec = FormatUtils.CapsIfShort(Stream.Codec, 5);
+            string codec = Aliases.GetNicerCodecName(Stream.Codec);
             const int maxChars = 50;
             int fileIndex = GetFileIndex();
             string str = $"[Track {Stream.Index + 1}]:";

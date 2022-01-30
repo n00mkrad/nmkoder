@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using Nmkoder.Data;
+using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,51 +12,66 @@ namespace Nmkoder.Media
 {
     class Iso639
     {
-        public static string GetLanguageName (string code)
-        {
-            if (code == "en" || code == "eng") return "English";
-            if (code == "es" || code == "spa") return "Spanish";
-            if (code == "fr" || code == "fra" || code == "fre") return "French";
-            if (code == "de" || code == "ger" || code == "deu") return "German";
-            if (code == "it" || code == "ita") return "Italian";
-            if (code == "pt" || code == "por") return "Portuguese";
-            if (code == "pl" || code == "pol") return "Polish";
-            if (code == "tr" || code == "tur") return "Turkish";
-            if (code == "sv" || code == "swe") return "Swedish";
-            if (code == "fi" || code == "fin") return "Finnish";
-            if (code == "nl" || code == "dut" || code == "nld") return "Dutch";
-            if (code == "nb" || code == "nob") return "Norwegian Bokmål";
-            if (code == "no" || code == "nor") return "Norwegian";
-            if (code == "ru" || code == "rus") return "Russian";
-            if (code == "he" || code == "heb") return "Hebrew";
-            if (code == "ar" || code == "ara") return "Arabic";
-            if (code == "hi" || code == "hin") return "Hindi";
-            if (code == "ta" || code == "tam") return "Tamil";
-            if (code == "te" || code == "tel") return "Telugu";
-            if (code == "id" || code == "ind") return "Indonesian";
-            if (code == "ms" || code == "msa" || code == "may") return "Malay";
-            if (code == "fil") return "Filipino";
-            if (code == "th" || code == "tha") return "Thai";
-            if (code == "ko" || code == "kor") return "Korean";
-            if (code == "zh" || code == "zho" || code == "chi") return "Chinese";
-            if (code == "ja" || code == "jpn") return "Japanese";
-            if (code == "da" || code == "dan") return "Danish";
-            if (code == "cs" || code == "cze" || code == "ces") return "Czech";
-            if (code == "et" || code == "est") return "Estonian";
-            if (code == "hu" || code == "hun") return "Hungarian";
-            if (code == "is" || code == "ice" || code == "isl") return "Icelandic";
-            if (code == "lv" || code == "lav") return "Latvian";
-            if (code == "lt" || code == "lit") return "Lithuanian";
-            if (code == "rp" || code == "ron" || code == "rum") return "Romanian";
-            if (code == "sr" || code == "srp") return "Serbian";
-            if (code == "sk" || code == "slk" || code == "slo") return "Slovak";
-            if (code == "sl" || code == "slv") return "Slovenian";
-            if (code == "so" || code == "som") return "Somali";
-            if (code == "af" || code == "aar") return "Afrikaans";
-            if (code == "hr" || code == "hrv") return "Croatian";
-            if (code == "el" || code == "ell" || code == "gre") return "Greek";
+        public static List<IsoLanguage> languages = new List<IsoLanguage>();
 
-            return code.ToUpper();
+        public class IsoLanguage
+        {
+            public string Family { get; set; }
+            public string EnglishName { get; set; }
+            public string NativeName { get; set; }
+            public string[] IsoCodes { get; set; }
+        }
+
+        private static void Init()
+        {
+            if (languages == null || languages.Count == 0)
+                LoadFromCsv();
+        }
+
+        private static void LoadFromCsv()
+        {
+            string csvPath = Path.Combine(Paths.GetBinPath(), "iso639.csv");
+            languages.Clear();
+
+            try
+            {
+                TextFieldParser csvParser = new TextFieldParser(csvPath) { CommentTokens = new string[] { "#" }, Delimiters = new string[] { "," }, HasFieldsEnclosedInQuotes = true };
+                csvParser.ReadLine(); // Skip header row
+
+                while (!csvParser.EndOfData)
+                {
+                    string[] fields = csvParser.ReadFields();
+                    string[] codes = new string[] { fields[3], fields[4], fields[5] }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray(); // Strip empty code fields
+                    IsoLanguage lang = new IsoLanguage() { Family = fields[0], EnglishName = fields[1], NativeName = fields[2], IsoCodes = codes };
+                    languages.Add(lang);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Error loading language list: {ex.Message}");
+                Logger.Log($"Stack Trace: {ex.StackTrace}", true);
+            }
+        }
+
+        public static IsoLanguage GetLanguage(string isoCode)
+        {
+            Init();
+
+            foreach (IsoLanguage lang in languages)
+                if (lang.IsoCodes.Contains(isoCode))
+                    return lang;
+
+            return new IsoLanguage() { Family = "Unknown", EnglishName = "Unknown", NativeName = "Unknown", IsoCodes = new string[] { isoCode } };
+        }
+
+        public static string GetLanguageString(string isoCode, bool includeNativeName = true, bool includeIsoCodes = true)
+        {
+            return GetLanguageString(GetLanguage(isoCode), includeNativeName, includeIsoCodes);
+        }
+
+        public static string GetLanguageString(IsoLanguage lang, bool includeNativeName = true, bool includeIsoCodes = true)
+        {
+            return $"{lang.EnglishName}{(includeNativeName ? $"/{lang.NativeName}" : "")}{(includeIsoCodes ? $" ({string.Join("/", lang.IsoCodes)})" : "")}";
         }
     }
 }

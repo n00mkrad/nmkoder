@@ -172,14 +172,14 @@ namespace Nmkoder.UI
                 lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title.Trunc(90) : "None")}");
                 lines.Add($"Sample Rate: {((a.SampleRate > 1) ? $"{a.SampleRate} KHz" : "None")}");
                 lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {a.Layout.ToTitleCase()}" : "")}");
-                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageName(a.Language)} ({a.Language})" : "Unknown")}");
+                lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageString(a.Language)}" : "Unknown")}");
             }
 
             if (stream.Type == Stream.StreamType.Subtitle)
             {
                 SubtitleStream s = (SubtitleStream)stream;
                 lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title.Trunc(90) : "None")}");
-                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageName(s.Language)} ({s.Language})" : "Unknown")}");
+                lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Iso639.GetLanguageString(s.Language)}" : "Unknown")}");
                 lines.Add($"Type: {((s.Bitmap) ? $"Bitmap-based" : "Text-based")}");
             }
 

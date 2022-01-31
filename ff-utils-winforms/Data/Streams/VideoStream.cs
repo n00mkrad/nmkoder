@@ -4,12 +4,12 @@ namespace Nmkoder.Data.Streams
 {
     public class VideoStream : Stream
     {
-        public string PixelFormat;
-        public int Kbits;
-        public Size Resolution;
-        public Size Sar;
-        public Size Dar;
-        public Fraction Rate;
+        public string PixelFormat { get; }
+        public int Kbits { get; }
+        public Size Resolution { get; }
+        public Size Sar { get; }
+        public Size Dar { get; }
+        public Fraction Rate { get; }
 
         public VideoStream(string language, string title, string codec, string codecLong, string pixFmt, int kbits, Size resolution, Size sar, Size dar, Fraction rate)
         {
@@ -28,7 +28,7 @@ namespace Nmkoder.Data.Streams
 
         public override string ToString()
         {
-            return $"{base.ToString()} - Language: {Language} - Colors: {PixelFormat} - Size: {Resolution.Width}x{Resolution.Height} - FPS: {Rate}";
+            return $"{base.ToString()} - Language: {Language} - Color Format: {PixelFormat} - Size: {Resolution.Width}x{Resolution.Height} - FPS: {Rate}";
         }
     }
 }

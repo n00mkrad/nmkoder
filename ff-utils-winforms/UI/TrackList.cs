@@ -163,25 +163,33 @@ namespace Nmkoder.UI
                 lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title.Trunc(90) : "None")}");
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
                 int bitDepth = GetBitDepthFromPixelFormat(v.PixelFormat);
-                lines.Add($"Color Space: {v.PixelFormat}{(bitDepth > 0 ? $" ({bitDepth}-bit)" : "")}");
+                lines.Add($"Color Format: {v.PixelFormat}{(bitDepth > 0 ? $" ({bitDepth}-bit)" : "")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
             }
 
-            if (stream.Type == Stream.StreamType.Audio)
+            else if (stream.Type == Stream.StreamType.Audio)
             {
                 AudioStream a = (AudioStream)stream;
                 lines.Add($"Title: {((a.Title.Trim().Length > 1) ? a.Title.Trunc(90) : "None")}");
                 lines.Add($"Sample Rate: {((a.SampleRate > 1) ? $"{a.SampleRate} KHz" : "None")}");
-                lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {a.Layout.ToTitleCase()}" : "")}");
+                string chLayout = (a.Layout.Contains("(") && !a.Layout.Contains(" (") ? a.Layout.Replace("(", " (") : a.Layout);
+                lines.Add($"Channels: {((a.Channels > 0) ? $"{a.Channels}" : "Unknown")} {(a.Layout.Trim().Length > 1 ? $"as {chLayout.ToTitleCase()}" : "")}");
                 lines.Add($"Language: {((a.Language.Trim().Length > 1) ? $"{Aliases.GetLanguageString(a.Language)}" : "Unknown")}");
             }
 
-            if (stream.Type == Stream.StreamType.Subtitle)
+            else if (stream.Type == Stream.StreamType.Subtitle)
             {
                 SubtitleStream s = (SubtitleStream)stream;
                 lines.Add($"Title: {((s.Title.Trim().Length > 1) ? s.Title.Trunc(90) : "None")}");
                 lines.Add($"Language: {((s.Language.Trim().Length > 1) ? $"{Aliases.GetLanguageString(s.Language)}" : "Unknown")}");
                 lines.Add($"Type: {((s.Bitmap) ? $"Bitmap-based" : "Text-based")}");
+            }
+
+            else if (stream.Type == Stream.StreamType.Attachment)
+            {
+                AttachmentStream a = (AttachmentStream)stream;
+                lines.Add($"Filename: {((a.Filename.Trim().Length > 1) ? a.Filename.Trunc(90) : "None")}");
+                lines.Add($"MIME Type: {((a.MimeType.Trim().Length > 1) ? $"{Aliases.GetLanguageString(a.MimeType)}" : "Unknown")}");
             }
 
             return string.Join(Environment.NewLine, lines);

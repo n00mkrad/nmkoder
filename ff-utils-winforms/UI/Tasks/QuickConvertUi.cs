@@ -356,7 +356,7 @@ namespace Nmkoder.UI.Tasks
                 MediaStreamListEntry entry = streamEntries[i];
                 string title = string.IsNullOrWhiteSpace(entry.TitleEdited) ? entry.Title : entry.TitleEdited;
                 string lang = string.IsNullOrWhiteSpace(entry.LanguageEdited) ? entry.Language : entry.LanguageEdited;
-                int newIdx = grid.Rows.Add($"{entry.ToString().Split(')')[0].Remove("[").Remove("]").Replace(" - ", " ")})", title, lang);
+                int newIdx = grid.Rows.Add(entry.GetString(true, false), title, lang);
                 grid.Rows[newIdx].Visible = Program.mainForm.streamList.Items[i].Checked;
             }
 
@@ -366,13 +366,16 @@ namespace Nmkoder.UI.Tasks
             grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);
             grid.Columns[0].Visible = true;
             grid.Columns[1].Visible = true;
-            grid.Columns[0].FillWeight = 34;
-            grid.Columns[1].FillWeight = 60;
-            grid.Columns[2].FillWeight = 6;
+            grid.Columns[0].FillWeight = 25;
+            grid.Columns[1].FillWeight = 65;
+            grid.Columns[2].FillWeight = 10;
         }
 
         public static void SaveMetadata ()
         {
+            if (TrackList.current == null)
+                return;
+
             DataGridView grid = Program.mainForm.MetaGrid;
             Logger.Log($"Saving metadata.", true);
 
@@ -424,7 +427,7 @@ namespace Nmkoder.UI.Tasks
             }
             
 
-            int cfg = Config.GetInt(Config.Key.metaMode);
+            int cfg = Config.GetInt(Config.Key.MetaMode);
             DataGridView grid = form.MetaGrid;
             int defaultAudio = form.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = form.trackListDefaultSubsBox.SelectedIndex - 1;

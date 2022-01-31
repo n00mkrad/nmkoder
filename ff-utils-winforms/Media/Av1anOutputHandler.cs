@@ -42,7 +42,7 @@ namespace Nmkoder.Media
 
         public static async Task ParseProgressLoop()
         {
-            int workers = Config.GetInt(Config.Key.av1anOptsWorkerCount);
+            int workers = Config.GetInt(Config.Key.Av1anOptsWorkerCount);
             string dir = AvProcess.lastTempDirAv1an;
             string logFile = Path.Combine(dir, "log.log");
 

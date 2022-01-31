@@ -117,7 +117,9 @@ namespace Nmkoder.Media
                         {
                             string codec = await GetFfprobeInfoAsync(path, showStreams, "codec_name", idx);
                             string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
-                            AttachmentStream aStream = new AttachmentStream(codec, codecLong);
+                            string filename = await GetFfprobeInfoAsync(path, showStreams, "TAG:filename", idx);
+                            string mimeType = await GetFfprobeInfoAsync(path, showStreams, "TAG:mimetype", idx);
+                            AttachmentStream aStream = new AttachmentStream(codec, codecLong, filename, mimeType);
                             aStream.Index = idx;
                             Logger.Log($"Added attachment stream to list: {aStream}", true);
                             streamList.Add(aStream);
@@ -170,7 +172,7 @@ namespace Nmkoder.Media
             string msg = "Detecting crop... This can take a while for long videos.";
             Logger.Log(msg, quiet);
             NmkdStopwatch sw = new NmkdStopwatch();
-            int sampleCount = Config.GetInt(Config.Key.autoCropSamples, 10);
+            int sampleCount = Config.GetInt(Config.Key.AutoCropSamples, 10);
             long duration = (int)Math.Floor((float)(await FfmpegCommands.GetDurationMs(path)) / 1000);
             int interval = (int)Math.Floor((float)duration / sampleCount);
             List<string> detectedCrops = new List<string>();

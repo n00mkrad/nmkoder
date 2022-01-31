@@ -251,9 +251,9 @@ namespace Nmkoder.Data
             return (long)Numerator / (long)Denominator;
         }
 
-        public string GetString()
+        public string GetString(string format = "")
         {
-            return ((float)Numerator / Denominator).ToString();
+            return ((float)Numerator / Denominator).ToString(format);
         }
     }
 }

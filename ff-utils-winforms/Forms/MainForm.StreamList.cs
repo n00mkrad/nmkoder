@@ -91,11 +91,13 @@ namespace Nmkoder.Forms
 
             trackListDefaultAudio.Items.Clear();
 
+            bool zeroIdx = Config.GetBool(Config.Key.UseZeroIndexedStreams);
+
             for (int i = 0; i < a.Count; i++)
             {
                 string title = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Title) ? "" : $" ({((AudioStream)(a[i].Stream)).Title})";
                 string lang = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Language) ? "" : $" ({((AudioStream)(a[i].Stream)).Language})";
-                trackListDefaultAudio.Items.Add($"Track {i + 1}{title}{lang.ToUpper()}");
+                trackListDefaultAudio.Items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}{title}{lang.ToUpper()}");
             }
 
             if (a.Count > 0)
@@ -108,7 +110,7 @@ namespace Nmkoder.Forms
             {
                 string title = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Title) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Title})";
                 string lang = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Language) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Language})";
-                trackListDefaultSubs.Items.Add($"Track {i + 1}{title}{lang.ToUpper()}");
+                trackListDefaultSubs.Items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}{title}{lang.ToUpper()}");
             }
 
             if (s.Count > 0)

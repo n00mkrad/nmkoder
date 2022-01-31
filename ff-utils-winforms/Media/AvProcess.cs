@@ -39,7 +39,7 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunFfmpeg(FfmpegSettings settings)
         {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
             Process ffmpeg = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
@@ -113,7 +113,7 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunFfprobe(FfprobeSettings settings)
         {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
             Process ffprobe = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
@@ -159,7 +159,7 @@ namespace Nmkoder.Media
             try
             {
                 string dir = Path.Combine(GetDir(), "av1an");
-                bool show = Config.GetBool(Config.Key.av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+                bool show = Config.GetBool(Config.Key.Av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
                 lastOutputAv1an = "";
                 Process av1an = OsUtils.NewProcess(!show, NmkoderProcess.ProcessType.Primary);
 
@@ -229,7 +229,7 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunMkvExtract(string args, NmkoderProcess.ProcessType processType)
         {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
 
             try
@@ -260,7 +260,7 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunMkvMerge(string args, NmkoderProcess.ProcessType processType, bool log = false)
         {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
 
             try
@@ -300,7 +300,7 @@ namespace Nmkoder.Media
 
         public static async Task<string> RunMkvInfo(string args, NmkoderProcess.ProcessType processType, bool log = false)
         {
-            bool show = Config.GetInt(Config.Key.cmdDebugMode) > 0;
+            bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
 
@@ -340,7 +340,7 @@ namespace Nmkoder.Media
 
         public static string GetCmdArg()
         {
-            bool stayOpen = Config.GetInt(Config.Key.cmdDebugMode) == 2;
+            bool stayOpen = Config.GetInt(Config.Key.CmdDebugMode) == 2;
 
             if (stayOpen)
                 return "/K";

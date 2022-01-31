@@ -5,6 +5,7 @@ using Nmkoder.Media;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Stream = Nmkoder.Data.Streams.Stream;
@@ -21,62 +22,107 @@ namespace Nmkoder.Data.Ui
         public string Language { get { return Stream.Language; } }
         public string LanguageEdited { get; set; } = "";
 
+        const int maxTitleChars = 50;
+        const int maxLangChars = 7;
+
         public override string ToString()
         {
+            return GetString(false, true);
+        }
+
+        public string GetString(bool lite, bool streamNumInBrackets)
+        {
             string codec = Aliases.GetNicerCodecName(Stream.Codec);
-            const int maxChars = 50;
             int fileIndex = GetFileIndex();
-            string str = $"[Track {Stream.Index + 1}]:";
+            int streamNumInt = (Config.GetBool(Config.Key.UseZeroIndexedStreams) ? Stream.Index : Stream.Index + 1);
+            string streamNum = streamNumInBrackets ? $"[#{streamNumInt.ToString().PadLeft(2, '0')}]:" : $"#{streamNumInt.ToString().PadLeft(2, '0')}:";
 
             if (Stream.Type == Stream.StreamType.Video)
             {
-                VideoStream vs = (VideoStream)Stream;
-                string codecStr = vs.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(vs.Kbits)}" : codec;
-                string fileCountStr = "";
+                VideoStream vidStr = (VideoStream)Stream;
+                List<string> items = new List<string>();
 
-                if (MediaFile.IsDirectory)
+                items.Add(vidStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(vidStr.Kbits)})" : $"({codec})");
+
+                if (!lite)
                 {
-                    List<string> exts = File.ReadAllLines(MediaFile.ImportPath).Select(x => x.Remove("file '").Remove("'").Split('.').LastOrDefault()).ToList();
-                    int formatsCount = exts.Select(x => x).Distinct().Count();
-                    fileCountStr = formatsCount > 1 ? $" ({MediaFile.FileCount} Files, {formatsCount} Formats)" : $" ({MediaFile.FileCount} Files)";
+                    items.Add($"{vidStr.Resolution.Width}x{vidStr.Resolution.Height}");
+                    items.Add($"{vidStr.Rate.GetString("0.###")} FPS");
+
+                    if (MediaFile.IsDirectory)
+                    {
+                        List<string> exts = File.ReadAllLines(MediaFile.ImportPath).Select(x => Path.GetExtension(x.Remove("file '").Remove("'"))).ToList();
+                        int formatsCount = exts.Distinct().Count();
+
+                        if (formatsCount < 1)
+                            items.Add($"({MediaFile.FileCount} Files 1)");
+                        else if (formatsCount == 1)
+                            items.Add($"({MediaFile.FileCount} {exts.Distinct().FirstOrDefault().ToUpper()} Files 2)");
+                        else if (formatsCount > 1)
+                            items.Add($"({MediaFile.FileCount} Files, {formatsCount} Formats 3)");
+                    }
                 }
 
-                return $"{str} Video ({codecStr}) - {vs.Resolution.Width}x{vs.Resolution.Height} - {vs.Rate.GetString()} FPS{fileCountStr}";
+                return $"{streamNum} Video {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
             }
 
             if (Stream.Type == Stream.StreamType.Audio)
             {
-                AudioStream @as = (AudioStream)Stream;
-                string title = string.IsNullOrWhiteSpace(@as.Title.Trim()) ? " " : $" - {@as.Title.Trunc(maxChars)} ";
-                string codecStr = @as.Kbits > 0 ? $"{codec} at {FormatUtils.Bitrate(@as.Kbits)}" : codec;
-                string lang = string.IsNullOrWhiteSpace(@as.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(@as.Language, 4).Trunc(maxChars)} ";
-                return $"{str} Audio ({codecStr}){title}- {@as.Layout.ToTitleCase()}{lang}";
+                AudioStream audStr = (AudioStream)Stream;
+                List<string> items = new List<string>();
+
+                items.Add(audStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(audStr.Kbits)})" : $"({codec})");
+
+                if (!lite)
+                {
+                    items.Add(audStr.Language.ToUpper().Trunc(maxLangChars));
+                    items.Add(audStr.Title.Trunc(maxTitleChars));
+                    items.Add(audStr.Layout.ToTitleCase().Split('(')[0]);
+                }
+
+                return $"{streamNum} Audio {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
             }
 
             if (Stream.Type == Stream.StreamType.Subtitle)
             {
-                SubtitleStream ss = (SubtitleStream)Stream;
-                string lang = string.IsNullOrWhiteSpace(ss.Language.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Language, 4).Trunc(maxChars)} ";
-                string ttl = string.IsNullOrWhiteSpace(ss.Title.Trim()) ? " " : $" - {FormatUtils.CapsIfShort(ss.Title, 4).Trunc(maxChars)} ";
-                return $"{str} Subtitles ({codec}){lang}{ttl}";
+                SubtitleStream subStr = (SubtitleStream)Stream;
+                List<string> items = new List<string>();
+
+                items.Add($"({codec})");
+
+                if (!lite)
+                {
+                    items.Add(subStr.Language.ToUpper().Trunc(maxLangChars));
+                    items.Add(subStr.Title.Trunc(maxTitleChars));
+                }
+
+                return $"{streamNum} Subtitles {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
             }
 
             if (Stream.Type == Stream.StreamType.Data)
             {
-                return $"{str} Data ({codec})";
+                return $"{streamNum} Data ({codec})";
             }
 
             if (Stream.Type == Stream.StreamType.Attachment)
             {
-                return $"{str} Attachment ({codec})";
+                AttachmentStream attStr = (AttachmentStream)Stream;
+                List<string> items = new List<string>();
+
+                items.Add($"({codec})");
+
+                if (!lite)
+                    items.Add(attStr.Filename);
+
+                return $"{streamNum} Attachment {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
             }
 
             if (Stream.Type == Stream.StreamType.Unknown)
             {
-                return $"{str} Unknown ({codec})";
+                return $"{streamNum} Unknown ({codec})";
             }
 
-            return str;
+            return streamNum;
         }
 
         int GetFileIndex ()

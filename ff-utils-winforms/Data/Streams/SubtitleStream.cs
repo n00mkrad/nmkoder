@@ -4,7 +4,7 @@ namespace Nmkoder.Data.Streams
 {
     public class SubtitleStream : Stream
     {
-        public bool Bitmap;
+        public bool Bitmap { get; }
 
         public SubtitleStream(string language, string title, string codec, string codecLong, bool bitmap)
         {

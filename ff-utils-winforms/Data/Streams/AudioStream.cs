@@ -2,10 +2,10 @@
 {
     public class AudioStream : Stream
     {
-        public int Kbits;
-        public int SampleRate;
-        public int Channels;
-        public string Layout;
+        public int Kbits { get; }
+        public int SampleRate { get; }
+        public int Channels { get; }
+        public string Layout { get; }
 
         public AudioStream(string language, string title, string codec, string codecLong, int kbits, int sampleRate, int channels, string layout)
         {

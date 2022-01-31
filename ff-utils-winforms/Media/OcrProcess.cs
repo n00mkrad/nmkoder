@@ -92,7 +92,7 @@ namespace Nmkoder.Media
 
         public static string GetCmdArg()
         {
-            bool stayOpen = Config.GetInt(Config.Key.cmdDebugMode) == 2;
+            bool stayOpen = Config.GetInt(Config.Key.CmdDebugMode) == 2;
 
             if (stayOpen)
                 return "/K";

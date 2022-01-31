@@ -55,11 +55,11 @@ namespace Nmkoder.Data.Ui
                         int formatsCount = exts.Distinct().Count();
 
                         if (formatsCount < 1)
-                            items.Add($"({MediaFile.FileCount} Files 1)");
+                            items.Add($"({MediaFile.FileCount} Files)");
                         else if (formatsCount == 1)
-                            items.Add($"({MediaFile.FileCount} {exts.Distinct().FirstOrDefault().ToUpper()} Files 2)");
+                            items.Add($"({MediaFile.FileCount} {exts.Distinct().FirstOrDefault().ToUpper().Remove(".")} Files)");
                         else if (formatsCount > 1)
-                            items.Add($"({MediaFile.FileCount} Files, {formatsCount} Formats 3)");
+                            items.Add($"({MediaFile.FileCount} Files, {formatsCount} Formats)");
                     }
                 }
 

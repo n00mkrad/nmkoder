@@ -29,7 +29,7 @@ namespace Nmkoder.Media
             if (string.IsNullOrWhiteSpace(output.Trim()))
                 return 0;
 
-            return output.SplitIntoLines().Length;
+            return output.SplitIntoLines().Where(x => x.MatchesWildcard("*Stream #0:*: *: *")).Count();
         }
 
         public static async Task<List<Stream>> GetStreams(string path, bool progressBar, int streamCount, Fraction defaultFps)
@@ -39,7 +39,7 @@ namespace Nmkoder.Media
             try
             {
                 string output = await GetFfmpegInfoAsync(path, "Stream #0:");
-                string[] streams = output.SplitIntoLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                string[] streams = output.SplitIntoLines().Where(x => x.MatchesWildcard("*Stream #0:*: *: *")).ToArray();
 
                 foreach (string streamStr in streams)
                 {

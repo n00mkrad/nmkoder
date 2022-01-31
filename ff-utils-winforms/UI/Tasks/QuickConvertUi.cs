@@ -356,7 +356,7 @@ namespace Nmkoder.UI.Tasks
                 MediaStreamListEntry entry = streamEntries[i];
                 string title = string.IsNullOrWhiteSpace(entry.TitleEdited) ? entry.Title : entry.TitleEdited;
                 string lang = string.IsNullOrWhiteSpace(entry.LanguageEdited) ? entry.Language : entry.LanguageEdited;
-                int newIdx = grid.Rows.Add(entry.GetString(true, false), title, lang);
+                int newIdx = grid.Rows.Add(entry.GetString(false, false), title, lang);
                 grid.Rows[newIdx].Visible = Program.mainForm.streamList.Items[i].Checked;
             }
 
@@ -367,8 +367,8 @@ namespace Nmkoder.UI.Tasks
             grid.Columns[0].Visible = true;
             grid.Columns[1].Visible = true;
             grid.Columns[0].FillWeight = 25;
-            grid.Columns[1].FillWeight = 65;
-            grid.Columns[2].FillWeight = 10;
+            grid.Columns[1].FillWeight = 67;
+            grid.Columns[2].FillWeight = 8;
         }
 
         public static void SaveMetadata ()

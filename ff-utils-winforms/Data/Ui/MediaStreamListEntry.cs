@@ -27,10 +27,10 @@ namespace Nmkoder.Data.Ui
 
         public override string ToString()
         {
-            return GetString(false, true);
+            return GetString(true, true);
         }
 
-        public string GetString(bool lite, bool streamNumInBrackets)
+        public string GetString(bool detailed, bool streamNumInBrackets)
         {
             string codec = Aliases.GetNicerCodecName(Stream.Codec);
             int fileIndex = GetFileIndex();
@@ -42,9 +42,9 @@ namespace Nmkoder.Data.Ui
                 VideoStream vidStr = (VideoStream)Stream;
                 List<string> items = new List<string>();
 
-                items.Add(vidStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(vidStr.Kbits)})" : $"({codec})");
+                items.Add(detailed && vidStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(vidStr.Kbits)})" : $"({codec})");
 
-                if (!lite)
+                if (detailed)
                 {
                     items.Add($"{vidStr.Resolution.Width}x{vidStr.Resolution.Height}");
                     items.Add($"{vidStr.Rate.GetString("0.###")} FPS");
@@ -71,9 +71,9 @@ namespace Nmkoder.Data.Ui
                 AudioStream audStr = (AudioStream)Stream;
                 List<string> items = new List<string>();
 
-                items.Add(audStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(audStr.Kbits)})" : $"({codec})");
+                items.Add(detailed && audStr.Kbits > 0 ? $"({codec} at {FormatUtils.Bitrate(audStr.Kbits)})" : $"({codec})");
 
-                if (!lite)
+                if (detailed)
                 {
                     items.Add(audStr.Language.ToUpper().Trunc(maxLangChars));
                     items.Add(audStr.Title.Trunc(maxTitleChars));
@@ -90,7 +90,7 @@ namespace Nmkoder.Data.Ui
 
                 items.Add($"({codec})");
 
-                if (!lite)
+                if (detailed)
                 {
                     items.Add(subStr.Language.ToUpper().Trunc(maxLangChars));
                     items.Add(subStr.Title.Trunc(maxTitleChars));
@@ -111,7 +111,7 @@ namespace Nmkoder.Data.Ui
 
                 items.Add($"({codec})");
 
-                if (!lite)
+                if (detailed)
                     items.Add(attStr.Filename);
 
                 return $"{streamNum} Attachment {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";

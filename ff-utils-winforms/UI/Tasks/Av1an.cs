@@ -99,7 +99,7 @@ namespace Nmkoder.UI.Tasks
                     }
 
                     int totalThreads = w.GetInt() * thr.GetInt();
-                    Logger.Log($"Using {w} workers with {thr} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
+                    Logger.Log($"Using {w} workers with {thr.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
                 }
                 else
                 {

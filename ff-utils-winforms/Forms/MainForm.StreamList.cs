@@ -122,6 +122,8 @@ namespace Nmkoder.Forms
             QuickConvertUi.LoadMetadataGrid();
         }
 
+        #region Move Buttons
+
         private void trackListMoveUpBtn_Click(object sender, EventArgs e)
         {
             UiUtils.MoveListViewItem(streamList, UiUtils.MoveDirection.Up);
@@ -131,6 +133,10 @@ namespace Nmkoder.Forms
         {
             UiUtils.MoveListViewItem(streamList, UiUtils.MoveDirection.Down);
         }
+
+        #endregion
+
+        #region Auto-Check
 
         private void trackListCheckTracksBtn_Click(object sender, EventArgs e)
         {
@@ -176,5 +182,46 @@ namespace Nmkoder.Forms
         {
             TrackList.CheckFirstOfEachLangOfEachType();
         }
+
+        #endregion
+
+        #region Sort
+
+        private void trackListSortTracksBtn_Click(object sender, EventArgs e)
+        {
+            sortTracksContextMenu.Show(Cursor.Position);
+        }
+
+        private void sortTracksByLanguageAZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Language, false);
+        }
+
+        private void sortTracksByLanguageZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Language, true);
+        }
+
+        private void sortTracksByTitleAZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Title, false);
+        }
+
+        private void sortTracksByTitleZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Title, true);
+        }
+
+        private void sortTracksByCodecAZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Codec, false);
+        }
+
+        private void sortTracksByCodecZAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrackList.SortTracks(TrackList.TrackSort.Codec, true);
+        }
+
+        #endregion
     }
 }

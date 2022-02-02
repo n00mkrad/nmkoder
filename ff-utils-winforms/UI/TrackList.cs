@@ -335,5 +335,38 @@ namespace Nmkoder.UI
         }
 
         #endregion
+
+        #region Sort Tracks
+
+        public enum TrackSort { Language, Title, Codec }
+
+        public static void SortTracks(TrackSort sort, bool reverse)
+        {
+            ListView list = Program.mainForm.streamList;
+            List<ListViewItem> itemsCopy = new List<ListViewItem>(list.Items.Cast<ListViewItem>());
+            Program.mainForm.ignoreStreamListCheck = true;
+            list.Items.Clear();
+            List<Stream.StreamType> streamTypes = itemsCopy.Select(x => ((MediaStreamListEntry)x.Tag).Stream.Type).Distinct().ToList();
+
+            foreach (Stream.StreamType streamType in streamTypes)
+            {
+                var items = itemsCopy.Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == streamType);
+                var sorted = new List<ListViewItem>();
+
+                if(sort == TrackSort.Language)
+                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Language).ToList();
+                else if (sort == TrackSort.Title)
+                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Title).ToList();
+                else if (sort == TrackSort.Codec)
+                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Codec).ToList();
+
+                list.Items.AddRange(reverse ? sorted.AsEnumerable().Reverse().ToArray() : sorted.ToArray());
+            }
+
+            Program.mainForm.ignoreStreamListCheck = false;
+            Program.mainForm.OnCheckedStreamsChange();
+        }
+
+        #endregion
     }
 }

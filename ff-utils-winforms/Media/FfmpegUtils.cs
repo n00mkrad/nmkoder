@@ -201,7 +201,7 @@ namespace Nmkoder.Media
             string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string largest = detectedCrops.First();
             int commonCertainty = (((float)detectedCrops.CountOccurences(mostCommon) / (float)detectedCrops.Count) * 100f).RoundToInt();
-            string chosen = commonCertainty > 85 ? mostCommon : largest; // Use most common if it's >85% common, otherwise use largest to be safe (thanks Nolan)
+            string chosen = commonCertainty > 80 ? mostCommon : largest; // Use most common if it's >80% common, otherwise use largest to be safe (thanks Nolan)
             Logger.Log($"GetCurrentAutoCrop - Largest: {largest} - Smallest: {detectedCrops.Last()} - Most Common: {mostCommon} ({commonCertainty}%) - Chosen: {chosen} [T = {sw}]", true);
             string[] cropVals = chosen.Split(':');
             bool repl = Logger.LastUiLine.Contains(msg);

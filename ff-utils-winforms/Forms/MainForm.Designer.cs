@@ -54,6 +54,7 @@ namespace Nmkoder.Forms
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.trackListSortTracksBtn = new System.Windows.Forms.Button();
             this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
             this.trackListMoveUpBtn = new System.Windows.Forms.Button();
             this.trackListMoveDownBtn = new System.Windows.Forms.Button();
@@ -152,6 +153,10 @@ namespace Nmkoder.Forms
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label52 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.av1anAdvancedArgsGrid = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label26 = new System.Windows.Forms.Label();
             this.av1anAudChannels = new System.Windows.Forms.ComboBox();
@@ -174,9 +179,6 @@ namespace Nmkoder.Forms
             this.label34 = new System.Windows.Forms.Label();
             this.av1anOptsSplitMode = new System.Windows.Forms.ComboBox();
             this.label32 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.av1anAdvancedArgsGrid = new System.Windows.Forms.DataGridView();
             this.utilsPage = new Cyotek.Windows.Forms.TabListPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.utilsBitratesPanel = new System.Windows.Forms.Panel();
@@ -230,7 +232,13 @@ namespace Nmkoder.Forms
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.runBtn = new System.Windows.Forms.Button();
-            this.label52 = new System.Windows.Forms.Label();
+            this.sortTracksContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.sortTracksByLanguageAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortTracksByLanguageZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortTracksByTitleAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortTracksByTitleZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortTracksByCodecAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortTracksByCodecZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -255,13 +263,13 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).BeginInit();
-            this.tabPage6.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).BeginInit();
             this.utilsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
@@ -277,6 +285,7 @@ namespace Nmkoder.Forms
             this.busyControlsPanel.SuspendLayout();
             this.checkItemsContextMenu.SuspendLayout();
             this.sortFileListContextMenu.SuspendLayout();
+            this.sortTracksContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -568,6 +577,7 @@ namespace Nmkoder.Forms
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.trackListSortTracksBtn);
             this.streamListPage.Controls.Add(this.trackListCheckTracksBtn);
             this.streamListPage.Controls.Add(this.trackListMoveUpBtn);
             this.streamListPage.Controls.Add(this.trackListMoveDownBtn);
@@ -581,6 +591,22 @@ namespace Nmkoder.Forms
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
+            // 
+            // trackListSortTracksBtn
+            // 
+            this.trackListSortTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListSortTracksBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_sort;
+            this.trackListSortTracksBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListSortTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListSortTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListSortTracksBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListSortTracksBtn.Location = new System.Drawing.Point(626, 98);
+            this.trackListSortTracksBtn.Name = "trackListSortTracksBtn";
+            this.trackListSortTracksBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListSortTracksBtn.TabIndex = 53;
+            this.toolTip.SetToolTip(this.trackListSortTracksBtn, "Move Down");
+            this.trackListSortTracksBtn.UseVisualStyleBackColor = false;
+            this.trackListSortTracksBtn.Click += new System.EventHandler(this.trackListSortTracksBtn_Click);
             // 
             // trackListCheckTracksBtn
             // 
@@ -606,7 +632,7 @@ namespace Nmkoder.Forms
             this.trackListMoveUpBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.trackListMoveUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackListMoveUpBtn.ForeColor = System.Drawing.Color.White;
-            this.trackListMoveUpBtn.Location = new System.Drawing.Point(591, 233);
+            this.trackListMoveUpBtn.Location = new System.Drawing.Point(626, 197);
             this.trackListMoveUpBtn.Name = "trackListMoveUpBtn";
             this.trackListMoveUpBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListMoveUpBtn.TabIndex = 50;
@@ -718,7 +744,7 @@ namespace Nmkoder.Forms
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Width = 650;
+            this.columnHeader1.Width = 617;
             // 
             // quickConvertPage
             // 
@@ -1924,6 +1950,57 @@ namespace Nmkoder.Forms
             this.label24.TabIndex = 17;
             this.label24.Text = "Codec (Encoder)";
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage6.Controls.Add(this.label52);
+            this.tabPage6.Controls.Add(this.panel1);
+            this.tabPage6.Location = new System.Drawing.Point(4, 27);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(668, 318);
+            this.tabPage6.TabIndex = 3;
+            this.tabPage6.Text = "Advanced";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.ForeColor = System.Drawing.SystemColors.Control;
+            this.label52.Location = new System.Drawing.Point(3, 3);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(587, 30);
+            this.label52.TabIndex = 9;
+            this.label52.Text = resources.GetString("label52.Text");
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.av1anAdvancedArgsGrid);
+            this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel1.Location = new System.Drawing.Point(6, 40);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(656, 205);
+            this.panel1.TabIndex = 8;
+            // 
+            // av1anAdvancedArgsGrid
+            // 
+            this.av1anAdvancedArgsGrid.AllowUserToAddRows = false;
+            this.av1anAdvancedArgsGrid.AllowUserToDeleteRows = false;
+            this.av1anAdvancedArgsGrid.AllowUserToResizeColumns = false;
+            this.av1anAdvancedArgsGrid.AllowUserToResizeRows = false;
+            this.av1anAdvancedArgsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.av1anAdvancedArgsGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.av1anAdvancedArgsGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anAdvancedArgsGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.av1anAdvancedArgsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.av1anAdvancedArgsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.av1anAdvancedArgsGrid.Location = new System.Drawing.Point(0, 0);
+            this.av1anAdvancedArgsGrid.MultiSelect = false;
+            this.av1anAdvancedArgsGrid.Name = "av1anAdvancedArgsGrid";
+            this.av1anAdvancedArgsGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.av1anAdvancedArgsGrid.RowHeadersWidth = 51;
+            this.av1anAdvancedArgsGrid.Size = new System.Drawing.Size(656, 205);
+            this.av1anAdvancedArgsGrid.TabIndex = 1;
+            // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -2234,47 +2311,6 @@ namespace Nmkoder.Forms
             this.label32.Size = new System.Drawing.Size(96, 15);
             this.label32.TabIndex = 46;
             this.label32.Text = "Splitting Method";
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage6.Controls.Add(this.label52);
-            this.tabPage6.Controls.Add(this.panel1);
-            this.tabPage6.Location = new System.Drawing.Point(4, 27);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(668, 318);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "Advanced";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.av1anAdvancedArgsGrid);
-            this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel1.Location = new System.Drawing.Point(6, 40);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(656, 205);
-            this.panel1.TabIndex = 8;
-            // 
-            // av1anAdvancedArgsGrid
-            // 
-            this.av1anAdvancedArgsGrid.AllowUserToAddRows = false;
-            this.av1anAdvancedArgsGrid.AllowUserToDeleteRows = false;
-            this.av1anAdvancedArgsGrid.AllowUserToResizeColumns = false;
-            this.av1anAdvancedArgsGrid.AllowUserToResizeRows = false;
-            this.av1anAdvancedArgsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.av1anAdvancedArgsGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.av1anAdvancedArgsGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.av1anAdvancedArgsGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.av1anAdvancedArgsGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.av1anAdvancedArgsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.av1anAdvancedArgsGrid.Location = new System.Drawing.Point(0, 0);
-            this.av1anAdvancedArgsGrid.MultiSelect = false;
-            this.av1anAdvancedArgsGrid.Name = "av1anAdvancedArgsGrid";
-            this.av1anAdvancedArgsGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.av1anAdvancedArgsGrid.RowHeadersWidth = 51;
-            this.av1anAdvancedArgsGrid.Size = new System.Drawing.Size(656, 205);
-            this.av1anAdvancedArgsGrid.TabIndex = 1;
             // 
             // utilsPage
             // 
@@ -2924,15 +2960,59 @@ namespace Nmkoder.Forms
             this.runBtn.UseVisualStyleBackColor = false;
             this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
             // 
-            // label52
+            // sortTracksContextMenu
             // 
-            this.label52.AutoSize = true;
-            this.label52.ForeColor = System.Drawing.SystemColors.Control;
-            this.label52.Location = new System.Drawing.Point(3, 3);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(587, 30);
-            this.label52.TabIndex = 9;
-            this.label52.Text = resources.GetString("label52.Text");
+            this.sortTracksContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sortTracksByLanguageAZToolStripMenuItem,
+            this.sortTracksByLanguageZAToolStripMenuItem,
+            this.sortTracksByTitleAZToolStripMenuItem,
+            this.sortTracksByTitleZAToolStripMenuItem,
+            this.sortTracksByCodecAZToolStripMenuItem,
+            this.sortTracksByCodecZAToolStripMenuItem});
+            this.sortTracksContextMenu.Name = "sortTracksContextMenu";
+            this.sortTracksContextMenu.Size = new System.Drawing.Size(233, 136);
+            // 
+            // sortTracksByLanguageAZToolStripMenuItem
+            // 
+            this.sortTracksByLanguageAZToolStripMenuItem.Name = "sortTracksByLanguageAZToolStripMenuItem";
+            this.sortTracksByLanguageAZToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByLanguageAZToolStripMenuItem.Text = "Sort Tracks By Language (A-Z)";
+            this.sortTracksByLanguageAZToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByLanguageAZToolStripMenuItem_Click);
+            // 
+            // sortTracksByLanguageZAToolStripMenuItem
+            // 
+            this.sortTracksByLanguageZAToolStripMenuItem.Name = "sortTracksByLanguageZAToolStripMenuItem";
+            this.sortTracksByLanguageZAToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByLanguageZAToolStripMenuItem.Text = "Sort Tracks By Language (Z-A)";
+            this.sortTracksByLanguageZAToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByLanguageZAToolStripMenuItem_Click);
+            // 
+            // sortTracksByTitleAZToolStripMenuItem
+            // 
+            this.sortTracksByTitleAZToolStripMenuItem.Name = "sortTracksByTitleAZToolStripMenuItem";
+            this.sortTracksByTitleAZToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByTitleAZToolStripMenuItem.Text = "Sort Tracks By Title (A-Z)";
+            this.sortTracksByTitleAZToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByTitleAZToolStripMenuItem_Click);
+            // 
+            // sortTracksByTitleZAToolStripMenuItem
+            // 
+            this.sortTracksByTitleZAToolStripMenuItem.Name = "sortTracksByTitleZAToolStripMenuItem";
+            this.sortTracksByTitleZAToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByTitleZAToolStripMenuItem.Text = "Sort Tracks By Title (Z-A)";
+            this.sortTracksByTitleZAToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByTitleZAToolStripMenuItem_Click);
+            // 
+            // sortTracksByCodecAZToolStripMenuItem
+            // 
+            this.sortTracksByCodecAZToolStripMenuItem.Name = "sortTracksByCodecAZToolStripMenuItem";
+            this.sortTracksByCodecAZToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByCodecAZToolStripMenuItem.Text = "Sort Tracks By Codec (A-Z)";
+            this.sortTracksByCodecAZToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByCodecAZToolStripMenuItem_Click);
+            // 
+            // sortTracksByCodecZAToolStripMenuItem
+            // 
+            this.sortTracksByCodecZAToolStripMenuItem.Name = "sortTracksByCodecZAToolStripMenuItem";
+            this.sortTracksByCodecZAToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.sortTracksByCodecZAToolStripMenuItem.Text = "Sort Tracks By Codec (Z-A)";
+            this.sortTracksByCodecZAToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByCodecZAToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -2992,16 +3072,16 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.av1anThreads)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAudQuality)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anOptsWorkerCount)).EndInit();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).EndInit();
             this.utilsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
@@ -3019,6 +3099,7 @@ namespace Nmkoder.Forms
             this.busyControlsPanel.ResumeLayout(false);
             this.checkItemsContextMenu.ResumeLayout(false);
             this.sortFileListContextMenu.ResumeLayout(false);
+            this.sortTracksContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3224,6 +3305,14 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView av1anAdvancedArgsGrid;
         private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Button trackListSortTracksBtn;
+        private System.Windows.Forms.ContextMenuStrip sortTracksContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByLanguageAZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByLanguageZAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByTitleAZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByTitleZAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecAZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecZAToolStripMenuItem;
     }
 }
 

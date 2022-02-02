@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Nmkoder.Data;
 using Nmkoder.Data.Codecs;
+using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
@@ -35,14 +37,16 @@ namespace Nmkoder.UI.Tasks
                 IEncoder vCodec = CodecUtils.GetCodec(GetCurrentCodecV());
                 CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
+                bool anyVideoStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Video).Count() > 0;
+                bool anyAudioStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() > 0;
                 bool crf = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.Crf;
-                bool twoPass = vCodec.SupportsTwoPass && (vCodec.ForceTwoPass || !crf);
+                bool twoPass = anyVideoStreams && vCodec.SupportsTwoPass && (vCodec.ForceTwoPass || !crf);
                 Dictionary<string, string> videoArgs = vCodec.DoesNotEncode ? new Dictionary<string, string>() : GetVideoArgsFromUi(!crf);
 
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
                 string map = TrackList.GetMapArgs();
-                string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current.File).Arguments;
+                string a = anyAudioStreams ? CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current.File).Arguments : "";
                 string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
                 string meta = GetMetadataArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
@@ -64,8 +68,8 @@ namespace Nmkoder.UI.Tasks
                 else
                 {
                     CodecArgs codecArgs = vCodec.GetArgs(videoArgs, TrackList.current.File, Pass.OneOfOne);
-                    string v = codecArgs.Arguments;
-                    string vf = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgs);
+                    string v = anyVideoStreams ? codecArgs.Arguments : "";
+                    string vf = anyVideoStreams && !vCodec.DoesNotEncode ? await GetVideoFilterArgs(vCodec, codecArgs) : "";
 
                     args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
                 }

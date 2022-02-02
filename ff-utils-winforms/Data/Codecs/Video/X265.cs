@@ -34,6 +34,7 @@ namespace Nmkoder.Data.Codecs
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
+            string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"] : "";
             string colors = "";
 
             if (mediaFile != null && mediaFile.ColorData != null)
@@ -42,7 +43,7 @@ namespace Nmkoder.Data.Codecs
                 colors = $"--colorprim {mediaFile.ColorData.ColorPrimaries} --transfer {mediaFile.ColorData.ColorTransfer} --colormatrix {mediaFile.ColorData.ColorMatrixCoeffs} --range {range}";
             }
 
-            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {colors} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {colors} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

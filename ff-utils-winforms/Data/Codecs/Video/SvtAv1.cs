@@ -39,6 +39,7 @@ namespace Nmkoder.Data.Codecs
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string tiles = ""; // TEMP DISABLED AS IT SEEMS TO SLOW THINGS DOWN // = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows ", "--tile-columns ");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
+            string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"] : "";
             string colors = "";
 
             if (mediaFile != null && mediaFile.ColorData != null)
@@ -47,7 +48,7 @@ namespace Nmkoder.Data.Codecs
                 colors = $"--color-primaries {mediaFile.ColorData.ColorPrimaries} --transfer-characteristics {mediaFile.ColorData.ColorTransfer} --matrix-coefficients {mediaFile.ColorData.ColorMatrixCoeffs} --color-range {range}";
             }
 
-            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp {thr} --film-grain {grain} {colors} {tiles} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp {thr} --film-grain {grain} {colors} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

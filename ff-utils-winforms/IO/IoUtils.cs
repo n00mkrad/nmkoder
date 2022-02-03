@@ -351,7 +351,7 @@ namespace Nmkoder.IO
 			}
 			catch
             {
-				Logger.Log("Failed to read FPS - Please enter it manually.");
+				Logger.Log("Failed to read FPS.");
 			}
 
 			return fps;

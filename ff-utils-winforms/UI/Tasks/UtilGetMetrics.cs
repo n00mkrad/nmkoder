@@ -42,9 +42,10 @@ namespace Nmkoder.UI.Tasks
                 form.ShowDialog();
                 Program.mainForm.SetMetricsVarsFromForm(form);
 
-                Logger.Log($"Getting metrics for {Path.GetFileName(vidLq)} compared against {Path.GetFileName(vidHq)}.");
+                Logger.Log($"Getting metrics for {Path.GetFileName(vidLq)} compared against {Path.GetFileName(vidHq)}...");
 
-                string r = fixRate ? "-r 24" : "";
+                Fraction fps = await IoUtils.GetVideoFramerate(vidLq);
+                string r = fixRate ? $"-r {(fps.GetFloat() > 0f ? fps.ToString() : "24")}" : "";
                 string f = await GetAlignFilters();
                 FfmpegOutputHandler.overrideTargetDurationMs = await FfmpegCommands.GetDurationMs(vidLq);
 

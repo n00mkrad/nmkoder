@@ -5,13 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Nmkoder.Data;
-using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms.Utils;
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.Media;
-using Nmkoder.Utils;
+using static Nmkoder.Media.AvProcess;
 
 namespace Nmkoder.UI.Tasks
 {
@@ -52,10 +51,11 @@ namespace Nmkoder.UI.Tasks
                 if (runVmaf)
                 {
                     Logger.Log("Calculating VMAF...");
-                    string vmafFilter = $"libvmaf={Paths.GetVmafPath(true, GetVmafModel())}:n_threads={Environment.ProcessorCount}:n_subsample={subsample}";
+                    string vmafPath = Paths.GetVmafPath(true, GetVmafModel());
+                    string vmafFilter = $"libvmaf={vmafPath}:n_threads={Environment.ProcessorCount}:n_subsample={subsample}";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{vmafFilter} -f null -";
-                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
-                    string output = await AvProcess.RunFfmpeg(settings);
+                    FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await RunFfmpeg(settings);
                     List<string> vmafLines = output.SplitIntoLines().Where(x => x.Contains("VMAF score: ")).ToList();
 
                     if (vmafLines.Count < 1)
@@ -74,8 +74,8 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating SSIM...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}ssim -f null -";
-                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
-                    string output = await AvProcess.RunFfmpeg(settings);
+                    FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await RunFfmpeg(settings);
                     List<string> ssimLines = output.SplitIntoLines().Where(x => x.Contains("] SSIM ")).ToList();
 
                     if (ssimLines.Count < 1)
@@ -94,8 +94,8 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log("Calculating PSNR...");
                     string select = subsample > 1 ? $"select=not(mod(n-1\\,{subsample}))," : "";
                     string args = $"{r} {vidLq.GetFfmpegInputArg()} {r} {vidHq.GetFfmpegInputArg()} -filter_complex {f}{select}psnr -f null -";
-                    AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
-                    string output = await AvProcess.RunFfmpeg(settings);
+                    FfmpegSettings settings = new FfmpegSettings() { Args = args, LoggingMode = LogMode.OnlyLastLine, LogLevel = "info", ReliableOutput = true, ProgressBar = true };
+                    string output = await RunFfmpeg(settings);
                     List<string> psnrLines = output.SplitIntoLines().Where(x => x.Contains("] PSNR ")).ToList();
 
                     if (psnrLines.Count < 1)
@@ -130,7 +130,7 @@ namespace Nmkoder.UI.Tasks
             if(alignMode == 1 || alignMode == 3) // Auto-Crop
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(vidHq, true));
 
-            if (alignMode == 2 || alignMode == 3)
+            if (alignMode == 2 || alignMode == 3) // Resize
             {
                 Size res = await GetMediaResolutionCached.GetSizeAsync(vidLq);
                 filters.Add($"scale={res.Width}:{res.Height}");

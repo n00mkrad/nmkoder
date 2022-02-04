@@ -233,7 +233,7 @@ namespace Nmkoder.UI
             return string.Join(" ", args);
         }
 
-        public static string GetMapArgs()
+        public static string GetMapArgs(bool videoOnly = false)
         {
             List<string> args = new List<string>();
             List<int> fileIndexesToMap = new List<int>();
@@ -250,7 +250,8 @@ namespace Nmkoder.UI
                     if (!fileIndexesToMap.Contains(fileIdx))
                         fileIndexesToMap.Add(fileIdx);
 
-                    args.Add($"-map {fileIdx}:{entry.Stream.Index}");
+                    if(!(videoOnly && entry.Stream.Type != Stream.StreamType.Video)) // Skip all non-video streams if videoOnly == true
+                        args.Add($"-map {fileIdx}:{entry.Stream.Index}");
                 }
             }
 

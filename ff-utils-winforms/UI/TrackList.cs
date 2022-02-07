@@ -189,7 +189,7 @@ namespace Nmkoder.UI
             {
                 AttachmentStream a = (AttachmentStream)stream;
                 lines.Add($"Filename: {((a.Filename.Trim().Length > 1) ? a.Filename.Trunc(90) : "None")}");
-                lines.Add($"MIME Type: {((a.MimeType.Trim().Length > 1) ? $"{Aliases.GetLanguageString(a.MimeType)}" : "Unknown")}");
+                lines.Add($"MIME Type: {((a.MimeType.Trim().Length > 1) ? a.MimeType : "Unknown")}");
             }
 
             return string.Join(Environment.NewLine, lines);

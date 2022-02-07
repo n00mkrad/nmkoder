@@ -188,9 +188,6 @@ namespace Nmkoder.Forms
             this.utilsMetricsConfBtn = new HTAlt.WinForms.HTButton();
             this.label1 = new System.Windows.Forms.Label();
             this.utilsMetricsSelBtn = new HTAlt.WinForms.HTButton();
-            this.utilsOcrPanel = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.htButton2 = new HTAlt.WinForms.HTButton();
             this.utilsColorDataPanel = new System.Windows.Forms.Panel();
             this.utilsColorDataConfBtn = new HTAlt.WinForms.HTButton();
             this.label40 = new System.Windows.Forms.Label();
@@ -274,7 +271,6 @@ namespace Nmkoder.Forms
             this.tableLayoutPanel2.SuspendLayout();
             this.utilsBitratesPanel.SuspendLayout();
             this.utilsMetricsPanel.SuspendLayout();
-            this.utilsOcrPanel.SuspendLayout();
             this.utilsColorDataPanel.SuspendLayout();
             this.utilsConcatPanel.SuspendLayout();
             this.utilsBitratePlotPanel.SuspendLayout();
@@ -2327,10 +2323,9 @@ namespace Nmkoder.Forms
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel2.Controls.Add(this.utilsBitratesPanel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsMetricsPanel, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.utilsOcrPanel, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.utilsColorDataPanel, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.utilsConcatPanel, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.utilsBitratePlotPanel, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.utilsBitratePlotPanel, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -2345,7 +2340,6 @@ namespace Nmkoder.Forms
             // 
             this.utilsBitratesPanel.Controls.Add(this.label5);
             this.utilsBitratesPanel.Controls.Add(this.utilsBitratesSelBtn);
-            this.utilsBitratesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.utilsBitratesPanel.Location = new System.Drawing.Point(0, 0);
             this.utilsBitratesPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsBitratesPanel.Name = "utilsBitratesPanel";
@@ -2387,7 +2381,6 @@ namespace Nmkoder.Forms
             this.utilsMetricsPanel.Controls.Add(this.utilsMetricsConfBtn);
             this.utilsMetricsPanel.Controls.Add(this.label1);
             this.utilsMetricsPanel.Controls.Add(this.utilsMetricsSelBtn);
-            this.utilsMetricsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.utilsMetricsPanel.Location = new System.Drawing.Point(227, 0);
             this.utilsMetricsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsMetricsPanel.Name = "utilsMetricsPanel";
@@ -2443,53 +2436,11 @@ namespace Nmkoder.Forms
             this.utilsMetricsSelBtn.Size = new System.Drawing.Size(87, 65);
             this.utilsMetricsSelBtn.TabIndex = 0;
             // 
-            // utilsOcrPanel
-            // 
-            this.utilsOcrPanel.Controls.Add(this.label2);
-            this.utilsOcrPanel.Controls.Add(this.htButton2);
-            this.utilsOcrPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.utilsOcrPanel.Location = new System.Drawing.Point(454, 0);
-            this.utilsOcrPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.utilsOcrPanel.Name = "utilsOcrPanel";
-            this.utilsOcrPanel.Size = new System.Drawing.Size(228, 127);
-            this.utilsOcrPanel.TabIndex = 5;
-            this.utilsOcrPanel.Click += new System.EventHandler(this.SelectOcr);
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Margin = new System.Windows.Forms.Padding(4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(219, 20);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Convert Bitmap Subtitles To Text";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // htButton2
-            // 
-            this.htButton2.AutoColor = false;
-            this.htButton2.ButtonImage = global::Nmkoder.Properties.Resources.icon_subs;
-            this.htButton2.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.htButton2.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
-            this.htButton2.DrawImage = true;
-            this.htButton2.Enabled = false;
-            this.htButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.htButton2.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.Zoom;
-            this.htButton2.Location = new System.Drawing.Point(70, 31);
-            this.htButton2.Margin = new System.Windows.Forms.Padding(70, 3, 70, 3);
-            this.htButton2.Name = "htButton2";
-            this.htButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.htButton2.Size = new System.Drawing.Size(87, 65);
-            this.htButton2.TabIndex = 0;
-            // 
             // utilsColorDataPanel
             // 
             this.utilsColorDataPanel.Controls.Add(this.utilsColorDataConfBtn);
             this.utilsColorDataPanel.Controls.Add(this.label40);
             this.utilsColorDataPanel.Controls.Add(this.htButton3);
-            this.utilsColorDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.utilsColorDataPanel.Location = new System.Drawing.Point(0, 127);
             this.utilsColorDataPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsColorDataPanel.Name = "utilsColorDataPanel";
@@ -2549,7 +2500,6 @@ namespace Nmkoder.Forms
             // 
             this.utilsConcatPanel.Controls.Add(this.label44);
             this.utilsConcatPanel.Controls.Add(this.htButton1);
-            this.utilsConcatPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.utilsConcatPanel.Location = new System.Drawing.Point(227, 127);
             this.utilsConcatPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsConcatPanel.Name = "utilsConcatPanel";
@@ -2590,8 +2540,7 @@ namespace Nmkoder.Forms
             // 
             this.utilsBitratePlotPanel.Controls.Add(this.label45);
             this.utilsBitratePlotPanel.Controls.Add(this.htButton4);
-            this.utilsBitratePlotPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.utilsBitratePlotPanel.Location = new System.Drawing.Point(454, 127);
+            this.utilsBitratePlotPanel.Location = new System.Drawing.Point(454, 0);
             this.utilsBitratePlotPanel.Margin = new System.Windows.Forms.Padding(0);
             this.utilsBitratePlotPanel.Name = "utilsBitratePlotPanel";
             this.utilsBitratePlotPanel.Size = new System.Drawing.Size(228, 127);
@@ -3086,7 +3035,6 @@ namespace Nmkoder.Forms
             this.tableLayoutPanel2.ResumeLayout(false);
             this.utilsBitratesPanel.ResumeLayout(false);
             this.utilsMetricsPanel.ResumeLayout(false);
-            this.utilsOcrPanel.ResumeLayout(false);
             this.utilsColorDataPanel.ResumeLayout(false);
             this.utilsConcatPanel.ResumeLayout(false);
             this.utilsBitratePlotPanel.ResumeLayout(false);
@@ -3250,9 +3198,6 @@ namespace Nmkoder.Forms
         private HTAlt.WinForms.HTButton utilsMetricsSelBtn;
         private HTAlt.WinForms.HTButton utilsMetricsConfBtn;
         private System.Windows.Forms.ComboBox encQualMode;
-        private System.Windows.Forms.Panel utilsOcrPanel;
-        private System.Windows.Forms.Label label2;
-        private HTAlt.WinForms.HTButton htButton2;
         private System.Windows.Forms.Button trackListCheckTracksBtn;
         private System.Windows.Forms.ContextMenuStrip checkItemsContextMenu;
         private System.Windows.Forms.ToolStripMenuItem checkAllToolStripMenuItem;

@@ -149,7 +149,7 @@ namespace Nmkoder.UI
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)
         {
-            if (stream == null)
+            if (stream == null || mediaFile == null)
                 return "";
 
             List<string> lines = new List<string>();

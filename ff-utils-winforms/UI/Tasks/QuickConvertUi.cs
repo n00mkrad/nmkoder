@@ -427,7 +427,7 @@ namespace Nmkoder.UI.Tasks
             }
             
 
-            int cfg = Config.GetInt(Config.Key.MetaMode);
+            int cfg = Config.GetInt(Config.Key.metaMode);
             DataGridView grid = form.MetaGrid;
             int defaultAudio = form.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = form.trackListDefaultSubsBox.SelectedIndex - 1;

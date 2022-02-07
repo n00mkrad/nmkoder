@@ -265,12 +265,12 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
-            if (key == Key.Av1anOptsChunkMode)          return WriteDefault(key, "1");
+            if (key == Key.av1anOptsChunkMode)          return WriteDefault(key, "1");
             if (key == Key.DefaultKeyIntSecs)           return WriteDefault(key, "10");
             if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
             if (key == Key.av1anThreads)                return WriteDefault(key, "2");
-            if (key == Key.Mp4Faststart)                return WriteDefault(key, "True");
-            if (key == Key.MetaMode)                    return WriteDefault(key, "1");
+            if (key == Key.mp4Faststart)                return WriteDefault(key, "True");
+            if (key == Key.metaMode)                    return WriteDefault(key, "1");
 
             if (type == Type.Int || type == Type.Float) return WriteDefault(key, "0");     // Write default int/float (0)
             if (type == Type.Bool)                      return WriteDefault(key, "False");     // Write default bool (False)
@@ -294,12 +294,12 @@ namespace Nmkoder.IO
             AutoCropSamples,
             Av1anCmdVisible,
             av1anThreads,
-            Av1anOptsChunkMode,
+            av1anOptsChunkMode,
             av1anOptsWorkerCount,
             CmdDebugMode,
             DefaultKeyIntSecs,
-            MetaMode,
-            Mp4Faststart,
+            metaMode,
+            mp4Faststart,
             UseZeroIndexedStreams
         }
     }

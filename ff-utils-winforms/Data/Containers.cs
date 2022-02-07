@@ -107,7 +107,7 @@ namespace Nmkoder.Data
         public static string GetMuxingArgs(Container c)
         {
             if (c == Container.Mp4)
-                return $"{(Config.GetBool(Config.Key.Mp4Faststart) ? "-movflags +faststart" : "")}"; // Web Optimize
+                return $"{(Config.GetBool(Config.Key.mp4Faststart) ? "-movflags +faststart" : "")}"; // Web Optimize
 
             if (c == Container.Mkv)
                 return "-default_mode infer_no_subs -max_interleave_delta 0"; // -default_mode: Disable first sub track being set as default, -max_interleave_delta: Fix audio muxing problems

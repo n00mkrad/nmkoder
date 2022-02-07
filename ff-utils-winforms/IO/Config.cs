@@ -274,6 +274,7 @@ namespace Nmkoder.IO
 
             if (type == Type.Int || type == Type.Float) return WriteDefault(key, "0");     // Write default int/float (0)
             if (type == Type.Bool)                      return WriteDefault(key, "False");     // Write default bool (False)
+
             return WriteDefault(key, "");
         }
 

@@ -39,7 +39,7 @@ namespace Nmkoder.Data.Codecs
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string tiles = ""; // TEMP DISABLED AS IT SEEMS TO SLOW THINGS DOWN // = CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-rows ", "--tile-columns ");
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"] : "";
+            string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"].Replace("=", " ") : "";
             string colors = "";
 
             if (mediaFile != null && mediaFile.ColorData != null)

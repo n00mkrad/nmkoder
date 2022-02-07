@@ -188,7 +188,8 @@ namespace Nmkoder.IO
 
         public static int GetInt(string key)
         {
-            return Get(key, Type.Int).GetInt();
+            var x = Get(key, Type.Int);
+            return x.GetInt();
         }
 
         public static int GetInt(string key, int defaultVal)
@@ -264,10 +265,10 @@ namespace Nmkoder.IO
                 return WriteDefault(keyStr, "");
             }
 
-            if (key == Key.Av1anOptsChunkMode)          return WriteDefault(key, $"1");
-            if (key == Key.DefaultKeyIntSecs)           return WriteDefault(key, $"10");
-            if (key == Key.Av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
-            if (key == Key.Av1anThreads)                return WriteDefault(key, $"2");
+            if (key == Key.Av1anOptsChunkMode)          return WriteDefault(key, "1");
+            if (key == Key.DefaultKeyIntSecs)           return WriteDefault(key, "10");
+            if (key == Key.av1anOptsWorkerCount)        return WriteDefault(key, $"{Av1an.GetDefaultWorkerCount()}");
+            if (key == Key.av1anThreads)                return WriteDefault(key, "2");
             if (key == Key.Mp4Faststart)                return WriteDefault(key, "True");
             if (key == Key.MetaMode)                    return WriteDefault(key, "1");
 
@@ -292,9 +293,9 @@ namespace Nmkoder.IO
         {
             AutoCropSamples,
             Av1anCmdVisible,
-            Av1anThreads,
+            av1anThreads,
             Av1anOptsChunkMode,
-            Av1anOptsWorkerCount,
+            av1anOptsWorkerCount,
             CmdDebugMode,
             DefaultKeyIntSecs,
             MetaMode,

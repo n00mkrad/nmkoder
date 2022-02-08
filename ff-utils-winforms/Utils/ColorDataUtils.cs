@@ -163,6 +163,7 @@ namespace Nmkoder.Utils
                 if (!string.IsNullOrWhiteSpace(d.LumaMax)) args.Add($"--max-luminance 0:{d.LumaMax}");
                 if (!string.IsNullOrWhiteSpace(d.LumaMin)) args.Add($"--min-luminance 0:{d.LumaMin}");
                 if (!string.IsNullOrWhiteSpace(d.RedX)) args.Add($"--chromaticity-coordinates 0:{d.RedX},{d.RedY},{d.GreenX},{d.GreenY},{d.BlueX},{d.BlueY}");
+                if (!string.IsNullOrWhiteSpace(d.RedX)) args.Add($"--white-colour-coordinates 0:{d.WhiteX},{d.WhiteY}");
                 if (!string.IsNullOrWhiteSpace(d.MaxCll)) args.Add($"--max-content-light 0:{d.MaxCll}");
                 if (!string.IsNullOrWhiteSpace(d.MaxFall)) args.Add($"--max-frame-light 0:{d.MaxFall}");
                 args.Add($"{path.Wrap()}");

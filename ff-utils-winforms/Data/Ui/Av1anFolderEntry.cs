@@ -31,6 +31,8 @@ namespace Nmkoder.Data.Ui
             jsonInfo = Av1an.LoadJson(DirInfo.Name);
             ChunkFiles = IoUtils.GetFileInfosSorted(Path.Combine(path, "encode"));
 
+            if (jsonInfo == null) return;
+
             InputFilename = (jsonInfo.ContainsKey("fileName") ? jsonInfo["fileName"] : DirInfo.Name).Trunc(35);
 
             if (jsonInfo.ContainsKey("filePath"))

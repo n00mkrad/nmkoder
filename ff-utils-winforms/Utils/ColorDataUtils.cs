@@ -201,7 +201,7 @@ namespace Nmkoder.Utils
             if (s == "bt709") return 1;
             if (s == "bt470m") return 4;
             if (s == "bt470bg") return 5;
-            if (s == "bt610") return 6;
+            if (s == "bt601") return 6;
             if (s == "smpte240m") return 7;
             if (s == "film") return 8;
             if (s == "bt2020") return 9;
@@ -217,7 +217,7 @@ namespace Nmkoder.Utils
             if (s == "bt709") return 1;
             if (s == "gamma22" || s == "bt470m") return 4;
             if (s == "gamma28" || s == "bt470bg") return 5; // BT.470 System B, G (historical)
-            if (s == "bt610" || s == "smpte170m") return 6; // BT.601
+            if (s == "bt601" || s == "smpte170m") return 6; // BT.601
             if (s == "smpte240m") return 7; // SMPTE 240 M
             if (s == "linear") return 8; // Linear
             //if (s == "?") return 9; // Logarithmic(100 : 1 range)
@@ -239,7 +239,7 @@ namespace Nmkoder.Utils
             if (s == "bt709") return 1;
             if (s == "fcc") return 4; // US FCC 73.628
             if (s == "bt470bg") return 5; // BT.470 System B, G (historical)
-            if (s == "bt610" || s == "smpte170m") return 6; // BT.601
+            if (s == "bt601" || s == "smpte170m") return 6; // BT.601
             if (s == "smpte240m") return 7; // SMPTE 240 M
             if (s == "ycgco") return 8; // YCgCo
             if (s == "bt2020ncl" || s == "bt2020nc") return 9; // BT.2020 non-constant luminance, BT.2100 YCbCr
@@ -273,7 +273,7 @@ namespace Nmkoder.Utils
                 case 1: return "bt709";
                 case 4: return "bt470m";
                 case 5: return "bt470bg";
-                case 6: return "bt610";
+                case 6: return "bt601";
                 case 7: return "smpte240m";
                 case 8: return "film";
                 case 9: return "bt2020";
@@ -292,7 +292,7 @@ namespace Nmkoder.Utils
                 case 1: return "bt709";
                 case 4: return "gamma22"; // "bt470m"
                 case 5: return "gamma28"; // "bt470bg"
-                case 6: return "bt610"; // "smpte170m"
+                case 6: return "bt601"; // "smpte170m"
                 case 7: return "smpte240m";
                 case 8: return "linear";
                 case 11: return "iec61966-2-4";
@@ -315,7 +315,7 @@ namespace Nmkoder.Utils
                 case 1: return "bt709";
                 case 4: return "fcc";
                 case 5: return "bt470bg";
-                case 6: return "bt610";
+                case 6: return "bt601";
                 case 7: return "smpte240m";
                 case 8: return "ycgco";
                 case 9: return "bt2020ncl";

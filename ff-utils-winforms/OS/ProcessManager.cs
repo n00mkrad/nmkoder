@@ -25,7 +25,7 @@ namespace Nmkoder.OS
         {
             List<NmkoderProcess> running = new List<NmkoderProcess>();
 
-            foreach(NmkoderProcess p in subProcesses)
+            foreach(NmkoderProcess p in new List<NmkoderProcess>(subProcesses))
             {
                 try
                 {
@@ -42,7 +42,7 @@ namespace Nmkoder.OS
         {
             List<NmkoderProcess> running = new List<NmkoderProcess>();
 
-            foreach (NmkoderProcess p in subProcesses)
+            foreach (NmkoderProcess p in new List<NmkoderProcess>(subProcesses))
             {
                 try
                 {
@@ -59,7 +59,7 @@ namespace Nmkoder.OS
         {
             List<NmkoderProcess> running = new List<NmkoderProcess>();
 
-            foreach (NmkoderProcess p in subProcesses)
+            foreach (NmkoderProcess p in new List<NmkoderProcess>(subProcesses))
             {
                 try
                 {
@@ -73,7 +73,7 @@ namespace Nmkoder.OS
 
         public static void ClearExitedProcesses ()
         {
-            subProcesses = subProcesses.Where(x => !x.Process.HasExited).ToList();
+            subProcesses = new List<NmkoderProcess>(subProcesses).Where(x => !x.Process.HasExited).ToList();
         }
 
         public static void Kill (List<NmkoderProcess> list)

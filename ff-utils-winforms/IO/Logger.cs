@@ -85,14 +85,7 @@ namespace Nmkoder.IO
             if (!entry.hidden && textbox != null)
                 textbox.AppendText((textbox.Text.Length > 1 ? Environment.NewLine : "") + msg);
 
-            if (entry.replaceLastLine)
-            {
-                textbox.Resume();
-                msg = "[REPL] " + msg;
-            }
-
-            if (!entry.hidden)
-                msg = "[UI] " + msg;
+            msg = $"{(!entry.hidden ? "[UI] " : "")}{(entry.replaceLastLine ? "[RP] " : "")}{msg}";
 
             LogToFile(msg, false, entry.filename);
         }
@@ -104,8 +97,9 @@ namespace Nmkoder.IO
 
             if (Path.GetExtension(filename) != ".txt")
                 filename = Path.ChangeExtension(filename, "txt");
+
             file = Path.Combine(Paths.GetLogPath(), filename);
-            logStr = logStr.Replace(Environment.NewLine, " ").TrimWhitespaces();
+            logStr = logStr.Replace(Environment.NewLine, " <br> ").TrimWhitespaces();
             string time = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
 
             try
@@ -152,19 +146,7 @@ namespace Nmkoder.IO
 
         private static string GetLastLine(bool includeHidden = false)
         {
-            if (includeHidden)
-            {
-                return _lastUi;
-            }
-            else
-            {
-                string[] lines = textbox.Text.SplitIntoLines();
-
-                if (lines.Length > 0)
-                    return lines.Last();
-            }
-
-            return "";
+            return includeHidden ? _lastLog : _lastUi;
         }
 
         public static void RemoveLastLine()

@@ -10,6 +10,7 @@ using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -126,7 +127,7 @@ namespace Nmkoder.UI
             Program.mainForm.OnCheckedStreamsChange();
             Program.mainForm.ignoreStreamListCheck = false;
             Program.mainForm.UpdateDefaultStreamsUi();
-            Program.mainForm.UpdateTrackListUpDownBtnsState();
+            Program.mainForm.UpdateTrackListBtnsState();
         }
 
         public static void Refresh()
@@ -145,6 +146,13 @@ namespace Nmkoder.UI
             }
 
             Program.mainForm.RefreshFileListUi();
+        }
+
+        public static async void Extract(ListViewItem item)
+        {
+            MediaStreamListEntry entry = item.Tag as MediaStreamListEntry;
+            string outDir = await FfmpegExtract.ExtractAttachments(entry.MediaFile.SourcePath, entry.Stream.Index);
+            Process.Start(outDir);
         }
 
         public static string GetStreamDetails(Stream stream, MediaFile mediaFile = null)

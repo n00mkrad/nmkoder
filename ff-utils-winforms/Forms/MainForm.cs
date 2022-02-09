@@ -485,5 +485,10 @@ namespace Nmkoder.Forms
         }
 
         #endregion
+
+        private void trackListExtractTracksBtn_Click(object sender, EventArgs e)
+        {
+            TrackList.Extract(streamList.SelectedItems[0]);
+        }
     }
 }

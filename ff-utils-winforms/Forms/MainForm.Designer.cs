@@ -54,6 +54,7 @@ namespace Nmkoder.Forms
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.trackListExtractTracksBtn = new System.Windows.Forms.Button();
             this.trackListSortTracksBtn = new System.Windows.Forms.Button();
             this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
             this.trackListMoveUpBtn = new System.Windows.Forms.Button();
@@ -573,6 +574,7 @@ namespace Nmkoder.Forms
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.trackListExtractTracksBtn);
             this.streamListPage.Controls.Add(this.trackListSortTracksBtn);
             this.streamListPage.Controls.Add(this.trackListCheckTracksBtn);
             this.streamListPage.Controls.Add(this.trackListMoveUpBtn);
@@ -588,6 +590,23 @@ namespace Nmkoder.Forms
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
             // 
+            // trackListExtractTracksBtn
+            // 
+            this.trackListExtractTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.trackListExtractTracksBtn.BackgroundImage = global::Nmkoder.Properties.Resources.icon_extract;
+            this.trackListExtractTracksBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.trackListExtractTracksBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trackListExtractTracksBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackListExtractTracksBtn.ForeColor = System.Drawing.Color.White;
+            this.trackListExtractTracksBtn.Location = new System.Drawing.Point(626, 134);
+            this.trackListExtractTracksBtn.Name = "trackListExtractTracksBtn";
+            this.trackListExtractTracksBtn.Size = new System.Drawing.Size(30, 30);
+            this.trackListExtractTracksBtn.TabIndex = 54;
+            this.toolTip.SetToolTip(this.trackListExtractTracksBtn, "Extract Attachment");
+            this.trackListExtractTracksBtn.UseVisualStyleBackColor = false;
+            this.trackListExtractTracksBtn.Visible = false;
+            this.trackListExtractTracksBtn.Click += new System.EventHandler(this.trackListExtractTracksBtn_Click);
+            // 
             // trackListSortTracksBtn
             // 
             this.trackListSortTracksBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -600,7 +619,7 @@ namespace Nmkoder.Forms
             this.trackListSortTracksBtn.Name = "trackListSortTracksBtn";
             this.trackListSortTracksBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListSortTracksBtn.TabIndex = 53;
-            this.toolTip.SetToolTip(this.trackListSortTracksBtn, "Move Down");
+            this.toolTip.SetToolTip(this.trackListSortTracksBtn, "Sort Tracks...");
             this.trackListSortTracksBtn.UseVisualStyleBackColor = false;
             this.trackListSortTracksBtn.Click += new System.EventHandler(this.trackListSortTracksBtn_Click);
             // 
@@ -616,7 +635,7 @@ namespace Nmkoder.Forms
             this.trackListCheckTracksBtn.Name = "trackListCheckTracksBtn";
             this.trackListCheckTracksBtn.Size = new System.Drawing.Size(30, 30);
             this.trackListCheckTracksBtn.TabIndex = 51;
-            this.toolTip.SetToolTip(this.trackListCheckTracksBtn, "Move Down");
+            this.toolTip.SetToolTip(this.trackListCheckTracksBtn, "Check Tracks...");
             this.trackListCheckTracksBtn.UseVisualStyleBackColor = false;
             this.trackListCheckTracksBtn.Click += new System.EventHandler(this.trackListCheckTracksBtn_Click);
             // 
@@ -3258,6 +3277,7 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ToolStripMenuItem sortTracksByTitleZAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecAZToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecZAToolStripMenuItem;
+        private System.Windows.Forms.Button trackListExtractTracksBtn;
     }
 }
 

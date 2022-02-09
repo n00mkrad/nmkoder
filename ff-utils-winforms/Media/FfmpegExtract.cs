@@ -59,6 +59,22 @@ namespace Nmkoder.Media
             await Task.WhenAll(tasks);
         }
 
+        public static async Task<string> ExtractAttachments(string inputFile, int index = -1)
+        {
+            string outputDir = $"{inputFile} Attachments";
+            Directory.CreateDirectory(outputDir);
+            await ExtractAttachments(inputFile, outputDir, index);
+            return outputDir;
+        }
+
+        public static async Task ExtractAttachments (string inputFile, string outputDir, int index = -1)
+        {
+            string idx = index < 0 ? ":t" : $":{index}";
+            string args = $"-dump_attachment{idx} \"\" -i {inputFile.Wrap()}";
+            FfmpegSettings settings = new FfmpegSettings() { Args = args, WorkingDir = outputDir, LogLevel = "error", LoggingMode = LogMode.Hidden };
+            await RunFfmpeg(settings);
+        }
+
         //public static async Task ExtractLastFrame(string inputFile, string outputPath, Size size)
         //{
         //    if (QuickSettingsTab.trimEnabled)

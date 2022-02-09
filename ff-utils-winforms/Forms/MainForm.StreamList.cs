@@ -40,7 +40,7 @@ namespace Nmkoder.Forms
 
         private void streamList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateTrackListUpDownBtnsState();
+            UpdateTrackListBtnsState();
 
             if (streamList.SelectedItems.Count < 1)
             {
@@ -48,20 +48,18 @@ namespace Nmkoder.Forms
                 return;
             }
 
-
             MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItems[0].Tag;
             streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
-        public void UpdateTrackListUpDownBtnsState()
+        public void UpdateTrackListBtnsState()
         {
-            bool newState = streamList.SelectedItems.Count == 1;
+            bool upDownBtnsEnabled = streamList.SelectedItems.Count == 1;
+            if (trackListMoveUpBtn.Visible != upDownBtnsEnabled) trackListMoveUpBtn.Visible = upDownBtnsEnabled;
+            if (trackListMoveDownBtn.Visible != upDownBtnsEnabled) trackListMoveDownBtn.Visible = upDownBtnsEnabled;
 
-            if (trackListMoveUpBtn.Visible != newState)
-                trackListMoveUpBtn.Visible = newState;
-
-            if (trackListMoveDownBtn.Visible != newState)
-                trackListMoveDownBtn.Visible = newState;
+            bool extractBtnEnabled = streamList.SelectedItems.Count > 0 && ((MediaStreamListEntry)streamList.SelectedItems[0].Tag).Stream.Type == Stream.StreamType.Attachment;
+            if (trackListExtractTracksBtn.Visible != extractBtnEnabled) trackListExtractTracksBtn.Visible = extractBtnEnabled;
         }
 
         public bool ignoreStreamListCheck;

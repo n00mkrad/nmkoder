@@ -237,6 +237,8 @@ namespace Nmkoder.UI.Tasks
 
         public static async Task CreateAttachmentMkv(string args, string tempFolder)
         {
+            if (!args.MatchesWildcard("* -o \"*.mkv\"*")) return; // Only do this if output is MKV
+
             while (!IsAv1anRunning()) await Task.Delay(200);
             while(!IsAudioDone(tempFolder)) await Task.Delay(500);
             await Task.Delay(500);
@@ -285,7 +287,7 @@ namespace Nmkoder.UI.Tasks
             }
             catch(Exception ex)
             {
-                Logger.Log($"IsAudioDone Error: {ex.Message}");
+                Logger.Log($"IsAudioDone Error: {ex.Message}", true);
                 return false;
             }
         }

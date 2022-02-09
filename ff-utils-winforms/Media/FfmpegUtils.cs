@@ -64,7 +64,7 @@ namespace Nmkoder.Media
                             Fraction fps = path.IsConcatFile() ? defaultFps : await IoUtils.GetVideoFramerate(path);
                             VideoStream vStream = new VideoStream(lang, title, codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                             vStream.Index = idx;
-                            Logger.Log($"Added video stream to list: {vStream}", true);
+                            Logger.Log($"Added video stream: {vStream}", true);
                             streamList.Add(vStream);
                             continue;
                         }
@@ -83,7 +83,7 @@ namespace Nmkoder.Media
                             string layout = (await GetFfprobeInfoAsync(path, showStreams, "channel_layout", idx));
                             AudioStream aStream = new AudioStream(lang, title, codec, codecLong, kbits, sampleRate, channels, layout);
                             aStream.Index = idx;
-                            Logger.Log($"Added audio stream to list: {aStream}", true);
+                            Logger.Log($"Added audio stream: {aStream}", true);
                             streamList.Add(aStream);
                             continue;
                         }
@@ -97,7 +97,7 @@ namespace Nmkoder.Media
                             bool bitmap = await IsSubtitleBitmapBased(path, idx, codec);
                             SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong, bitmap);
                             sStream.Index = idx;
-                            Logger.Log($"Added subtitle stream to list: {sStream}", true);
+                            Logger.Log($"Added subtitle stream: {sStream}", true);
                             streamList.Add(sStream);
                             continue;
                         }
@@ -108,7 +108,7 @@ namespace Nmkoder.Media
                             string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
                             DataStream dStream = new DataStream(codec, codecLong);
                             dStream.Index = idx;
-                            Logger.Log($"Added data stream to list: {dStream}", true);
+                            Logger.Log($"Added data stream: {dStream}", true);
                             streamList.Add(dStream);
                             continue;
                         }
@@ -121,12 +121,12 @@ namespace Nmkoder.Media
                             string mimeType = await GetFfprobeInfoAsync(path, showStreams, "TAG:mimetype", idx);
                             AttachmentStream aStream = new AttachmentStream(codec, codecLong, filename, mimeType);
                             aStream.Index = idx;
-                            Logger.Log($"Added attachment stream to list: {aStream}", true);
+                            Logger.Log($"Added attachment stream: {aStream}", true);
                             streamList.Add(aStream);
                             continue;
                         }
 
-                        Logger.Log($"Unknown stream (not vid/aud/sub/data/attach): {streamStr}", true);
+                        Logger.Log($"Unknown stream (not vid/aud/sub/dat/att): {streamStr}", true);
                         Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, Type = Stream.StreamType.Unknown };
                         streamList.Add(stream);
                     }
@@ -140,6 +140,10 @@ namespace Nmkoder.Media
             {
                 Logger.Log($"GetStreams Exception: {e.Message}\n{e.StackTrace}", true);
             }
+
+            Logger.Log($"Video Streams: {string.Join(", ", streamList.Where(x => x.Type == Stream.StreamType.Video).Select(x => x.Title))}", true);
+            Logger.Log($"Audio Streams: {string.Join(", ", streamList.Where(x => x.Type == Stream.StreamType.Audio).Select(x => x.Title))}", true);
+            Logger.Log($"Subtitle Streams: {string.Join(", ", streamList.Where(x => x.Type == Stream.StreamType.Subtitle).Select(x => x.Title))}", true);
 
             if (progressBar)
                 Program.mainForm.SetProgress(0);

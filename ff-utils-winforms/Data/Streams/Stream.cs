@@ -12,7 +12,7 @@
 
         public override string ToString()
         {
-            return $"Stream #{Index} - {Codec} {Type}";
+            return $"Stream #{Index.ToString().PadLeft(2, '0')} - {Codec} {Type}";
         }
     }
 }

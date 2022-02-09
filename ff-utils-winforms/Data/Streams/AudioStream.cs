@@ -23,7 +23,7 @@
         public override string ToString()
         {
             string title = string.IsNullOrWhiteSpace(Title.Trim()) ? "None" : Title;
-            return $"{base.ToString()} - Language: {Language} - Title: {title} - Kbits: {Kbits} - SampleRate: {SampleRate} - Channels: {Channels} - Layout: {Layout}";
+            return $"{base.ToString()} - Language: {Language} - Title: {title} - Kbps: {Kbits} - SampleRate: {SampleRate} - Channels: {Channels} - Layout: {Layout}";
         }
     }
 }

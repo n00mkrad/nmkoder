@@ -111,7 +111,7 @@ namespace Nmkoder.IO
 
             try
             {
-                string appendStr = noLineBreak ? $" {logStr}" : $"{Environment.NewLine}[{id}] [{time}]: {logStr}";
+                string appendStr = noLineBreak ? $" {logStr}" : $"{Environment.NewLine}[{id.ToString().PadLeft(8, '0')}] [{time}]: {logStr}";
                 sessionLogs[filename] = (sessionLogs.ContainsKey(filename) ? sessionLogs[filename] : "") + appendStr;
                 File.AppendAllText(file, appendStr);
                 id++;

@@ -85,8 +85,9 @@ namespace Nmkoder.IO
             if (!entry.hidden && textbox != null)
                 textbox.AppendText((textbox.Text.Length > 1 ? Environment.NewLine : "") + msg);
 
-            msg = $"{(!entry.hidden ? "[UI] " : "")}{(entry.replaceLastLine ? "[RP] " : "")}{msg}";
+            textbox.Resume();
 
+            msg = $"{(!entry.hidden ? "[UI] " : "")}{(entry.replaceLastLine ? "[RP] " : "")}{msg}";
             LogToFile(msg, false, entry.filename);
         }
 

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DT = System.DateTime;
 
 namespace Nmkoder.IO
 {
@@ -107,7 +106,7 @@ namespace Nmkoder.IO
                 filename = Path.ChangeExtension(filename, "txt");
             file = Path.Combine(Paths.GetLogPath(), filename);
             logStr = logStr.Replace(Environment.NewLine, " ").TrimWhitespaces();
-            string time = DT.Now.Month + "-" + DT.Now.Day + "-" + DT.Now.Year + " " + DT.Now.Hour + ":" + DT.Now.Minute + ":" + DT.Now.Second;
+            string time = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss");
 
             try
             {

@@ -17,6 +17,7 @@ using Nmkoder.UI;
 using Nmkoder.IO;
 using Stream = Nmkoder.Data.Streams.Stream;
 using Nmkoder.Data.Streams;
+using Nmkoder.Extensions;
 
 namespace Nmkoder.Forms
 {
@@ -46,7 +47,7 @@ namespace Nmkoder.Forms
                 streamDetails.Text = "";
                 return;
             }
-                
+
 
             MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItems[0].Tag;
             streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
@@ -82,9 +83,10 @@ namespace Nmkoder.Forms
 
         public void UpdateDefaultStreamsUi()
         {
-            List<MediaStreamListEntry> v = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Video)).ToList();
-            List<MediaStreamListEntry> a = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Audio)).ToList();
-            List<MediaStreamListEntry> s = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).Where(x => (x.Stream.Type == Stream.StreamType.Subtitle)).ToList();
+            var checkedStreamEntries = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag);
+            List<MediaStreamListEntry> v = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Video)).ToList();
+            List<MediaStreamListEntry> a = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Audio)).ToList();
+            List<MediaStreamListEntry> s = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Subtitle)).ToList();
 
             trackListDefaultAudio.Enabled = a != null && a.Count > 0;
             trackListDefaultSubs.Enabled = s != null && s.Count > 0;
@@ -95,9 +97,11 @@ namespace Nmkoder.Forms
 
             for (int i = 0; i < a.Count; i++)
             {
-                string title = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Title) ? "" : $" ({((AudioStream)(a[i].Stream)).Title})";
-                string lang = string.IsNullOrWhiteSpace(((AudioStream)(a[i].Stream)).Language) ? "" : $" ({((AudioStream)(a[i].Stream)).Language})";
-                trackListDefaultAudio.Items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}{title}{lang.ToUpper()}");
+                List<string> items = new List<string>();
+                items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
+                items.Add(((AudioStream)a[i].Stream).Language.ToUpper().Trunc(6));
+                items.Add(((AudioStream)a[i].Stream).Title.Trunc(22));
+                trackListDefaultAudio.Items.Add(string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x))));
             }
 
             if (a.Count > 0)
@@ -108,9 +112,11 @@ namespace Nmkoder.Forms
 
             for (int i = 0; i < s.Count; i++)
             {
-                string title = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Title) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Title})";
-                string lang = string.IsNullOrWhiteSpace(((SubtitleStream)(s[i].Stream)).Language) ? "" : $" ({((SubtitleStream)(s[i].Stream)).Language})";
-                trackListDefaultSubs.Items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}{title}{lang.ToUpper()}");
+                List<string> items = new List<string>();
+                items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
+                items.Add(((SubtitleStream)s[i].Stream).Language.ToUpper().Trunc(6));
+                items.Add(((SubtitleStream)s[i].Stream).Title.Trunc(22));
+                trackListDefaultSubs.Items.Add(string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x))));
             }
 
             if (s.Count > 0)

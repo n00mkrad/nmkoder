@@ -85,7 +85,7 @@ namespace Nmkoder.UI
         public static async Task AddStreamsToList(MediaFile mediaFile, Color color, bool switchToList, bool silent = false)
         {
             ListView list = Program.mainForm.streamList;
-            int uniqueFileCount = (from x in list.Items.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag).MediaFile.ImportPath) select x).Distinct().Count();
+            int uniqueFileCount = (from x in list.Items.Cast<ListViewItem>().Select(x => ((StreamListEntry)x.Tag).MediaFile.ImportPath) select x).Distinct().Count();
 
             if (!mediaFile.Initialized)
             {
@@ -98,7 +98,7 @@ namespace Nmkoder.UI
                     PrintFoundStreams(mediaFile);
             }
 
-            bool alreadyHasVidStream = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).Count() > 0;
+            bool alreadyHasVidStream = list.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).Count() > 0;
 
             Random r = new Random();
 
@@ -109,7 +109,7 @@ namespace Nmkoder.UI
             {
                 try
                 {
-                    MediaStreamListEntry entry = new MediaStreamListEntry(mediaFile, s);
+                    StreamListEntry entry = new StreamListEntry(mediaFile, s);
                     bool check = s.Codec.ToLower().Trim() != "unknown" && !(s.Type == Stream.StreamType.Video && alreadyHasVidStream);
                     list.Items.Add(new ListViewItem { Text = entry.ToString(), Tag = entry, BackColor = color, Checked = check });
                 }
@@ -136,7 +136,7 @@ namespace Nmkoder.UI
 
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
-                MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag;
+                StreamListEntry entry = (StreamListEntry)Program.mainForm.streamList.Items[i].Tag;
 
                 if (entry.MediaFile == null || !loadedPaths.Contains(entry.MediaFile.ImportPath))
                 {
@@ -150,7 +150,7 @@ namespace Nmkoder.UI
 
         public static async void Extract(ListViewItem item)
         {
-            MediaStreamListEntry entry = item.Tag as MediaStreamListEntry;
+            StreamListEntry entry = item.Tag as StreamListEntry;
             string outDir = await FfmpegExtract.ExtractAttachments(entry.MediaFile.SourcePath, entry.Stream.Index);
             Process.Start(outDir);
         }
@@ -250,7 +250,7 @@ namespace Nmkoder.UI
             {
                 if (item.Checked)
                 {
-                    MediaStreamListEntry entry = (MediaStreamListEntry)item.Tag;
+                    StreamListEntry entry = (StreamListEntry)item.Tag;
 
                     ListViewItem correspodingFileEntry = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Where(x => ((FileListEntry)x.Tag).File == entry.MediaFile).First();
                     int fileIdx = RunTask.currentFileListMode == RunTask.FileListMode.Batch ? 0 : Program.mainForm.fileListBox.Items.IndexOf(correspodingFileEntry);
@@ -295,7 +295,7 @@ namespace Nmkoder.UI
             for (int i = 0; i < Program.mainForm.streamList.Items.Count; i++)
             {
                 Program.mainForm.ignoreStreamListCheck = i < (Program.mainForm.streamList.Items.Count - 1);
-                Program.mainForm.streamList.Items[i].Checked = ((MediaStreamListEntry)Program.mainForm.streamList.Items[i].Tag).Stream.Type == type;
+                Program.mainForm.streamList.Items[i].Checked = ((StreamListEntry)Program.mainForm.streamList.Items[i].Tag).Stream.Type == type;
             }
 
             Program.mainForm.OnCheckedStreamsChange();
@@ -304,9 +304,9 @@ namespace Nmkoder.UI
         public static void CheckFirstOfEachType()
         {
             ListView list = Program.mainForm.streamList;
-            var firstVid = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).FirstOrDefault();
-            var firstAud = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).FirstOrDefault();
-            var firstSub = list.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Subtitle).FirstOrDefault();
+            var firstVid = list.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Video).FirstOrDefault();
+            var firstAud = list.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).FirstOrDefault();
+            var firstSub = list.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Subtitle).FirstOrDefault();
 
             for (int i = 0; i < list.Items.Count; i++)
             {
@@ -326,7 +326,7 @@ namespace Nmkoder.UI
             {
                 Program.mainForm.ignoreStreamListCheck = i < (list.Items.Count - 1);
 
-                MediaStreamListEntry entry = (MediaStreamListEntry)list.Items[i].Tag;
+                StreamListEntry entry = (StreamListEntry)list.Items[i].Tag;
                 string hash = $"{entry.Stream.Type}{entry.Stream.Language}";
 
                 if (checkedLangs.Contains(hash))
@@ -355,19 +355,19 @@ namespace Nmkoder.UI
             List<ListViewItem> itemsCopy = new List<ListViewItem>(list.Items.Cast<ListViewItem>());
             Program.mainForm.ignoreStreamListCheck = true;
             list.Items.Clear();
-            List<Stream.StreamType> streamTypes = itemsCopy.Select(x => ((MediaStreamListEntry)x.Tag).Stream.Type).Distinct().ToList();
+            List<Stream.StreamType> streamTypes = itemsCopy.Select(x => ((StreamListEntry)x.Tag).Stream.Type).Distinct().ToList();
 
             foreach (Stream.StreamType streamType in streamTypes)
             {
-                var items = itemsCopy.Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == streamType);
+                var items = itemsCopy.Where(x => ((StreamListEntry)x.Tag).Stream.Type == streamType);
                 var sorted = new List<ListViewItem>();
 
                 if(sort == TrackSort.Language)
-                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Language).ToList();
+                    sorted = items.OrderBy(x => ((StreamListEntry)x.Tag).Stream.Language).ToList();
                 else if (sort == TrackSort.Title)
-                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Title).ToList();
+                    sorted = items.OrderBy(x => ((StreamListEntry)x.Tag).Stream.Title).ToList();
                 else if (sort == TrackSort.Codec)
-                    sorted = items.OrderBy(x => ((MediaStreamListEntry)x.Tag).Stream.Codec).ToList();
+                    sorted = items.OrderBy(x => ((StreamListEntry)x.Tag).Stream.Codec).ToList();
 
                 list.Items.AddRange(reverse ? sorted.AsEnumerable().Reverse().ToArray() : sorted.ToArray());
             }

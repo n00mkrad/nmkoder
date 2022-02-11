@@ -75,7 +75,7 @@ namespace Nmkoder.Forms
             grid.Columns[4].FillWeight = 20;
 
             List<ListViewItem> streamItems = Program.mainForm.streamList.Items.Cast<ListViewItem>().ToList();
-            List<AudioStream> audStreams = streamItems.Select(x => (MediaStreamListEntry)x.Tag).Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
+            List<AudioStream> audStreams = streamItems.Select(x => (StreamListEntry)x.Tag).Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
 
             List<AudioConfigurationEntry> currentEntries = TrackList.currentAudioConfig?.GetConfig(current);
 

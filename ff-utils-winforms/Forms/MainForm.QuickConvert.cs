@@ -113,7 +113,7 @@ namespace Nmkoder.Forms
             {
                 bool currentNull = TrackList.current == null;
                 bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
-                bool noAudTracks = streamList.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
+                bool noAudTracks = streamList.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
                 if (currentNull || noAudTracks || noEnc)
                 {
@@ -143,7 +143,7 @@ namespace Nmkoder.Forms
             if (i == 1)
             {
                 bool noEnc = !Program.mainForm.encAudQualUpDown.Enabled;
-                bool noAudTracks = streamList.Items.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
+                bool noAudTracks = streamList.Items.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() < 1;
 
                 if (TrackList.current == null || TrackList.currentAudioConfig == null || TrackList.currentAudioConfig.CreationFile.ImportPath != TrackList.current.File.ImportPath || noAudTracks || noEnc)
                 {

@@ -37,8 +37,8 @@ namespace Nmkoder.UI.Tasks
                 IEncoder vCodec = CodecUtils.GetCodec(GetCurrentCodecV());
                 CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
-                bool anyVideoStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Video).Count() > 0;
-                bool anyAudioStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() > 0;
+                bool anyVideoStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Video).Count() > 0;
+                bool anyAudioStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Data.Streams.Stream.StreamType.Audio).Count() > 0;
                 bool crf = (QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.Crf;
                 bool twoPass = anyVideoStreams && vCodec.SupportsTwoPass && (vCodec.ForceTwoPass || !crf);
                 Dictionary<string, string> videoArgs = vCodec.DoesNotEncode ? new Dictionary<string, string>() : GetVideoArgsFromUi(!crf);

@@ -280,7 +280,7 @@ namespace Nmkoder.UI.Tasks
             if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetMbytes)
             {
                 bool aud = !CodecUtils.GetCodec(GetCurrentCodecA()).DoesNotEncode;
-                int audioTracks = form.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((MediaStreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).Count();
+                int audioTracks = form.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).Count();
                 int audioBps = aud ? ((int)form.encAudQualUpDown.Value * 1024) * audioTracks : 0;
                 double durationSecs = TrackList.current.File.DurationMs / (double)1000;
                 float targetMbytes = form.encVidQualityBox.Text.GetFloat();
@@ -349,11 +349,11 @@ namespace Nmkoder.UI.Tasks
 
             grid.Rows.Add($"Output File", (curr.TitleEdited != null) ? curr.TitleEdited : curr.Title, (curr.LanguageEdited != null) ? curr.LanguageEdited : curr.Language);
 
-            var streamEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
+            var streamEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToArray();
 
             for (int i = 0; i < streamEntries.Count(); i++)
             {
-                MediaStreamListEntry entry = streamEntries[i];
+                StreamListEntry entry = streamEntries[i];
                 string title = string.IsNullOrWhiteSpace(entry.TitleEdited) ? entry.Title : entry.TitleEdited;
                 string lang = string.IsNullOrWhiteSpace(entry.LanguageEdited) ? entry.Language : entry.LanguageEdited;
                 int newIdx = grid.Rows.Add(entry.GetString(false, false), title, lang);
@@ -394,7 +394,7 @@ namespace Nmkoder.UI.Tasks
                 }
                 else
                 {
-                    MediaStreamListEntry entry = (MediaStreamListEntry)Program.mainForm.streamList.Items[idx].Tag;
+                    StreamListEntry entry = (StreamListEntry)Program.mainForm.streamList.Items[idx].Tag;
                     entry.TitleEdited = title;
                     entry.LanguageEdited = lang;
                 }
@@ -405,7 +405,7 @@ namespace Nmkoder.UI.Tasks
         {
             SaveMetadata();
             MainForm form = Program.mainForm;
-            List<MediaStreamListEntry> checkedEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => ((MediaStreamListEntry)x.Tag)).ToList();
+            List<StreamListEntry> checkedEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => ((StreamListEntry)x.Tag)).ToList();
             bool attachments = checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
             string stripStr = ""; // If there are attachments, only copy the attachment metadata, otherwise none
 
@@ -471,11 +471,11 @@ namespace Nmkoder.UI.Tasks
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
                     argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
-                var streamEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToArray();
+                var streamEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToArray();
 
                 for (int i = 0; i < streamEntries.Count(); i++)
                 {
-                    MediaStreamListEntry entry = streamEntries[i];
+                    StreamListEntry entry = streamEntries[i];
 
                     if (cfg == 0 && entry.TitleEdited.Trim() != entry.Title)
                         argsMeta.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");

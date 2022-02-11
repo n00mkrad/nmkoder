@@ -35,7 +35,7 @@ namespace Nmkoder.UI.Tasks
                 if (RunTask.canceled)
                     continue;
 
-                Stream s = ((MediaStreamListEntry)item.Tag).Stream;
+                Stream s = ((StreamListEntry)item.Tag).Stream;
                 FfmpegUtils.StreamSizeInfo info = await FfmpegUtils.GetStreamSizeBytes(TrackList.current.File.ImportPath, s.Index);
                 string percent = FormatUtils.RatioFloat(info.Bytes, TrackList.current.File.Size).ToString("0.0");
                 string br = info.Kbps > 1 ? FormatUtils.Bitrate(info.Kbps.RoundToInt()) : info.Kbps.ToString("0.0") + " kbps";

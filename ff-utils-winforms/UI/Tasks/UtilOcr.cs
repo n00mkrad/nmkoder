@@ -22,7 +22,7 @@ namespace Nmkoder.UI.Tasks
         public static async Task Run ()
         {
             Program.mainForm.SetWorking(true);
-            List<MediaStreamListEntry> checkedStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToList();
+            List<StreamListEntry> checkedStreams = Program.mainForm.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToList();
             List<SubtitleStream> subStreams = checkedStreams.Where(x => x.Stream.Type == Stream.StreamType.Subtitle).Select(x => (SubtitleStream)x.Stream).ToList();
             int i = 0;
 

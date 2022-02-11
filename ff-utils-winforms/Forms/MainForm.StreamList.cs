@@ -48,7 +48,7 @@ namespace Nmkoder.Forms
                 return;
             }
 
-            MediaStreamListEntry entry = (MediaStreamListEntry)streamList.SelectedItems[0].Tag;
+            StreamListEntry entry = (StreamListEntry)streamList.SelectedItems[0].Tag;
             streamDetails.Text = TrackList.GetStreamDetails(entry.Stream, entry.MediaFile);
         }
 
@@ -58,7 +58,7 @@ namespace Nmkoder.Forms
             if (trackListMoveUpBtn.Visible != upDownBtnsEnabled) trackListMoveUpBtn.Visible = upDownBtnsEnabled;
             if (trackListMoveDownBtn.Visible != upDownBtnsEnabled) trackListMoveDownBtn.Visible = upDownBtnsEnabled;
 
-            bool extractBtnEnabled = streamList.SelectedItems.Count > 0 && ((MediaStreamListEntry)streamList.SelectedItems[0].Tag).Stream.Type == Stream.StreamType.Attachment;
+            bool extractBtnEnabled = streamList.SelectedItems.Count > 0 && ((StreamListEntry)streamList.SelectedItems[0].Tag).Stream.Type == Stream.StreamType.Attachment;
             if (trackListExtractTracksBtn.Visible != extractBtnEnabled) trackListExtractTracksBtn.Visible = extractBtnEnabled;
         }
 
@@ -81,10 +81,10 @@ namespace Nmkoder.Forms
 
         public void UpdateDefaultStreamsUi()
         {
-            var checkedStreamEntries = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag);
-            List<MediaStreamListEntry> v = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Video)).ToList();
-            List<MediaStreamListEntry> a = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Audio)).ToList();
-            List<MediaStreamListEntry> s = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Subtitle)).ToList();
+            var checkedStreamEntries = streamList.CheckedItems.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag);
+            List<StreamListEntry> v = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Video)).ToList();
+            List<StreamListEntry> a = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Audio)).ToList();
+            List<StreamListEntry> s = checkedStreamEntries.Where(x => (x.Stream.Type == Stream.StreamType.Subtitle)).ToList();
 
             trackListDefaultAudio.Enabled = a != null && a.Count > 0;
             trackListDefaultSubs.Enabled = s != null && s.Count > 0;

@@ -87,8 +87,8 @@ namespace Nmkoder.Data
         {
             List<string> args = new List<string>();
 
-            List<MediaStreamListEntry> allEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (MediaStreamListEntry)x.Tag).ToList();
-            List<MediaStreamListEntry> checkedEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Where(x => x.Checked).Select(x => (MediaStreamListEntry)x.Tag).ToList();
+            List<StreamListEntry> allEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToList();
+            List<StreamListEntry> checkedEntries = Program.mainForm.streamList.Items.Cast<ListViewItem>().Where(x => x.Checked).Select(x => (StreamListEntry)x.Tag).ToList();
 
             List<AudioStream> allAudStreams = allEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
             List<AudioStream> checkedAudStreams = checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();

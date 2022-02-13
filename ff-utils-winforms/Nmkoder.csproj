@@ -294,7 +294,7 @@
     <Compile Include="Data\Streams\Stream.cs" />
     <Compile Include="Data\Streams\SubtitleStream.cs" />
     <Compile Include="Data\Ui\Av1anFolderEntry.cs" />
-    <Compile Include="Data\Ui\MediaStreamListEntry.cs" />
+    <Compile Include="Data\Ui\StreamListEntry.cs" />
     <Compile Include="Data\Ui\FileListEntry.cs" />
     <Compile Include="Data\UniqueMetadataEntry.cs" />
     <Compile Include="Data\VideoColorData.cs" />

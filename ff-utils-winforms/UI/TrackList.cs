@@ -170,7 +170,7 @@ namespace Nmkoder.UI
                 VideoStream v = (VideoStream)stream;
                 lines.Add($"Title: {((v.Title.Trim().Length > 1) ? v.Title.Trunc(90) : "None")}");
                 lines.Add($"Resolution and Aspect Ratio: {v.Resolution.ToStringShort()} - SAR {v.Sar.ToStringShort(":")} - DAR {v.Dar.ToStringShort(":")}");
-                int bitDepth = GetBitDepthFromPixelFormat(v.PixelFormat);
+                int bitDepth = FormatUtils.GetBitDepthFromPixelFormat(v.PixelFormat);
                 lines.Add($"Color Format: {v.PixelFormat}{(bitDepth > 0 ? $" ({bitDepth}-bit)" : "")}");
                 lines.Add($"Frame Rate: {v.Rate} (~{v.Rate.GetString()} FPS)");
             }
@@ -201,16 +201,6 @@ namespace Nmkoder.UI
             }
 
             return string.Join(Environment.NewLine, lines);
-        }
-
-        private static int GetBitDepthFromPixelFormat(string pixFmt)
-        {
-            pixFmt = pixFmt.ToLower();
-            if (pixFmt.MatchesWildcard("yuv*p")) return 8;
-            if (pixFmt.MatchesWildcard("*p10?e")) return 10;
-            if (pixFmt.MatchesWildcard("*p12?e")) return 12;
-            if (pixFmt.MatchesWildcard("*p16?e")) return 16;
-            return 0;
         }
 
         public static string GetInputFilesString()

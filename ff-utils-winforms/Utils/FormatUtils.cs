@@ -206,5 +206,15 @@ namespace Nmkoder.Utils
             return path.Replace(@"\", @"/").Replace(":", @"\\:").Wrap();
             //return path.Replace("/", @"\").Replace(@"\", @"\\\\").Replace(@":\\\\", @"\\:\\\\"); // https://trac.ffmpeg.org/ticket/3334
         }
+
+        public static int GetBitDepthFromPixelFormat(string pixFmt)
+        {
+            pixFmt = pixFmt.ToLower();
+            if (pixFmt.MatchesWildcard("yuv*p")) return 8;
+            if (pixFmt.MatchesWildcard("*p10?e")) return 10;
+            if (pixFmt.MatchesWildcard("*p12?e")) return 12;
+            if (pixFmt.MatchesWildcard("*p16?e")) return 16;
+            return 0;
+        }
     }
 }

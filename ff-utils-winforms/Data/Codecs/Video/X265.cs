@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.Utils;
 using System.Collections.Generic;
 
 namespace Nmkoder.Data.Codecs
@@ -32,6 +33,7 @@ namespace Nmkoder.Data.Codecs
             string q = vmaf ? "0" : encArgs.ContainsKey("q") ? encArgs["q"] : QDefault.ToString();
             string preset = encArgs.ContainsKey("preset") ? encArgs["preset"] : Presets[PresetDefault];
             string pixFmt = encArgs.ContainsKey("pixFmt") ? encArgs["pixFmt"] : ColorFormats[ColorFormatDefault];
+            int bitDepth = FormatUtils.GetBitDepthFromPixelFormat(pixFmt);
             string thr = encArgs.ContainsKey("threads") ? encArgs["threads"] : "0";
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
             string adv = encArgs.ContainsKey("advanced") ? encArgs["advanced"] : "";
@@ -43,7 +45,7 @@ namespace Nmkoder.Data.Codecs
                 colors = $"--colorprim {mediaFile.ColorData.ColorPrimaries} --transfer {mediaFile.ColorData.ColorTransfer} --colormatrix {mediaFile.ColorData.ColorMatrixCoeffs} --range {range}";
             }
 
-            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} {colors} {adv} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} --output-depth {bitDepth} {colors} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

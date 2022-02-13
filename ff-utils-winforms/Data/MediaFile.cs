@@ -40,6 +40,7 @@ namespace Nmkoder.Data
         public VideoColorData ColorData = null;
         public long CreationTime;
         public bool Initialized = false;
+        public bool SequenceInitialized = false;
 
         public MediaFile(string path, bool requestFpsInputIfUnset = true)
         {
@@ -52,10 +53,11 @@ namespace Nmkoder.Data
                 Name = Directory.Name;
                 SourcePath = Directory.FullName;
                 Format = "Folder";
-                PrepareFrameSeq();
 
-                if (FileCount < 1)
-                    return;
+                //Logger.Log($"MediaFile: PrepareFrameSeq {sw.ElapsedMs}ms");
+
+                //if (FileCount < 1)
+                //    return;
 
                 if(requestFpsInputIfUnset && InputRate == null)
                 {
@@ -78,17 +80,21 @@ namespace Nmkoder.Data
             Size = GetSize();
         }
 
-        private void PrepareFrameSeq()
+        public async Task InitializeSequence()
         {
             try
             {
+                if (SequenceInitialized) return;
+
+                Logger.Log($"Preparing image sequence...");
                 Logger.Log($"MediaFile {Name}: Preparing image sequence", true);
                 string seqPath = Path.Combine(Paths.GetFrameSeqPath(), CreationTime.ToString(), "frames.concat");
                 string chosenExt = IoUtils.GetUniqueExtensions(SourcePath).FirstOrDefault();
-                int fileCount = FfmpegUtils.CreateConcatFile(SourcePath, seqPath, new string[] { chosenExt });
+                int fileCount = FfmpegUtils.CreateConcatFile(SourcePath, seqPath, new List<string> { chosenExt });
                 ImportPath = seqPath;
                 FileCount = fileCount;
                 Logger.Log($"Created concat file with {fileCount} files.", true);
+                SequenceInitialized = true;
             }
             catch (Exception e)
             {
@@ -103,6 +109,9 @@ namespace Nmkoder.Data
 
             try
             {
+                if(IsDirectory && !SequenceInitialized)
+                    await InitializeSequence();
+
                 await LoadFormatInfo(ImportPath);
                 AllStreams = await FfmpegUtils.GetStreams(ImportPath, progressBar, StreamCount, (Fraction)InputRate);
                 VideoStreams = AllStreams.Where(x => x.Type == Stream.StreamType.Video).Select(x => (VideoStream)x).ToList();

@@ -1,4 +1,7 @@
-﻿using Nmkoder.Data.Ui;
+﻿using Nmkoder.Data;
+using Nmkoder.Data.Ui;
+using Nmkoder.IO;
+using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +35,7 @@ namespace Nmkoder.Forms
 
         }
 
-        private void FileImportForm_Shown(object sender, EventArgs e)
+        private async void FileImportForm_Shown(object sender, EventArgs e)
         {
             if (!importClearBtn.Visible)
                 importAppendBtn.Text = importAppendBtn.Text.Split(' ')[0];
@@ -41,7 +44,8 @@ namespace Nmkoder.Forms
 
             foreach (string file in files)
             {
-                FileListEntry entry = new FileListEntry(new Data.MediaFile(file, false));
+                MediaFile mediaFile = new MediaFile(file, false);
+                FileListEntry entry = new FileListEntry(mediaFile);
                 fileList.Items.Add(entry);
                 fileList.SetItemChecked(fileList.Items.Count - 1, true);
             }

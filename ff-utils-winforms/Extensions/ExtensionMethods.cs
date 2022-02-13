@@ -114,10 +114,8 @@ namespace Nmkoder.Extensions
 
         public static int Clamp(this int i, int min, int max)
         {
-            if (i < min)
-                i = min;
-            if (i > max)
-                i = max;
+            if (i < min) i = min;
+            if (i > max) i = max;
             return i;
         }
 
@@ -243,7 +241,7 @@ namespace Nmkoder.Extensions
         {
             try
             {
-                return Path.GetExtension(filePath).ToLower() == ".concat";
+                return Path.GetExtension(filePath)?.ToLower() == ".concat";
             }
             catch
             {

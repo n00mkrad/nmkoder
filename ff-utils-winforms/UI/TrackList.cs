@@ -45,6 +45,10 @@ namespace Nmkoder.UI
         public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
         {
             MediaFile mediaFile = ((FileListEntry)item.Tag).File;
+
+            if (mediaFile.IsDirectory)
+                await mediaFile.InitializeSequence();
+
             int streamCount = await FfmpegUtils.GetStreamCount(mediaFile.ImportPath);
             Logger.Log($"Scanning '{mediaFile.Name}' (Streams: {streamCount})...");
             await mediaFile.Initialize();

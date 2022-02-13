@@ -230,22 +230,25 @@ namespace Nmkoder.Media
             return new StreamSizeInfo() { Bytes = bytes, Kbps = bitrate };
         }
 
-        public static int CreateConcatFile(string inputFilesDir, string outputPath, string[] validExtensions = null)
+        public static int CreateConcatFile(string inputFilesDir, string outputPath, List<string> validExtensions = null)
         {
             if (IoUtils.GetAmountOfFiles(inputFilesDir, false) < 1)
                 return 0;
 
+            NmkdStopwatch sw = new NmkdStopwatch();
+            
             Directory.CreateDirectory(outputPath.GetParentDir());
-            validExtensions = validExtensions.Select(x => x.Remove(".").ToLower()).ToArray(); // Ignore "." in extensions
+
+            if(validExtensions == null)
+                validExtensions = new List<string>();
+
+            validExtensions = validExtensions.Select(x => x.Remove(".").ToLower()).ToList(); // Ignore "." in extensions
             string concatFileContent = "";
             string[] files = IoUtils.GetFilesSorted(inputFilesDir);
             int fileCount = 0;
 
-            foreach (string file in files)
+            foreach (string file in files.Where(x => validExtensions.Contains(Path.GetExtension(x).Replace(".", "").ToLower())))
             {
-                if (validExtensions != null && !validExtensions.Contains(Path.GetExtension(file).Remove(".").ToLower()))
-                    continue;
-
                 fileCount++;
                 concatFileContent += $"file '{file.Replace(@"\", "/")}'\n";
             }

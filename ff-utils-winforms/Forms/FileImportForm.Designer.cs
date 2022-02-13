@@ -58,7 +58,7 @@ namespace Nmkoder.Forms
             this.formatInfo.Location = new System.Drawing.Point(13, 13);
             this.formatInfo.Margin = new System.Windows.Forms.Padding(4);
             this.formatInfo.Name = "formatInfo";
-            this.formatInfo.Size = new System.Drawing.Size(155, 16);
+            this.formatInfo.Size = new System.Drawing.Size(154, 16);
             this.formatInfo.TabIndex = 29;
             this.formatInfo.Text = "Import All Checked Files:";
             // 

@@ -155,6 +155,9 @@ namespace Nmkoder.Forms
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.av1anAdvancedFiltersGrid = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.av1anAdvancedArgsGrid = new System.Windows.Forms.DataGridView();
@@ -262,6 +265,8 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.av1anGrainSynthStrength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).BeginInit();
             this.tabPage6.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedFiltersGrid)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -1968,6 +1973,8 @@ namespace Nmkoder.Forms
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabPage6.Controls.Add(this.panel4);
+            this.tabPage6.Controls.Add(this.label2);
             this.tabPage6.Controls.Add(this.label52);
             this.tabPage6.Controls.Add(this.panel1);
             this.tabPage6.Location = new System.Drawing.Point(4, 27);
@@ -1977,13 +1984,52 @@ namespace Nmkoder.Forms
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Advanced";
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.av1anAdvancedFiltersGrid);
+            this.panel4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel4.Location = new System.Drawing.Point(6, 212);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(656, 100);
+            this.panel4.TabIndex = 11;
+            // 
+            // av1anAdvancedFiltersGrid
+            // 
+            this.av1anAdvancedFiltersGrid.AllowUserToOrderColumns = true;
+            this.av1anAdvancedFiltersGrid.AllowUserToResizeColumns = false;
+            this.av1anAdvancedFiltersGrid.AllowUserToResizeRows = false;
+            this.av1anAdvancedFiltersGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.av1anAdvancedFiltersGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.av1anAdvancedFiltersGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.av1anAdvancedFiltersGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.av1anAdvancedFiltersGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.av1anAdvancedFiltersGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.av1anAdvancedFiltersGrid.Location = new System.Drawing.Point(0, 0);
+            this.av1anAdvancedFiltersGrid.MultiSelect = false;
+            this.av1anAdvancedFiltersGrid.Name = "av1anAdvancedFiltersGrid";
+            this.av1anAdvancedFiltersGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.av1anAdvancedFiltersGrid.RowHeadersWidth = 51;
+            this.av1anAdvancedFiltersGrid.Size = new System.Drawing.Size(656, 100);
+            this.av1anAdvancedFiltersGrid.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.Control;
+            this.label2.Location = new System.Drawing.Point(6, 194);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(561, 15);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Below you can add your own ffmpeg filters that will be applied before the video i" +
+    "s encoded using AV1AN.";
+            // 
             // label52
             // 
             this.label52.AutoSize = true;
             this.label52.ForeColor = System.Drawing.SystemColors.Control;
             this.label52.Location = new System.Drawing.Point(3, 3);
             this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(587, 30);
+            this.label52.Size = new System.Drawing.Size(594, 30);
             this.label52.TabIndex = 9;
             this.label52.Text = resources.GetString("label52.Text");
             // 
@@ -1993,7 +2039,7 @@ namespace Nmkoder.Forms
             this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.panel1.Location = new System.Drawing.Point(6, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(656, 205);
+            this.panel1.Size = new System.Drawing.Size(656, 151);
             this.panel1.TabIndex = 8;
             // 
             // av1anAdvancedArgsGrid
@@ -2013,7 +2059,7 @@ namespace Nmkoder.Forms
             this.av1anAdvancedArgsGrid.Name = "av1anAdvancedArgsGrid";
             this.av1anAdvancedArgsGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.av1anAdvancedArgsGrid.RowHeadersWidth = 51;
-            this.av1anAdvancedArgsGrid.Size = new System.Drawing.Size(656, 205);
+            this.av1anAdvancedArgsGrid.Size = new System.Drawing.Size(656, 151);
             this.av1anAdvancedArgsGrid.TabIndex = 1;
             // 
             // tabPage4
@@ -3042,6 +3088,8 @@ namespace Nmkoder.Forms
             ((System.ComponentModel.ISupportInitialize)(this.av1anQuality)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedFiltersGrid)).EndInit();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.av1anAdvancedArgsGrid)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -3278,6 +3326,9 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecAZToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortTracksByCodecZAToolStripMenuItem;
         private System.Windows.Forms.Button trackListExtractTracksBtn;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.DataGridView av1anAdvancedFiltersGrid;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -54,11 +54,6 @@ namespace Nmkoder.Data
                 SourcePath = Directory.FullName;
                 Format = "Folder";
 
-                //Logger.Log($"MediaFile: PrepareFrameSeq {sw.ElapsedMs}ms");
-
-                //if (FileCount < 1)
-                //    return;
-
                 if(requestFpsInputIfUnset && InputRate == null)
                 {
                     PromptForm form = new PromptForm("Enter Frame Rate", $"Please enter a frame rate to use for the image sequence '{Name.Trunc(80)}'.", "30");

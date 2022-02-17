@@ -1,45 +1,19 @@
 ﻿using Nmkoder.Extensions;
-using Nmkoder.GuiHelpers;
 using Nmkoder.IO;
 using Nmkoder.UI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
-using ImageMagick;
 using Nmkoder.UI.Tasks;
 using Nmkoder.Main;
-using Nmkoder.Data;
 using Nmkoder.Data.Ui;
-using Nmkoder.Utils;
-using Nmkoder.Forms.Utils;
 using Paths = Nmkoder.Data.Paths;
 using Nmkoder.OS;
 using System.Windows.Input;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ImageMagick;
-using Nmkoder.UI.Tasks;
-using Nmkoder.Main;
-using Nmkoder.Data;
-using Nmkoder.Data.Ui;
-using Nmkoder.Properties;
-using System;
-using Nmkoder.UI;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Nmkoder.Forms
 {
@@ -86,6 +60,8 @@ namespace Nmkoder.Forms
 
             if (Paths.GetExe().Length > 150)
                 Logger.Log($"Warning: Nmkoder's installation path is very long ({Paths.GetExe().Length} characters) - This can lead to problems. It is recommended to move it to a higher directory to reduce the path length.");
+
+            Av1anUi.InitAdvFilterGrid();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

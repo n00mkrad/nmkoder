@@ -179,30 +179,28 @@ namespace Nmkoder.UI.Tasks
 
             DataGridView grid = Program.mainForm.Av1anAdvancedArgsGrid;
             grid.Rows.Clear();
+            grid.Columns.Clear();
 
             if (!File.Exists(jsonPath))
                 return;
 
-            if (grid.Columns.Count != 3)
-            {
-                grid.Columns.Clear();
-                grid.Columns.Add("0", "Argument");
-                grid.Columns.Add("1", "Value");
-                grid.Columns.Add("2", "Description, Possible Values");
-            }
+            grid.Columns.Clear();
+            grid.Columns.Add("0", "Argument");
+            grid.Columns.Add("1", "Value");
+            grid.Columns.Add("2", "Description, Possible Values");
 
             List<string[]> args = new List<string[]>();
             try
             {
                 args = JsonConvert.DeserializeObject<List<string[]>>(File.ReadAllText(jsonPath));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log($"Error loading advanced arg JSON: {e.Message}");
                 args = new List<string[]>();
             }
 
-            foreach(string[] arg in args)
+            foreach (string[] arg in args)
                 grid.Rows.Add(arg[0], arg[1], arg[2]);
 
             grid.RowHeadersVisible = false;
@@ -307,17 +305,6 @@ namespace Nmkoder.UI.Tasks
         public static string GetChunkGenMethod()
         {
             return $"-m {form.av1anOptsChunkModeBox.Text.ToLower().Trim()}";
-
-            // switch (form.av1anOptsChunkModeBox.SelectedIndex)
-            // {
-            //     case 0: return "hybrid";
-            //     case 1: return "lsmash";
-            //     case 2: return "ffms2";
-            //     case 3: return "segment";
-            //     case 4: return "select";
-            // }
-            // 
-            // return "";
         }
 
         public static string GetConcatMethodArgs()
@@ -368,6 +355,17 @@ namespace Nmkoder.UI.Tasks
             ValidatePath();
         }
 
+        public static void InitAdvFilterGrid()
+        {
+            DataGridView grid = Program.mainForm.Av1anAdvancedFiltersGrid;
+            grid.Rows.Clear();
+            grid.Columns.Clear();
+            grid.Columns.Clear();
+            grid.Columns.Add("0", "Filter");
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);
+        }
+
         public static void ValidatePath()
         {
             if (TrackList.current == null)
@@ -383,7 +381,7 @@ namespace Nmkoder.UI.Tasks
             return MiscUtils.GetFpsFromString(fpsBox.Text);
         }
 
-        public static void AskDeleteTempFolder (string dir)
+        public static void AskDeleteTempFolder(string dir)
         {
             if (string.IsNullOrWhiteSpace(dir))
                 return;
@@ -411,7 +409,7 @@ namespace Nmkoder.UI.Tasks
             }
         }
 
-        public static bool IsUsingVmaf ()
+        public static bool IsUsingVmaf()
         {
             return form.av1anQualModeBox.SelectedIndex == 1;
         }

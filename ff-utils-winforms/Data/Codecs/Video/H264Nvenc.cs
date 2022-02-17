@@ -14,7 +14,7 @@ namespace Nmkoder.Data.Codecs
         public string FriendlyName { get; } = "H.264 / AVC (NVIDIA NVENC)";
         public string[] Presets { get; } = new string[] { "p5", "p4", "p3", "p2", "p1" };
         public int PresetDefault { get; } = 0;
-        public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv444p", "yuv444p16le" };
+        public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv444p" };
         public int ColorFormatDefault { get; } = 0;
         public int QMin { get; } = 0;
         public int QMax { get; } = 51;

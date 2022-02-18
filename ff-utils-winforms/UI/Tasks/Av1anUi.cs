@@ -289,12 +289,20 @@ namespace Nmkoder.UI.Tasks
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
+            filters.AddRange(GetCustomFilters());
+
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";
             else
                 return "";
+        }
+
+        private static List<string> GetCustomFilters ()
+        {
+            DataGridView grid = Program.mainForm.Av1anAdvancedFiltersGrid;
+            return grid.Rows.Cast<DataGridViewRow>().ToList().Select(x => (string)x.Cells[0].Value).Where(x => x != null).ToList();
         }
 
         public static string GetSplittingMethodArgs()

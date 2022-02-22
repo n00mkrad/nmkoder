@@ -74,7 +74,7 @@ namespace Nmkoder.Forms
             this.encCustomArgsIn = new System.Windows.Forms.TextBox();
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
-            this.encVid = new System.Windows.Forms.TabPage();
+            this.encVidTab = new System.Windows.Forms.TabPage();
             this.encCropConfBtn = new HTAlt.WinForms.HTButton();
             this.encQualMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -97,7 +97,11 @@ namespace Nmkoder.Forms
             this.label49 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.encAdvTab = new System.Windows.Forms.TabPage();
+            this.label54 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.encAdvancedFiltersGrid = new System.Windows.Forms.DataGridView();
+            this.encAudTab = new System.Windows.Forms.TabPage();
             this.encAudPerTrackPanel = new System.Windows.Forms.Panel();
             this.encAudConfigureBtn = new HTAlt.WinForms.HTButton();
             this.encAudConfMode = new System.Windows.Forms.ComboBox();
@@ -109,7 +113,7 @@ namespace Nmkoder.Forms
             this.label53 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.encSubsTab = new System.Windows.Forms.TabPage();
             this.encSubBurn = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.encSubCodec = new System.Windows.Forms.ComboBox();
@@ -248,13 +252,16 @@ namespace Nmkoder.Forms
             this.streamListPage.SuspendLayout();
             this.quickConvertPage.SuspendLayout();
             this.quickEncTabControl.SuspendLayout();
-            this.encVid.SuspendLayout();
+            this.encVidTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.encAdvTab.SuspendLayout();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.encAdvancedFiltersGrid)).BeginInit();
+            this.encAudTab.SuspendLayout();
             this.encAudPerTrackPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabPage1.SuspendLayout();
+            this.encSubsTab.SuspendLayout();
             this.encMetaTab.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).BeginInit();
@@ -851,9 +858,10 @@ namespace Nmkoder.Forms
             this.quickEncTabControl.AllowDrop = true;
             this.quickEncTabControl.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
             this.quickEncTabControl.BorderTabLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.quickEncTabControl.Controls.Add(this.encVid);
-            this.quickEncTabControl.Controls.Add(this.tabPage2);
-            this.quickEncTabControl.Controls.Add(this.tabPage1);
+            this.quickEncTabControl.Controls.Add(this.encVidTab);
+            this.quickEncTabControl.Controls.Add(this.encAdvTab);
+            this.quickEncTabControl.Controls.Add(this.encAudTab);
+            this.quickEncTabControl.Controls.Add(this.encSubsTab);
             this.quickEncTabControl.Controls.Add(this.encMetaTab);
             this.quickEncTabControl.DisableClose = true;
             this.quickEncTabControl.DisableDragging = true;
@@ -876,37 +884,37 @@ namespace Nmkoder.Forms
             this.quickEncTabControl.UpDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(63)))), ((int)(((byte)(63)))), ((int)(((byte)(70)))));
             this.quickEncTabControl.UpDownTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(112)))));
             // 
-            // encVid
+            // encVidTab
             // 
-            this.encVid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.encVid.Controls.Add(this.encCropConfBtn);
-            this.encVid.Controls.Add(this.encQualMode);
-            this.encVid.Controls.Add(this.label4);
-            this.encVid.Controls.Add(this.label3);
-            this.encVid.Controls.Add(this.presetInfo);
-            this.encVid.Controls.Add(this.qInfo);
-            this.encVid.Controls.Add(this.encScaleH);
-            this.encVid.Controls.Add(this.encScaleW);
-            this.encVid.Controls.Add(this.label29);
-            this.encVid.Controls.Add(this.encCropMode);
-            this.encVid.Controls.Add(this.label27);
-            this.encVid.Controls.Add(this.encVidQuality);
-            this.encVid.Controls.Add(this.label61);
-            this.encVid.Controls.Add(this.encVidFps);
-            this.encVid.Controls.Add(this.encVidColors);
-            this.encVid.Controls.Add(this.encVidPreset);
-            this.encVid.Controls.Add(this.encVidCodec);
-            this.encVid.Controls.Add(this.label51);
-            this.encVid.Controls.Add(this.label50);
-            this.encVid.Controls.Add(this.label49);
-            this.encVid.Controls.Add(this.label48);
-            this.encVid.Controls.Add(this.label38);
-            this.encVid.Location = new System.Drawing.Point(4, 27);
-            this.encVid.Name = "encVid";
-            this.encVid.Padding = new System.Windows.Forms.Padding(3);
-            this.encVid.Size = new System.Drawing.Size(668, 288);
-            this.encVid.TabIndex = 0;
-            this.encVid.Text = "Video";
+            this.encVidTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVidTab.Controls.Add(this.encCropConfBtn);
+            this.encVidTab.Controls.Add(this.encQualMode);
+            this.encVidTab.Controls.Add(this.label4);
+            this.encVidTab.Controls.Add(this.label3);
+            this.encVidTab.Controls.Add(this.presetInfo);
+            this.encVidTab.Controls.Add(this.qInfo);
+            this.encVidTab.Controls.Add(this.encScaleH);
+            this.encVidTab.Controls.Add(this.encScaleW);
+            this.encVidTab.Controls.Add(this.label29);
+            this.encVidTab.Controls.Add(this.encCropMode);
+            this.encVidTab.Controls.Add(this.label27);
+            this.encVidTab.Controls.Add(this.encVidQuality);
+            this.encVidTab.Controls.Add(this.label61);
+            this.encVidTab.Controls.Add(this.encVidFps);
+            this.encVidTab.Controls.Add(this.encVidColors);
+            this.encVidTab.Controls.Add(this.encVidPreset);
+            this.encVidTab.Controls.Add(this.encVidCodec);
+            this.encVidTab.Controls.Add(this.label51);
+            this.encVidTab.Controls.Add(this.label50);
+            this.encVidTab.Controls.Add(this.label49);
+            this.encVidTab.Controls.Add(this.label48);
+            this.encVidTab.Controls.Add(this.label38);
+            this.encVidTab.Location = new System.Drawing.Point(4, 27);
+            this.encVidTab.Name = "encVidTab";
+            this.encVidTab.Padding = new System.Windows.Forms.Padding(3);
+            this.encVidTab.Size = new System.Drawing.Size(668, 288);
+            this.encVidTab.TabIndex = 0;
+            this.encVidTab.Text = "Video";
             // 
             // encCropConfBtn
             // 
@@ -1186,25 +1194,75 @@ namespace Nmkoder.Forms
             this.label38.TabIndex = 17;
             this.label38.Text = "Codec (Encoder)";
             // 
-            // tabPage2
+            // encAdvTab
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage2.Controls.Add(this.encAudPerTrackPanel);
-            this.tabPage2.Controls.Add(this.encAudConfMode);
-            this.tabPage2.Controls.Add(this.label39);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Controls.Add(this.encAudChannels);
-            this.tabPage2.Controls.Add(this.encAudQuality);
-            this.tabPage2.Controls.Add(this.encAudCodec);
-            this.tabPage2.Controls.Add(this.label53);
-            this.tabPage2.Controls.Add(this.label58);
-            this.tabPage2.Controls.Add(this.pictureBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(668, 288);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Audio";
+            this.encAdvTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAdvTab.Controls.Add(this.label54);
+            this.encAdvTab.Controls.Add(this.panel5);
+            this.encAdvTab.Location = new System.Drawing.Point(4, 27);
+            this.encAdvTab.Name = "encAdvTab";
+            this.encAdvTab.Padding = new System.Windows.Forms.Padding(3);
+            this.encAdvTab.Size = new System.Drawing.Size(668, 288);
+            this.encAdvTab.TabIndex = 4;
+            this.encAdvTab.Text = "Advanced";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.ForeColor = System.Drawing.SystemColors.Control;
+            this.label54.Location = new System.Drawing.Point(6, 5);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(237, 15);
+            this.label54.TabIndex = 11;
+            this.label54.Text = "Below you can add your own ffmpeg filters.";
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.encAdvancedFiltersGrid);
+            this.panel5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel5.Location = new System.Drawing.Point(6, 23);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(656, 151);
+            this.panel5.TabIndex = 9;
+            // 
+            // encAdvancedFiltersGrid
+            // 
+            this.encAdvancedFiltersGrid.AllowUserToOrderColumns = true;
+            this.encAdvancedFiltersGrid.AllowUserToResizeColumns = false;
+            this.encAdvancedFiltersGrid.AllowUserToResizeRows = false;
+            this.encAdvancedFiltersGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.encAdvancedFiltersGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.encAdvancedFiltersGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAdvancedFiltersGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.encAdvancedFiltersGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.encAdvancedFiltersGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.encAdvancedFiltersGrid.Location = new System.Drawing.Point(0, 0);
+            this.encAdvancedFiltersGrid.MultiSelect = false;
+            this.encAdvancedFiltersGrid.Name = "encAdvancedFiltersGrid";
+            this.encAdvancedFiltersGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.encAdvancedFiltersGrid.RowHeadersWidth = 51;
+            this.encAdvancedFiltersGrid.Size = new System.Drawing.Size(656, 151);
+            this.encAdvancedFiltersGrid.TabIndex = 1;
+            // 
+            // encAudTab
+            // 
+            this.encAudTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAudTab.Controls.Add(this.encAudPerTrackPanel);
+            this.encAudTab.Controls.Add(this.encAudConfMode);
+            this.encAudTab.Controls.Add(this.label39);
+            this.encAudTab.Controls.Add(this.label11);
+            this.encAudTab.Controls.Add(this.encAudChannels);
+            this.encAudTab.Controls.Add(this.encAudQuality);
+            this.encAudTab.Controls.Add(this.encAudCodec);
+            this.encAudTab.Controls.Add(this.label53);
+            this.encAudTab.Controls.Add(this.label58);
+            this.encAudTab.Controls.Add(this.pictureBox1);
+            this.encAudTab.Location = new System.Drawing.Point(4, 27);
+            this.encAudTab.Name = "encAudTab";
+            this.encAudTab.Padding = new System.Windows.Forms.Padding(3);
+            this.encAudTab.Size = new System.Drawing.Size(668, 288);
+            this.encAudTab.TabIndex = 1;
+            this.encAudTab.Text = "Audio";
             // 
             // encAudPerTrackPanel
             // 
@@ -1354,19 +1412,19 @@ namespace Nmkoder.Forms
             this.toolTip.SetToolTip(this.pictureBox1, "Base bitrate for Stereo (2-Channel).\r\nFor any other channel count (like 5.1), a m" +
         "ultiplier will be used on this value.");
             // 
-            // tabPage1
+            // encSubsTab
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage1.Controls.Add(this.encSubBurn);
-            this.tabPage1.Controls.Add(this.label25);
-            this.tabPage1.Controls.Add(this.encSubCodec);
-            this.tabPage1.Controls.Add(this.label10);
-            this.tabPage1.Location = new System.Drawing.Point(4, 27);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(668, 288);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Subtitles";
+            this.encSubsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encSubsTab.Controls.Add(this.encSubBurn);
+            this.encSubsTab.Controls.Add(this.label25);
+            this.encSubsTab.Controls.Add(this.encSubCodec);
+            this.encSubsTab.Controls.Add(this.label10);
+            this.encSubsTab.Location = new System.Drawing.Point(4, 27);
+            this.encSubsTab.Name = "encSubsTab";
+            this.encSubsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.encSubsTab.Size = new System.Drawing.Size(668, 288);
+            this.encSubsTab.TabIndex = 2;
+            this.encSubsTab.Text = "Subtitles";
             // 
             // encSubBurn
             // 
@@ -3074,16 +3132,20 @@ namespace Nmkoder.Forms
             this.quickConvertPage.ResumeLayout(false);
             this.quickConvertPage.PerformLayout();
             this.quickEncTabControl.ResumeLayout(false);
-            this.encVid.ResumeLayout(false);
-            this.encVid.PerformLayout();
+            this.encVidTab.ResumeLayout(false);
+            this.encVidTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.encVidQuality)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.encAdvTab.ResumeLayout(false);
+            this.encAdvTab.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.encAdvancedFiltersGrid)).EndInit();
+            this.encAudTab.ResumeLayout(false);
+            this.encAudTab.PerformLayout();
             this.encAudPerTrackPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.encAudQuality)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.encSubsTab.ResumeLayout(false);
+            this.encSubsTab.PerformLayout();
             this.encMetaTab.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).EndInit();
@@ -3148,9 +3210,9 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.PictureBox thumbnail;
         private System.Windows.Forms.TextBox streamDetails;
         private HTAlt.WinForms.HTTabControl quickEncTabControl;
-        private System.Windows.Forms.TabPage encVid;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage encVidTab;
+        private System.Windows.Forms.TabPage encAudTab;
+        private System.Windows.Forms.TabPage encSubsTab;
         private System.Windows.Forms.TextBox outputPath;
         private System.Windows.Forms.ComboBox containers;
         private System.Windows.Forms.Label label51;
@@ -3341,6 +3403,10 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.DataGridView av1anAdvancedFiltersGrid;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel streamListBlockPanel;
+        private System.Windows.Forms.TabPage encAdvTab;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.DataGridView encAdvancedFiltersGrid;
     }
 }
 

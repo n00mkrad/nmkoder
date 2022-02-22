@@ -186,22 +186,6 @@ namespace Nmkoder.UI.Tasks
             CodecUtils.VideoCodec vCodec = (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
             CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.encAudCodecBox.SelectedIndex;
             CodecUtils.SubtitleCodec sCodec = (CodecUtils.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
-            IEncoder encV = CodecUtils.GetCodec(vCodec);
-            IEncoder encA = CodecUtils.GetCodec(aCodec);
-            IEncoder encS = CodecUtils.GetCodec(sCodec);
-
-            Containers.Container c = (Containers.Container)form.ffmpegContainerBox.SelectedIndex;
-
-            // if (!(Containers.ContainerSupports(c, encV) && Containers.ContainerSupports(c, encA) && Containers.ContainerSupports(c, encS)))
-            // {
-            //     Containers.Container supported = Containers.GetSupportedContainer(encV, encA, encS);
-            // 
-            //     for (int i = 0; i < form.ffmpegContainerBox.Items.Count; i++)
-            //         if (form.ffmpegContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-            //             form.ffmpegContainerBox.SelectedIndex = i;
-            // 
-            //     Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{encA.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
-            // }
 
             bool fixedFormat = CodecUtils.GetCodec(vCodec).IsFixedFormat;
 
@@ -500,6 +484,16 @@ namespace Nmkoder.UI.Tasks
 
         #endregion
 
+        public static void InitAdvFilterGrid()
+        {
+            DataGridView grid = Program.mainForm.EncAdvancedFiltersGrid;
+            grid.Rows.Clear();
+            grid.Columns.Clear();
+            grid.Columns.Add("0", "Filter");
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
+            grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);
+        }
+
         #region Get Args
 
         public static string GetMuxingArgsFromUi()
@@ -546,12 +540,20 @@ namespace Nmkoder.UI.Tasks
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));
 
+            filters.AddRange(GetCustomFilters());
+
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 
             if (filters.Count > 0)
                 return $"-vf {string.Join(",", filters)}";
             else
                 return "";
+        }
+
+        private static List<string> GetCustomFilters()
+        {
+            DataGridView grid = Program.mainForm.EncAdvancedFiltersGrid;
+            return grid.Rows.Cast<DataGridViewRow>().ToList().Select(x => (string)x.Cells[0].Value).Where(x => x != null).ToList();
         }
 
         public static string GetOutPath (IEncoder c)

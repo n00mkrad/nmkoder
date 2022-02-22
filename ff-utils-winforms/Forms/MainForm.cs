@@ -62,6 +62,7 @@ namespace Nmkoder.Forms
             if (Paths.GetExe().Length > 150)
                 Logger.Log($"Warning: Nmkoder's installation path is very long ({Paths.GetExe().Length} characters) - This can lead to problems. It is recommended to move it to a higher directory to reduce the path length.");
 
+            QuickConvertUi.InitAdvFilterGrid();
             Av1anUi.InitAdvFilterGrid();
         }
 

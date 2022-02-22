@@ -368,7 +368,6 @@ namespace Nmkoder.UI.Tasks
             DataGridView grid = Program.mainForm.Av1anAdvancedFiltersGrid;
             grid.Rows.Clear();
             grid.Columns.Clear();
-            grid.Columns.Clear();
             grid.Columns.Add("0", "Filter");
             grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill);
             grid.Columns.Cast<DataGridViewColumn>().ToList().ForEach(x => x.SortMode = DataGridViewColumnSortMode.NotSortable);

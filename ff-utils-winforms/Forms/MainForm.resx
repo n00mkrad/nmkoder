@@ -124,6 +124,9 @@
     <value>Below you can modify more advanced encoder settings. If a field is too small, hover over it to show the full text.
 Cells in the "Value" column can be edited by either pressing F2 or typing while a cell is selected.</value>
   </data>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="checkItemsContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>107, 17</value>
   </metadata>

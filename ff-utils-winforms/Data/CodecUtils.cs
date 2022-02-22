@@ -92,9 +92,6 @@ namespace Nmkoder.Data
 
             List<AudioStream> allAudStreams = allEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
             List<AudioStream> checkedAudStreams = checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Audio).Select(x => (AudioStream)x.Stream).ToList();
-
-            if(RunTask.currentFileListMode == RunTask.FileListMode.Batch)
-                allAudStreams = checkedAudStreams = TrackList.current.File.AudioStreams;
             
             List<AudioConfigurationEntry> audioConf = TrackList.currentAudioConfig != null ? TrackList.currentAudioConfig.GetConfig(mf) : null;
             bool perTrack = Program.mainForm.encAudConfModeBox.SelectedIndex == 1;

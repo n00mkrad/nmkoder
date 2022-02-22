@@ -30,7 +30,7 @@ namespace Nmkoder.Forms
 
         public void RefreshStreamListUi()
         {
-            string note = "Stream selection is not available in Batch Processing Mode.";
+            string note = "Manual track selection is not available in Batch Processing Mode.";
 
             if (RunTask.currentFileListMode == RunTask.FileListMode.Batch)
                 formatInfo.Text = note;

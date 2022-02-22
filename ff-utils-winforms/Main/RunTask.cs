@@ -110,29 +110,32 @@ namespace Nmkoder.Main
             TrackList.ClearCurrentFile();
             ListView fileList = Program.mainForm.fileListBox;
 
-            ListViewItem[] taskItems = new ListViewItem[fileList.Items.Count];
-            fileList.Items.CopyTo(taskItems, 0);
+            ListViewItem[] taskFileListItems = new ListViewItem[fileList.Items.Count];
+            fileList.Items.CopyTo(taskFileListItems, 0);
 
             runningBatch = true;
             int finishedTasks = 0;
             NmkdStopwatch sw = new NmkdStopwatch();
 
-            for (int i = 0; i < taskItems.Length; i++)
+            for (int i = 0; i < taskFileListItems.Length; i++)
             {
                 if (canceled)
                     break;
 
-                FileListEntry entry = (FileListEntry)taskItems[i].Tag;
-                Logger.Log($"Queue: Starting task {i + 1}/{taskItems.Length} for {entry.File.Name}.");
+                FileListEntry entry = (FileListEntry)taskFileListItems[i].Tag;
+                Logger.Log($"Queue: Starting task {i + 1}/{taskFileListItems.Length} for {entry.File.Name}.");
                 TrackList.ClearCurrentFile();
-                await TrackList.SetAsMainFile(taskItems[i], false, false); // Load file info
+                await TrackList.SetAsMainFile(taskFileListItems[i], false, false); // Load file info
+                await TrackList.AddStreamsToList(((FileListEntry)taskFileListItems[i].Tag).File, taskFileListItems[i].BackColor, true); // Load tracks into list (readonly for user)
                 await Start(batchTask); // Run task
-                finishedTasks++;
+
+                if (!canceled)
+                    finishedTasks++;
             }
 
             runningBatch = false;
 
-            Logger.Log($"Queue: Completed {finishedTasks}/{taskItems.Length} tasks{(canceled ? " (Canceled)" : "")}. Total time: {sw}");
+            Logger.Log($"Queue: Completed {finishedTasks}/{taskFileListItems.Length} tasks{(canceled ? " (Canceled)" : "")}. Total time: {sw}");
         }
 
         public static bool RunInstantly()

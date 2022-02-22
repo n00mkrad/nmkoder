@@ -14,6 +14,7 @@ using Nmkoder.Data.Ui;
 using Paths = Nmkoder.Data.Paths;
 using Nmkoder.OS;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Nmkoder.Forms
 {
@@ -139,8 +140,22 @@ namespace Nmkoder.Forms
         {
             Logger.Log($"SetWorking({state})", true);
             SetProgress(-1);
-            Control[] controlsToDisable = new Control[] { runBtn /* runStepBtn, stepSelector, settingsBtn */ };
-            Control[] controlsToHide = new Control[] { runBtn /* runBtn, runStepBtn, stepSelector */ };
+
+            List<Control> controlsToDisable = new List<Control> { runBtn /* runStepBtn, stepSelector, settingsBtn */ };
+            List<Control> controlsToHide = new List<Control> { runBtn /* runBtn, runStepBtn, stepSelector */ };
+
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Batch)
+            {
+                controlsToDisable.AddRange(new Control[] { trackListDefaultAudio, trackListDefaultSubs });
+                controlsToHide.AddRange(new Control[] { trackListCheckTracksBtn, trackListSortTracksBtn, trackListMoveUpBtn, trackListMoveDownBtn, fileListMoveUpBtn, fileListMoveDownBtn });
+
+                //Program.mainForm.streamList.CheckBoxes = !state;
+                streamListBlockPanel.Visible = state;
+
+                if (!state)
+                    streamList.Items.Clear();
+            }
+
             progressCircle.Visible = state;
             busyControlsPanel.Visible = state;
 
@@ -150,7 +165,6 @@ namespace Nmkoder.Forms
             foreach (Control c in controlsToHide)
                 c.Visible = !state;
 
-            //busyControlsPanel.Enabled = allowCancel;
             Program.busy = state;
         }
 

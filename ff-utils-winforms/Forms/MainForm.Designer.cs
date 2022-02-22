@@ -54,6 +54,7 @@ namespace Nmkoder.Forms
             this.fileListMoveDownBtn = new System.Windows.Forms.Button();
             this.addTracksFromFileBtn = new System.Windows.Forms.Button();
             this.streamListPage = new Cyotek.Windows.Forms.TabListPage();
+            this.streamListBlockPanel = new System.Windows.Forms.Panel();
             this.trackListExtractTracksBtn = new System.Windows.Forms.Button();
             this.trackListSortTracksBtn = new System.Windows.Forms.Button();
             this.trackListCheckTracksBtn = new System.Windows.Forms.Button();
@@ -579,6 +580,7 @@ namespace Nmkoder.Forms
             // 
             // streamListPage
             // 
+            this.streamListPage.Controls.Add(this.streamListBlockPanel);
             this.streamListPage.Controls.Add(this.trackListExtractTracksBtn);
             this.streamListPage.Controls.Add(this.trackListSortTracksBtn);
             this.streamListPage.Controls.Add(this.trackListCheckTracksBtn);
@@ -594,6 +596,15 @@ namespace Nmkoder.Forms
             this.streamListPage.Name = "streamListPage";
             this.streamListPage.Size = new System.Drawing.Size(682, 382);
             this.streamListPage.Text = "Track List";
+            // 
+            // streamListBlockPanel
+            // 
+            this.streamListBlockPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.streamListBlockPanel.Location = new System.Drawing.Point(3, 57);
+            this.streamListBlockPanel.Name = "streamListBlockPanel";
+            this.streamListBlockPanel.Size = new System.Drawing.Size(620, 211);
+            this.streamListBlockPanel.TabIndex = 55;
+            this.streamListBlockPanel.Visible = false;
             // 
             // trackListExtractTracksBtn
             // 
@@ -3329,6 +3340,7 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView av1anAdvancedFiltersGrid;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel streamListBlockPanel;
     }
 }
 

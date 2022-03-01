@@ -110,7 +110,7 @@ namespace Nmkoder.Forms
             this.confirmBtn.Location = new System.Drawing.Point(12, 163);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(462, 23);
-            this.confirmBtn.TabIndex = 73;
+            this.confirmBtn.TabIndex = 5;
             this.confirmBtn.Text = "OK";
             this.confirmBtn.UseVisualStyleBackColor = false;
             this.confirmBtn.Click += new System.EventHandler(this.confirmBtn_Click);
@@ -122,7 +122,7 @@ namespace Nmkoder.Forms
             this.cropTop.Location = new System.Drawing.Point(250, 13);
             this.cropTop.Name = "cropTop";
             this.cropTop.Size = new System.Drawing.Size(110, 20);
-            this.cropTop.TabIndex = 74;
+            this.cropTop.TabIndex = 0;
             this.cropTop.ValueChanged += new System.EventHandler(this.CropBotTopChanged);
             // 
             // cropBot
@@ -132,7 +132,7 @@ namespace Nmkoder.Forms
             this.cropBot.Location = new System.Drawing.Point(366, 13);
             this.cropBot.Name = "cropBot";
             this.cropBot.Size = new System.Drawing.Size(110, 20);
-            this.cropBot.TabIndex = 75;
+            this.cropBot.TabIndex = 1;
             this.cropBot.ValueChanged += new System.EventHandler(this.CropBotTopChanged);
             // 
             // cropRight
@@ -142,7 +142,7 @@ namespace Nmkoder.Forms
             this.cropRight.Location = new System.Drawing.Point(366, 43);
             this.cropRight.Name = "cropRight";
             this.cropRight.Size = new System.Drawing.Size(110, 20);
-            this.cropRight.TabIndex = 77;
+            this.cropRight.TabIndex = 3;
             this.cropRight.ValueChanged += new System.EventHandler(this.CropLeftRightChanged);
             // 
             // cropLeft
@@ -152,7 +152,7 @@ namespace Nmkoder.Forms
             this.cropLeft.Location = new System.Drawing.Point(250, 43);
             this.cropLeft.Name = "cropLeft";
             this.cropLeft.Size = new System.Drawing.Size(110, 20);
-            this.cropLeft.TabIndex = 76;
+            this.cropLeft.TabIndex = 2;
             this.cropLeft.ValueChanged += new System.EventHandler(this.CropLeftRightChanged);
             // 
             // cropAreaH
@@ -164,6 +164,7 @@ namespace Nmkoder.Forms
             this.cropAreaH.Name = "cropAreaH";
             this.cropAreaH.Size = new System.Drawing.Size(110, 20);
             this.cropAreaH.TabIndex = 79;
+            this.cropAreaH.TabStop = false;
             // 
             // cropAreaW
             // 
@@ -174,6 +175,7 @@ namespace Nmkoder.Forms
             this.cropAreaW.Name = "cropAreaW";
             this.cropAreaW.Size = new System.Drawing.Size(110, 20);
             this.cropAreaW.TabIndex = 78;
+            this.cropAreaW.TabStop = false;
             // 
             // cropAreaY
             // 
@@ -184,6 +186,7 @@ namespace Nmkoder.Forms
             this.cropAreaY.Name = "cropAreaY";
             this.cropAreaY.Size = new System.Drawing.Size(110, 20);
             this.cropAreaY.TabIndex = 81;
+            this.cropAreaY.TabStop = false;
             // 
             // cropAreaX
             // 
@@ -194,6 +197,7 @@ namespace Nmkoder.Forms
             this.cropAreaX.Name = "cropAreaX";
             this.cropAreaX.Size = new System.Drawing.Size(110, 20);
             this.cropAreaX.TabIndex = 80;
+            this.cropAreaX.TabStop = false;
             // 
             // resetBtn
             // 
@@ -205,7 +209,7 @@ namespace Nmkoder.Forms
             this.resetBtn.Location = new System.Drawing.Point(12, 134);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(462, 23);
-            this.resetBtn.TabIndex = 82;
+            this.resetBtn.TabIndex = 4;
             this.resetBtn.Text = "Reset";
             this.resetBtn.UseVisualStyleBackColor = false;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);

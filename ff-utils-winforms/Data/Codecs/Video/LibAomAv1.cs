@@ -12,7 +12,7 @@ namespace Nmkoder.Data.Codecs
         public string FriendlyName { get; } = "AV1 (AOM-AV1)";
         public string[] Presets { get; } = new string[] { "0", "1", "2", "3", "4", "5", "6" };
         public int PresetDefault { get; } = 6;
-        public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le" };
+        public string[] ColorFormats { get; } = new string[] { "yuv420p", "yuv420p10le", "yuv422p", "yuv422p10le", "yuv444p", "yuv444p10le" };
         public int ColorFormatDefault { get; } = 1;
         public int QMin { get; } = 0;
         public int QMax { get; } = 63;

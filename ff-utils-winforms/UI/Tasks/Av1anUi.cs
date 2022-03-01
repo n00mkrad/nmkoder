@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Nmkoder.Data;
 using Nmkoder.Data.Codecs;
+using Nmkoder.Data.Colors;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -166,8 +167,8 @@ namespace Nmkoder.UI.Tasks
             form.av1anColorsBox.Items.Clear();
 
             if (enc.ColorFormats != null)
-                foreach (string p in enc.ColorFormats)
-                    form.av1anColorsBox.Items.Add(p.ToUpper()); // Add every pix_fmt to the dropdown
+                foreach (PixelFormats p in enc.ColorFormats)
+                    form.av1anColorsBox.Items.Add(PixFmtUtils.GetFormat(p).FriendlyName); // Add every pix_fmt to the dropdown
 
             if (form.av1anColorsBox.Items.Count > 0)
                 form.av1anColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt

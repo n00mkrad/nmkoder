@@ -1,4 +1,7 @@
 ﻿using Nmkoder.Data.Codecs;
+using Nmkoder.Data.Codecs.Audio;
+using Nmkoder.Data.Codecs.Subs;
+using Nmkoder.Data.Codecs.Video;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -58,7 +61,7 @@ namespace Nmkoder.Data
             if (c == AudioCodec.Aac) return new Aac();
             if (c == AudioCodec.Opus) return new Opus();
             if (c == AudioCodec.Vorbis) return new Vorbis();
-            if (c == AudioCodec.Eac3) return new EAc3();
+            if (c == AudioCodec.Eac3) return new Eac3();
             if (c == AudioCodec.Mp3) return new Mp3();
             if (c == AudioCodec.Flac) return new Flac();
             return null;

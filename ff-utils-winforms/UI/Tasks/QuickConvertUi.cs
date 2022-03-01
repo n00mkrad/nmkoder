@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Data.Codecs;
+using Nmkoder.Data.Colors;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -85,7 +86,7 @@ namespace Nmkoder.UI.Tasks
             Program.mainForm.encVidQualityBox.Enabled = !enc.DoesNotEncode && enc.QMin != enc.QMax;
             Program.mainForm.encQualModeBox.Enabled = !enc.DoesNotEncode && !noRateControl;
             Program.mainForm.encVidPresetBox.Enabled = !enc.DoesNotEncode && enc.Presets.Length > 0;
-            Program.mainForm.encVidColorsBox.Enabled = !enc.DoesNotEncode && enc.ColorFormats.Length > 0;
+            Program.mainForm.encVidColorsBox.Enabled = !enc.DoesNotEncode && enc.ColorFormats != null && enc.ColorFormats.Count > 0;
             Program.mainForm.encVidFpsBox.Enabled = !enc.DoesNotEncode;
             Program.mainForm.encScaleBoxW.Enabled = Program.mainForm.encScaleBoxH.Enabled = !enc.DoesNotEncode;
             Program.mainForm.encCropModeBox.Enabled = !enc.DoesNotEncode;
@@ -150,8 +151,8 @@ namespace Nmkoder.UI.Tasks
             form.encVidColorsBox.Items.Clear();
 
             if (enc.ColorFormats != null)
-                foreach (string p in enc.ColorFormats)
-                    form.encVidColorsBox.Items.Add(p.ToUpper()); // Add every pix_fmt to the dropdown
+                foreach (PixelFormats p in enc.ColorFormats)
+                    form.encVidColorsBox.Items.Add(PixFmtUtils.GetFormat(p).FriendlyName); // Add every pix_fmt to the dropdown
 
             if (form.encVidColorsBox.Items.Count > 0)
                 form.encVidColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt

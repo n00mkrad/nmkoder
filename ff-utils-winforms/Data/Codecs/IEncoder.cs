@@ -15,7 +15,7 @@ namespace Nmkoder.Data.Codecs
         string FriendlyName { get; }
         string[] Presets { get; }
         int PresetDefault { get; }
-        string[] ColorFormats { get; }
+        List<Colors.PixelFormats> ColorFormats { get; }
         int ColorFormatDefault { get; }
         int QMin { get; }
         int QMax { get; }

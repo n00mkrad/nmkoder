@@ -245,7 +245,7 @@ namespace Nmkoder.UI.Tasks
                 dict.Add("q", form.encVidQualityBox.Value.ToString());
                 
             dict.Add("preset", form.encVidPresetBox.Text.ToLower());
-            dict.Add("pixFmt", form.encVidColorsBox.Text.ToLower());
+            dict.Add("pixFmt", PixFmtUtils.GetFormat(CodecUtils.GetCodec((CodecUtils.VideoCodec)Program.mainForm.encVidCodecsBox.SelectedIndex).ColorFormats[Program.mainForm.encVidColorsBox.SelectedIndex]).Name);
             dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
             //dict.Add("custom", form.customArgsOutBox.Text.Trim());
 

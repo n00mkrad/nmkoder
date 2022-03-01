@@ -19,10 +19,9 @@ namespace Nmkoder.Data.Colors
             else if (fmt == PF.Yuv420P10) name = "yuv420p10le";
             else if (fmt == PF.Yuv422P8) name = "yuv422p10le";
             else if (fmt == PF.Yuv422P10) name = "yuv422p10le";
-            else if (fmt == PF.Yuv444P8) name = "yuv444p8le";
+            else if (fmt == PF.Yuv444P8) name = "yuv444p";
             else if (fmt == PF.Yuv444P10) name = "yuv444p10le";
             else if (fmt == PF.P010) name = "p010le";
-            else if (fmt == PF.P016) name = "p016le";
             else if (fmt == PF.Rgb24) name = "rgb24";
             else if (fmt == PF.Rgba) name = "rgba";
             else name = "NOT_IMPLEMENTED";
@@ -36,11 +35,11 @@ namespace Nmkoder.Data.Colors
             int depth = 8;
 
             if (fmt == PF.Yuv420P10 || fmt == PF.Yuv422P10 || fmt == PF.Yuv444P10 || fmt == PF.P010) depth = 10;
-            else if (fmt == PF.P016) depth = 16;
+            //else if (fmt == PF.P016) depth = 16;
 
             int[] subsampling = null;
 
-            if (fmt == PF.Yuv420P8 || fmt == PF.Yuva420P8 || fmt == PF.Yuv420P10 || fmt == PF.P010 || fmt == PF.P016) subsampling = new int[] { 4, 2, 0 };
+            if (fmt == PF.Yuv420P8 || fmt == PF.Yuva420P8 || fmt == PF.Yuv420P10 || fmt == PF.P010) subsampling = new int[] { 4, 2, 0 };
             else if (fmt == PF.Yuv422P8 || fmt == PF.Yuv422P10) subsampling = new int[] { 4, 2, 2 };
             else if (fmt == PF.Yuv444P8 || fmt == PF.Yuv444P10) subsampling = new int[] { 4, 4, 4 };
 

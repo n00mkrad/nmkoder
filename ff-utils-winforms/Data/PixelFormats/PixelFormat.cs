@@ -27,5 +27,5 @@ namespace Nmkoder.Data.Colors
         }
     }
 
-    public enum PixelFormats { Yuv420P8, Yuva420P8, Yuv420P10, Yuv422P8, Yuv422P10, Yuv444P8, Yuv444P10, P010, P016, Rgb24, Rgba }
+    public enum PixelFormats { Yuv420P8, Yuva420P8, Yuv420P10, Yuv422P8, Yuv422P10, Yuv444P8, Yuv444P10, P010, Rgb24, Rgba }
 }

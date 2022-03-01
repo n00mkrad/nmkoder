@@ -43,9 +43,11 @@ namespace Nmkoder.Media
             }
 
             string lineWithoutPath = RemoveStringsFromLine(line, ignoreStrings);
-            string log = $"Last 4 log lines:\n{string.Join(Environment.NewLine, Logger.GetSessionLogLastLines("ffmpeg", 4))}"; 
+            string log = $"Last 4 log lines:\n{string.Join(Environment.NewLine, Logger.GetSessionLogLastLines("ffmpeg", 4))}";
 
-            if (lineWithoutPath.Contains("Error ") || lineWithoutPath.Contains("Unable to ") || lineWithoutPath.Contains("Could not open file"))
+            List<string> genericErrors = new List<string>() { "Error ", "Unable to ", "Could not open file", "Failed " };
+
+            if (genericErrors.Any(x => lineWithoutPath.Contains(x)))
             {
                 RunTask.Cancel($"Error: {line}\n\n{log}");
                 return;
@@ -88,6 +90,12 @@ namespace Nmkoder.Media
             }
 
             if (lineWithoutPath.Contains("Width and height of input videos must be same"))
+            {
+                RunTask.Cancel($"Error: {line}");
+                return;
+            }
+
+            if (lineWithoutPath.Contains("Unknown pixel format"))
             {
                 RunTask.Cancel($"Error: {line}");
                 return;

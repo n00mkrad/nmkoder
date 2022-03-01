@@ -238,7 +238,7 @@ namespace Nmkoder.UI.Tasks
             dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
             dict.Add("q", form.av1anQualityUpDown.Value.ToString());
             dict.Add("preset", form.av1anPresetBox.Text.ToLower());
-            dict.Add("pixFmt", form.av1anColorsBox.Text.ToLower());
+            dict.Add("pixFmt", PixFmtUtils.GetFormat((PixelFormats)Enum.Parse(typeof(PixelFormats), form.av1anColorsBox.Text)).Name);
             dict.Add("grainSynthStrength", form.av1anGrainSynthStrengthUpDown.Value.ToString());
             dict.Add("grainSynthDenoise", form.av1anGrainSynthDenoiseBox.Checked.ToString());
             dict.Add("threads", form.av1anThreadsUpDown.Value.ToString());

@@ -127,7 +127,7 @@ namespace Nmkoder.Data.Codecs.Video
         public string FriendlyName { get; } = "H.265 / HEVC (NVIDIA NVENC)";
         public string[] Presets { get; } = new string[] { "p7", "p6", "p5", "p4", "p3", "p2", "p1" };
         public int PresetDefault { get; } = 0;
-        public List<PixelFormats> ColorFormats { get; } = new List<PixelFormats>() { PixelFormats.Yuv420P8, PixelFormats.Yuv444P8, PixelFormats.P010, PixelFormats.P016 };
+        public List<PixelFormats> ColorFormats { get; } = new List<PixelFormats>() { PixelFormats.Yuv420P8, PixelFormats.Yuv444P8, PixelFormats.P010 };
         public int ColorFormatDefault { get; } = 0;
         public int QMin { get; } = 0;
         public int QMax { get; } = 51;

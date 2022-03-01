@@ -98,6 +98,7 @@ namespace Nmkoder.Forms
             this.label48 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.encAdvTab = new System.Windows.Forms.TabPage();
+            this.label55 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.encAdvancedFiltersGrid = new System.Windows.Forms.DataGridView();
@@ -245,6 +246,7 @@ namespace Nmkoder.Forms
             this.sortTracksByTitleZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortTracksByCodecAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortTracksByCodecZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.encTrimConfBtn = new HTAlt.WinForms.HTButton();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -1197,6 +1199,8 @@ namespace Nmkoder.Forms
             // encAdvTab
             // 
             this.encAdvTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encAdvTab.Controls.Add(this.encTrimConfBtn);
+            this.encAdvTab.Controls.Add(this.label55);
             this.encAdvTab.Controls.Add(this.label54);
             this.encAdvTab.Controls.Add(this.panel5);
             this.encAdvTab.Location = new System.Drawing.Point(4, 27);
@@ -1206,11 +1210,22 @@ namespace Nmkoder.Forms
             this.encAdvTab.TabIndex = 4;
             this.encAdvTab.Text = "Advanced";
             // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.ForeColor = System.Drawing.Color.White;
+            this.label55.Location = new System.Drawing.Point(5, 10);
+            this.label55.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(30, 15);
+            this.label55.TabIndex = 18;
+            this.label55.Text = "Trim";
+            // 
             // label54
             // 
             this.label54.AutoSize = true;
             this.label54.ForeColor = System.Drawing.SystemColors.Control;
-            this.label54.Location = new System.Drawing.Point(6, 5);
+            this.label54.Location = new System.Drawing.Point(5, 36);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(237, 15);
             this.label54.TabIndex = 11;
@@ -1220,7 +1235,7 @@ namespace Nmkoder.Forms
             // 
             this.panel5.Controls.Add(this.encAdvancedFiltersGrid);
             this.panel5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel5.Location = new System.Drawing.Point(6, 23);
+            this.panel5.Location = new System.Drawing.Point(6, 63);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(656, 151);
             this.panel5.TabIndex = 9;
@@ -3097,6 +3112,24 @@ namespace Nmkoder.Forms
             this.sortTracksByCodecZAToolStripMenuItem.Text = "Sort Tracks By Codec (Z-A)";
             this.sortTracksByCodecZAToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByCodecZAToolStripMenuItem_Click);
             // 
+            // encTrimConfBtn
+            // 
+            this.encTrimConfBtn.AutoColor = true;
+            this.encTrimConfBtn.ButtonImage = null;
+            this.encTrimConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encTrimConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.encTrimConfBtn.DrawImage = false;
+            this.encTrimConfBtn.ForeColor = System.Drawing.Color.White;
+            this.encTrimConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.encTrimConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.encTrimConfBtn.Location = new System.Drawing.Point(362, 6);
+            this.encTrimConfBtn.Name = "encTrimConfBtn";
+            this.encTrimConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.encTrimConfBtn.Size = new System.Drawing.Size(300, 23);
+            this.encTrimConfBtn.TabIndex = 67;
+            this.encTrimConfBtn.Text = "Configure...";
+            this.encTrimConfBtn.Click += new System.EventHandler(this.encTrimConfBtn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3407,6 +3440,8 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.DataGridView encAdvancedFiltersGrid;
+        private System.Windows.Forms.Label label55;
+        private HTAlt.WinForms.HTButton encTrimConfBtn;
     }
 }
 

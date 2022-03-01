@@ -254,7 +254,7 @@ namespace Nmkoder.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "CropForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CropForm";
+            this.Text = "Crop";
             this.Load += new System.EventHandler(this.CropForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cropTop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cropBot)).EndInit();

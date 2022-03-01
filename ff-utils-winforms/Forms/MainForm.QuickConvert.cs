@@ -37,6 +37,7 @@ namespace Nmkoder.Forms
         public TextBox encScaleBoxW { get { return encScaleW; } }
         public TextBox encScaleBoxH { get { return encScaleH; } }
         public ComboBox encCropModeBox { get { return encCropMode; } }
+        // Quick Convert - Advanced
         public DataGridView EncAdvancedFiltersGrid { get { return encAdvancedFiltersGrid; } }
         // Quick Convert - Audio
         public ComboBox encAudCodecBox { get { return encAudCodec; } }

@@ -54,6 +54,26 @@ namespace Nmkoder.Extensions
             }
         }
 
+        public static long GetLong(this string str)
+        {
+            if (str == null || str.Length < 1)
+                return 0;
+
+            str = str.Trim();
+
+            try
+            {
+                if (str.Length >= 2 && str[0] == '-' && str[1] != '-')
+                    return long.Parse("-" + str.TrimNumbers());
+                else
+                    return long.Parse(str.TrimNumbers());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public static bool GetBool(this string str)
         {
             try
@@ -113,6 +133,13 @@ namespace Nmkoder.Extensions
         }
 
         public static int Clamp(this int i, int min, int max)
+        {
+            if (i < min) i = min;
+            if (i > max) i = max;
+            return i;
+        }
+
+        public static long Clamp(this long i, long min, long max)
         {
             if (i < min) i = min;
             if (i > max) i = max;

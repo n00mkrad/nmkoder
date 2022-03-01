@@ -360,6 +360,12 @@
     <Compile Include="Forms\PromptForm.Designer.cs">
       <DependentUpon>PromptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TrimForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TrimForm.designer.cs">
+      <DependentUpon>TrimForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Utils\BitratePlotForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -453,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PromptForm.resx">
       <DependentUpon>PromptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TrimForm.resx">
+      <DependentUpon>TrimForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Utils\BitratePlotForm.resx">
       <DependentUpon>BitratePlotForm.cs</DependentUpon>

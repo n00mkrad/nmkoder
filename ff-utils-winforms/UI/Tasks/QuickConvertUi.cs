@@ -24,6 +24,7 @@ namespace Nmkoder.UI.Tasks
     {
         private static MainForm form;
         public static int[] currentCropValues;
+        public static TrimForm.TrimSettings currentTrim;
 
         public static void Init()
         {
@@ -496,10 +497,30 @@ namespace Nmkoder.UI.Tasks
 
         #region Get Args
 
-        public static string GetMuxingArgsFromUi()
+        public static string GetMuxingArgs()
         {
             Containers.Container c = (Containers.Container)Program.mainForm.ffmpegContainerBox.SelectedIndex;
             return Containers.GetMuxingArgs(c);
+        }
+
+        public static string GetMiscInputArgs()
+        {
+            List<string> args = new List<string>();
+
+            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode != TrimForm.TrimSettings.Mode.FrameNumbers)
+                args.Add(currentTrim.StartArg);
+
+            return string.Join(" ", args);
+        }
+
+        public static string GetMiscOutputArgs()
+        {
+            List<string> args = new List<string>();
+
+            if (currentTrim != null && !currentTrim.IsUnset)
+                args.Add(currentTrim.DurationArg);
+
+            return string.Join(" ", args);
         }
 
         public static async Task<string> GetVideoFilterArgs(IEncoder vCodec, CodecArgs codecArgs = null)
@@ -515,6 +536,9 @@ namespace Nmkoder.UI.Tasks
 
             VideoStream vs = currFile.VideoStreams.First();
             Fraction fps = GetUiFps();
+
+            if(currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.FrameNumbers) // Check Filter: Frame Number Trim
+                filters.Add(currentTrim.StartArg);
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
                 filters.Add($"fps=fps={fps}");

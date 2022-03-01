@@ -2,6 +2,7 @@
 using Nmkoder.IO;
 using Nmkoder.Main;
 using Nmkoder.UI;
+using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
@@ -108,17 +109,29 @@ namespace Nmkoder.Media
                 if (TrackList.current == null && overrideTargetDurationMs < 0)
                     return;
 
-                long currInDuration = overrideTargetDurationMs > 0 ? overrideTargetDurationMs : (TrackList.current != null ? TrackList.current.File.DurationMs : 0);
+                long durationMs = 0;
+                
+                if(overrideTargetDurationMs > 0)
+                {
+                    durationMs = overrideTargetDurationMs;
+                }
+                else if(QuickConvertUi.currentTrim != null && !QuickConvertUi.currentTrim.IsUnset)
+                {
+                    durationMs = QuickConvertUi.currentTrim.Duration;
+                }
+                else if (TrackList.current != null)
+                {
+                    durationMs = TrackList.current.File.DurationMs;
+                }
 
-                if (currInDuration < 1)
+                if (durationMs < 1)
                 {
                     Program.mainForm.SetProgress(0);
                     return;
                 }
 
-                long total = currInDuration / 100;
-                long current = FormatUtils.TimestampToMs(ffmpegTime);
-                int progress = Convert.ToInt32(current / total);
+                long currentMs = FormatUtils.TimestampToMs(ffmpegTime);
+                int progress = (((double)currentMs / (double)durationMs) * (double)100).RoundToInt();
                 Program.mainForm.SetProgress(progress);
             }
             catch (Exception e)
@@ -129,7 +142,17 @@ namespace Nmkoder.Media
 
         static bool HideMessage(string msg)
         {
-            string[] hiddenMsgs = new string[] { "can produce invalid output", "pixel format", "provided invalid", "Non-monotonous", "not enough frames to estimate rate", "invalid dropping", "message repeated", "missing, emulating" };
+            string[] hiddenMsgs = new string[] { 
+                "can produce invalid output", 
+                "pixel format", 
+                "provided invalid", 
+                "Non-monotonous", 
+                "not enough frames to estimate rate", 
+                "invalid dropping", 
+                "message repeated", 
+                "missing, emulating",
+                "Consider increasing the value"
+            };
 
             foreach (string str in hiddenMsgs)
                 if (msg.MatchesWildcard($"*{str}*"))

@@ -49,9 +49,11 @@ namespace Nmkoder.UI.Tasks
                 string a = anyAudioStreams ? CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current.File).Arguments : "";
                 string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
                 string meta = GetMetadataArgs();
+                string miscIn = GetMiscInputArgs();
+                string miscOut = GetMiscOutputArgs();
                 string custIn = Program.mainForm.customArgsInBox.Text.Trim();
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
-                string muxing = GetMuxingArgsFromUi();
+                string muxing = GetMuxingArgs();
 
                 if (twoPass)
                 {
@@ -62,8 +64,8 @@ namespace Nmkoder.UI.Tasks
                     string v2 = codecArgsPass2.Arguments;
                     string vf2 = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgsPass2);
 
-                    args = $"{custIn} {inFiles} -map v {v1} {vf1} -f null - && ffmpeg -y -loglevel warning -stats " +
-                           $"{custIn} {inFiles} {map} {v2} {vf2} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+                    args = $"{miscIn} {custIn} {inFiles} -map v {v1} {vf1} -f null - && ffmpeg -y -loglevel warning -stats " +
+                           $"{miscIn} {custIn} {inFiles} {map} {v2} {vf2} {a} {s} {meta} {miscOut} {custOut} {muxing} {outPath.Wrap()}";
                 }
                 else
                 {
@@ -71,7 +73,7 @@ namespace Nmkoder.UI.Tasks
                     string v = anyVideoStreams ? codecArgs.Arguments : "";
                     string vf = anyVideoStreams && !vCodec.DoesNotEncode ? await GetVideoFilterArgs(vCodec, codecArgs) : "";
 
-                    args = $"{custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {custOut} {muxing} {outPath.Wrap()}";
+                    args = $"{miscIn} {custIn} {inFiles} {map} {v} {vf} {a} {s} {meta} {miscOut} {custOut} {muxing} {outPath.Wrap()}";
                 }
             }
             catch (Exception e)

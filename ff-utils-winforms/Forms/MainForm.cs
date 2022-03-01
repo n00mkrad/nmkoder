@@ -15,6 +15,7 @@ using Paths = Nmkoder.Data.Paths;
 using Nmkoder.OS;
 using System.Windows.Input;
 using System.Collections.Generic;
+using Nmkoder.Media;
 
 namespace Nmkoder.Forms
 {
@@ -480,6 +481,16 @@ namespace Nmkoder.Forms
         private void trackListExtractTracksBtn_Click(object sender, EventArgs e)
         {
             TrackList.Extract(streamList.SelectedItems[0]);
+        }
+
+        private async void encTrimConfBtn_Click(object sender, EventArgs e)
+        {
+            TrimForm form = new TrimForm(TrackList.current == null ? 0 : TrackList.current.File.DurationMs, QuickConvertUi.currentTrim);
+            form.ShowDialog();
+            QuickConvertUi.currentTrim = form.NewTrimSettings;
+
+            if(QuickConvertUi.currentTrim != null)
+                encTrimConfBtn.Text = QuickConvertUi.currentTrim.ToString();
         }
     }
 }

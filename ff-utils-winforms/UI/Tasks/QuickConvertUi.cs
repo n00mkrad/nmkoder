@@ -116,7 +116,7 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadQualityLevel(IEncoder enc)
         {
-            if(form.encQualModeBox.SelectedIndex == 0)
+            if (form.encQualModeBox.SelectedIndex == 0)
             {
                 if (enc.QMax > 0)
                     form.encVidQualityBox.Maximum = enc.QMax;
@@ -201,7 +201,7 @@ namespace Nmkoder.UI.Tasks
                 Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
                 Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(form.FfmpegOutputBox.Text.Trim(), current.ToString().ToLower());
             }
-            
+
             ValidatePath();
         }
 
@@ -212,7 +212,7 @@ namespace Nmkoder.UI.Tasks
 
             //string ext = Program.mainForm.containerBox.Text.ToLower();
 
-            if(File.Exists(Program.mainForm.FfmpegOutputBox.Text))
+            if (File.Exists(Program.mainForm.FfmpegOutputBox.Text))
                 Program.mainForm.FfmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.FfmpegOutputBox.Text);
         }
 
@@ -243,9 +243,14 @@ namespace Nmkoder.UI.Tasks
                 dict.Add("bitrate", GetVideoKbps().ToString());
             else
                 dict.Add("q", form.encVidQualityBox.Value.ToString());
-                
+
             dict.Add("preset", form.encVidPresetBox.Text.ToLower());
-            dict.Add("pixFmt", PixFmtUtils.GetFormat(CodecUtils.GetCodec((CodecUtils.VideoCodec)Program.mainForm.encVidCodecsBox.SelectedIndex).ColorFormats[Program.mainForm.encVidColorsBox.SelectedIndex]).Name);
+
+            IEncoder enc = CodecUtils.GetCodec((CodecUtils.VideoCodec)Program.mainForm.encVidCodecsBox.SelectedIndex);
+
+            if (enc.ColorFormats != null)
+                dict.Add("pixFmt", PixFmtUtils.GetFormat(enc.ColorFormats[Program.mainForm.encVidColorsBox.SelectedIndex]).Name);
+
             dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
             //dict.Add("custom", form.customArgsOutBox.Text.Trim());
 
@@ -254,7 +259,7 @@ namespace Nmkoder.UI.Tasks
 
         private static int GetVideoKbps()
         {
-            if((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
+            if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
             {
                 string br = form.encVidQualityBox.Text.ToLower().Trim();
                 if (br.EndsWith("k")) return br.GetInt() * 1024;
@@ -270,7 +275,7 @@ namespace Nmkoder.UI.Tasks
                 int audioBps = aud ? ((int)form.encAudQualUpDown.Value * 1024) * audioTracks : 0;
                 double durationSecs = TrackList.current.File.DurationMs / (double)1000;
                 float targetMbytes = form.encVidQualityBox.Text.GetFloat();
-                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024); 
+                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024);
                 int targetVidBitrate = (int)Math.Floor(targetBits / durationSecs) - audioBps; // Round down since undershooting is better than overshooting here
                 string brTotal = (((float)targetVidBitrate + audioBps) / 1024).ToString("0.0");
                 string brVid = ((float)targetVidBitrate / 1024).ToString("0");
@@ -357,7 +362,7 @@ namespace Nmkoder.UI.Tasks
             grid.Columns[2].FillWeight = 8;
         }
 
-        public static void SaveMetadata ()
+        public static void SaveMetadata()
         {
             if (TrackList.current == null)
                 return;
@@ -411,7 +416,7 @@ namespace Nmkoder.UI.Tasks
             {
                 stripStr = "-map_metadata -1";
             }
-            
+
 
             int cfg = Config.GetInt(Config.Key.metaMode);
             DataGridView grid = form.MetaGrid;
@@ -427,7 +432,7 @@ namespace Nmkoder.UI.Tasks
                 DataGridViewRow row = grid.Rows[i];
                 string trackTitle = row.Cells[0].Value?.ToString();
 
-                if (i > 0 && form.streamList.Items[i-1].Checked)
+                if (i > 0 && form.streamList.Items[i - 1].Checked)
                 {
                     if (trackTitle.ToLower().Contains("audio"))
                     {
@@ -444,7 +449,7 @@ namespace Nmkoder.UI.Tasks
             }
 
             if (cfg == 2) // 2 = Strip All
-                return $"{stripStr} {string.Join(" ", argsDispo)}"; 
+                return $"{stripStr} {string.Join(" ", argsDispo)}";
 
             bool map = cfg == 0 || cfg == 1;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
             List<string> argsMeta = new List<string>();
@@ -470,7 +475,7 @@ namespace Nmkoder.UI.Tasks
 
                     if (cfg == 0 && entry.LanguageEdited.Trim() != entry.Language)
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
-                    else if(cfg == 1)
+                    else if (cfg == 1)
                         argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
                 }
             }
@@ -538,7 +543,7 @@ namespace Nmkoder.UI.Tasks
             VideoStream vs = currFile.VideoStreams.First();
             Fraction fps = GetUiFps();
 
-            if(currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.FrameNumbers) // Check Filter: Frame Number Trim
+            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.FrameNumbers) // Check Filter: Frame Number Trim
                 filters.Add(currentTrim.StartArg);
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
@@ -581,7 +586,7 @@ namespace Nmkoder.UI.Tasks
             return grid.Rows.Cast<DataGridViewRow>().ToList().Select(x => (string)x.Cells[0].Value).Where(x => x != null).ToList();
         }
 
-        public static string GetOutPath (IEncoder c)
+        public static string GetOutPath(IEncoder c)
         {
             string uiPath = Program.mainForm.FfmpegOutputBox.Text.Trim();
 

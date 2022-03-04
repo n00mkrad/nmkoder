@@ -513,7 +513,7 @@ namespace Nmkoder.UI.Tasks
         {
             List<string> args = new List<string>();
 
-            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode != TrimForm.TrimSettings.Mode.FrameNumbers)
+            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeKeyframe)
                 args.Add(currentTrim.StartArg);
 
             return string.Join(" ", args);
@@ -524,7 +524,12 @@ namespace Nmkoder.UI.Tasks
             List<string> args = new List<string>();
 
             if (currentTrim != null && !currentTrim.IsUnset)
+            {
+                if(currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeExact)
+                    args.Add(currentTrim.StartArg);
+
                 args.Add(currentTrim.DurationArg);
+            }
 
             return string.Join(" ", args);
         }

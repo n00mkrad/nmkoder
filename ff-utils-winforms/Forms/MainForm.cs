@@ -489,8 +489,7 @@ namespace Nmkoder.Forms
             form.ShowDialog();
             QuickConvertUi.currentTrim = form.NewTrimSettings;
 
-            if(QuickConvertUi.currentTrim != null)
-                encTrimConfBtn.Text = QuickConvertUi.currentTrim.ToString();
+            encTrimConfBtn.Text = QuickConvertUi.currentTrim == null ? "Configure..." : QuickConvertUi.currentTrim.ToString();
         }
     }
 }

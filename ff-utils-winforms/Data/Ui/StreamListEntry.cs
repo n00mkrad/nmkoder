@@ -46,6 +46,9 @@ namespace Nmkoder.Data.Ui
 
                 if (detailed)
                 {
+                    if (!string.IsNullOrWhiteSpace(vidStr.Language) && vidStr.Language.ToLower() != "und")
+                        items.Add(vidStr.Language.ToUpper().Trunc(maxLangChars));
+
                     items.Add($"{vidStr.Resolution.Width}x{vidStr.Resolution.Height}");
                     items.Add($"{vidStr.Rate.GetString("0.###")} FPS");
 
@@ -61,9 +64,13 @@ namespace Nmkoder.Data.Ui
                         else if (formatsCount > 1)
                             items.Add($"({MediaFile.FileCount} Files, {formatsCount} Formats)");
                     }
+                    else
+                    {
+                        items.Add($"'{vidStr.Title.Trunc(maxTitleChars - 10)}'");
+                    }
                 }
 
-                return $"{streamNum} Video {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
+                return $"{streamNum} Video {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x) && x != "''"))}";
             }
 
             if (Stream.Type == Stream.StreamType.Audio)
@@ -76,11 +83,11 @@ namespace Nmkoder.Data.Ui
                 if (detailed)
                 {
                     items.Add(audStr.Language.ToUpper().Trunc(maxLangChars));
-                    items.Add(audStr.Title.Trunc(maxTitleChars));
                     items.Add(audStr.Layout.ToTitleCase().Split('(')[0]);
+                    items.Add($"'{audStr.Title.Trunc(maxTitleChars)}'");
                 }
 
-                return $"{streamNum} Audio {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
+                return $"{streamNum} Audio {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x) && x != "''"))}";
             }
 
             if (Stream.Type == Stream.StreamType.Subtitle)
@@ -93,10 +100,10 @@ namespace Nmkoder.Data.Ui
                 if (detailed)
                 {
                     items.Add(subStr.Language.ToUpper().Trunc(maxLangChars));
-                    items.Add(subStr.Title.Trunc(maxTitleChars));
+                    items.Add($"'{subStr.Title.Trunc(maxTitleChars)}'");
                 }
 
-                return $"{streamNum} Subtitles {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
+                return $"{streamNum} Subtitles {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x) && x != "''"))}";
             }
 
             if (Stream.Type == Stream.StreamType.Data)
@@ -112,9 +119,9 @@ namespace Nmkoder.Data.Ui
                 items.Add($"({codec})");
 
                 if (detailed)
-                    items.Add(attStr.Filename);
+                    items.Add(attStr.Filename.Trunc(maxTitleChars));
 
-                return $"{streamNum} Attachment {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))}";
+                return $"{streamNum} Attachment {string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x) && x != "''"))}";
             }
 
             if (Stream.Type == Stream.StreamType.Unknown)

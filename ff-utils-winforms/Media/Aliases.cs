@@ -99,6 +99,7 @@ namespace Nmkoder.Media
             if (lower == "msrle") return "MS RLE";
             if (lower == "wmav2") return "WMAV2";
             if (lower == "wmapro") return "WMA Pro";
+            if (lower == "text") return "Text";
 
             return FormatUtils.CapsIfShort(codecName, 5);
         }

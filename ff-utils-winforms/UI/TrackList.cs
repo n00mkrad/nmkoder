@@ -166,7 +166,7 @@ namespace Nmkoder.UI
 
             List<string> lines = new List<string>();
             string ext = Path.GetExtension(mediaFile.SourcePath);
-            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileNameWithoutExtension(mediaFile.SourcePath).Trunc(90 - ext.Length) + ext : "Unknown")}");
+            lines.Add($"Source File: {(mediaFile != null ? Path.GetFileNameWithoutExtension(mediaFile.SourcePath).Trunc(85 - ext.Length) + ext : "Unknown")}");
             lines.Add($"Codec: {stream.CodecLong} ({stream.Codec})");
 
             if (stream.Type == Stream.StreamType.Video)

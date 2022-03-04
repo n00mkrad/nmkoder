@@ -338,7 +338,7 @@ namespace Nmkoder.Data.Codecs.Video
         public string FriendlyName { get; } = "PNG [Image Sequence]";
         public string[] Presets { get; } = new string[] { };
         public int PresetDefault { get; }
-        public List<PixelFormats> ColorFormats { get; } = new List<PixelFormats>() { PixelFormats.Rgb24, PixelFormats.Rgba };
+        public List<PixelFormats> ColorFormats { get; } = new List<PixelFormats>() { PixelFormats.Rgb24, PixelFormats.Rgba, PixelFormats.Rgb48, PixelFormats.Rgba64 };
         public int ColorFormatDefault { get; } = 0;
         public int QMin { get; } = 0;
         public int QMax { get; } = 0;

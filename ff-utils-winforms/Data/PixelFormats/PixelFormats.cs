@@ -24,18 +24,20 @@ namespace Nmkoder.Data.Colors
             else if (fmt == PF.P010) name = "p010le";
             else if (fmt == PF.Rgb24) name = "rgb24";
             else if (fmt == PF.Rgba) name = "rgba";
+            else if (fmt == PF.Rgb48) name = "rgb48be";
+            else if (fmt == PF.Rgba64) name = "rgba64be";
             else name = "NOT_IMPLEMENTED";
 
             string channels = "yuv";
 
-            if (fmt == PF.Rgb24) channels = "rgb";
-            else if (fmt == PF.Rgba) channels = "rgba";
+            if (fmt == PF.Rgb24 || fmt == PF.Rgb48) channels = "rgb";
+            else if (fmt == PF.Rgba || fmt == PF.Rgba64) channels = "rgba";
             else if (fmt == PF.Yuva420P8) channels = "yuva";
 
             int depth = 8;
 
             if (fmt == PF.Yuv420P10 || fmt == PF.Yuv422P10 || fmt == PF.Yuv444P10 || fmt == PF.P010) depth = 10;
-            //else if (fmt == PF.P016) depth = 16;
+            else if (fmt == PF.Rgb48 || fmt == PF.Rgba64) depth = 16;
 
             int[] subsampling = null;
 

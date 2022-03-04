@@ -8,6 +8,7 @@ using Nmkoder.UI.Tasks;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,17 @@ namespace Nmkoder.Main
                 MessageBox.Show("No input files in file list! Please add one or more files first.", "Error");
                 Program.mainForm.MainTabList.SelectedIndex = 0;
                 return;
+            }
+            else
+            {
+                var missingFiles = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File.SourcePath).Where(x => !File.Exists(x));
+
+                if (missingFiles.Any())
+                {
+                    MessageBox.Show($"The following files have been imported but are no longer accessible:\n\n{string.Join("\n", missingFiles)}\n\n" +
+                        $"Possibly they were deleted, moved, or renamed.\nPlease either restore them or remove them from the file list.", "Error");
+                    return;
+                }
             }
 
             bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates || taskType == TaskType.UtilOcr;

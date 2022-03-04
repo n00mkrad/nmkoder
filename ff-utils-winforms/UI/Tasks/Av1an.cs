@@ -87,10 +87,11 @@ namespace Nmkoder.UI.Tasks
                     string c = GetConcatMethodArgs();
                     string o = GetChunkOrderArgs();
                     string thr = GetThreadAffArgs();
+                    string x = CodecUtils.GetKeyIntArg(TrackList.current.File, Config.GetInt(Config.Key.DefaultKeyIntSecs), "-x ");
 
                     if (RunTask.canceled) return;
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} {x} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {

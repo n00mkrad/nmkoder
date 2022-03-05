@@ -429,11 +429,6 @@ namespace Nmkoder.Forms
 
         #region Quick Convert
 
-        private void encAudChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
-        }
-
         private void encCropMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             encCropConfBtn.Visible = encCropMode.Text.ToLower().Contains("manual");

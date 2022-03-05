@@ -86,12 +86,12 @@ namespace Nmkoder.UI.Tasks
                     string m = GetChunkGenMethod();
                     string c = GetConcatMethodArgs();
                     string o = GetChunkOrderArgs();
-                    string thr = GetThreadAffArgs();
+                    string t = GetThreadAffArgs();
                     string x = CodecUtils.GetKeyIntArg(TrackList.current.File, Config.GetInt(Config.Key.DefaultKeyIntSecs), "-x ");
 
                     if (RunTask.canceled) return;
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {thr} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} {x} -o {outPath.Wrap()}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} {x} -o {outPath.Wrap()}";
 
                     if (vmaf)
                     {
@@ -100,8 +100,8 @@ namespace Nmkoder.UI.Tasks
                         args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
                     }
 
-                    int totalThreads = w.GetInt() * thr.GetInt();
-                    Logger.Log($"Using {w} workers with {thr.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
+                    int totalThreads = w.GetInt() * t.GetInt();
+                    Logger.Log($"Using {w} workers with {t.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
                 }
                 else
                 {

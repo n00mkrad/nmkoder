@@ -55,7 +55,7 @@ namespace Nmkoder.UI.Tasks
                 string custOut = Program.mainForm.customArgsOutBox.Text.Trim();
                 string muxing = GetMuxingArgs();
 
-                if (twoPass)
+                if (twoPass && anyVideoStreams)
                 {
                     CodecArgs codecArgsPass1 = vCodec.GetArgs(videoArgs, TrackList.current.File, Pass.OneOfTwo);
                     string v1 = codecArgsPass1.Arguments;
@@ -64,7 +64,7 @@ namespace Nmkoder.UI.Tasks
                     string v2 = codecArgsPass2.Arguments;
                     string vf2 = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgsPass2);
 
-                    args = $"{miscIn} {custIn} {inFiles} -map v {v1} {vf1} -f null - && ffmpeg -y -loglevel warning -stats " +
+                    args = $"{miscIn} {custIn} {inFiles} -map v {v1} {vf1} {miscOut} {custOut} -f null - && ffmpeg -y -loglevel warning -stats " +
                            $"{miscIn} {custIn} {inFiles} {map} {v2} {vf2} {a} {s} {meta} {miscOut} {custOut} {muxing} {outPath.Wrap()}";
                 }
                 else

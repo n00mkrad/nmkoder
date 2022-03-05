@@ -77,7 +77,7 @@ namespace Nmkoder.Forms
 
             if ((QuickConvert.QualityMode)encQualMode.SelectedIndex == QuickConvert.QualityMode.TargetKbps)
             {
-                encVidQuality.Minimum = 50;
+                encVidQuality.Minimum = 10;
                 encVidQuality.Maximum = 100000;
                 encVidQuality.Value = 1500;
             }

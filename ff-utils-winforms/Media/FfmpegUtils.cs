@@ -46,6 +46,7 @@ namespace Nmkoder.Media
                     try
                     {
                         int idx = streamStr.Split(':')[1].Split('[')[0].Split('(')[0].GetInt();
+                        bool def = await GetFfprobeInfoAsync(path, showStreams, "DISPOSITION:default", idx) == "1";
 
                         if (progressBar)
                             Program.mainForm.SetProgress(FormatUtils.RatioInt(idx + 1, streamCount));
@@ -64,6 +65,7 @@ namespace Nmkoder.Media
                             Fraction fps = path.IsConcatFile() ? defaultFps : await IoUtils.GetVideoFramerate(path);
                             VideoStream vStream = new VideoStream(lang, title, codec, codecLong, pixFmt, kbits, res, sar, dar, fps);
                             vStream.Index = idx;
+                            vStream.IsDefault = def;
                             Logger.Log($"Added video stream: {vStream}", true);
                             streamList.Add(vStream);
                             continue;
@@ -83,6 +85,7 @@ namespace Nmkoder.Media
                             string layout = (await GetFfprobeInfoAsync(path, showStreams, "channel_layout", idx));
                             AudioStream aStream = new AudioStream(lang, title, codec, codecLong, kbits, sampleRate, channels, layout);
                             aStream.Index = idx;
+                            aStream.IsDefault = def;
                             Logger.Log($"Added audio stream: {aStream}", true);
                             streamList.Add(aStream);
                             continue;
@@ -97,6 +100,7 @@ namespace Nmkoder.Media
                             bool bitmap = await IsSubtitleBitmapBased(path, idx, codec);
                             SubtitleStream sStream = new SubtitleStream(lang, title, codec, codecLong, bitmap);
                             sStream.Index = idx;
+                            sStream.IsDefault = def;
                             Logger.Log($"Added subtitle stream: {sStream}", true);
                             streamList.Add(sStream);
                             continue;
@@ -108,6 +112,7 @@ namespace Nmkoder.Media
                             string codecLong = await GetFfprobeInfoAsync(path, showStreams, "codec_long_name", idx);
                             DataStream dStream = new DataStream(codec, codecLong);
                             dStream.Index = idx;
+                            dStream.IsDefault = def;
                             Logger.Log($"Added data stream: {dStream}", true);
                             streamList.Add(dStream);
                             continue;
@@ -121,13 +126,14 @@ namespace Nmkoder.Media
                             string mimeType = await GetFfprobeInfoAsync(path, showStreams, "TAG:mimetype", idx);
                             AttachmentStream aStream = new AttachmentStream(codec, codecLong, filename, mimeType);
                             aStream.Index = idx;
+                            aStream.IsDefault = def;
                             Logger.Log($"Added attachment stream: {aStream}", true);
                             streamList.Add(aStream);
                             continue;
                         }
 
                         Logger.Log($"Unknown stream (not vid/aud/sub/dat/att): {streamStr}", true);
-                        Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, Type = Stream.StreamType.Unknown };
+                        Stream stream = new Stream { Codec = "Unknown", CodecLong = "Unknown", Index = idx, IsDefault = def, Type = Stream.StreamType.Unknown };
                         streamList.Add(stream);
                     }
                     catch (Exception e)

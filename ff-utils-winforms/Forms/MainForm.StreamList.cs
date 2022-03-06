@@ -105,6 +105,15 @@ namespace Nmkoder.Forms
             if (a.Count > 0)
                 trackListDefaultAudio.SelectedIndex = 0;
 
+            for (int i = 0; i < a.Count; i++)
+            {
+                if (a[i].Stream.IsDefault)
+                {
+                    trackListDefaultAudio.SelectedIndex = i;
+                    break;
+                }
+            }
+
             trackListDefaultSubs.Items.Clear();
             trackListDefaultSubs.Items.Add($"None");
 
@@ -119,6 +128,15 @@ namespace Nmkoder.Forms
 
             if (s.Count > 0)
                 trackListDefaultSubs.SelectedIndex = 0;
+
+            for (int i = 0; i < s.Count; i++)
+            {
+                if (s[i].Stream.IsDefault)
+                {
+                    trackListDefaultSubs.SelectedIndex = i + 1; // Increment by 1 to account for the "None" entry
+                    break;
+                }
+            }
         }
 
         private void streamList_Leave(object sender, EventArgs e)

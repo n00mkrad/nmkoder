@@ -246,7 +246,7 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
-                string txtPath = Path.Combine(Paths.GetSessionDataPath(), "av1an.txt");
+                string txtPath = Path.Combine(Paths.GetSessionDataPath(), $"av1an-{DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss")}.txt");
                 List<string> lines = new List<string> { "Encoder:", args.Split(" -e ")[1].Split(' ')[0], "", "Args:", args.Split("-v \" ")[1].Split(" \"")[0] };
                 File.WriteAllLines(txtPath, lines);
                 string outPath = Path.Combine(tempFolder, "audio.mkv");                

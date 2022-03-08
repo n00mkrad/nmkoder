@@ -63,7 +63,10 @@ namespace Nmkoder.Forms
             grid.Rows.Clear();
 
             foreach (DataGridViewColumn col in grid.Columns)
+            {
                 col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
             grid.Columns[0].ReadOnly = true;
             grid.Columns[1].ReadOnly = true;

@@ -42,8 +42,11 @@ namespace Nmkoder.UI
             Av1anUi.currentCropValues = null;
         }
 
-        public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true)
+        public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true, bool setWorking = true)
         {
+            if (setWorking)
+                Program.mainForm.SetWorking(true);
+
             MediaFile mediaFile = ((FileListEntry)item.Tag).File;
 
             if (mediaFile.IsDirectory)
@@ -66,6 +69,9 @@ namespace Nmkoder.UI
             QuickConvertUi.InitFile(current.File.SourcePath);
             Av1anUi.InitFile(current.File.SourcePath);
 
+            if (setWorking)
+                Program.mainForm.SetWorking(false);
+
             if (generateThumbs)
                 Task.Run(() => ThumbnailView.GenerateThumbs(mediaFile.SourcePath)); // Generate thumbs in background
         }
@@ -86,8 +92,11 @@ namespace Nmkoder.UI
                 Logger.Log($"Found no media streams in '{mediaFile.Name}'!");
         }
 
-        public static async Task AddStreamsToList(MediaFile mediaFile, Color color, bool switchToList, bool silent = false)
+        public static async Task AddStreamsToList(MediaFile mediaFile, Color color, bool switchToList, bool silent = false, bool setWorking = true)
         {
+            if (setWorking)
+                Program.mainForm.SetWorking(true);
+
             ListView list = Program.mainForm.streamList;
             int uniqueFileCount = (from x in list.Items.Cast<ListViewItem>().Select(x => ((StreamListEntry)x.Tag).MediaFile.ImportPath) select x).Distinct().Count();
 
@@ -124,6 +133,9 @@ namespace Nmkoder.UI
             }
 
             list.EndUpdate();
+
+            if (setWorking)
+                Program.mainForm.SetWorking(false);
 
             if (switchToList && !RunTask.RunInstantly())
                 Program.mainForm.MainTabList.SelectedIndex = 1;

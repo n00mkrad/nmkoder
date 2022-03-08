@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Nmkoder.UI;
 
 namespace Nmkoder.IO
 {
@@ -603,7 +604,7 @@ namespace Nmkoder.IO
 				Logger.Log($"Can't write to {dir}! {e.Message}", errMode == ErrorMode.HiddenLog);
 
 				if (errMode == ErrorMode.Messagebox)
-					MessageBox.Show($"Can't write to {dir}!\n\n{e.Message}", "Error");
+					UiUtils.ShowMessageBox($"Can't write to {dir}!\n\n{e.Message}", UiUtils.MessageType.Error);
 
 				return false;
             }

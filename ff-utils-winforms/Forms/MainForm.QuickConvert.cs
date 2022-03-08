@@ -120,11 +120,11 @@ namespace Nmkoder.Forms
                 if (currentNull || noAudTracks || noEnc)
                 {
                     if(currentNull)
-                        MessageBox.Show("Please load a file first in order to configure its audio tracks.", "Error");
+                        UiUtils.ShowMessageBox("Please load a file first in order to configure its audio tracks.", UiUtils.MessageType.Error);
                     else if(noAudTracks)
-                        MessageBox.Show("This is only available if you have at least one audio track in the track list.", "Error");
+                        UiUtils.ShowMessageBox("This is only available if you have at least one audio track in the track list.", UiUtils.MessageType.Error);
                     else if (noEnc)
-                        MessageBox.Show("The selected audio encoder does not support custom bitrates.", "Error");
+                        UiUtils.ShowMessageBox("The selected audio encoder does not support custom bitrates.", UiUtils.MessageType.Error);
 
                     encAudConfMode.SelectedIndex = 0;
                     return;

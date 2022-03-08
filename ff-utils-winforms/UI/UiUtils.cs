@@ -9,6 +9,19 @@ namespace Nmkoder.UI
 {
     class UiUtils
     {
+        public enum MessageType { Message, Warning, Error };
+
+        public static DialogResult ShowMessageBox (string text, MessageType type = MessageType.Message)
+        {
+            MessageBoxIcon icon = MessageBoxIcon.Information;
+            if (type == MessageType.Warning) icon = MessageBoxIcon.Warning;
+            else if (type == MessageType.Error) icon = MessageBoxIcon.Error;
+
+            DialogResult res = MessageBox.Show(text, $"Nmkoder - {type}", MessageBoxButtons.OK, icon, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+            Program.mainForm.Activate();
+            return res;
+        }
+
         public enum MoveDirection { Up = -1, Down = 1 };
 
         public static void MoveListViewItem(ListView listView, MoveDirection direction)

@@ -77,6 +77,7 @@ namespace Nmkoder.Forms
                 string msg = "The Shift key was held when trying to close Nmkoder. This gives you the option to leave all subprocesses (e.g. av1an) running even after closing the GUI. " +
                     "Are you sure you want to close Nmkoder without stopping its subprocesses?";
                 DialogResult dialog = MessageBox.Show(msg, "Keep subprocesses running?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                Program.mainForm.Activate();
 
                 if (dialog == DialogResult.No)
                     ProcessManager.KillAll();

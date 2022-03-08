@@ -1,5 +1,6 @@
 ﻿using Nmkoder.Extensions;
 using Nmkoder.IO;
+using Nmkoder.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -118,7 +119,7 @@ namespace Nmkoder.Forms
             }
             else
             {
-                MessageBox.Show($"Invalid input.\n\n{(IsFrameMode() ? "Please enter numeric values only." : "Please use the HH:MM:SS (or HH:MM:SS:mmm format.")}", "Error");
+                UiUtils.ShowMessageBox($"Invalid input.\n\n{(IsFrameMode() ? "Please enter numeric values only." : "Please use the HH:MM:SS (or HH:MM:SS:mmm format.")}", UiUtils.MessageType.Error);
             }
         }
 

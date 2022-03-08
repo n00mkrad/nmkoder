@@ -34,6 +34,13 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
+                if(Program.mainForm.streamList.CheckedItems.Count < 1)
+                {
+                    RunTask.Cancel($"No tracks are selected. Please select at least one track to use.");
+                    Program.mainForm.MainTabList.SelectedIndex = 1;
+                    return;
+                }
+
                 IEncoder vCodec = CodecUtils.GetCodec(GetCurrentCodecV());
                 CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                 CodecUtils.SubtitleCodec sCodec = GetCurrentCodecS();
@@ -78,7 +85,7 @@ namespace Nmkoder.UI.Tasks
             }
             catch (Exception e)
             {
-                Logger.Log($"Error creating FFmpeg command: {e.Message}\n{e.StackTrace}");
+                RunTask.Cancel($"Error creating FFmpeg command: {e.Message}\n{e.StackTrace}");
                 return;
             }
 

@@ -31,9 +31,6 @@ namespace Nmkoder.Main
 
         public static void Cancel(string reason = "", bool noMsgBox = false)
         {
-            //if (current == null)
-            //    return;
-
             canceled = true;
             Program.mainForm.SetStatus("Canceled.");
             Program.mainForm.SetProgress(0);
@@ -42,11 +39,10 @@ namespace Nmkoder.Main
             ProcessManager.KillSecondary();
 
             Program.mainForm.SetWorking(false);
-            // Program.mainForm.SetTab("interpolation");
             Logger.LogIfLastLineDoesNotContainMsg("Canceled.");
 
             if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
-                System.Windows.Forms.MessageBox.Show($"Canceled:\n\n{reason}", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, System.Windows.Forms.MessageBoxOptions.ServiceNotification);
+                UiUtils.ShowMessageBox($"Canceled:\n\n{reason}", UiUtils.MessageType.Warning); 
         }
 
         public static async Task Start(TaskType batchTask = TaskType.Null)
@@ -58,7 +54,7 @@ namespace Nmkoder.Main
 
             if (Program.mainForm.fileListBox.Items.Count < 1)
             {
-                MessageBox.Show("No input files in file list! Please add one or more files first.", "Error");
+                UiUtils.ShowMessageBox("No input files in file list! Please add one or more files first.");
                 Program.mainForm.MainTabList.SelectedIndex = 0;
                 return;
             }
@@ -68,8 +64,8 @@ namespace Nmkoder.Main
 
                 if (missingFiles.Any())
                 {
-                    MessageBox.Show($"The following files have been imported but are no longer accessible:\n\n{string.Join("\n", missingFiles)}\n\n" +
-                        $"Possibly they were deleted, moved, or renamed.\nPlease either restore them or remove them from the file list.", "Error");
+                    UiUtils.ShowMessageBox($"The following files have been imported but are no longer accessible:\n\n{string.Join("\n", missingFiles)}\n\n" +
+                        $"Possibly they were deleted, moved, or renamed.\nPlease either restore them or remove them from the file list.", UiUtils.MessageType.Error);
                     return;
                 }
             }
@@ -78,14 +74,14 @@ namespace Nmkoder.Main
 
             if (loadedFileRequired && (currentFileListMode == FileListMode.Mux && TrackList.current == null))
             {
-                MessageBox.Show("No input file loaded! Please load one first (File List).", "Error");
+                UiUtils.ShowMessageBox("No input file loaded! Please load one first (File List).");
                 return;
             }
 
             if (taskType == TaskType.None)
             {
                 if (!RunInstantly())
-                    MessageBox.Show("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).", "Error");
+                    UiUtils.ShowMessageBox("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).");
 
                 return;
             }
@@ -115,7 +111,7 @@ namespace Nmkoder.Main
 
             if (batchTask == TaskType.None)
             {
-                MessageBox.Show("No task selected for batch processing! Please select an option (Quick Encode, AV1AN or one of the actions in Utilities).", "Error");
+                UiUtils.ShowMessageBox("No task selected for batch processing! Please select an option (Quick Encode, AV1AN or one of the actions in Utilities).");
                 return;
             }
 

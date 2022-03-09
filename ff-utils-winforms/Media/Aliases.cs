@@ -87,6 +87,7 @@ namespace Nmkoder.Media
 
             if (lower.StartsWith("hdmv_pgs")) return "PGS";
             if (lower.StartsWith("subrip")) return "SRT";
+            if (lower.StartsWith("dvd_subtitle")) return "VobSub";
             if (lower == "truehd") return "TrueHD";
             if (lower == "opus") return "Opus";
             if (lower.StartsWith("pcm")) return codecName.ToUpper();

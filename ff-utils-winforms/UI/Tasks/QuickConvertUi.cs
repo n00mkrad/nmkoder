@@ -548,7 +548,7 @@ namespace Nmkoder.UI.Tasks
             if (codecArgs != null && codecArgs.ForcedFilters != null)
                 filters.AddRange(codecArgs.ForcedFilters);
 
-            if (currFile.VideoStreams.Count < 1 || vCodec.DoesNotEncode)
+            if (currFile.VideoStreams.Count < 1 || (vCodec != null && vCodec.DoesNotEncode))
                 return "";
 
             VideoStream vs = currFile.VideoStreams.First();
@@ -562,8 +562,18 @@ namespace Nmkoder.UI.Tasks
 
             if (Program.mainForm.encSubBurnBox.SelectedIndex > 0) // Check Filter: Subtitle Burn-In
             {
-                string subFilePath = FormatUtils.GetFilterPath(currFile.ImportPath);
-                filters.Add($"subtitles={subFilePath}:si={Program.mainForm.encSubBurnBox.Text.GetInt() - 1}");
+                int subIndex = Program.mainForm.encSubBurnBox.SelectedIndex - 1;
+                bool bitmapSubs = TrackList.current.File.SubtitleStreams[subIndex].Bitmap;
+
+                if (bitmapSubs)
+                {
+                    filters.Add($"[0:s:{subIndex}]overlay=shortest=1");
+                }
+                else
+                {
+                    string subFilePath = FormatUtils.GetFilterPath(currFile.ImportPath);
+                    filters.Add($"subtitles={subFilePath}:si={subIndex}");
+                }
             }
 
             if ((vs.Resolution.Width % 2 != 0) || (vs.Resolution.Height % 2 != 0)) // Check Filter: Pad for mod2
@@ -585,8 +595,20 @@ namespace Nmkoder.UI.Tasks
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 
+            string firstVideoMap = (await TrackList.GetMapArgs(true, false)).Split("-map ")[1];
+            string filterChain = "";
+
+            for(int i = 0; i < filters.Count; i++)
+            {
+                bool first = i == 0;
+                bool last = i == filters.Count - 1;
+
+                filterChain += $"[{(first ? firstVideoMap : "vf")}]{filters[i]}";
+                filterChain += $"[vf]{(last ? "" : ";")}";
+            }
+
             if (filters.Count > 0)
-                return $"-vf {string.Join(",", filters)}";
+                return $"-filter_complex {filterChain}";
             else
                 return "";
         }

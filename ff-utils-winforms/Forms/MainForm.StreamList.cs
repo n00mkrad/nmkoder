@@ -125,7 +125,7 @@ namespace Nmkoder.Forms
                 List<string> items = new List<string>();
                 items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
                 items.Add(stream.Language.ToUpper().Trunc(6));
-                items.Add(stream.Title.Trunc(15));
+                items.Add(stream.Title.Trunc(18));
                 trackListDefaultSubs.Items.Add($"{string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))} ({Aliases.GetNicerCodecName(stream.Codec).Trunc(10)})");
             }
 

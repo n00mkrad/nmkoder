@@ -30,7 +30,7 @@ namespace Nmkoder.UI
             current = null;
             Program.mainForm.FfmpegOutputBox.Text = "";
 
-            if(clearStreamList)
+            if (clearStreamList)
                 Program.mainForm.streamList.Items.Clear();
 
             Program.mainForm.streamDetailsBox.Text = "";
@@ -247,10 +247,12 @@ namespace Nmkoder.UI
             return string.Join(" ", args);
         }
 
-        public static string GetMapArgs(bool videoOnly = false)
+        public static async Task<string> GetMapArgs(bool videoOnly = false, bool accountForFilterChain = true)
         {
             List<string> args = new List<string>();
             List<int> fileIndexesToMap = new List<int>();
+
+            bool hasSkippedFirstVideoStream = false;
 
             foreach (ListViewItem item in Program.mainForm.streamList.Items.Cast<ListViewItem>())
             {
@@ -264,8 +266,20 @@ namespace Nmkoder.UI
                     if (!fileIndexesToMap.Contains(fileIdx))
                         fileIndexesToMap.Add(fileIdx);
 
-                    if(!(videoOnly && entry.Stream.Type != Stream.StreamType.Video)) // Skip all non-video streams if videoOnly == true
-                        args.Add($"-map {fileIdx}:{entry.Stream.Index}");
+                    if (videoOnly && entry.Stream.Type != Stream.StreamType.Video) // Skip all non-video streams if videoOnly == true
+                        continue;
+
+                    if (accountForFilterChain && !hasSkippedFirstVideoStream && entry.Stream.Type == Stream.StreamType.Video)
+                    {
+                        if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(null)))
+                        {
+                            args.Add($"-map [vf]");
+                            hasSkippedFirstVideoStream = true;
+                            continue;
+                        }
+                    }
+
+                    args.Add($"-map {fileIdx}:{entry.Stream.Index}");
                 }
             }
 
@@ -368,7 +382,7 @@ namespace Nmkoder.UI
                 var items = itemsCopy.Where(x => ((StreamListEntry)x.Tag).Stream.Type == streamType);
                 var sorted = new List<ListViewItem>();
 
-                if(sort == TrackSort.Language)
+                if (sort == TrackSort.Language)
                     sorted = items.OrderBy(x => ((StreamListEntry)x.Tag).Stream.Language).ToList();
                 else if (sort == TrackSort.Title)
                     sorted = items.OrderBy(x => ((StreamListEntry)x.Tag).Stream.Title).ToList();

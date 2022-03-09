@@ -18,6 +18,7 @@ using Nmkoder.IO;
 using Stream = Nmkoder.Data.Streams.Stream;
 using Nmkoder.Data.Streams;
 using Nmkoder.Extensions;
+using Nmkoder.Media;
 
 namespace Nmkoder.Forms
 {
@@ -95,10 +96,11 @@ namespace Nmkoder.Forms
 
             for (int i = 0; i < a.Count; i++)
             {
+                var stream = (AudioStream)a[i].Stream;
                 List<string> items = new List<string>();
                 items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
-                items.Add(((AudioStream)a[i].Stream).Language.ToUpper().Trunc(6));
-                items.Add(((AudioStream)a[i].Stream).Title.Trunc(22));
+                items.Add(stream.Language.ToUpper().Trunc(6));
+                items.Add(stream.Title.Trunc(22));
                 trackListDefaultAudio.Items.Add(string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x))));
             }
 
@@ -119,11 +121,12 @@ namespace Nmkoder.Forms
 
             for (int i = 0; i < s.Count; i++)
             {
+                var stream = (SubtitleStream)s[i].Stream;
                 List<string> items = new List<string>();
                 items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
-                items.Add(((SubtitleStream)s[i].Stream).Language.ToUpper().Trunc(6));
-                items.Add(((SubtitleStream)s[i].Stream).Title.Trunc(22));
-                trackListDefaultSubs.Items.Add(string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x))));
+                items.Add(stream.Language.ToUpper().Trunc(6));
+                items.Add(stream.Title.Trunc(15));
+                trackListDefaultSubs.Items.Add($"{string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))} ({Aliases.GetNicerCodecName(stream.Codec).Trunc(10)})");
             }
 
             if (s.Count > 0)

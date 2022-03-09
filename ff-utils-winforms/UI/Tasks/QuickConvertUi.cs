@@ -306,8 +306,14 @@ namespace Nmkoder.UI.Tasks
 
             for (int i = 0; i < TrackList.current.File.SubtitleStreams.Count; i++)
             {
-                string lang = TrackList.current.File.SubtitleStreams[i].Language.Trim();
-                burnBox.Items.Add($"Subtitle Track {i + 1}{(lang.Length > 1 ? $" ({lang})" : "")}");
+                bool zeroIdx = Config.GetBool(Config.Key.UseZeroIndexedStreams);
+                var stream = TrackList.current.File.SubtitleStreams[i];
+
+                List<string> items = new List<string>();
+                items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
+                items.Add(stream.Language.ToUpper().Trunc(6));
+                items.Add(stream.Title.Trunc(25));
+                burnBox.Items.Add($"{string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))} ({Aliases.GetNicerCodecName(stream.Codec).Trunc(12)})");
             }
 
             burnBox.SelectedIndex = 0;

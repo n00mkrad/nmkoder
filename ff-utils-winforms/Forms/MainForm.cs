@@ -65,6 +65,7 @@ namespace Nmkoder.Forms
 
             QuickConvertUi.InitAdvFilterGrid();
             Av1anUi.InitAdvFilterGrid();
+            UpdateResetSettingsText();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -497,8 +498,29 @@ namespace Nmkoder.Forms
             TrimForm form = new TrimForm(TrackList.current == null ? 0 : TrackList.current.File.DurationMs, QuickConvertUi.currentTrim);
             form.ShowDialog();
             QuickConvertUi.currentTrim = form.NewTrimSettings;
+        }
 
+        public void UpdateTrimBtnText ()
+        {
             encTrimConfBtn.Text = QuickConvertUi.currentTrim == null ? "Configure..." : QuickConvertUi.currentTrim.ToString();
+        }
+
+        private void resetSettingsConfBtn_Click(object sender, EventArgs e)
+        {
+            ResetSettingsForm form = new ResetSettingsForm();
+            form.ShowDialog();
+            UpdateResetSettingsText();
+        }
+
+        public void UpdateResetSettingsText()
+        {
+            settingsToResetLabel.Text = ResetSettingsOnNewFile.GetString();
+        }
+
+
+        private void resetSettingsResetAllBtn_Click(object sender, EventArgs e)
+        {
+            ResetSettingsOnNewFile.ResetAll();
         }
     }
 }

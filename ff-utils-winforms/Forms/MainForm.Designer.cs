@@ -98,6 +98,7 @@ namespace Nmkoder.Forms
             this.label48 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.encAdvTab = new System.Windows.Forms.TabPage();
+            this.encTrimConfBtn = new HTAlt.WinForms.HTButton();
             this.label55 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -246,7 +247,11 @@ namespace Nmkoder.Forms
             this.sortTracksByTitleZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortTracksByCodecAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortTracksByCodecZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.encTrimConfBtn = new HTAlt.WinForms.HTButton();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.resetSettingsResetAllBtn = new HTAlt.WinForms.HTButton();
+            this.settingsToResetLabel = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.resetSettingsConfBtn = new HTAlt.WinForms.HTButton();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -298,6 +303,7 @@ namespace Nmkoder.Forms
             this.checkItemsContextMenu.SuspendLayout();
             this.sortFileListContextMenu.SuspendLayout();
             this.sortTracksContextMenu.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -1209,6 +1215,24 @@ namespace Nmkoder.Forms
             this.encAdvTab.Size = new System.Drawing.Size(668, 288);
             this.encAdvTab.TabIndex = 4;
             this.encAdvTab.Text = "Advanced";
+            // 
+            // encTrimConfBtn
+            // 
+            this.encTrimConfBtn.AutoColor = true;
+            this.encTrimConfBtn.ButtonImage = null;
+            this.encTrimConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.encTrimConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
+            this.encTrimConfBtn.DrawImage = false;
+            this.encTrimConfBtn.ForeColor = System.Drawing.Color.White;
+            this.encTrimConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
+            this.encTrimConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.encTrimConfBtn.Location = new System.Drawing.Point(362, 6);
+            this.encTrimConfBtn.Name = "encTrimConfBtn";
+            this.encTrimConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
+            this.encTrimConfBtn.Size = new System.Drawing.Size(300, 23);
+            this.encTrimConfBtn.TabIndex = 67;
+            this.encTrimConfBtn.Text = "Configure...";
+            this.encTrimConfBtn.Click += new System.EventHandler(this.encTrimConfBtn_Click);
             // 
             // label55
             // 
@@ -3111,23 +3135,76 @@ namespace Nmkoder.Forms
             this.sortTracksByCodecZAToolStripMenuItem.Text = "Sort Tracks By Codec (Z-A)";
             this.sortTracksByCodecZAToolStripMenuItem.Click += new System.EventHandler(this.sortTracksByCodecZAToolStripMenuItem_Click);
             // 
-            // encTrimConfBtn
+            // panel6
             // 
-            this.encTrimConfBtn.AutoColor = true;
-            this.encTrimConfBtn.ButtonImage = null;
-            this.encTrimConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
-            this.encTrimConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(124)))), ((int)(((byte)(124)))));
-            this.encTrimConfBtn.DrawImage = false;
-            this.encTrimConfBtn.ForeColor = System.Drawing.Color.White;
-            this.encTrimConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(104)))), ((int)(((byte)(104)))));
-            this.encTrimConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
-            this.encTrimConfBtn.Location = new System.Drawing.Point(362, 6);
-            this.encTrimConfBtn.Name = "encTrimConfBtn";
-            this.encTrimConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
-            this.encTrimConfBtn.Size = new System.Drawing.Size(300, 23);
-            this.encTrimConfBtn.TabIndex = 67;
-            this.encTrimConfBtn.Text = "Configure...";
-            this.encTrimConfBtn.Click += new System.EventHandler(this.encTrimConfBtn_Click);
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.panel6.Controls.Add(this.resetSettingsResetAllBtn);
+            this.panel6.Controls.Add(this.settingsToResetLabel);
+            this.panel6.Controls.Add(this.label56);
+            this.panel6.Controls.Add(this.resetSettingsConfBtn);
+            this.panel6.Location = new System.Drawing.Point(12, 458);
+            this.panel6.Margin = new System.Windows.Forms.Padding(6);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(314, 77);
+            this.panel6.TabIndex = 41;
+            // 
+            // resetSettingsResetAllBtn
+            // 
+            this.resetSettingsResetAllBtn.AutoColor = true;
+            this.resetSettingsResetAllBtn.ButtonImage = null;
+            this.resetSettingsResetAllBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.resetSettingsResetAllBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.resetSettingsResetAllBtn.DrawImage = false;
+            this.resetSettingsResetAllBtn.ForeColor = System.Drawing.Color.White;
+            this.resetSettingsResetAllBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.resetSettingsResetAllBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.resetSettingsResetAllBtn.Location = new System.Drawing.Point(160, 48);
+            this.resetSettingsResetAllBtn.Name = "resetSettingsResetAllBtn";
+            this.resetSettingsResetAllBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.resetSettingsResetAllBtn.Size = new System.Drawing.Size(148, 23);
+            this.resetSettingsResetAllBtn.TabIndex = 70;
+            this.resetSettingsResetAllBtn.Text = "Reset All Now";
+            this.resetSettingsResetAllBtn.Click += new System.EventHandler(this.resetSettingsResetAllBtn_Click);
+            // 
+            // settingsToResetLabel
+            // 
+            this.settingsToResetLabel.AutoSize = true;
+            this.settingsToResetLabel.ForeColor = System.Drawing.Color.White;
+            this.settingsToResetLabel.Location = new System.Drawing.Point(7, 28);
+            this.settingsToResetLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.settingsToResetLabel.Name = "settingsToResetLabel";
+            this.settingsToResetLabel.Size = new System.Drawing.Size(65, 13);
+            this.settingsToResetLabel.TabIndex = 69;
+            this.settingsToResetLabel.Text = "Trim, Frame ";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.ForeColor = System.Drawing.Color.White;
+            this.label56.Location = new System.Drawing.Point(7, 7);
+            this.label56.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(261, 13);
+            this.label56.TabIndex = 68;
+            this.label56.Text = "Reset the following settings when a new file is loaded:";
+            // 
+            // resetSettingsConfBtn
+            // 
+            this.resetSettingsConfBtn.AutoColor = true;
+            this.resetSettingsConfBtn.ButtonImage = null;
+            this.resetSettingsConfBtn.ButtonShape = HTAlt.WinForms.HTButton.ButtonShapes.Rectangle;
+            this.resetSettingsConfBtn.ClickColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
+            this.resetSettingsConfBtn.DrawImage = false;
+            this.resetSettingsConfBtn.ForeColor = System.Drawing.Color.White;
+            this.resetSettingsConfBtn.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.resetSettingsConfBtn.ImageSizeMode = HTAlt.WinForms.HTButton.ButtonImageSizeMode.None;
+            this.resetSettingsConfBtn.Location = new System.Drawing.Point(7, 48);
+            this.resetSettingsConfBtn.Name = "resetSettingsConfBtn";
+            this.resetSettingsConfBtn.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.resetSettingsConfBtn.Size = new System.Drawing.Size(148, 23);
+            this.resetSettingsConfBtn.TabIndex = 67;
+            this.resetSettingsConfBtn.Text = "Configure...";
+            this.resetSettingsConfBtn.Click += new System.EventHandler(this.resetSettingsConfBtn_Click);
             // 
             // MainForm
             // 
@@ -3135,6 +3212,7 @@ namespace Nmkoder.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
+            this.Controls.Add(this.panel6);
             this.Controls.Add(this.currentActionLabel);
             this.Controls.Add(this.busyControlsPanel);
             this.Controls.Add(this.progressCircle);
@@ -3220,6 +3298,8 @@ namespace Nmkoder.Forms
             this.checkItemsContextMenu.ResumeLayout(false);
             this.sortFileListContextMenu.ResumeLayout(false);
             this.sortTracksContextMenu.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3441,6 +3521,11 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.DataGridView encAdvancedFiltersGrid;
         private System.Windows.Forms.Label label55;
         private HTAlt.WinForms.HTButton encTrimConfBtn;
+        private System.Windows.Forms.Panel panel6;
+        private HTAlt.WinForms.HTButton resetSettingsResetAllBtn;
+        private System.Windows.Forms.Label settingsToResetLabel;
+        private System.Windows.Forms.Label label56;
+        private HTAlt.WinForms.HTButton resetSettingsConfBtn;
     }
 }
 

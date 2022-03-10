@@ -27,19 +27,47 @@ namespace Nmkoder.UI
 
         public static void ClearCurrentFile(bool clearStreamList = false)
         {
+            Forms.MainForm f = Program.mainForm;
             current = null;
-            Program.mainForm.FfmpegOutputBox.Text = "";
+            f.FfmpegOutputBox.Text = "";
 
             if (clearStreamList)
-                Program.mainForm.streamList.Items.Clear();
+                f.streamList.Items.Clear();
 
-            Program.mainForm.streamDetailsBox.Text = "";
-            Program.mainForm.FormatInfoLabel.Text = "";
-            Program.mainForm.MetaGrid.Columns.Clear();
-            Program.mainForm.MetaGrid.Rows.Clear();
+            f.streamDetailsBox.Text = "";
+            f.FormatInfoLabel.Text = "";
+            f.MetaGrid.Columns.Clear();
+            f.MetaGrid.Rows.Clear();
             ThumbnailView.ClearUi();
-            QuickConvertUi.currentCropValues = null;
-            Av1anUi.currentCropValues = null;
+
+            if (ResetSettingsOnNewFile.ResetCrop)
+                QuickConvertUi.currentCropValues = Av1anUi.currentCropValues = null;
+
+            f.encScaleBoxW.Text = f.encScaleBoxH.Text = "";
+
+            if (ResetSettingsOnNewFile.ResetTrim)
+            {
+                QuickConvertUi.currentTrim = null;
+                f.UpdateTrimBtnText();
+            }
+
+            if (ResetSettingsOnNewFile.ResetResize)
+                f.encScaleBoxW.Text = f.encScaleBoxH.Text = f.av1anScaleBoxW.Text = f.av1anScaleBoxH.Text = "";
+
+            if (ResetSettingsOnNewFile.ResetFpsResample)
+                f.encVidFpsBox.Text = f.av1anFpsBox.Text = "";
+
+            if (ResetSettingsOnNewFile.ResetCustomInArgs)
+                f.customArgsInBox.Text = "";
+
+            if (ResetSettingsOnNewFile.ResetCustomOutArgs)
+                f.customArgsOutBox.Text = "";
+
+            if (ResetSettingsOnNewFile.ResetCustomFilters)
+            {
+                f.EncAdvancedFiltersGrid.Rows.Clear();
+                f.Av1anAdvancedFiltersGrid.Rows.Clear();
+            }
         }
 
         public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true, bool setWorking = true)

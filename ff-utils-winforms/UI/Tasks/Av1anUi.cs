@@ -61,7 +61,6 @@ namespace Nmkoder.UI.Tasks
 
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
-                    form.av1anScaleBoxW.Text = form.av1anScaleBoxH.Text = "";
                     InitAudioChannels(TrackList.current.File.AudioStreams.FirstOrDefault()?.Channels);
                 }
 

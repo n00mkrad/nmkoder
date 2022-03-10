@@ -64,7 +64,6 @@ namespace Nmkoder.UI.Tasks
 
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
-                    Program.mainForm.encScaleBoxW.Text = Program.mainForm.encScaleBoxH.Text = "";
                     InitBurnCombox();
                     LoadMetadataGrid();
                 }

@@ -72,7 +72,7 @@ namespace Nmkoder.UI
             if (setWorking)
                 Program.mainForm.SetWorking(false);
 
-            if (generateThumbs)
+            if (generateThumbs && mediaFile.VideoStreams.Any())
                 Task.Run(() => ThumbnailView.GenerateThumbs(mediaFile.SourcePath)); // Generate thumbs in background
         }
 

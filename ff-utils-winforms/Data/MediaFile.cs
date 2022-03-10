@@ -151,10 +151,18 @@ namespace Nmkoder.Data
 
         public long GetSize()
         {
-            if (IsDirectory)
-                return IoUtils.GetDirSize(GetPath(), true);
-            else
-                return FileInfo.Length;
+            try
+            {
+                if (IsDirectory)
+                    return IoUtils.GetDirSize(GetPath(), true);
+                else
+                    return FileInfo.Length;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Failed to get file size of {FileInfo.FullName}: {ex.Message} (Path Length: {FileInfo.FullName.Length})", true);
+                return 0;
+            }
         }
 
         public override string ToString()

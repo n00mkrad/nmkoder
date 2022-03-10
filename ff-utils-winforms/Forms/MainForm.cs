@@ -201,9 +201,22 @@ namespace Nmkoder.Forms
                 return;
 
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            List<string> invalidFiles = files.Where(x => x.Length > 256).ToList();
+
+            if (invalidFiles.Any())
+            {
+                string list = string.Join("\n", invalidFiles.Select(x => $"{x} ({x.Length} Chars)"));
+                UiUtils.ShowMessageBox($"The following files can not be imported because their path is too long:\n\n{list}\n\nPlease ensure their path is less than 256 characters long.", UiUtils.MessageType.Warning);
+            }
+
+            files = files.Where(x => x.Length <= 256).ToArray();
+
+            if (files.Length < 1)
+                return;
+
             bool anyFilesLoaded = fileList.Items.Count > 0;
 
-            if (files.Length > 1 || anyFilesLoaded)
+            if (anyFilesLoaded)
             {
                 FileImportForm form = new FileImportForm(files, anyFilesLoaded);
                 form.ShowDialog();

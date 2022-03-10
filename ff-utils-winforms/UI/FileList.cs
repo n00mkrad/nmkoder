@@ -15,9 +15,9 @@ namespace Nmkoder.UI
     {
         public static List<MediaFile> currentFiles = new List<MediaFile>();
 
-        public static void LoadFiles (string[] paths, bool clearExisting)
+        public static void LoadFiles(string[] paths, bool clearExisting)
         {
-            if(clearExisting)
+            if (clearExisting)
                 Program.mainForm.fileListBox.Items.Clear();
 
             Random r = new Random();
@@ -35,6 +35,9 @@ namespace Nmkoder.UI
 
         public static async Task HandleFiles(string[] paths, bool clearExisting)
         {
+            if (paths == null || paths.Length == 0)
+                return;
+
             Media.GetFrameCountCached.ClearCache();
             Media.GetMediaResolutionCached.ClearCache();
             Media.GetVideoInfo.ClearCache();

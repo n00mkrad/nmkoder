@@ -28,6 +28,7 @@ namespace Nmkoder.UI
         public static void ClearCurrentFile(bool clearStreamList = false)
         {
             Forms.MainForm f = Program.mainForm;
+
             current = null;
             f.FfmpegOutputBox.Text = "";
 
@@ -40,34 +41,62 @@ namespace Nmkoder.UI
             f.MetaGrid.Rows.Clear();
             ThumbnailView.ClearUi();
 
-            if (ResetSettingsOnNewFile.ResetCrop)
+            ResetSettings();
+        }
+
+        public static void ResetSettings(bool resetAll = false, bool showMsgBox = false)
+        {
+            Forms.MainForm f = Program.mainForm;
+
+            List<string> clearedSettings = new List<string>();
+
+            if (resetAll || ResetSettingsOnNewFile.ResetCrop)
+            {
                 QuickConvertUi.currentCropValues = Av1anUi.currentCropValues = null;
+                f.encCropModeBox.SelectedIndex = f.av1anCropBox.SelectedIndex = 0;
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetCrop)]);
+            }
 
-            f.encScaleBoxW.Text = f.encScaleBoxH.Text = "";
-
-            if (ResetSettingsOnNewFile.ResetTrim)
+            if (resetAll || ResetSettingsOnNewFile.ResetTrim)
             {
                 QuickConvertUi.currentTrim = null;
                 f.UpdateTrimBtnText();
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetTrim)]);
             }
 
-            if (ResetSettingsOnNewFile.ResetResize)
+            if (resetAll || ResetSettingsOnNewFile.ResetResize)
+            {
                 f.encScaleBoxW.Text = f.encScaleBoxH.Text = f.av1anScaleBoxW.Text = f.av1anScaleBoxH.Text = "";
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetResize)]);
+            }
 
-            if (ResetSettingsOnNewFile.ResetFpsResample)
+            if (resetAll || ResetSettingsOnNewFile.ResetFpsResample)
+            {
                 f.encVidFpsBox.Text = f.av1anFpsBox.Text = "";
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetFpsResample)]);
+            }
 
-            if (ResetSettingsOnNewFile.ResetCustomInArgs)
+            if (resetAll || ResetSettingsOnNewFile.ResetCustomInArgs)
+            {
                 f.customArgsInBox.Text = "";
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetCustomInArgs)]);
+            }
 
-            if (ResetSettingsOnNewFile.ResetCustomOutArgs)
+            if (resetAll || ResetSettingsOnNewFile.ResetCustomOutArgs)
+            {
                 f.customArgsOutBox.Text = "";
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetCustomOutArgs)]);
+            }
 
-            if (ResetSettingsOnNewFile.ResetCustomFilters)
+            if (resetAll || ResetSettingsOnNewFile.ResetCustomFilters)
             {
                 f.EncAdvancedFiltersGrid.Rows.Clear();
                 f.Av1anAdvancedFiltersGrid.Rows.Clear();
+                clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetCustomFilters)]);
             }
+
+            if (showMsgBox)
+                UiUtils.ShowMessageBox($"The following settings have been reset:\n{string.Join(", ", clearedSettings)}.", UiUtils.MessageType.Message);
         }
 
         public static async Task SetAsMainFile(ListViewItem item, bool switchToTrackList = true, bool generateThumbs = true, bool setWorking = true)

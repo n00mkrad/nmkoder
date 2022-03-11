@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Nmkoder.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Nmkoder.UI
 {
@@ -32,15 +34,18 @@ namespace Nmkoder.UI
             }
         }
 
-        public static void ResetAll()
+        public static void ResetAll(Label labelToSet = null)
         {
             ResetTrim = false;
             ResetFpsResample = false;
-            ResetResize = true;
+            ResetResize = false;
             ResetCrop = false;
-            ResetCustomInArgs = true;
+            ResetCustomInArgs = false;
             ResetCustomOutArgs = false;
-            ResetCustomFilters = true;
+            ResetCustomFilters = false;
+
+            if (labelToSet != null)
+                labelToSet.Text = GetString();
         }
 
         public static string GetString()
@@ -64,6 +69,48 @@ namespace Nmkoder.UI
         public static string ShortenName(string s)
         {
             return s.Replace("Custom Input", "In").Replace("Custom Output", "Out").Replace("Custom Filters", "Filters").Replace("Frame Rate", "FPS");
+        }
+
+        public static void Save ()
+        {
+            List<string> list = new List<string>();
+
+            var properties = typeof(ResetSettingsOnNewFile).GetProperties();
+
+            foreach (var prop in properties)
+            {
+                if (!prop.Name.StartsWith("Reset"))
+                    continue;
+
+                list.Add($"{prop.Name}={(bool)prop.GetValue(null, null)}");
+            }
+
+            Config.Set(Config.Key.ResetSettingsList, string.Join(",", list));
+        }
+
+        public static void Load (Label labelToSet = null)
+        {
+            string data = Config.Get(Config.Key.ResetSettingsList);
+
+            if (data == null || string.IsNullOrWhiteSpace(data))
+                return;
+
+            foreach (string prop in data.Split(','))
+            {
+                try
+                {
+                    string propName = prop.Split('=')[0];
+                    bool propVal = bool.Parse(prop.Split('=')[1]);
+                    typeof(ResetSettingsOnNewFile).GetProperty(propName).SetValue(null, propVal);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"Failed to set saved ResetSettingsOnNewFile property: {ex.Message}");
+                }
+            }
+
+            if (labelToSet != null)
+                labelToSet.Text = GetString();
         }
     }
 }

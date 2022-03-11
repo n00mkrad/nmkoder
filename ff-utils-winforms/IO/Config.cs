@@ -301,6 +301,7 @@ namespace Nmkoder.IO
             DefaultKeyIntSecs,
             metaMode,
             mp4Faststart,
+            ResetSettingsList,
             UseZeroIndexedStreams
         }
     }

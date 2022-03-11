@@ -62,6 +62,9 @@ namespace Nmkoder.IO
 
             string msg = entry.logMessage;
 
+            if(msg == LastUiLine)
+                entry.hidden = true; // Never show the same line twice in UI, but log it to file
+
             _lastLog = msg;
 
             if (!entry.hidden)

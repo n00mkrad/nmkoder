@@ -101,8 +101,10 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadComboxIndex(encSubCodec);
             ConfigParser.LoadComboxIndex(metaMode);
+            // Settings to reset
 
             LoadConfigAv1an();
+            ResetSettingsOnNewFile.Load(settingsToResetLabel);
         }
 
         void SaveUiConfig(object sender = null, EventArgs e = null)
@@ -520,7 +522,7 @@ namespace Nmkoder.Forms
 
         private void resetSettingsResetAllBtn_Click(object sender, EventArgs e)
         {
-            ResetSettingsOnNewFile.ResetAll();
+            TrackList.ResetSettings(true, true);
         }
     }
 }

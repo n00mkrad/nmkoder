@@ -41,6 +41,7 @@ namespace Nmkoder.Forms
             Set();
             DialogResult = DialogResult.OK;
             Close();
+            ResetSettingsOnNewFile.Save();
             Program.mainForm.BringToFront();
         }
 

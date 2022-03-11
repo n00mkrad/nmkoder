@@ -71,7 +71,6 @@ namespace Nmkoder.UI.Tasks
                     Logger.Log($"Preparing encoding arguments...");
                     CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
                     CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
-                    bool vmaf = IsUsingVmaf();
                     inPath = TrackList.current.File.ImportPath;
                     outPath = GetOutPath();
                     string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
@@ -93,28 +92,20 @@ namespace Nmkoder.UI.Tasks
 
                     args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} {x} -o {outPath.Wrap()}";
 
-                    if (vmaf)
+                    if (IsUsingVmaf())
                     {
                         int q = (int)Program.mainForm.av1anQualityUpDown.Value;
                         string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
                         args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
                     }
 
-                    int totalThreads = w.GetInt() * t.GetInt();
-                    Logger.Log($"Using {w} workers with {t.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
+                    //int totalThreads = w.GetInt() * t.GetInt();
+                    //Logger.Log($"Using {w} workers with {t.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
                 }
                 else
                 {
                     inPath = overrideArgs.Split("-i \"")[1].Split("\"")[0].Trim();
                     outPath = overrideArgs.Split(" -o \"").Last().Remove("\"").Trim();
-
-                    try
-                    {
-                        int w = overrideArgs.Split("-y ")[1].Split("-w ")[1].Split(" ")[0].GetInt();
-                        int thr = overrideArgs.Split("-y ")[1].Split("--set-thread-affinity ")[1].Split(" ")[0].GetInt();
-                        Logger.Log($"Resuming with {w} workers with {thr} threads each = {w * thr} threads total. {((w * thr) <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
-                    }
-                    catch { } // Allow this to fail, it's just some ugly string parsing and not crucial anyway
                 }
 
                 if (outPath == inPath)

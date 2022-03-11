@@ -328,7 +328,7 @@ namespace Nmkoder.UI
 
                     if (accountForFilterChain && !hasSkippedFirstVideoStream && entry.Stream.Type == Stream.StreamType.Video)
                     {
-                        if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(null)))
+                        if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(null, null, true)))
                         {
                             args.Add($"-map [vf]");
                             hasSkippedFirstVideoStream = true;

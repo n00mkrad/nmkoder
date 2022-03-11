@@ -539,7 +539,7 @@ namespace Nmkoder.UI.Tasks
             return string.Join(" ", args);
         }
 
-        public static async Task<string> GetVideoFilterArgs(IEncoder vCodec, CodecArgs codecArgs = null)
+        public static async Task<string> GetVideoFilterArgs(IEncoder vCodec, CodecArgs codecArgs = null, bool quiet = false)
         {
             MediaFile currFile = TrackList.current.File;
             List<string> filters = new List<string>();
@@ -585,7 +585,7 @@ namespace Nmkoder.UI.Tasks
                 filters.Add($"crop={currentCropValues[0]}:{currentCropValues[1]}:{currentCropValues[2]}:{currentCropValues[3]}");
 
             if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
-                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.ImportPath, false));
+                filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.ImportPath, quiet));
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
                 filters.Add(MiscUtils.GetScaleFilter(scaleW, scaleH));

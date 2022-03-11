@@ -132,7 +132,7 @@ namespace Nmkoder.UI.Tasks
 
             if (alignMode == 2 || alignMode == 3) // Resize
             {
-                Size res = await GetMediaResolutionCached.GetSizeAsync(vidLq);
+                Size res = await GetMediaResolutionCached.GetSizeAsync(vidHq);
                 filters.Add($"scale={res.Width}:{res.Height}");
             }
 

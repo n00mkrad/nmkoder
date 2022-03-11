@@ -71,7 +71,7 @@ namespace Nmkoder.UI.Tasks
                     string v2 = codecArgsPass2.Arguments;
                     string vf2 = vCodec.DoesNotEncode ? "" : await GetVideoFilterArgs(vCodec, codecArgsPass2);
 
-                    args = $"{miscIn} {custIn} {inFiles} -map v {v1} {vf1} {miscOut} {custOut} -f null - && ffmpeg -y -loglevel warning -stats " +
+                    args = $"{miscIn} {custIn} {inFiles} {map} {v1} {vf1} {miscOut} {custOut} -an -sn -dn -f null - && ffmpeg -y -loglevel warning -stats " +
                            $"{miscIn} {custIn} {inFiles} {map} {v2} {vf2} {a} {s} {meta} {miscOut} {custOut} {muxing} {outPath.Wrap()}";
                 }
                 else

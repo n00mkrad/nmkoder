@@ -132,6 +132,11 @@ namespace Nmkoder.Extensions
             return (int)Math.Round(d);
         }
 
+        public static long RoundToLong(this double d)
+        {
+            return (long)Math.Round(d);
+        }
+
         public static int Clamp(this int i, int min, int max)
         {
             if (i < min) i = min;

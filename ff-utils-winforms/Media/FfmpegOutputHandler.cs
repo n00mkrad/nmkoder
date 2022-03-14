@@ -125,7 +125,16 @@ namespace Nmkoder.Media
                 }
                 else if(QuickConvertUi.currentTrim != null && !QuickConvertUi.currentTrim.IsUnset)
                 {
-                    durationMs = QuickConvertUi.currentTrim.Duration;
+                    if(QuickConvertUi.currentTrim.TrimMode == Forms.TrimForm.TrimSettings.Mode.FrameNumbers)
+                    {
+                        if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
+                            durationMs = 1000 * ((double)QuickConvertUi.currentTrim.Duration * (1f / TrackList.current.File.VideoStreams[0].Rate.GetFloat())).RoundToLong();
+                    }
+                    else
+                    {
+                        durationMs = QuickConvertUi.currentTrim.Duration;
+                    }
+                    
                 }
                 else if (TrackList.current != null)
                 {

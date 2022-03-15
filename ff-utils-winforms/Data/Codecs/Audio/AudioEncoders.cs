@@ -64,7 +64,7 @@ namespace Nmkoder.Data.Codecs.Audio
         {
             string bitrate = encArgs.ContainsKey("bitrate") ? encArgs["bitrate"] : $"{QDefault}k";
             string channels = encArgs.ContainsKey("ac") ? encArgs["ac"] : "2";
-            return new CodecArgs($"-c:a aac -aac_coder twoloop {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
+            return new CodecArgs($"-c:a eac3 {CodecUtils.GetAudioArgsForEachStream(mediaFile, bitrate.GetInt(), channels.GetInt())}");
         }
     }
 

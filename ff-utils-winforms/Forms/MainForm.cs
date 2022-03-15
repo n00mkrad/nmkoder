@@ -16,6 +16,7 @@ using Nmkoder.OS;
 using System.Windows.Input;
 using System.Collections.Generic;
 using Nmkoder.Media;
+using System.Diagnostics;
 
 namespace Nmkoder.Forms
 {
@@ -52,10 +53,8 @@ namespace Nmkoder.Forms
             LoadUiConfig();
             encVidCodec_SelectedIndexChanged(null, null);
             encAudioCodec_SelectedIndexChanged(null, null);
-            encSubCodec_SelectedIndexChanged(null, null);
             av1anAudCodec_SelectedIndexChanged(null, null);
             await RefreshFileListUi();
-            initialized = true;
 
             if (Program.args.Where(x => x.StartsWith("package=")).Count() == 1)
                 await PackageBuild.Run(Program.args.Where(x => x.StartsWith("package=")).First().Split('=')[1]);
@@ -66,11 +65,14 @@ namespace Nmkoder.Forms
             QuickConvertUi.InitAdvFilterGrid();
             Av1anUi.InitAdvFilterGrid();
             UpdateResetSettingsText();
+            QuickConvertUi.InitFile();
+
+            initialized = true;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveConfig();
+            SaveUiConfig();
             SaveConfigAv1an();
 
             if (Keyboard.Modifiers == System.Windows.Input.ModifierKeys.Shift)
@@ -100,7 +102,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(encVidCodec);
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadComboxIndex(encSubCodec);
-            ConfigParser.LoadComboxIndex(metaMode);
+            ConfigParser.LoadComboxIndex(encMetaCopySource);
             // Settings to reset
 
             LoadConfigAv1an();
@@ -119,7 +121,7 @@ namespace Nmkoder.Forms
             ConfigParser.SaveComboxIndex(encVidCodec);
             ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveComboxIndex(encSubCodec);
-            ConfigParser.SaveComboxIndex(metaMode);
+            ConfigParser.SaveComboxIndex(encMetaCopySource);
         }
 
         public bool IsInFocus() { return (ActiveForm == this); }
@@ -243,13 +245,7 @@ namespace Nmkoder.Forms
 
         private void encAudioCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveUiConfig();
             QuickConvertUi.AudEncoderSelected(encAudCodecBox.SelectedIndex);
-        }
-
-        private void encSubCodec_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SaveUiConfig();
         }
 
         private void thumbnail_Click(object sender, EventArgs e)
@@ -282,11 +278,6 @@ namespace Nmkoder.Forms
 
             if (sel == streamListPage)
                 RefreshStreamListUi();
-
-            if (sel == settingsPage)
-                LoadConfig();
-            else
-                SaveConfig();
         }
 
         public void SetButtonActive(Control c, bool state)
@@ -319,6 +310,8 @@ namespace Nmkoder.Forms
                 if (RunTask.currentFileListMode == RunTask.FileListMode.Mux)
                     await TrackList.SetAsMainFile(fileList.Items[0], false);
             }
+
+            QuickConvertUi.RefreshFileListRelatedOptions();
         }
 
         private async void fileListMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -500,6 +493,7 @@ namespace Nmkoder.Forms
             TrimForm form = new TrimForm(TrackList.current == null ? 0 : TrackList.current.File.DurationMs, QuickConvertUi.currentTrim);
             form.ShowDialog();
             QuickConvertUi.currentTrim = form.NewTrimSettings;
+            UpdateTrimBtnText();
         }
 
         public void UpdateTrimBtnText ()
@@ -523,6 +517,31 @@ namespace Nmkoder.Forms
         private void resetSettingsResetAllBtn_Click(object sender, EventArgs e)
         {
             TrackList.ResetSettings(true, true);
+        }
+
+        private void discordBtn_Click(object sender, EventArgs e)
+        {
+            discordLinkMenu.Show(System.Windows.Forms.Cursor.Position);
+        }
+
+        private void paypalBtn_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://www.paypal.com/paypalme/nmkd/10");
+        }
+
+        private void patreonBtn_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://patreon.com/n00mkrad");
+        }
+
+        private void joinNmkdSoftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discord.gg/eJHD2NSJRe");
+        }
+
+        private void joinAv1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discord.gg/JutnEFrDbM"); 
         }
     }
 }

@@ -2,6 +2,7 @@
 using Nmkoder.Data.Ui;
 using Nmkoder.IO;
 using Nmkoder.Main;
+using Nmkoder.UI.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -57,10 +58,17 @@ namespace Nmkoder.UI
             Logger.Log($"Added {paths.Length} file{((paths.Length == 1) ? "" : "s")} to list.");
             LoadFiles(paths, clearExisting);
 
-            if (RunTask.currentFileListMode == RunTask.FileListMode.Mux && Program.mainForm.fileListBox.Items.Count == 1)
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Mux)
             {
-                await TrackList.SetAsMainFile(Program.mainForm.fileListBox.Items[0]);
-                await TrackList.AddStreamsToList(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File, Program.mainForm.fileListBox.Items[0].BackColor, true);
+                if(Program.mainForm.fileListBox.Items.Count == 1)
+                {
+                    await TrackList.SetAsMainFile(Program.mainForm.fileListBox.Items[0]);
+                    await TrackList.AddStreamsToList(((FileListEntry)Program.mainForm.fileListBox.Items[0].Tag).File, Program.mainForm.fileListBox.Items[0].BackColor, true);
+                }
+                else
+                {
+                    QuickConvertUi.InitFile();
+                }
             }
 
             if (runInstantly)

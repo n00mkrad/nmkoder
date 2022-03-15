@@ -56,24 +56,32 @@ namespace Nmkoder.UI.Tasks
             form.encAudConfModeBox.SelectedIndex = 0;
         }
 
-        public static void InitFile(string path)
+        public static void InitFile(string path = "")
         {
             try
             {
-                Program.mainForm.FfmpegOutputBox.Text = path;
+                bool empty = string.IsNullOrWhiteSpace(path);
 
-                if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
+                if (!empty)
                 {
-                    InitBurnCombox();
-                    LoadMetadataGrid();
+                    Program.mainForm.FfmpegOutputBox.Text = path;
+                    ValidateContainer();
                 }
 
-                ValidateContainer();
+                RefreshFileListRelatedOptions();
             }
             catch (Exception e)
             {
                 Logger.Log($"Failed to initialize media file: {e.Message}\n{e.StackTrace}");
             }
+        }
+
+        public static void RefreshFileListRelatedOptions()
+        {
+            //Logger.Log($"RefreshFileListRelatedOptions [removeme]");
+            RefreshSubtitleBurnInBox();
+            RefreshMetadataAndChapterOptions();
+            LoadMetadataGrid();
         }
 
         public static void VidEncoderSelected(int index)
@@ -296,23 +304,29 @@ namespace Nmkoder.UI.Tasks
 
         #region Load Media Info Into UI Where Needed
 
-        public static void InitBurnCombox()
+        public static void RefreshSubtitleBurnInBox()
         {
+            if (RunTask.runningBatch)
+                return;
+
             ComboBox burnBox = Program.mainForm.encSubBurnBox;
 
             burnBox.Items.Clear();
             burnBox.Items.Add("Disabled");
 
-            for (int i = 0; i < TrackList.current.File.SubtitleStreams.Count; i++)
+            if (TrackList.current != null && TrackList.current.File != null)
             {
-                bool zeroIdx = Config.GetBool(Config.Key.UseZeroIndexedStreams);
-                var stream = TrackList.current.File.SubtitleStreams[i];
+                for (int i = 0; i < TrackList.current.File.SubtitleStreams.Count; i++)
+                {
+                    bool zeroIdx = Config.GetBool(Config.Key.UseZeroIndexedStreams);
+                    var stream = TrackList.current.File.SubtitleStreams[i];
 
-                List<string> items = new List<string>();
-                items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
-                items.Add(stream.Language.ToUpper().Trunc(6));
-                items.Add(stream.Title.Trunc(25));
-                burnBox.Items.Add($"{string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))} ({Aliases.GetNicerCodecName(stream.Codec).Trunc(12)})");
+                    List<string> items = new List<string>();
+                    items.Add($"#{(zeroIdx ? i : i + 1).ToString().PadLeft(2, '0')}");
+                    items.Add(stream.Language.ToUpper().Trunc(6));
+                    items.Add(stream.Title.Trunc(25));
+                    burnBox.Items.Add($"{string.Join(" - ", items.Where(x => !string.IsNullOrWhiteSpace(x)))} ({Aliases.GetNicerCodecName(stream.Codec).Trunc(12)})");
+                }
             }
 
             burnBox.SelectedIndex = 0;
@@ -322,15 +336,51 @@ namespace Nmkoder.UI.Tasks
 
         #region Metadata Tab 
 
+        public static void RefreshMetadataAndChapterOptions()
+        {
+            if (RunTask.runningBatch)
+                return;
+
+            var metaBox = Program.mainForm.EncMetaCopySource;
+            var chapBox = Program.mainForm.EncMetaChapterSource;
+
+            metaBox.Items.Clear();
+            chapBox.Items.Clear();
+            metaBox.Items.Add("None");
+            chapBox.Items.Add("None");
+
+            List<string> filePaths = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File.SourcePath).ToList();
+
+            if (RunTask.currentFileListMode == RunTask.FileListMode.Mux)
+            {
+                for (int i = 0; i < filePaths.Count(); i++)
+                {
+                    string ext = Path.GetExtension(filePaths[i]);
+                    string text = $"#{i + 1} ({Path.GetFileNameWithoutExtension(filePaths[i]).Trunc(30 - ext.Length) + ext})";
+                    metaBox.Items.Add(text);
+                    chapBox.Items.Add(text);
+                }
+            }
+            else
+            {
+                string text = "#1 - Current Input File";
+                metaBox.Items.Add(text);
+                chapBox.Items.Add(text);
+            }
+
+            metaBox.SelectedIndex = metaBox.Items.Count > 1 ? 1 : 0; // Use 1st file if there is one, otherwise select "None"
+            chapBox.SelectedIndex = chapBox.Items.Count > 1 ? 1 : 0; // "
+        }
+
         public static void LoadMetadataGrid()
         {
             FileListEntry curr = TrackList.current;
 
-            if (curr == null)
+            if (RunTask.runningBatch || curr == null)
                 return;
 
             Logger.Log($"Reloading metadata grid.", true);
-            DataGridView grid = Program.mainForm.MetaGrid;
+            DataGridView grid = Program.mainForm.EncMetadataGrid;
             MediaFile c = curr.File;
 
             if (grid.Columns.Count != 3)
@@ -372,7 +422,7 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
-            DataGridView grid = Program.mainForm.MetaGrid;
+            DataGridView grid = Program.mainForm.EncMetadataGrid;
             Logger.Log($"Saving metadata.", true);
 
             for (int i = 0; i < grid.Rows.Count; i++)
@@ -402,32 +452,35 @@ namespace Nmkoder.UI.Tasks
             SaveMetadata();
             MainForm form = Program.mainForm;
             List<StreamListEntry> checkedEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => ((StreamListEntry)x.Tag)).ToList();
-            bool attachments = checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
-            string stripStr = ""; // If there are attachments, only copy the attachment metadata, otherwise none
 
-            if (attachments)
+            int metaFileIndex = (Program.mainForm.EncMetaCopySource.SelectedIndex - 1).Clamp(-1, int.MaxValue);
+            int chapFileIndex = (Program.mainForm.EncMetaChapterSource.SelectedIndex - 1).Clamp(-1, int.MaxValue);
+
+            DataGridView grid = form.EncMetadataGrid;
+
+            #region Attachment Metadata (Only needed when doing -map_metadata -1)
+
+            string argsAttachmentData = "";
+
+            if (metaFileIndex == -1 && checkedEntries.Where(x => x.Stream.Type == Stream.StreamType.Attachment).Any()) // When stripping all other metadata, we must still add attachment data as muxing attachments without filename doesn't seem to be possible
             {
                 for (int i = 0; i < form.fileListBox.Items.Count; i++)
                 {
                     MediaFile file = ((FileListEntry)form.fileListBox.Items[i].Tag).File;
 
-                    bool hasAttachments = checkedEntries.Where(x => x.MediaFile.SourcePath == file.SourcePath).Where(x => x.Stream.Type == Stream.StreamType.Attachment).Count() > 0;
-
-                    if (hasAttachments)
-                        stripStr += $"-map_metadata:s:t {i}:s:t";
+                    if (checkedEntries.Where(x => x.MediaFile.SourcePath == file.SourcePath).Where(x => x.Stream.Type == Stream.StreamType.Attachment).Any())
+                        argsAttachmentData += $"-map_metadata:s:t {i}:s:t";
                 }
             }
-            else
-            {
-                stripStr = "-map_metadata -1";
-            }
 
+            #endregion
 
-            int cfg = Config.GetInt(Config.Key.metaMode);
-            DataGridView grid = form.MetaGrid;
+            #region Dispositions (Set default track)
+
+            List<string> argListDispositions = new List<string>();
+
             int defaultAudio = form.trackListDefaultAudioBox.SelectedIndex;
             int defaultSubs = form.trackListDefaultSubsBox.SelectedIndex - 1;
-            List<string> argsDispo = new List<string>();
 
             int relIdxAud = 0;
             int relIdxSub = 0;
@@ -441,31 +494,35 @@ namespace Nmkoder.UI.Tasks
                 {
                     if (trackTitle.ToLower().Contains("audio"))
                     {
-                        argsDispo.Add($"-disposition:a:{relIdxAud} {(defaultAudio == relIdxAud ? "default" : "0")}");
+                        argListDispositions.Add($"-disposition:a:{relIdxAud} {(defaultAudio == relIdxAud ? "default" : "0")}");
                         relIdxAud++;
                     }
 
                     if (trackTitle.ToLower().Contains("subtitle"))
                     {
-                        argsDispo.Add($"-disposition:s:{relIdxSub} {(defaultSubs == relIdxSub ? "default" : "0")}");
+                        argListDispositions.Add($"-disposition:s:{relIdxSub} {(defaultSubs == relIdxSub ? "default" : "0")}");
                         relIdxSub++;
                     }
                 }
             }
 
-            if (cfg == 2) // 2 = Strip All
-                return $"{stripStr} {string.Join(" ", argsDispo)}";
+            string argsDispo = string.Join(" ", argListDispositions);
 
-            bool map = cfg == 0 || cfg == 1;  // 0 = Copy + Apply Editor Tags - 1 = Strip Others + Apply Editor Tags
-            List<string> argsMeta = new List<string>();
+            #endregion
 
-            if (map)
+            #region Track Titles/Languages from Grid
+
+            string argsMetaGrid = "";
+
+            if (Program.mainForm.EncMetaApplyGrid.Checked)
             {
+                List<string> argListMetaGrid = new List<string>();
+
                 if (!string.IsNullOrWhiteSpace(TrackList.current.TitleEdited))
-                    argsMeta.Add($"-metadata title=\"{TrackList.current.TitleEdited}\"");
+                    argListMetaGrid.Add($"-metadata title=\"{TrackList.current.TitleEdited}\"");
 
                 if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
-                    argsMeta.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
+                    argListMetaGrid.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
                 var streamEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToArray();
 
@@ -473,25 +530,23 @@ namespace Nmkoder.UI.Tasks
                 {
                     StreamListEntry entry = streamEntries[i];
 
-                    if (cfg == 0 && entry.TitleEdited.Trim() != entry.Title)
-                        argsMeta.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
-                    else if (cfg == 1)
-                        argsMeta.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
+                    if (entry.TitleEdited != entry.Title)
+                        argListMetaGrid.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
 
-                    if (cfg == 0 && entry.LanguageEdited.Trim() != entry.Language)
-                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
-                    else if (cfg == 1)
-                        argsMeta.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
+                    if (entry.LanguageEdited != entry.Language)
+                        argListMetaGrid.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
                 }
+
+                argsMetaGrid = string.Join(" ", argListMetaGrid);
             }
 
-            if (cfg == 0) // 0 = Map all and add titles/langs
-                return $"-map_metadata 0 {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
-            else if (cfg == 1) // 1 = Strip but add titles/langs
-                return $"{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
+            #endregion
 
-            Logger.Log($"Metadata mode not 0, 1, or 2!! cfg = {cfg}", true);
-            return $"{stripStr} {string.Join(" ", argsMeta)} {string.Join(" ", argsDispo)}";
+            return $"-map_metadata {metaFileIndex} " +
+                $"{argsAttachmentData} " +
+                $"-map_chapters {chapFileIndex} " +
+                $"{argsMetaGrid} " +
+                $"{argsDispo}";
         }
 
         #endregion
@@ -530,7 +585,7 @@ namespace Nmkoder.UI.Tasks
 
             if (currentTrim != null && !currentTrim.IsUnset)
             {
-                if(currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeExact)
+                if (currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeExact)
                     args.Add(currentTrim.StartArg);
 
                 args.Add(currentTrim.DurationArg);
@@ -597,7 +652,7 @@ namespace Nmkoder.UI.Tasks
             string firstVideoMap = (await TrackList.GetMapArgs(true, false)).Split("-map ")[1];
             string filterChain = "";
 
-            for(int i = 0; i < filters.Count; i++)
+            for (int i = 0; i < filters.Count; i++)
             {
                 bool first = i == 0;
                 bool last = i == filters.Count - 1;

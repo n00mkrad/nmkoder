@@ -122,11 +122,14 @@ namespace Nmkoder.Forms
             this.label10 = new System.Windows.Forms.Label();
             this.encMetaTab = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.metadataGrid = new System.Windows.Forms.DataGridView();
+            this.encMetadataGrid = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.metaMode = new System.Windows.Forms.ComboBox();
-            this.label21 = new System.Windows.Forms.Label();
+            this.encMetaApplyGrid = new System.Windows.Forms.CheckBox();
+            this.encMetaChapterSource = new System.Windows.Forms.ComboBox();
+            this.label57 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.encMetaCopySource = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.av1anPage = new Cyotek.Windows.Forms.TabListPage();
             this.av1anOutputPath = new System.Windows.Forms.TextBox();
             this.av1anContainer = new System.Windows.Forms.ComboBox();
@@ -222,6 +225,9 @@ namespace Nmkoder.Forms
             this.pauseBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.discordBtn = new System.Windows.Forms.Button();
+            this.patreonBtn = new System.Windows.Forms.Button();
+            this.paypalBtn = new System.Windows.Forms.Button();
             this.currentActionLabel = new System.Windows.Forms.Label();
             this.checkItemsContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -239,7 +245,6 @@ namespace Nmkoder.Forms
             this.sortMenuSizeAsc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentDesc = new System.Windows.Forms.ToolStripMenuItem();
             this.sortMenuRecentAsc = new System.Windows.Forms.ToolStripMenuItem();
-            this.runBtn = new System.Windows.Forms.Button();
             this.sortTracksContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sortTracksByLanguageAZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortTracksByLanguageZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -252,6 +257,10 @@ namespace Nmkoder.Forms
             this.settingsToResetLabel = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.resetSettingsConfBtn = new HTAlt.WinForms.HTButton();
+            this.runBtn = new System.Windows.Forms.Button();
+            this.discordLinkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.joinNmkdSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.joinAv1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -271,7 +280,7 @@ namespace Nmkoder.Forms
             this.encSubsTab.SuspendLayout();
             this.encMetaTab.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encMetadataGrid)).BeginInit();
             this.panel2.SuspendLayout();
             this.av1anPage.SuspendLayout();
             this.av1anTabControl.SuspendLayout();
@@ -304,6 +313,7 @@ namespace Nmkoder.Forms
             this.sortFileListContextMenu.SuspendLayout();
             this.sortTracksContextMenu.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.discordLinkMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // logTbox
@@ -1498,7 +1508,6 @@ namespace Nmkoder.Forms
             this.encSubCodec.Name = "encSubCodec";
             this.encSubCodec.Size = new System.Drawing.Size(250, 23);
             this.encSubCodec.TabIndex = 47;
-            this.encSubCodec.SelectedIndexChanged += new System.EventHandler(this.encSubCodec_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -1526,82 +1535,126 @@ namespace Nmkoder.Forms
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.metadataGrid);
+            this.panel3.Controls.Add(this.encMetadataGrid);
             this.panel3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel3.Location = new System.Drawing.Point(6, 77);
+            this.panel3.Location = new System.Drawing.Point(6, 99);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(656, 205);
+            this.panel3.Size = new System.Drawing.Size(656, 183);
             this.panel3.TabIndex = 7;
             // 
-            // metadataGrid
+            // encMetadataGrid
             // 
-            this.metadataGrid.AllowUserToAddRows = false;
-            this.metadataGrid.AllowUserToDeleteRows = false;
-            this.metadataGrid.AllowUserToResizeColumns = false;
-            this.metadataGrid.AllowUserToResizeRows = false;
-            this.metadataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.metadataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.metadataGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.metadataGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.metadataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.metadataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.metadataGrid.Location = new System.Drawing.Point(0, 0);
-            this.metadataGrid.MultiSelect = false;
-            this.metadataGrid.Name = "metadataGrid";
-            this.metadataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.metadataGrid.RowHeadersWidth = 51;
-            this.metadataGrid.Size = new System.Drawing.Size(656, 205);
-            this.metadataGrid.TabIndex = 1;
-            this.metadataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.metadataGrid_CellEndEdit);
+            this.encMetadataGrid.AllowUserToAddRows = false;
+            this.encMetadataGrid.AllowUserToDeleteRows = false;
+            this.encMetadataGrid.AllowUserToResizeColumns = false;
+            this.encMetadataGrid.AllowUserToResizeRows = false;
+            this.encMetadataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.encMetadataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.encMetadataGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encMetadataGrid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.encMetadataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.encMetadataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.encMetadataGrid.Location = new System.Drawing.Point(0, 0);
+            this.encMetadataGrid.MultiSelect = false;
+            this.encMetadataGrid.Name = "encMetadataGrid";
+            this.encMetadataGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.encMetadataGrid.RowHeadersWidth = 51;
+            this.encMetadataGrid.Size = new System.Drawing.Size(656, 183);
+            this.encMetadataGrid.TabIndex = 1;
+            this.encMetadataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.metadataGrid_CellEndEdit);
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.metaMode);
-            this.panel2.Controls.Add(this.label21);
+            this.panel2.Controls.Add(this.encMetaApplyGrid);
+            this.panel2.Controls.Add(this.encMetaChapterSource);
+            this.panel2.Controls.Add(this.label57);
             this.panel2.Controls.Add(this.label14);
-            this.panel2.Location = new System.Drawing.Point(6, 6);
+            this.panel2.Controls.Add(this.encMetaCopySource);
+            this.panel2.Controls.Add(this.label21);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(656, 65);
+            this.panel2.Size = new System.Drawing.Size(668, 93);
             this.panel2.TabIndex = 6;
             // 
-            // metaMode
+            // encMetaApplyGrid
             // 
-            this.metaMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.metaMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.metaMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.metaMode.ForeColor = System.Drawing.Color.White;
-            this.metaMode.FormattingEnabled = true;
-            this.metaMode.Items.AddRange(new object[] {
+            this.encMetaApplyGrid.AutoSize = true;
+            this.encMetaApplyGrid.Checked = true;
+            this.encMetaApplyGrid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.encMetaApplyGrid.ForeColor = System.Drawing.Color.White;
+            this.encMetaApplyGrid.Location = new System.Drawing.Point(362, 69);
+            this.encMetaApplyGrid.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.encMetaApplyGrid.Name = "encMetaApplyGrid";
+            this.encMetaApplyGrid.Size = new System.Drawing.Size(15, 14);
+            this.encMetaApplyGrid.TabIndex = 73;
+            this.encMetaApplyGrid.UseVisualStyleBackColor = true;
+            // 
+            // encMetaChapterSource
+            // 
+            this.encMetaChapterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encMetaChapterSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encMetaChapterSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encMetaChapterSource.ForeColor = System.Drawing.Color.White;
+            this.encMetaChapterSource.FormattingEnabled = true;
+            this.encMetaChapterSource.Items.AddRange(new object[] {
             "Copy All From Input, Edit Titles/Languages",
             "Apply Titles/Languages, Strip Rest",
             "Strip All Metadata Including Titles/Languages"});
-            this.metaMode.Location = new System.Drawing.Point(220, 37);
-            this.metaMode.Name = "metaMode";
-            this.metaMode.Size = new System.Drawing.Size(433, 23);
-            this.metaMode.TabIndex = 49;
-            this.metaMode.SelectedIndexChanged += new System.EventHandler(this.metaMode_SelectedIndexChanged);
+            this.encMetaChapterSource.Location = new System.Drawing.Point(362, 37);
+            this.encMetaChapterSource.Name = "encMetaChapterSource";
+            this.encMetaChapterSource.Size = new System.Drawing.Size(300, 23);
+            this.encMetaChapterSource.TabIndex = 52;
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.ForeColor = System.Drawing.Color.White;
+            this.label57.Location = new System.Drawing.Point(5, 70);
+            this.label57.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(311, 15);
+            this.label57.TabIndex = 51;
+            this.label57.Text = "Apply Track Names And Languages From The Table Below";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ForeColor = System.Drawing.Color.White;
+            this.label14.Location = new System.Drawing.Point(5, 40);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(165, 15);
+            this.label14.TabIndex = 50;
+            this.label14.Text = "Copy Chapter Markers From...";
+            // 
+            // encMetaCopySource
+            // 
+            this.encMetaCopySource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encMetaCopySource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.encMetaCopySource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.encMetaCopySource.ForeColor = System.Drawing.Color.White;
+            this.encMetaCopySource.FormattingEnabled = true;
+            this.encMetaCopySource.Items.AddRange(new object[] {
+            "Copy All From Input, Edit Titles/Languages",
+            "Apply Titles/Languages, Strip Rest",
+            "Strip All Metadata Including Titles/Languages"});
+            this.encMetaCopySource.Location = new System.Drawing.Point(362, 7);
+            this.encMetaCopySource.Name = "encMetaCopySource";
+            this.encMetaCopySource.Size = new System.Drawing.Size(300, 23);
+            this.encMetaCopySource.TabIndex = 49;
+            this.encMetaCopySource.SelectedIndexChanged += new System.EventHandler(this.metaMode_SelectedIndexChanged);
             // 
             // label21
             // 
             this.label21.AutoSize = true;
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(4, 40);
+            this.label21.Location = new System.Drawing.Point(5, 10);
             this.label21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(143, 15);
+            this.label21.Size = new System.Drawing.Size(128, 15);
             this.label21.TabIndex = 18;
-            this.label21.Text = "Metadata Handling Mode";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.ForeColor = System.Drawing.SystemColors.Control;
-            this.label14.Location = new System.Drawing.Point(3, 3);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(616, 15);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Here you can edit the title and language tag (ISO 639-2) of each track. Double cl" +
-    "ick or press F2 to edit a selected cell.";
+            this.label21.Text = "Copy Metadata From...";
             // 
             // av1anPage
             // 
@@ -2926,6 +2979,54 @@ namespace Nmkoder.Forms
             this.stopBtn.UseVisualStyleBackColor = false;
             this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 
+            // discordBtn
+            // 
+            this.discordBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.discordBtn.BackgroundImage = global::Nmkoder.Properties.Resources.links_discordNew;
+            this.discordBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.discordBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.discordBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.discordBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.discordBtn.Location = new System.Drawing.Point(1132, 12);
+            this.discordBtn.Name = "discordBtn";
+            this.discordBtn.Size = new System.Drawing.Size(40, 40);
+            this.discordBtn.TabIndex = 71;
+            this.toolTip.SetToolTip(this.discordBtn, "Chat on Discord");
+            this.discordBtn.UseVisualStyleBackColor = false;
+            this.discordBtn.Click += new System.EventHandler(this.discordBtn_Click);
+            // 
+            // patreonBtn
+            // 
+            this.patreonBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.patreonBtn.BackgroundImage = global::Nmkoder.Properties.Resources.links_patreon256pxColored;
+            this.patreonBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.patreonBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.patreonBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.patreonBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.patreonBtn.Location = new System.Drawing.Point(1086, 12);
+            this.patreonBtn.Name = "patreonBtn";
+            this.patreonBtn.Size = new System.Drawing.Size(40, 40);
+            this.patreonBtn.TabIndex = 70;
+            this.toolTip.SetToolTip(this.patreonBtn, "Support me on Patreon");
+            this.patreonBtn.UseVisualStyleBackColor = false;
+            this.patreonBtn.Click += new System.EventHandler(this.patreonBtn_Click);
+            // 
+            // paypalBtn
+            // 
+            this.paypalBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.paypalBtn.BackgroundImage = global::Nmkoder.Properties.Resources.links_paypal256px;
+            this.paypalBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.paypalBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paypalBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paypalBtn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.paypalBtn.Location = new System.Drawing.Point(1040, 12);
+            this.paypalBtn.Name = "paypalBtn";
+            this.paypalBtn.Size = new System.Drawing.Size(40, 40);
+            this.paypalBtn.TabIndex = 69;
+            this.toolTip.SetToolTip(this.paypalBtn, "Donate via PayPal");
+            this.paypalBtn.UseVisualStyleBackColor = false;
+            this.paypalBtn.Click += new System.EventHandler(this.paypalBtn_Click);
+            // 
             // currentActionLabel
             // 
             this.currentActionLabel.AutoSize = true;
@@ -3062,25 +3163,6 @@ namespace Nmkoder.Forms
             this.sortMenuRecentAsc.Text = "Sort By Modified Date (Old To New)";
             this.sortMenuRecentAsc.Click += new System.EventHandler(this.sortMenuRecentAsc_Click);
             // 
-            // runBtn
-            // 
-            this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.runBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.runBtn.Enabled = false;
-            this.runBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.runBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.runBtn.ForeColor = System.Drawing.Color.White;
-            this.runBtn.Image = ((System.Drawing.Image)(resources.GetObject("runBtn.Image")));
-            this.runBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.runBtn.Location = new System.Drawing.Point(12, 544);
-            this.runBtn.Name = "runBtn";
-            this.runBtn.Size = new System.Drawing.Size(314, 45);
-            this.runBtn.TabIndex = 13;
-            this.runBtn.Text = "Start";
-            this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.runBtn.UseVisualStyleBackColor = false;
-            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
-            // 
             // sortTracksContextMenu
             // 
             this.sortTracksContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -3206,12 +3288,56 @@ namespace Nmkoder.Forms
             this.resetSettingsConfBtn.Text = "Configure...";
             this.resetSettingsConfBtn.Click += new System.EventHandler(this.resetSettingsConfBtn_Click);
             // 
+            // runBtn
+            // 
+            this.runBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.runBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.runBtn.Enabled = false;
+            this.runBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.runBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.runBtn.ForeColor = System.Drawing.Color.White;
+            this.runBtn.Image = ((System.Drawing.Image)(resources.GetObject("runBtn.Image")));
+            this.runBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.runBtn.Location = new System.Drawing.Point(12, 544);
+            this.runBtn.Name = "runBtn";
+            this.runBtn.Size = new System.Drawing.Size(314, 45);
+            this.runBtn.TabIndex = 13;
+            this.runBtn.Text = "Start";
+            this.runBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.runBtn.UseVisualStyleBackColor = false;
+            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
+            // 
+            // discordLinkMenu
+            // 
+            this.discordLinkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.joinNmkdSoftToolStripMenuItem,
+            this.joinAv1ToolStripMenuItem});
+            this.discordLinkMenu.Name = "discordLinkMenu";
+            this.discordLinkMenu.Size = new System.Drawing.Size(450, 48);
+            // 
+            // joinNmkdSoftToolStripMenuItem
+            // 
+            this.joinNmkdSoftToolStripMenuItem.Name = "joinNmkdSoftToolStripMenuItem";
+            this.joinNmkdSoftToolStripMenuItem.Size = new System.Drawing.Size(449, 22);
+            this.joinNmkdSoftToolStripMenuItem.Text = "Join NMKD Software Discord (Discuss Nmkoder and other NMKD tools)";
+            this.joinNmkdSoftToolStripMenuItem.Click += new System.EventHandler(this.joinNmkdSoftToolStripMenuItem_Click);
+            // 
+            // joinAv1ToolStripMenuItem
+            // 
+            this.joinAv1ToolStripMenuItem.Name = "joinAv1ToolStripMenuItem";
+            this.joinAv1ToolStripMenuItem.Size = new System.Drawing.Size(449, 22);
+            this.joinAv1ToolStripMenuItem.Text = "Join AV1 Discord (Discuss Nmkoder and AV1)";
+            this.joinAv1ToolStripMenuItem.Click += new System.EventHandler(this.joinAv1ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1184, 601);
+            this.Controls.Add(this.discordBtn);
+            this.Controls.Add(this.patreonBtn);
+            this.Controls.Add(this.paypalBtn);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.currentActionLabel);
             this.Controls.Add(this.busyControlsPanel);
@@ -3258,7 +3384,7 @@ namespace Nmkoder.Forms
             this.encSubsTab.PerformLayout();
             this.encMetaTab.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.metadataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.encMetadataGrid)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.av1anPage.ResumeLayout(false);
@@ -3300,6 +3426,7 @@ namespace Nmkoder.Forms
             this.sortTracksContextMenu.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.discordLinkMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3353,12 +3480,11 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox encAudChannels;
         private System.Windows.Forms.TabPage encMetaTab;
-        private System.Windows.Forms.DataGridView metadataGrid;
+        private System.Windows.Forms.DataGridView encMetadataGrid;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ComboBox metaMode;
+        private System.Windows.Forms.ComboBox encMetaCopySource;
         private System.Windows.Forms.ComboBox encSubBurn;
         private System.Windows.Forms.Label label25;
         private Cyotek.Windows.Forms.TabListPage fileListPage;
@@ -3526,6 +3652,16 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.Label settingsToResetLabel;
         private System.Windows.Forms.Label label56;
         private HTAlt.WinForms.HTButton resetSettingsConfBtn;
+        private System.Windows.Forms.Button paypalBtn;
+        private System.Windows.Forms.Button patreonBtn;
+        private System.Windows.Forms.Button discordBtn;
+        private System.Windows.Forms.CheckBox encMetaApplyGrid;
+        private System.Windows.Forms.ComboBox encMetaChapterSource;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ContextMenuStrip discordLinkMenu;
+        private System.Windows.Forms.ToolStripMenuItem joinNmkdSoftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem joinAv1ToolStripMenuItem;
     }
 }
 

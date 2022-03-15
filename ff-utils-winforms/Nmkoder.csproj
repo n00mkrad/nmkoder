@@ -490,6 +490,9 @@
     <Content Include="ff-utils-icon-new.ico" />
     <Content Include="NMKD2020-nonly1-smoothed2.ico" />
     <Content Include="nmkoder.ico" />
+    <None Include="Resources\links_discordNew.png" />
+    <None Include="Resources\links_patreon256pxColored.png" />
+    <None Include="Resources\links_paypal256px.png" />
     <None Include="Resources\icon_extract.png" />
     <None Include="Resources\icon_sort.png" />
     <None Include="Resources\icon_plot.png" />

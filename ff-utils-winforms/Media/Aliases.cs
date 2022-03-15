@@ -94,13 +94,16 @@ namespace Nmkoder.Media
             if (lower == "vc1") return "VC-1";
             if (lower == "mjpeg") return "MJPEG";
             if (lower == "mpeg4") return "MPEG-4";
+            if (lower == "mpeg2video") return "MPEG-2";
             if (lower == "msmpeg4v3") return "MS MPEG-4 V3";
             if (lower == "timed_id3") return "Timed ID3";
+            if (lower == "text") return "Text";
             if (lower == "rawvideo") return "Raw Video";
             if (lower == "msrle") return "MS RLE";
             if (lower == "wmav2") return "WMAV2";
             if (lower == "wmapro") return "WMA Pro";
-            if (lower == "text") return "Text";
+            if (lower == "dvb_teletext") return "DVB Teletext";
+            if (lower == "dvb_subtitle") return "DVB Subtitles";
 
             return FormatUtils.CapsIfShort(codecName, 5);
         }

@@ -37,8 +37,8 @@ namespace Nmkoder.UI
 
             f.streamDetailsBox.Text = "";
             f.FormatInfoLabel.Text = "";
-            f.MetaGrid.Columns.Clear();
-            f.MetaGrid.Rows.Clear();
+            f.EncMetadataGrid.Columns.Clear();
+            f.EncMetadataGrid.Rows.Clear();
             ThumbnailView.ClearUi();
 
             ResetSettings();

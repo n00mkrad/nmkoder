@@ -48,10 +48,14 @@ namespace Nmkoder.Forms
         public ComboBox encSubCodecBox { get { return encSubCodec; } }
         public ComboBox encSubBurnBox { get { return encSubBurn; } }
         // Quick Convert - Other
-        public DataGridView MetaGrid { get { return metadataGrid; } }
         public TextBox FfmpegOutputBox { get { return outputPath; } }
         public TextBox customArgsInBox { get { return encCustomArgsIn; } }
         public TextBox customArgsOutBox { get { return encCustomArgsOut; } }
+        // Metadata
+        public DataGridView EncMetadataGrid { get { return encMetadataGrid; } }
+        public ComboBox EncMetaCopySource { get { return encMetaCopySource; } }
+        public ComboBox EncMetaChapterSource { get { return encMetaChapterSource; } }
+        public CheckBox EncMetaApplyGrid { get { return encMetaApplyGrid; } }
 
         public void InitQuickConvert ()
         {
@@ -61,13 +65,11 @@ namespace Nmkoder.Forms
 
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveUiConfig();
             QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);
         }
 
         private void containers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveUiConfig();
             QuickConvertUi.ValidateContainer();
         }
 

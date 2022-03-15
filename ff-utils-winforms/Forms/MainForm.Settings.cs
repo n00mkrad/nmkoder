@@ -23,16 +23,6 @@ namespace Nmkoder.Forms
 {
     partial class MainForm
     {
-        public void SaveConfig ()
-        {
-            //Logger.Log($"SaveConfig");
-            ConfigParser.SaveGuiElement(mp4Faststart);
-        }
 
-        public void LoadConfig()
-        {
-            //Logger.Log($"SaveConfig");
-            ConfigParser.LoadGuiElement(mp4Faststart);
-        }
     }
 }

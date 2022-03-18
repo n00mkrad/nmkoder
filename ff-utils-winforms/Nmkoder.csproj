@@ -425,6 +425,7 @@
     <Compile Include="Utils\NmkdStopwatch.cs" />
     <EmbeddedResource Include="Forms\AudioStreamsForm.resx">
       <DependentUpon>AudioStreamsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Av1anResumeForm.resx">
       <DependentUpon>Av1anResumeForm.cs</DependentUpon>

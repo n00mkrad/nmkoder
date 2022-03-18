@@ -90,6 +90,15 @@ namespace Nmkoder.UI
 
         public static void Load (Label labelToSet = null)
         {
+            bool firstRun = !Config.cachedValues.ContainsKey(Config.Key.ResetSettingsList.ToString());
+
+            if (firstRun) // Set default values here if none are saved yet
+            {
+                ResetTrim = true;
+                ResetCrop = true;
+                Save();
+            }
+
             string data = Config.Get(Config.Key.ResetSettingsList);
 
             if (data == null || string.IsNullOrWhiteSpace(data))
@@ -105,7 +114,7 @@ namespace Nmkoder.UI
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log($"Failed to set saved ResetSettingsOnNewFile property: {ex.Message}");
+                    Logger.Log($"Failed to set saved ResetSettingsOnNewFile property: {ex.Message}", true);
                 }
             }
 

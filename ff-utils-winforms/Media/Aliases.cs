@@ -90,12 +90,15 @@ namespace Nmkoder.Media
             if (lower.StartsWith("dvd_subtitle")) return "VobSub";
             if (lower == "truehd") return "TrueHD";
             if (lower == "opus") return "Opus";
-            if (lower.StartsWith("pcm")) return codecName.ToUpper();
+            if (lower == "pcm_bluray") return "Blu-ray PCM";
+            if (lower.StartsWith("pcm")) return codecName.Replace("_", " ").ToUpper();
             if (lower == "vc1") return "VC-1";
             if (lower == "mjpeg") return "MJPEG";
             if (lower == "mpeg4") return "MPEG-4";
             if (lower == "mpeg2video") return "MPEG-2";
             if (lower == "msmpeg4v3") return "MS MPEG-4 V3";
+            if (lower == "prores") return "ProRes";
+            if (lower == "dnxhd") return "DNxHD";
             if (lower == "timed_id3") return "Timed ID3";
             if (lower == "text") return "Text";
             if (lower == "rawvideo") return "Raw Video";

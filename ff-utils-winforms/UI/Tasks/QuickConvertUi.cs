@@ -518,11 +518,8 @@ namespace Nmkoder.UI.Tasks
             {
                 List<string> argListMetaGrid = new List<string>();
 
-                if (!string.IsNullOrWhiteSpace(TrackList.current.TitleEdited))
-                    argListMetaGrid.Add($"-metadata title=\"{TrackList.current.TitleEdited}\"");
-
-                if (!string.IsNullOrWhiteSpace(TrackList.current.LanguageEdited))
-                    argListMetaGrid.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
+                argListMetaGrid.Add($"-metadata title=\"{TrackList.current.TitleEdited}\"");
+                argListMetaGrid.Add($"-metadata title=\"{TrackList.current.LanguageEdited}\"");
 
                 var streamEntries = form.streamList.CheckedItems.Cast<ListViewItem>().Select(x => (StreamListEntry)x.Tag).ToArray();
 
@@ -530,11 +527,8 @@ namespace Nmkoder.UI.Tasks
                 {
                     StreamListEntry entry = streamEntries[i];
 
-                    if (entry.TitleEdited != entry.Title)
-                        argListMetaGrid.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
-
-                    if (entry.LanguageEdited != entry.Language)
-                        argListMetaGrid.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
+                    argListMetaGrid.Add($"-metadata:s:{i} title=\"{entry.TitleEdited}\"");
+                    argListMetaGrid.Add($"-metadata:s:{i} language=\"{entry.LanguageEdited}\"");
                 }
 
                 argsMetaGrid = string.Join(" ", argListMetaGrid);

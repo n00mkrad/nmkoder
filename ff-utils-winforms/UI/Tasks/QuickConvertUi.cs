@@ -277,18 +277,7 @@ namespace Nmkoder.UI.Tasks
 
             if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetMbytes)
             {
-                bool aud = !CodecUtils.GetCodec(GetCurrentCodecA()).DoesNotEncode;
-                int audioTracks = form.streamList.CheckedItems.Cast<ListViewItem>().Where(x => ((StreamListEntry)x.Tag).Stream.Type == Stream.StreamType.Audio).Count();
-                int audioBps = aud ? ((int)form.encAudQualUpDown.Value * 1024) * audioTracks : 0;
-                double durationSecs = TrackList.current.File.DurationMs / (double)1000;
-                float targetMbytes = form.encVidQualityBox.Text.GetFloat();
-                long targetBits = (long)Math.Round(targetMbytes * 8 * 1024 * 1024);
-                int targetVidBitrate = (int)Math.Floor(targetBits / durationSecs) - audioBps; // Round down since undershooting is better than overshooting here
-                string brTotal = (((float)targetVidBitrate + audioBps) / 1024).ToString("0.0");
-                string brVid = ((float)targetVidBitrate / 1024).ToString("0");
-                string brAud = ((float)audioBps / 1024).ToString("0");
-                Logger.Log($"Target Filesize Mode: Using bitrate of {brTotal} kbps ({brVid}k Video, {brAud}k Audio) over {durationSecs.ToString("0.0")} seconds to hit {targetMbytes} megabytes.");
-                return ((float)targetVidBitrate / 1024).RoundToInt();
+                return BitrateCalculation.GetTargetSizeKbps(CodecUtils.GetCodec(GetCurrentCodecA()));
             }
 
             return 0;

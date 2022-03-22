@@ -80,13 +80,14 @@ namespace Nmkoder.Media
             {
                 if (stripKeyName)
                 {
-                    List<string> filtered = output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToList();    // Filter
+                    
+                    List<string> filtered = output.SplitIntoLines().Where(x => x.ToLower().Contains(lineFilter.ToLower())).ToList();    // Filter
                     filtered = filtered.Select(x => string.Join("", x.Split('=').Skip(1))).ToList();    // Ignore everything before (and including) the first '=' sign
                     output = string.Join("\n", filtered);
                 }
                 else
                 {
-                    output = string.Join("\n", output.SplitIntoLines().Where(x => x.Contains(lineFilter)).ToArray());
+                    output = string.Join("\n", output.SplitIntoLines().Where(x => x.ToLower().Contains(lineFilter.ToLower())).ToArray());
                 }
             }
 

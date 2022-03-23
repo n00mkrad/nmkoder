@@ -157,11 +157,7 @@ namespace Nmkoder.Forms
                 controlsToDisable.AddRange(new Control[] { trackListDefaultAudio, trackListDefaultSubs });
                 controlsToHide.AddRange(new Control[] { trackListCheckTracksBtn, trackListSortTracksBtn, trackListMoveUpBtn, trackListMoveDownBtn, fileListMoveUpBtn, fileListMoveDownBtn });
 
-                //Program.mainForm.streamList.CheckBoxes = !state;
                 streamListBlockPanel.Visible = state;
-
-                if (!state)
-                    streamList.Items.Clear();
             }
 
             progressCircle.Visible = state;

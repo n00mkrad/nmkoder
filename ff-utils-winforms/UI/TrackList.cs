@@ -164,7 +164,7 @@ namespace Nmkoder.UI
 
                 await mediaFile.Initialize();
 
-                if (!silent)
+                if (!silent) 
                     PrintFoundStreams(mediaFile);
             }
 

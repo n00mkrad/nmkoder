@@ -141,6 +141,7 @@ namespace Nmkoder.Main
                     finishedTasks++;
             }
 
+            TrackList.ClearCurrentFile(true);
             runningBatch = false;
 
             Logger.Log($"Queue: Completed {finishedTasks}/{taskFileListItems.Length} tasks{(canceled ? " (Canceled)" : "")}. Total time: {sw}");

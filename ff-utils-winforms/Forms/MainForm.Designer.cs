@@ -261,6 +261,7 @@ namespace Nmkoder.Forms
             this.discordLinkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.joinNmkdSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinAv1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label59 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -905,6 +906,7 @@ namespace Nmkoder.Forms
             // encVidTab
             // 
             this.encVidTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.encVidTab.Controls.Add(this.label59);
             this.encVidTab.Controls.Add(this.encCropConfBtn);
             this.encVidTab.Controls.Add(this.encQualMode);
             this.encVidTab.Controls.Add(this.label4);
@@ -3329,6 +3331,17 @@ namespace Nmkoder.Forms
             this.joinAv1ToolStripMenuItem.Text = "Join AV1 Discord (Discuss Nmkoder and AV1)";
             this.joinAv1ToolStripMenuItem.Click += new System.EventHandler(this.joinAv1ToolStripMenuItem_Click);
             // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.ForeColor = System.Drawing.Color.Silver;
+            this.label59.Location = new System.Drawing.Point(477, 100);
+            this.label59.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(177, 15);
+            this.label59.TabIndex = 67;
+            this.label59.Text = "Channels - Sampling - Bit Depth";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3662,6 +3675,7 @@ namespace Nmkoder.Forms
         private System.Windows.Forms.ContextMenuStrip discordLinkMenu;
         private System.Windows.Forms.ToolStripMenuItem joinNmkdSoftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem joinAv1ToolStripMenuItem;
+        private System.Windows.Forms.Label label59;
     }
 }
 

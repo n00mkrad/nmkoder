@@ -23,7 +23,7 @@ namespace Nmkoder.Utils
             MainForm form = Program.mainForm;
             bool aud = !aCodec.DoesNotEncode;
 
-            string audArgs = CodecUtils.GetAudioArgsForEachStream(TrackList.current.File, (int)form.encAudQualUpDown.Value, form.encAudChannelsBox.GetInt());
+            string audArgs = CodecUtils.GetAudioArgsForEachStream(TrackList.current.File, (int)form.encAudQualUpDown.Value, form.encAudChannelsBox.Text.Split(' ')[0].GetInt());
 
             List<int> audioBitrates = audArgs.Split("-b:a:").Where(x => x.Contains("k ")).Select(x => x.Split(' ')[1].GetInt()).ToList(); //aud ? ((int)form.encAudQualUpDown.Value * 1024) * audioTracks : 0;
             int audioBps = audioBitrates.Select(x => x * 1024).Sum();

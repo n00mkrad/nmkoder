@@ -87,7 +87,7 @@ namespace Nmkoder.Media
 
             if (lower.StartsWith("hdmv_pgs")) return "PGS";
             if (lower.StartsWith("subrip")) return "SRT";
-            if (lower.StartsWith("dvd_subtitle")) return "VobSub";
+            if (lower.StartsWith("dvd_subtitle")) return "DVD Subtitles";
             if (lower == "truehd") return "TrueHD";
             if (lower == "opus") return "Opus";
             if (lower == "pcm_bluray") return "Blu-ray PCM";
@@ -98,6 +98,9 @@ namespace Nmkoder.Media
             if (lower == "mpeg2video") return "MPEG-2";
             if (lower == "msmpeg4v3") return "MS MPEG-4 V3";
             if (lower == "prores") return "ProRes";
+            if (lower == "dnxhd") return "DNxHD";
+            if (lower == "binkvideo") return "Bink Video";
+            if (lower.StartsWith("binkaudio")) return $"Bink Audio {lower.Split('_').Last().ToUpperInvariant()}";
             if (lower == "dnxhd") return "DNxHD";
             if (lower == "timed_id3") return "Timed ID3";
             if (lower == "text") return "Text";

@@ -62,7 +62,7 @@ namespace Nmkoder.IO
 
             string msg = entry.logMessage;
 
-            if(msg == LastUiLine)
+            if (msg == LastUiLine)
                 entry.hidden = true; // Never show the same line twice in UI, but log it to file
 
             _lastLog = msg;
@@ -88,9 +88,15 @@ namespace Nmkoder.IO
             if (!entry.hidden && textbox != null)
                 textbox.AppendText((textbox.Text.Length > 1 ? Environment.NewLine : "") + msg);
 
-            textbox.Resume();
+            if (entry.replaceLastLine)
+            {
+                textbox.Resume();
+                msg = "[REPL] " + msg;
+            }
 
-            msg = $"{(!entry.hidden ? "[UI] " : "")}{(entry.replaceLastLine ? "[RP] " : "")}{msg}";
+            if (!entry.hidden)
+                msg = "[UI] " + msg;
+
             LogToFile(msg, false, entry.filename);
         }
 
@@ -148,7 +154,7 @@ namespace Nmkoder.IO
             textbox.Text = "";
         }
 
-        private static string GetLastLine(bool includeHidden = false)
+        public static string GetLastLine(bool includeHidden = false)
         {
             return includeHidden ? _lastLog : _lastUi;
         }

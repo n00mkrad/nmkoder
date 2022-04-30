@@ -75,7 +75,7 @@ namespace Nmkoder.Data.Codecs.Video
         public List<PixelFormats> ColorFormats { get; } = new List<PixelFormats>() { PixelFormats.Yuv420P8, PixelFormats.Yuv420P10 };
         public int ColorFormatDefault { get; } = 1;
         public int QMin { get; } = 0;
-        public int QMax { get; } = 50;
+        public int QMax { get; } = 63;
         public int QDefault { get; } = 20;
         public string QInfo { get; } = "CRF (0-50 - Lower is better)";
         public string PresetInfo { get; } = "Lower = Better compression";

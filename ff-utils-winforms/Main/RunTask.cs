@@ -60,7 +60,8 @@ namespace Nmkoder.Main
             }
             else
             {
-                var missingFiles = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File.SourcePath).Where(x => !File.Exists(x));
+                List<MediaFile> mediaFiles = Program.mainForm.fileListBox.Items.Cast<ListViewItem>().Select(x => ((FileListEntry)x.Tag).File).ToList();
+                var missingFiles = mediaFiles.Where(x => !x.CheckFiles()).Select(x => x.SourcePath);
 
                 if (missingFiles.Any())
                 {

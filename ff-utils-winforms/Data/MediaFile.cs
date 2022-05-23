@@ -18,7 +18,7 @@ namespace Nmkoder.Data
     {
         public bool IsDirectory;
         public FileInfo FileInfo;
-        public DirectoryInfo Directory;
+        public DirectoryInfo DirectoryInfo;
         public int FileCount;
         public string Name;
         public string SourcePath;
@@ -49,9 +49,9 @@ namespace Nmkoder.Data
             if (IoUtils.IsPathDirectory(path))
             {
                 IsDirectory = true;
-                Directory = new DirectoryInfo(path);
-                Name = Directory.Name;
-                SourcePath = Directory.FullName;
+                DirectoryInfo = new DirectoryInfo(path);
+                Name = DirectoryInfo.Name;
+                SourcePath = DirectoryInfo.FullName;
                 Format = "Folder";
 
                 if(requestFpsInputIfUnset && InputRate == null)
@@ -136,7 +136,7 @@ namespace Nmkoder.Data
         public string GetName()
         {
             if (IsDirectory)
-                return Directory.Name;
+                return DirectoryInfo.Name;
             else
                 return FileInfo.Name;
         }
@@ -144,7 +144,7 @@ namespace Nmkoder.Data
         public string GetPath()
         {
             if (IsDirectory)
-                return Directory.FullName;
+                return DirectoryInfo.FullName;
             else
                 return FileInfo.FullName;
         }
@@ -163,6 +163,14 @@ namespace Nmkoder.Data
                 Logger.Log($"Failed to get file size of {FileInfo.FullName}: {ex.Message} (Path Length: {FileInfo.FullName.Length})", true);
                 return 0;
             }
+        }
+
+        public bool CheckFiles()
+        {
+            if (IsDirectory)
+                return Directory.Exists(DirectoryInfo.FullName);
+            else
+                return File.Exists(FileInfo.FullName);
         }
 
         public override string ToString()

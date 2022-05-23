@@ -110,7 +110,7 @@ namespace Nmkoder.Data
 
                 if (baseBitrate > 0)
                 {
-                    int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
+                        int kbps = (baseBitrate * MiscUtils.GetAudioBitrateMultiplier(ac)).RoundToInt();
 
                     if (perTrack && audioConf != null)
                         kbps = audioConf[indexTotal].BitrateKbps;

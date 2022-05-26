@@ -208,6 +208,10 @@ namespace Nmkoder.Media
             }
 
             detectedCrops = detectedCrops.Where(x => (x.Split(':')[0].GetInt() > 0) && (x.Split(':')[1].GetInt() > 0)).OrderByDescending(x => (x.Split(':')[0].GetInt() * x.Split(':')[1].GetInt())).ToList();
+
+            if (detectedCrops.Count < 1)
+                return "";
+
             string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string largest = detectedCrops.First();
             int commonCertainty = (((float)detectedCrops.CountOccurences(mostCommon) / (float)detectedCrops.Count) * 100f).RoundToInt();

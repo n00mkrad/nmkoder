@@ -304,7 +304,7 @@ namespace Nmkoder.UI
             return string.Join(" ", args);
         }
 
-        public static async Task<string> GetMapArgs(bool videoOnly = false, bool accountForFilterChain = true)
+        public static async Task<string> GetMapArgs(bool videoOnly = false, bool noVideoEncode = false, bool accountForFilterChain = true)
         {
             List<string> args = new List<string>();
             List<int> fileIndexesToMap = new List<int>();
@@ -326,7 +326,7 @@ namespace Nmkoder.UI
                     if (videoOnly && entry.Stream.Type != Stream.StreamType.Video) // Skip all non-video streams if videoOnly == true
                         continue;
 
-                    if (accountForFilterChain && !hasSkippedFirstVideoStream && entry.Stream.Type == Stream.StreamType.Video)
+                    if (accountForFilterChain && !hasSkippedFirstVideoStream && entry.Stream.Type == Stream.StreamType.Video && !noVideoEncode)
                     {
                         if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(null, null, true)))
                         {

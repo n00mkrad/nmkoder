@@ -632,7 +632,7 @@ namespace Nmkoder.UI.Tasks
 
             filters = filters.Where(x => x.Trim().Length > 2).ToList(); // Strip empty filters
 
-            string firstVideoMap = (await TrackList.GetMapArgs(true, false)).Split("-map ")[1];
+            string firstVideoMap = (await TrackList.GetMapArgs(true, false, false)).Split("-map ")[1];
             string filterChain = "";
 
             for (int i = 0; i < filters.Count; i++)

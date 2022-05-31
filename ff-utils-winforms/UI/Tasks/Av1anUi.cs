@@ -93,9 +93,8 @@ namespace Nmkoder.UI.Tasks
             IEncoder enc = CodecUtils.GetCodec(c);
             form.qInfoLabel.Text = enc.QInfo;
             form.presetInfoLabel.Text = enc.PresetInfo;
-            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = c == CodecUtils.Av1anCodec.AomAv1 || c == CodecUtils.Av1anCodec.SvtAv1; // Only AV1 has grain synth
-            form.av1anGrainSynthDenoiseBox.Enabled = c == CodecUtils.Av1anCodec.AomAv1; // Only AOM has an option to enable or disable denoising...
-            form.av1anGrainSynthDenoiseBox.Checked = c == CodecUtils.Av1anCodec.SvtAv1; // ...SVT always has it enabled
+            bool av1 = c == CodecUtils.Av1anCodec.AomAv1 || c == CodecUtils.Av1anCodec.SvtAv1;
+            form.av1anGrainSynthStrengthUpDown.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = form.av1anGrainSynthDenoiseBox.Enabled = av1; // Only AV1 has grain synth
             LoadQualityLevel(enc);
             LoadPresets(enc);
             LoadColorFormats(enc);
@@ -379,7 +378,7 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             if (File.Exists(form.av1anOutputPathBox.Text))
-                form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(form.av1anOutputPathBox.Text);
+                form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(form.av1anOutputPathBox.Text, "av1an");
         }
 
         public static Fraction GetUiFps()

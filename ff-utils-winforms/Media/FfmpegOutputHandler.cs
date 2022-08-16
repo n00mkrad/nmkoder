@@ -45,14 +45,6 @@ namespace Nmkoder.Media
             string lineWithoutPath = RemoveStringsFromLine(line, ignoreStrings);
             string log = $"Last 4 log lines:\n{string.Join(Environment.NewLine, Logger.GetSessionLogLastLines("ffmpeg", 4))}";
 
-            List<string> genericErrors = new List<string>() { "Error ", "Unable to ", "Could not open file", "Failed " };
-
-            if (genericErrors.Any(x => lineWithoutPath.Contains(x)))
-            {
-                RunTask.Cancel($"Error: {line}\n\n{log}");
-                return;
-            }
-
             if (lineWithoutPath.Contains("No NVENC capable devices found") || lineWithoutPath.MatchesWildcard("*nvcuda.dll*"))
             {
                 RunTask.Cancel($"Error: {line}\n\nMake sure you have an NVENC-capable Nvidia GPU.");
@@ -98,6 +90,20 @@ namespace Nmkoder.Media
             if (lineWithoutPath.Contains("Unknown pixel format"))
             {
                 RunTask.Cancel($"Error: {line}");
+                return;
+            }
+
+            if (lineWithoutPath.Contains("exactly one stream"))
+            {
+                RunTask.Cancel($"Error: {line}\n\nYou cannot mux multiple tracks into this container.");
+                return;
+            }
+
+            List<string> genericErrors = new List<string>() { "Error ", "Unable to ", "Could not open file", "Failed " };
+
+            if (genericErrors.Any(x => lineWithoutPath.Contains(x)))
+            {
+                RunTask.Cancel($"Error: {line}\n\n{log}");
                 return;
             }
         }

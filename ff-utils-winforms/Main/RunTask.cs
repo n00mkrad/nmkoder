@@ -42,7 +42,7 @@ namespace Nmkoder.Main
             Logger.LogIfLastLineDoesNotContainMsg("Canceled.");
 
             if (!string.IsNullOrWhiteSpace(reason) && !noMsgBox)
-                UiUtils.ShowMessageBox($"Canceled:\n\n{reason}", UiUtils.MessageType.Warning); 
+                UiUtils.ShowMessageBox($"Canceled:\n\n{reason}", UiUtils.MessageType.Error); 
         }
 
         public static async Task Start(TaskType batchTask = TaskType.Null)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nmkoder.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,15 @@ namespace Nmkoder.UI
             if (type == MessageType.Warning) icon = MessageBoxIcon.Warning;
             else if (type == MessageType.Error) icon = MessageBoxIcon.Error;
 
-            DialogResult res = MessageBox.Show(text, $"Nmkoder - {type}", MessageBoxButtons.OK, icon, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
-            Program.mainForm.Activate();
-            return res;
+            MessageForm form = new MessageForm(text, $"Nmkoder - {type}");
+            form.ShowDialog();
+            return DialogResult.OK;
+        }
+
+        public static DialogResult ShowMessageBox(string text, string title, MessageBoxButtons btns)
+        {
+            MessageForm form = new MessageForm(text, title, btns);
+            return form.ShowDialog();
         }
 
         public enum MoveDirection { Up = -1, Down = 1 };

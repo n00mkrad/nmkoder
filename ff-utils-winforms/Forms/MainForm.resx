@@ -133,6 +133,9 @@ Cells in the "Value" column can be edited by either pressing F2 or typing while 
   <metadata name="sortTracksContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>463, 23</value>
   </metadata>
+  <metadata name="discordLinkMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>644, 23</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="runBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -144,9 +147,6 @@ Cells in the "Value" column can be edited by either pressing F2 or typing while 
         nzTNA2Frs24HzQdqAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="discordLinkMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>644, 23</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAA0AAAAAAAEAIAAFnQAA1gAAAICAAAABACAAKAgBANudAACAgAAAAQAIAChMAAADpgEAQEAAAAEA

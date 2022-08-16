@@ -139,8 +139,23 @@ namespace Nmkoder.Extensions
 
         public static int Clamp(this int i, int min, int max)
         {
-            if (i < min) i = min;
-            if (i > max) i = max;
+            if (i < min)
+                i = min;
+
+            if (i > max)
+                i = max;
+
+            return i;
+        }
+
+        public static float Clamp(this float i, float min, float max)
+        {
+            if (i < min)
+                i = min;
+
+            if (i > max)
+                i = max;
+
             return i;
         }
 

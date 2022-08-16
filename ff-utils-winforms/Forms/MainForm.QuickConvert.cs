@@ -63,6 +63,16 @@ namespace Nmkoder.Forms
             encCropMode.SelectedIndex = 0;
         }
 
+        public string GetOutPath ()
+        {
+            string path = FfmpegOutputBox.Text;
+
+            if (!string.IsNullOrEmpty (containers.Text))
+                path = $"{path}.{containers.Text.ToLower().Trim()}";
+
+            return path.Trim();
+        }
+
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)
         {
             QuickConvertUi.VidEncoderSelected(encVidCodec.SelectedIndex);

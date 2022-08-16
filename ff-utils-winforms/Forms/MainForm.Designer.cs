@@ -75,6 +75,7 @@ namespace Nmkoder.Forms
             this.containers = new System.Windows.Forms.ComboBox();
             this.quickEncTabControl = new HTAlt.WinForms.HTTabControl();
             this.encVidTab = new System.Windows.Forms.TabPage();
+            this.label59 = new System.Windows.Forms.Label();
             this.encCropConfBtn = new HTAlt.WinForms.HTButton();
             this.encQualMode = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -261,7 +262,6 @@ namespace Nmkoder.Forms
             this.discordLinkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.joinNmkdSoftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.joinAv1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label59 = new System.Windows.Forms.Label();
             this.inputPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
             this.tabList.SuspendLayout();
@@ -862,7 +862,6 @@ namespace Nmkoder.Forms
             // containers
             // 
             this.containers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.containers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.containers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.containers.ForeColor = System.Drawing.Color.White;
             this.containers.FormattingEnabled = true;
@@ -935,6 +934,17 @@ namespace Nmkoder.Forms
             this.encVidTab.Size = new System.Drawing.Size(668, 288);
             this.encVidTab.TabIndex = 0;
             this.encVidTab.Text = "Video";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.ForeColor = System.Drawing.Color.Silver;
+            this.label59.Location = new System.Drawing.Point(477, 100);
+            this.label59.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(177, 15);
+            this.label59.TabIndex = 67;
+            this.label59.Text = "Channels - Sampling - Bit Depth";
             // 
             // encCropConfBtn
             // 
@@ -3330,17 +3340,6 @@ namespace Nmkoder.Forms
             this.joinAv1ToolStripMenuItem.Size = new System.Drawing.Size(449, 22);
             this.joinAv1ToolStripMenuItem.Text = "Join AV1 Discord (Discuss Nmkoder and AV1)";
             this.joinAv1ToolStripMenuItem.Click += new System.EventHandler(this.joinAv1ToolStripMenuItem_Click);
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.ForeColor = System.Drawing.Color.Silver;
-            this.label59.Location = new System.Drawing.Point(477, 100);
-            this.label59.Margin = new System.Windows.Forms.Padding(4, 4, 4, 11);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(177, 15);
-            this.label59.TabIndex = 67;
-            this.label59.Text = "Channels - Sampling - Bit Depth";
             // 
             // MainForm
             // 

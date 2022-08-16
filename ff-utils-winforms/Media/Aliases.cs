@@ -88,6 +88,7 @@ namespace Nmkoder.Media
             if (lower.StartsWith("hdmv_pgs")) return "PGS";
             if (lower.StartsWith("subrip")) return "SRT";
             if (lower.StartsWith("dvd_subtitle")) return "DVD Subtitles";
+            if (lower == "webvtt") return "WebVTT";
             if (lower == "truehd") return "TrueHD";
             if (lower == "opus") return "Opus";
             if (lower == "pcm_bluray") return "Blu-ray PCM";

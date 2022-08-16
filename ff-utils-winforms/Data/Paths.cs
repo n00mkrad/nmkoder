@@ -24,7 +24,7 @@ namespace Nmkoder.Data
             return System.Reflection.Assembly.GetEntryAssembly().GetName().CodeBase.Replace("file:///", "");
         }
 
-        public static string GetOwnFolder()
+        public static string GetExeDir()
         {
             return new FileInfo(GetExe()).Directory.FullName;
         }
@@ -36,21 +36,21 @@ namespace Nmkoder.Data
 
         public static string GetLogPath(bool noSession = false)
         {
-            string path = Path.Combine(GetOwnFolder(), "logs", (noSession ? "" : sessionTimestamp));
+            string path = Path.Combine(GetExeDir(), "logs", (noSession ? "" : sessionTimestamp));
             Directory.CreateDirectory(path);
             return path;
         }
 
         public static string GetBinPath()
         {
-            string path = Path.Combine(GetOwnFolder(), "bin");
+            string path = Path.Combine(GetExeDir(), "bin");
             Directory.CreateDirectory(path);
             return path;
         }
 
         public static string GetDataPath()
         {
-            string path = Path.Combine(GetOwnFolder(), "data");
+            string path = Path.Combine(GetExeDir(), "data");
             Directory.CreateDirectory(path);
             return path;
         }

@@ -244,8 +244,6 @@ namespace Nmkoder.Media
         {
             if (IoUtils.GetAmountOfFiles(inputFilesDir, false) < 1)
                 return 0;
-
-            NmkdStopwatch sw = new NmkdStopwatch();
             
             Directory.CreateDirectory(outputPath.GetParentDir());
 

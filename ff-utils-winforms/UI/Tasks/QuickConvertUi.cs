@@ -64,7 +64,7 @@ namespace Nmkoder.UI.Tasks
 
                 if (!empty)
                 {
-                    Program.mainForm.FfmpegOutputBox.Text = path;
+                    Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(path, null);
                     ValidateContainer();
                 }
 
@@ -192,22 +192,9 @@ namespace Nmkoder.UI.Tasks
             if (form.ffmpegContainerBox.SelectedIndex < 0)
                 return;
 
-            CodecUtils.VideoCodec vCodec = (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
-            CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.encAudCodecBox.SelectedIndex;
-            CodecUtils.SubtitleCodec sCodec = (CodecUtils.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
-
-            bool fixedFormat = CodecUtils.GetCodec(vCodec).IsFixedFormat;
-
-            if (fixedFormat)
-            {
-                string format = vCodec.ToString().ToLower();
-                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(form.FfmpegOutputBox.Text.Trim(), format);
-            }
-            else
-            {
-                Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(form.ffmpegContainerBox.Text);
-                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(form.FfmpegOutputBox.Text.Trim(), current.ToString().ToLower());
-            }
+            // CodecUtils.VideoCodec vCodec = (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
+            // CodecUtils.AudioCodec aCodec = (CodecUtils.AudioCodec)form.encAudCodecBox.SelectedIndex;
+            // CodecUtils.SubtitleCodec sCodec = (CodecUtils.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
 
             ValidatePath();
         }
@@ -217,10 +204,8 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
-            //string ext = Program.mainForm.containerBox.Text.ToLower();
-
-            if (File.Exists(Program.mainForm.FfmpegOutputBox.Text))
-                Program.mainForm.FfmpegOutputBox.Text = IoUtils.GetAvailableFilename(Program.mainForm.FfmpegOutputBox.Text);
+            if (File.Exists(Program.mainForm.GetOutPath()))
+                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(IoUtils.GetAvailableFilename(Program.mainForm.GetOutPath()), null);
         }
 
         #region Get Current Codec
@@ -658,7 +643,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetOutPath(IEncoder c)
         {
-            string uiPath = Program.mainForm.FfmpegOutputBox.Text.Trim();
+            string uiPath = Program.mainForm.GetOutPath();
 
             if (c.IsSequence)
             {

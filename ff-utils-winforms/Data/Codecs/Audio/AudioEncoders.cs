@@ -21,7 +21,7 @@ namespace Nmkoder.Data.Codecs.Audio
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 8;
         public int QMax { get; } = 640;
-        public int QDefault { get; } = 144;
+        public int QDefault { get; } = 160;
         public string QInfo { get; }
         public string PresetInfo { get; }
 
@@ -49,8 +49,8 @@ namespace Nmkoder.Data.Codecs.Audio
         public List<PixelFormats> ColorFormats { get; }
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 64;
-        public int QMax { get; } = 6144;
-        public int QDefault { get; } = 256;
+        public int QMax { get; } = 1536;
+        public int QDefault { get; } = 224;
         public string QInfo { get; }
         public string PresetInfo { get; }
 
@@ -106,7 +106,7 @@ namespace Nmkoder.Data.Codecs.Audio
         public List<PixelFormats> ColorFormats { get; }
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 32;
-        public int QMax { get; } = 960;
+        public int QMax { get; } = 480;
         public int QDefault { get; } = 160;
         public string QInfo { get; }
         public string PresetInfo { get; }

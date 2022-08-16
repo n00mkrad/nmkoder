@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DT = System.DateTime;
 
 namespace Nmkoder.IO
 {
@@ -147,6 +148,31 @@ namespace Nmkoder.IO
         {
             if (!GetLastLine().Contains(s))
                 Log(s, hidden, replaceLastLine, filename);
+        }
+
+        public static void WriteToFile(string content, bool append, string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+                filename = defaultLogName;
+
+            if (Path.GetExtension(filename) != ".txt")
+                filename = Path.ChangeExtension(filename, "txt");
+
+            file = Path.Combine(Paths.GetLogPath(), filename);
+
+            string time = DT.Now.Month + "-" + DT.Now.Day + "-" + DT.Now.Year + " " + DT.Now.Hour + ":" + DT.Now.Minute + ":" + DT.Now.Second;
+
+            try
+            {
+                if (append)
+                    File.AppendAllText(file, Environment.NewLine + time + ":" + Environment.NewLine + content);
+                else
+                    File.WriteAllText(file, Environment.NewLine + time + ":" + Environment.NewLine + content);
+            }
+            catch
+            {
+
+            }
         }
 
         public static void ClearLogBox()

@@ -20,7 +20,7 @@ namespace Nmkoder.IO
             try
             {
                 Program.Cleanup();
-                string dir = Paths.GetOwnFolder();
+                string dir = Paths.GetExeDir();
                 string copyDir = Path.Combine(dir, $"Nmkoder{ver}");
                 IoUtils.DeleteIfExists(copyDir);
                 Directory.CreateDirectory(copyDir);

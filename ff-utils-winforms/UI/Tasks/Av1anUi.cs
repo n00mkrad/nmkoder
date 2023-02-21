@@ -233,7 +233,7 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetVideoArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
+            dict.Add("qMode", form.av1anQualModeBox.SelectedIndex.ToString());
             dict.Add("q", form.av1anQualityUpDown.Value.ToString());
             dict.Add("preset", form.av1anPresetBox.Text.ToLower());
             dict.Add("pixFmt", PixFmtUtils.GetFormat(CodecUtils.GetCodec((CodecUtils.Av1anCodec)Program.mainForm.av1anCodecBox.SelectedIndex).ColorFormats[Program.mainForm.av1anColorsBox.SelectedIndex]).Name);

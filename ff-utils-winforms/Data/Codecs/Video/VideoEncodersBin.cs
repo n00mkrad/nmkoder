@@ -2,11 +2,8 @@
 using Nmkoder.Extensions;
 using Nmkoder.IO;
 using Nmkoder.Utils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nmkoder.Data.Codecs.Video
 {
@@ -53,26 +50,12 @@ namespace Nmkoder.Data.Codecs.Video
                 string matrixCoeffs = ColorDataUtils.FormatForAom(ColorDataUtils.GetColorMatrixCoeffsString(mediaFile.ColorData.ColorMatrixCoeffs));
                 colors = $"{(prims != "" ? $"--color-primaries={prims}" : "")} {(transfer != "" ? $"--transfer-characteristics={transfer}" : "")} {(matrixCoeffs != "" ? $"--matrix-coefficients={matrixCoeffs}" : "")}";
 
-                if (mediaFile.ColorData.ColorPrimaries == 9)
+                if (mediaFile.ColorData.ColorPrimaries == 9) // HDR
                     colors += " --deltaq-mode=5 --enable-chroma-deltaq=1";
             }
-            
-            if (vmaf)
-            {
-                return new CodecArgs($" -e aom -v \" " +
-                $"--cpu-used={preset} " +
-                $"--disable-kf --kf-min-dist=12 --kf-max-dist={g} " +
-                $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} " +
-                $"{colors} --threads={thr} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
-            }
-            else
-            {
-                return new CodecArgs($" -e aom -v \" " +
-                $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
-                $"--disable-kf --kf-min-dist=12 --kf-max-dist={g} " +
-                $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} " +
-                $"{colors} --threads={thr} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
-            }
+
+            return new CodecArgs($" -e aom -v \" {(!vmaf ? $"--end-usage=q --cq-level={q}" : "")} --cpu-used={preset} --disable-kf --kf-min-dist=12 --kf-max-dist={g} " +
+                    $"--enable-dnl-denoising={denoise} --denoise-noise-level={grain} {colors} --threads={thr} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 
@@ -119,10 +102,7 @@ namespace Nmkoder.Data.Codecs.Video
                 colors = $"--color-primaries {mediaFile.ColorData.ColorPrimaries} --transfer-characteristics {mediaFile.ColorData.ColorTransfer} --matrix-coefficients {mediaFile.ColorData.ColorMatrixCoeffs} --color-range {range}";
             }
             
-            if (vmaf)
-                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --keyint {g} --lp {thr} --film-grain {grain} --film-grain-denoise {denoise} {colors} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
-            else
-                return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} --crf {q} --keyint {g} --lp {thr} --film-grain {grain} --film-grain-denoise {denoise} {colors} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
+            return new CodecArgs($" -e svt-av1 --force -v \" --preset {preset} {(!vmaf ? $"--crf {q}" : "")} --keyint {g} --lp {thr} --film-grain {grain} --film-grain-denoise {denoise} {colors} {tiles} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 
@@ -161,19 +141,9 @@ namespace Nmkoder.Data.Codecs.Video
             int p = b > 8 ? (is420 ? 2 : 3) : (is420 ? 0 : 1); // Profile 0: 4:2:0 8-bit | Profile 1: 4:2:2/4:4:4 8-bit | Profile 2: 4:2:0 10/12-bit | Profile 3: 4:2:2/4:4:4 10/12-bit
             string tiles = mediaFile.VideoStreams.Count > 0 ? CodecUtils.GetTilingArgs(mediaFile.VideoStreams.FirstOrDefault().Resolution, "--tile-columns=", "--tile-rows=") : "";
             string cust = encArgs.ContainsKey("custom") ? encArgs["custom"] : "";
-            
-            if (vmaf)
-            {
-                return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} " +
-                $"--cpu-used={preset} " +
-                $"--kf-max-dist={g} --threads={thr} --row-mt=1 {tiles} {cust} \" --pix-format {pixFmt}");
-            }
-            else
-            {
-                return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} " +
-                $"--end-usage=q --cpu-used={preset} --cq-level={q} " +
-                $"--kf-max-dist={g} --threads={thr} --row-mt=1 {tiles} {cust} \" --pix-format {pixFmt}");
-            }
+
+            return new CodecArgs($" -e vpx --force -v \" --codec=vp9 --profile={p} --bit-depth={b} {(!vmaf ? $"--end-usage=q --cq-level={q}" : "")} --cpu-used={preset} --kf-max-dist={g} " +
+                    $"--threads={thr} --row-mt=1 {tiles} {cust} \" --pix-format {pixFmt}");
         }
     }
 
@@ -216,11 +186,8 @@ namespace Nmkoder.Data.Codecs.Video
                 string range = mediaFile.ColorData.ColorRange == 2 ? "full" : "limited"; // x265 range is "limited" (tv) and "full", not 0 (unspecified), 1 (tv), 2 (full) like in VideoColorData
                 colors = $"--colorprim {mediaFile.ColorData.ColorPrimaries} --transfer {mediaFile.ColorData.ColorTransfer} --colormatrix {mediaFile.ColorData.ColorMatrixCoeffs} --range {range}";
             }
-            
-            if (vmaf)
-                return new CodecArgs($" -e x265 --force -v \" --preset {preset} --keyint {g} --frame-threads {thr} --output-depth {bitDepth} {colors} {adv} {cust} \" --pix-format {pixFmt}");
-            else
-                return new CodecArgs($" -e x265 --force -v \" --crf {q} --preset {preset} --keyint {g} --frame-threads {thr} --output-depth {bitDepth} {colors} {adv} {cust} \" --pix-format {pixFmt}");
+
+            return new CodecArgs($" -e x265 --force -v \" {(!vmaf ? $"--crf {q}" : "")} --preset {preset} --keyint {g} --frame-threads {thr} --output-depth {bitDepth} {colors} {adv} {cust} \" --pix-format {pixFmt}");
         }
     }
 }

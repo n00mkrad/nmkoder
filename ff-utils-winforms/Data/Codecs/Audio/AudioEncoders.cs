@@ -165,7 +165,7 @@ namespace Nmkoder.Data.Codecs.Audio
         public List<PixelFormats> ColorFormats { get; }
         public int ColorFormatDefault { get; }
         public int QMin { get; } = 8;
-        public int QMax { get; } = 640;
+        public int QMax { get; } = 320;
         public int QDefault { get; } = 128;
         public string QInfo { get; }
         public string PresetInfo { get; }

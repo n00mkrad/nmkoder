@@ -52,7 +52,7 @@ namespace Nmkoder.UI.Tasks
 
                 string inFiles = TrackList.GetInputFilesString();
                 string outPath = GetOutPath(vCodec);
-                string map = await TrackList.GetMapArgs(vCodec.IsFixedFormat, vCodec.DoesNotEncode);
+                string map = await TrackList.GetMapArgs(vCodec, vCodec.IsFixedFormat, vCodec.DoesNotEncode);
                 string a = anyAudioStreams ? CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current.File).Arguments : "";
                 string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
                 string meta = GetMetadataArgs();

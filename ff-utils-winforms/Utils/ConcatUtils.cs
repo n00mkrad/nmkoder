@@ -15,18 +15,23 @@ namespace Nmkoder.Utils
     {
         public static async Task ConcatMkvMerge(List<string> paths, string outPath, bool print = true)
         {
+            string parentDir = new FileInfo(paths.FirstOrDefault()).Directory.FullName;
+            bool allInSameDir = paths.All(p => p.StartsWith(parentDir + "\\"));
+
+            if (allInSameDir)
+                paths = paths.Select(p => p.Replace(parentDir + "\\", "")).ToList();
+
             List<string> commands = new List<string>();
             List<string> superChunkPaths = new List<string>();
             Dictionary<int, List<string>> lists = new Dictionary<int, List<string>>();
-            string superChunkBasePath = Path.Combine(Paths.GetSessionDataPath(), "mkvchunks");
-            Directory.CreateDirectory(superChunkBasePath);
+            string superChunkBasePath = Directory.CreateDirectory($"{outPath}.merge.tmp").FullName;
             int superChunkIndex = 0;
             string currentCmd = GetBaseCmd(superChunkBasePath, superChunkIndex);
             bool first = true;
 
             for (int i = 0; i < paths.Count; i++)
             {
-                if (currentCmd.Length > 7500)
+                if (currentCmd.Length > 7000)
                 {
                     superChunkPaths.Add(Path.Combine(superChunkBasePath, $"{(superChunkIndex.ToString().PadLeft(3, '0'))}.mkv"));
                     superChunkIndex++;
@@ -60,11 +65,12 @@ namespace Nmkoder.Utils
                     Program.mainForm.SetProgress(percent);
                 }
 
-                await AvProcess.RunMkvMerge(commands[i], OS.NmkoderProcess.ProcessType.Secondary, false);
+                await AvProcess.RunMkvMerge(commands[i], OS.NmkoderProcess.ProcessType.Secondary, false, allInSameDir ? parentDir : null);
             }
 
             await ConcatMkvMergeSingle(superChunkPaths, outPath, print);
             superChunkPaths.ForEach(x => IoUtils.TryDeleteIfExists(x));
+            IoUtils.TryDeleteIfExists(superChunkBasePath);
         }
 
         private static string GetBaseCmd(string superChunkBasePath, int superChunkIndex)
@@ -74,6 +80,12 @@ namespace Nmkoder.Utils
 
         private static async Task ConcatMkvMergeSingle(List<string> paths, string outPath, bool print)
         {
+            if(paths.Count == 1)
+            {
+                File.Move(paths.First(), outPath);
+                return;
+            }
+
             string args = $" -o {outPath.Wrap()}";
 
             for (int i = 0; i < paths.Count; i++)

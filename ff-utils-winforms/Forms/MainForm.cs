@@ -98,7 +98,7 @@ namespace Nmkoder.Forms
             ConfigParser.LoadComboxIndex(fileListMode);
             ConfigParser.LoadComboxIndex(taskMode);
             // Quick Convert
-            ConfigParser.LoadComboxIndex(containers);
+            ConfigParser.LoadGuiElement(containers);
             ConfigParser.LoadComboxIndex(encVidCodec);
             ConfigParser.LoadComboxIndex(encAudCodec);
             ConfigParser.LoadComboxIndex(encSubCodec);
@@ -117,7 +117,7 @@ namespace Nmkoder.Forms
             ConfigParser.SaveComboxIndex(fileListMode);
             ConfigParser.SaveComboxIndex(taskMode);
             // Quick Convert
-            ConfigParser.SaveComboxIndex(containers);
+            ConfigParser.SaveGuiElement(containers);
             ConfigParser.SaveComboxIndex(encVidCodec);
             ConfigParser.SaveComboxIndex(encAudCodec);
             ConfigParser.SaveComboxIndex(encSubCodec);

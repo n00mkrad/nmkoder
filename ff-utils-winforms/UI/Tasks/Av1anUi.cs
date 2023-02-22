@@ -378,7 +378,7 @@ namespace Nmkoder.UI.Tasks
                 return;
 
             if (File.Exists(form.av1anOutputPathBox.Text))
-                form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(form.av1anOutputPathBox.Text, "av1an");
+                form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(form.av1anOutputPathBox.Text, ".av1an");
         }
 
         public static Fraction GetUiFps()

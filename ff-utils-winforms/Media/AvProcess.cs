@@ -1,17 +1,13 @@
 ﻿using Nmkoder.Data;
 using Nmkoder.Extensions;
-using Nmkoder.Forms;
 using Nmkoder.IO;
-using Nmkoder.Main;
 using Nmkoder.OS;
-using Nmkoder.UI;
-using Nmkoder.UI.Tasks;
+using Nmkoder.Properties;
 using Nmkoder.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Nmkoder.Media
@@ -46,10 +42,9 @@ namespace Nmkoder.Media
 
             string beforeArgs = $"-hide_banner -stats -loglevel {settings.LogLevel} -y";
 
-            if (!string.IsNullOrWhiteSpace(settings.WorkingDir))
-                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {settings.WorkingDir.Wrap()} & {Path.Combine(GetDir(), "ffmpeg.exe").Wrap()} {beforeArgs} {settings.Args}";
-            else
-                ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffmpeg.exe {beforeArgs} {settings.Args}";
+            string wd = string.IsNullOrWhiteSpace(settings.WorkingDir) ? "" : $"cd /D {settings.WorkingDir.Wrap()} &";
+            ffmpeg.StartInfo.Arguments = $"{GetCmdArg()} {wd} ffmpeg.exe {beforeArgs} {settings.Args}";
+            ffmpeg.StartInfo.EnvironmentVariables["PATH"] = OsUtils.GetPathVar();
 
             if (settings.LoggingMode != LogMode.Hidden) Logger.Log("Running FFmpeg...", false);
             Logger.Log($"ffmpeg {beforeArgs} {settings.Args}", true, false, "ffmpeg");
@@ -118,7 +113,8 @@ namespace Nmkoder.Media
             Process ffprobe = OsUtils.NewProcess(!show, settings.ProcessType);
             NmkdStopwatch timeSinceLastOutput = new NmkdStopwatch();
 
-            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & ffprobe -v {settings.LogLevel} {settings.Args}";
+            ffprobe.StartInfo.Arguments = $"{GetCmdArg()} ffprobe -v {settings.LogLevel} {settings.Args}";
+            ffprobe.StartInfo.EnvironmentVariables["PATH"] = OsUtils.GetPathVar();
 
             if (settings.LoggingMode != LogMode.Hidden) Logger.Log("Running FFprobe...", false);
             Logger.Log($"ffprobe -v {settings.LogLevel} {settings.Args}", true, false, "ffmpeg");
@@ -158,7 +154,7 @@ namespace Nmkoder.Media
         {
             try
             {
-                string dir = Path.Combine(GetDir(), "av1an");
+                string dir = Path.Combine(Paths.GetBinPath(), "av1an");
                 bool show = Config.GetBool(Config.Key.Av1anCmdVisible, true); // = Config.GetInt(Config.Key.cmdDebugMode) > 0;
                 lastOutputAv1an = "";
                 Process av1an = OsUtils.NewProcess(!show, NmkoderProcess.ProcessType.Primary);
@@ -236,7 +232,8 @@ namespace Nmkoder.Media
             {
                 Process mkve = OsUtils.NewProcess(!show, processType);
 
-                mkve.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvextract.exe {args}";
+                mkve.StartInfo.Arguments = $"{GetCmdArg()} mkvextract.exe {args}";
+                mkve.StartInfo.EnvironmentVariables["PATH"] = OsUtils.GetPathVar();
 
                 Logger.Log($"mkvextract {args}", true, false, "mkvextract");
 
@@ -258,7 +255,7 @@ namespace Nmkoder.Media
             return processOutput;
         }
 
-        public static async Task<string> RunMkvMerge(string args, NmkoderProcess.ProcessType processType, bool log = false)
+        public static async Task<string> RunMkvMerge(string args, NmkoderProcess.ProcessType processType, bool log = false, string workingDir = null)
         {
             bool show = Config.GetInt(Config.Key.CmdDebugMode) > 0;
             string processOutput = "";
@@ -266,9 +263,9 @@ namespace Nmkoder.Media
             try
             {
                 Process mkvm = OsUtils.NewProcess(!show, processType);
-
-                mkvm.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvmerge.exe {args}";
-
+                string wd = string.IsNullOrWhiteSpace(workingDir) ? "" : $"cd /D {workingDir.Wrap()} &";
+                mkvm.StartInfo.Arguments = $"{GetCmdArg()} {wd} mkvmerge.exe {args}";
+                mkvm.StartInfo.EnvironmentVariables["PATH"] = OsUtils.GetPathVar(new[] { Paths.GetBinPath() });
                 Logger.Log($"mkvmerge {args}", true, false, "mkvmerge");
 
                 mkvm.OutputDataReceived += (sender, outLine) => {
@@ -307,8 +304,8 @@ namespace Nmkoder.Media
             try
             {
                 Process mkvi = OsUtils.NewProcess(!show, processType);
-
-                mkvi.StartInfo.Arguments = $"{GetCmdArg()} cd /D {GetDir().Wrap()} & mkvinfo.exe {args}";
+                mkvi.StartInfo.Arguments = $"{GetCmdArg()} mkvinfo.exe {args}";
+                mkvi.StartInfo.EnvironmentVariables["PATH"] = OsUtils.GetPathVar();
 
                 Logger.Log($"mkvinfo {args}", true, false, "mkvinfo");
 
@@ -333,19 +330,10 @@ namespace Nmkoder.Media
 
         #endregion
 
-        static string GetDir()
-        {
-            return Paths.GetBinPath();
-        }
-
         public static string GetCmdArg()
         {
             bool stayOpen = Config.GetInt(Config.Key.CmdDebugMode) == 2;
-
-            if (stayOpen)
-                return "/K";
-            else
-                return "/C";
+            return stayOpen ? "/K" : "/C";
         }
     }
 }

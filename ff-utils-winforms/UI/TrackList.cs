@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Data;
+using Nmkoder.Data.Codecs;
 using Nmkoder.Data.Streams;
 using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
@@ -304,7 +305,7 @@ namespace Nmkoder.UI
             return string.Join(" ", args);
         }
 
-        public static async Task<string> GetMapArgs(bool videoOnly = false, bool noVideoEncode = false, bool accountForFilterChain = true)
+        public static async Task<string> GetMapArgs(IEncoder enc, bool videoOnly = false, bool noVideoEncode = false, bool accountForFilterChain = true)
         {
             List<string> args = new List<string>();
             List<int> fileIndexesToMap = new List<int>();
@@ -328,7 +329,7 @@ namespace Nmkoder.UI
 
                     if (accountForFilterChain && !hasSkippedFirstVideoStream && entry.Stream.Type == Stream.StreamType.Video && !noVideoEncode)
                     {
-                        if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(null, null, true)))
+                        if (!string.IsNullOrWhiteSpace(await QuickConvertUi.GetVideoFilterArgs(enc, null, true)))
                         {
                             args.Add($"-map [vf]");
                             hasSkippedFirstVideoStream = true;

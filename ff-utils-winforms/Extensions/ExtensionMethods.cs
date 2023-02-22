@@ -329,5 +329,35 @@ namespace Nmkoder.Extensions
                 return String.Empty;
             }
         }
+
+        public static string Lower(this string s)
+        {
+            if (s == null)
+                return s;
+
+            return s.ToLowerInvariant();
+        }
+
+        public static string Upper(this string s)
+        {
+            if (s == null)
+                return s;
+
+            return s.ToUpperInvariant();
+        }
+
+        /// <summary> Shortcut for !string.IsNullOrWhiteSpace </summary>
+        /// <returns> If the string is NOT null or whitespace </returns>
+        public static bool IsNotEmpty(this string s)
+        {
+            return !string.IsNullOrWhiteSpace(s);
+        }
+
+        /// <summary> Shortcut for string.IsNullOrWhiteSpace </summary>
+        /// <returns> If the string is null or whitespace </returns>
+        public static bool IsEmpty(this string s)
+        {
+            return string.IsNullOrWhiteSpace(s);
+        }
     }
 }

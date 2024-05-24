@@ -60,9 +60,7 @@ namespace Nmkoder.UI.Tasks
         {
             try
             {
-                bool empty = string.IsNullOrWhiteSpace(path);
-
-                if (!empty)
+                if (path.IsNotEmpty())
                 {
                     Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(path, null);
                     ValidateContainer();
@@ -204,8 +202,8 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
-            if (File.Exists(Program.mainForm.GetOutPath()))
-                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(IoUtils.GetAvailableFilename(Program.mainForm.GetOutPath()), null);
+            if (File.Exists(UiData.GetOutPath()))
+                Program.mainForm.FfmpegOutputBox.Text = Path.ChangeExtension(IoUtils.GetAvailableFilename(UiData.GetOutPath()), null);
         }
 
         #region Get Current Codec
@@ -639,22 +637,6 @@ namespace Nmkoder.UI.Tasks
         {
             DataGridView grid = Program.mainForm.EncAdvancedFiltersGrid;
             return grid.Rows.Cast<DataGridViewRow>().ToList().Select(x => (string)x.Cells[0].Value).Where(x => x != null).ToList();
-        }
-
-        public static string GetOutPath(IEncoder c)
-        {
-            string uiPath = Program.mainForm.GetOutPath();
-
-            if (c.IsSequence)
-            {
-                Directory.CreateDirectory(uiPath);
-                string ext = Program.mainForm.encVidCodecsBox.Text.Split(' ')[0].ToLower();
-                return Path.Combine(uiPath, $"%8d.{ext}");
-            }
-            else
-            {
-                return uiPath;
-            }
         }
 
         #endregion

@@ -274,6 +274,12 @@ namespace Nmkoder.Forms
 
             if (sel == streamListPage)
                 RefreshStreamListUi();
+
+            if (sel == quickConvertPage)
+                QuickConvertUi.ValidatePath();
+
+            if (sel == av1anPage)
+                Av1anUi.ValidatePath();
         }
 
         public void SetButtonActive(Control c, bool state)

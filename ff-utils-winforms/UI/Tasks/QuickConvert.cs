@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,7 +52,7 @@ namespace Nmkoder.UI.Tasks
                 Dictionary<string, string> videoArgs = vCodec.DoesNotEncode ? new Dictionary<string, string>() : GetVideoArgsFromUi(!crf);
 
                 string inFiles = TrackList.GetInputFilesString();
-                string outPath = GetOutPath(vCodec);
+                string outPath = GetFfmpegOutPath(vCodec);
                 string map = await TrackList.GetMapArgs(vCodec, vCodec.IsFixedFormat, vCodec.DoesNotEncode);
                 string a = anyAudioStreams ? CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi(), TrackList.current.File).Arguments : "";
                 string s = CodecUtils.GetCodec(sCodec).GetArgs().Arguments;
@@ -109,6 +110,18 @@ namespace Nmkoder.UI.Tasks
 
             AvProcess.FfmpegSettings settings = new AvProcess.FfmpegSettings() { Args = args, LoggingMode = AvProcess.LogMode.OnlyLastLine, ProgressBar = true };
             await AvProcess.RunFfmpeg(settings);
+        }
+
+        private static string GetFfmpegOutPath(IEncoder c)
+        {
+            string uiPath = UiData.GetOutPath();
+
+            if (!c.IsSequence)
+                return uiPath;
+
+            Directory.CreateDirectory(uiPath);
+            string ext = Program.mainForm.encVidCodecsBox.Text.Split(' ')[0].ToLower();
+            return Path.Combine(uiPath, $"%8d.{ext}");
         }
     }
 }

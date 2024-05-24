@@ -38,7 +38,6 @@ namespace Nmkoder.UI.Tasks
                 Form.av1anQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetVmaf", "Target VMAF"));
 
             Form.av1anQualModeBox.SelectedIndex = 0;
-
             Form.av1anOptsSplitModeBox.SelectedIndex = 1;
 
             foreach (Av1an.ChunkMethod cm in Enum.GetValues(typeof(Av1an.ChunkMethod)))  // Load chunk modes
@@ -48,15 +47,21 @@ namespace Nmkoder.UI.Tasks
 
             ConfigParser.LoadComboxIndex(Form.av1anAudCodecBox);
 
-            Form.av1anContainerBox.Items.Add(Containers.Container.Mkv.ToString().ToUpper());
-            Form.av1anContainerBox.Items.Add(Containers.Container.Webm.ToString().ToUpper());
+            foreach (Av1an.ChunkMethod cm in Enum.GetValues(typeof(Av1an.ChunkMethod)))  // Load chunk modes
+                Form.av1anOptsChunkModeBox.Items.Add(cm);
+
+            new[] { Containers.Container.Mkv, Containers.Container.Webm }.ToList().ForEach(c => Form.av1anContainerBox.Items.Add(c.ToString().Upper()));
         }
 
         public static void InitFile(string path)
         {
             try
             {
-                Form.av1anOutputPathBox.Text = path;
+                if (path.IsNotEmpty())
+                {
+                    Form.av1anOutputPathBox.Text = Path.ChangeExtension(path, null);
+                    // ValidateContainer();
+                }
 
                 if (!RunTask.runningBatch) // Don't load new values into UI in batch mode since we apply the same for all files
                 {
@@ -175,7 +180,7 @@ namespace Nmkoder.UI.Tasks
         {
             string jsonPath = Path.Combine(Paths.GetBinPath(), "av1an", "encoderArgs", enc.Name + ".json");
 
-            DataGridView grid = Program.mainForm.Av1anAdvancedArgsGrid;
+            DataGridView grid = Form.Av1anAdvancedArgsGrid;
             grid.Rows.Clear();
             grid.Columns.Clear();
 
@@ -235,7 +240,7 @@ namespace Nmkoder.UI.Tasks
             dict.Add("qMode", Form.av1anQualModeBox.SelectedIndex.ToString());
             dict.Add("q", Form.av1anQualityUpDown.Value.ToString());
             dict.Add("preset", Form.av1anPresetBox.Text.ToLower());
-            dict.Add("pixFmt", PixFmtUtils.GetFormat(CodecUtils.GetCodec((CodecUtils.Av1anCodec)Program.mainForm.av1anCodecBox.SelectedIndex).ColorFormats[Program.mainForm.av1anColorsBox.SelectedIndex]).Name);
+            dict.Add("pixFmt", PixFmtUtils.GetFormat(CodecUtils.GetCodec((CodecUtils.Av1anCodec)Form.av1anCodecBox.SelectedIndex).ColorFormats[Form.av1anColorsBox.SelectedIndex]).Name);
             dict.Add("grainSynthStrength", Form.av1anGrainSynthStrengthUpDown.Value.ToString());
             dict.Add("grainSynthDenoise", Form.av1anGrainSynthDenoiseBox.Checked.ToString());
             dict.Add("threads", Form.av1anThreadsUpDown.Value.ToString());
@@ -278,10 +283,10 @@ namespace Nmkoder.UI.Tasks
             string scaleW = Form.av1anScaleBoxW.Text.Trim().ToLower();
             string scaleH = Form.av1anScaleBoxH.Text.Trim().ToLower();
 
-            if (Program.mainForm.av1anCropBox.Text.ToLower().Contains("manual") && CurrentCrop != null) // Check Filter: Manual Crop
+            if (Form.av1anCropBox.Text.ToLower().Contains("manual") && CurrentCrop != null) // Check Filter: Manual Crop
                 filters.Add($"crop={CurrentCrop.GetFilterArgs(vs.Resolution)}");
 
-            if (Program.mainForm.av1anCropBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
+            if (Form.av1anCropBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(TrackList.current.File.ImportPath, false));
 
             if (!string.IsNullOrWhiteSpace(scaleW) || !string.IsNullOrWhiteSpace(scaleH)) // Check Filter: Scale
@@ -299,7 +304,7 @@ namespace Nmkoder.UI.Tasks
 
         private static List<string> GetCustomFilters ()
         {
-            DataGridView grid = Program.mainForm.Av1anAdvancedFiltersGrid;
+            DataGridView grid = Form.Av1anAdvancedFiltersGrid;
             return grid.Rows.Cast<DataGridViewRow>().ToList().Select(x => (string)x.Cells[0].Value).Where(x => x != null).ToList();
         }
 
@@ -330,7 +335,7 @@ namespace Nmkoder.UI.Tasks
 
         public static string GetOutPath()
         {
-            return Form.av1anOutputPathBox.Text.Trim();
+            return UiData.GetOutPath();
         }
 
         #endregion
@@ -341,29 +346,29 @@ namespace Nmkoder.UI.Tasks
             if (Form.av1anContainerBox.SelectedIndex < 0)
                 return;
 
-            IEncoder aCodec = CodecUtils.GetCodec((CodecUtils.AudioCodec)Form.av1anAudCodecBox.SelectedIndex);
-            Containers.Container c = (Containers.Container)Enum.Parse(typeof(Containers.Container), Form.av1anContainerBox.Text, true);
-
-            if (!Containers.ContainerSupports(c, aCodec))
-            {
-                Containers.Container supported = Containers.Container.Mkv;
-
-                for (int i = 0; i < Form.av1anContainerBox.Items.Count; i++)
-                    if (Form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-                        Form.av1anContainerBox.SelectedIndex = i;
-
-                Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
-            }
-
-            Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(Form.av1anContainerBox.Text);
-            string path = Path.ChangeExtension(Form.av1anOutputPathBox.Text.Trim(), current.ToString().ToLower());
-            Form.av1anOutputPathBox.Text = path;
+            // IEncoder aCodec = CodecUtils.GetCodec((CodecUtils.AudioCodec)Form.av1anAudCodecBox.SelectedIndex);
+            // Containers.Container c = (Containers.Container)Enum.Parse(typeof(Containers.Container), Form.av1anContainerBox.Text, true);
+            // 
+            // if (!Containers.ContainerSupports(c, aCodec))
+            // {
+            //     Containers.Container supported = Containers.Container.Mkv;
+            // 
+            //     for (int i = 0; i < Form.av1anContainerBox.Items.Count; i++)
+            //         if (Form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
+            //             Form.av1anContainerBox.SelectedIndex = i;
+            // 
+            //     Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
+            // }
+            // 
+            // Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(Form.av1anContainerBox.Text);
+            // string path = Path.ChangeExtension(Form.av1anOutputPathBox.Text.Trim(), current.ToString().ToLower());
+            // Form.av1anOutputPathBox.Text = path;
             ValidatePath();
         }
 
         public static void InitAdvFilterGrid()
         {
-            DataGridView grid = Program.mainForm.Av1anAdvancedFiltersGrid;
+            DataGridView grid = Form.Av1anAdvancedFiltersGrid;
             grid.Rows.Clear();
             grid.Columns.Clear();
             grid.Columns.Add("0", "Filter");
@@ -376,8 +381,8 @@ namespace Nmkoder.UI.Tasks
             if (TrackList.current == null)
                 return;
 
-            if (File.Exists(Form.av1anOutputPathBox.Text))
-                Form.av1anOutputPathBox.Text = IoUtils.GetAvailableFilename(Form.av1anOutputPathBox.Text, ".av1an");
+            if (File.Exists(UiData.GetOutPath()))
+                Form.av1anOutputPathBox.Text = Path.ChangeExtension(IoUtils.GetAvailableFilename(UiData.GetOutPath(), ".av1an"), null);
         }
 
         public static Fraction GetUiFps()
@@ -406,7 +411,7 @@ namespace Nmkoder.UI.Tasks
             string chunks = $"{IoUtils.GetFileInfosSorted(Path.Combine(dir, "encode"), false, "*.*").Where(x => x.Length >= 1024).Count()} encoded video chunks";
             string msg = $"Av1an has finished.\nDo you want to delete the temporary folder of this encode? It's {size} and contains {chunks}.";
             DialogResult dialog = MessageBox.Show(msg, "Delete av1an temp folder?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-            Program.mainForm.Activate();
+            Form.Activate();
 
             if (dialog == DialogResult.Yes)
             {

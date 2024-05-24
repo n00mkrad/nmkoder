@@ -1,23 +1,12 @@
 ﻿using Nmkoder.Extensions;
-using Nmkoder.GuiHelpers;
-using Nmkoder.IO;
 using Nmkoder.UI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImageMagick;
 using Nmkoder.UI.Tasks;
-using Nmkoder.Main;
 using Nmkoder.Data;
 using Nmkoder.Data.Ui;
-using Nmkoder.Properties;
-using Nmkoder.Utils;
 using Nmkoder.Data.Codecs;
 
 namespace Nmkoder.Forms
@@ -61,16 +50,6 @@ namespace Nmkoder.Forms
         {
             encAudChannels.SelectedIndex = 0;
             encCropMode.SelectedIndex = 0;
-        }
-
-        public string GetOutPath ()
-        {
-            string path = FfmpegOutputBox.Text;
-
-            if (!string.IsNullOrEmpty (containers.Text))
-                path = $"{path}.{containers.Text.ToLower().Trim()}";
-
-            return path.Trim();
         }
 
         private void encVidCodec_SelectedIndexChanged(object sender, EventArgs e)

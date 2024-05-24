@@ -26,52 +26,52 @@ namespace Nmkoder.Utils
 
             foreach (string line in linesFfprobe)
             {
-                if (line.Contains("color_transfer="))
+                if (line.StartsWith("color_transfer="))
                     data.ColorTransfer = GetColorTransfer(line.Split('=').Last());
 
-                else if (line.Contains("color_space="))
+                else if (line.StartsWith("color_space="))
                     data.ColorMatrixCoeffs = GetMatrixCoeffs(line.Split('=').Last());
 
-                else if (line.Contains("color_primaries="))
+                else if (line.StartsWith("color_primaries="))
                     data.ColorPrimaries = GetColorPrimaries(line.Split('=').Last());
 
-                else if (line.Contains("color_range="))
+                else if (line.StartsWith("color_range="))
                     data.ColorRange = GetColorRange(line.Split('=').Last());
 
-                else if (line.Contains("red_x="))
+                else if (line.StartsWith("red_x="))
                     data.RedX = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("red_y="))
+                else if (line.StartsWith("red_y="))
                     data.RedY = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("green_x="))
+                else if (line.StartsWith("green_x="))
                     data.GreenX = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("green_y="))
+                else if (line.StartsWith("green_y="))
                     data.GreenY = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("blue_x="))
+                else if (line.StartsWith("blue_x="))
                     data.BlueY = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("blue_y="))
+                else if (line.StartsWith("blue_y="))
                     data.BlueX = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("white_point_x="))
+                else if (line.StartsWith("white_point_x="))
                     data.WhiteY = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("white_point_y="))
+                else if (line.StartsWith("white_point_y="))
                     data.WhiteX = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("max_luminance="))
+                else if (line.StartsWith("max_luminance="))
                     data.LumaMax = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("min_luminance="))
+                else if (line.StartsWith("min_luminance="))
                     data.LumaMin = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("max_content="))
+                else if (line.StartsWith("max_content="))
                     data.MaxCll = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
 
-                else if (line.Contains("max_average="))
+                else if (line.StartsWith("max_average="))
                     data.MaxFall = line.Contains("/") ? FractionToFloat(line.Split('=').Last()) : line.Split('=').Last();
             }
 
@@ -83,52 +83,52 @@ namespace Nmkoder.Utils
 
                 foreach (string line in lines)
                 {
-                    if (line.Contains("+ Colour transfer:"))
+                    if (line.StartsWith("+ Colour transfer:"))
                         data.ColorTransfer = ValidateNumber(line.Split(':')[1]).GetInt();
 
-                    else if (line.Contains("+ Colour matrix coefficients:"))
+                    else if (line.StartsWith("+ Colour matrix coefficients:"))
                         data.ColorMatrixCoeffs = ValidateNumber(line.Split(':')[1]).GetInt();
 
-                    else if (line.Contains("+ Colour primaries:"))
+                    else if (line.StartsWith("+ Colour primaries:"))
                         data.ColorPrimaries = ValidateNumber(line.Split(':')[1]).GetInt();
 
-                    else if (line.Contains("+ Colour range:"))
+                    else if (line.StartsWith("+ Colour range:"))
                         data.ColorRange = ValidateNumber(line.Split(':')[1]).GetInt();
 
-                    else if (line.Contains("+ Red colour coordinate x:"))
+                    else if (line.StartsWith("+ Red colour coordinate x:"))
                         data.RedX = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Red colour coordinate y:"))
+                    else if (line.StartsWith("+ Red colour coordinate y:"))
                         data.RedY = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Green colour coordinate x:"))
+                    else if (line.StartsWith("+ Green colour coordinate x:"))
                         data.GreenX = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Green colour coordinate y:"))
+                    else if (line.StartsWith("+ Green colour coordinate y:"))
                         data.GreenY = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Blue colour coordinate y:"))
+                    else if (line.StartsWith("+ Blue colour coordinate y:"))
                         data.BlueY = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Blue colour coordinate x:"))
+                    else if (line.StartsWith("+ Blue colour coordinate x:"))
                         data.BlueX = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ White colour coordinate y:"))
+                    else if (line.StartsWith("+ White colour coordinate y:"))
                         data.WhiteY = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ White colour coordinate x:"))
+                    else if (line.StartsWith("+ White colour coordinate x:"))
                         data.WhiteX = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Maximum luminance:"))
+                    else if (line.StartsWith("+ Maximum luminance:"))
                         data.LumaMax = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Minimum luminance:"))
+                    else if (line.StartsWith("+ Minimum luminance:"))
                         data.LumaMin = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Maximum content light:"))
+                    else if (line.StartsWith("+ Maximum content light:"))
                         data.MaxCll = ValidateNumber(line.Split(':')[1]);
 
-                    else if (line.Contains("+ Maximum frame light:"))
+                    else if (line.StartsWith("+ Maximum frame light:"))
                         data.MaxFall = ValidateNumber(line.Split(':')[1]);
                 }
             }

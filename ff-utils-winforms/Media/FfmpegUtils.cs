@@ -214,7 +214,7 @@ namespace Nmkoder.Media
 
             string mostCommon = detectedCrops.GroupBy(i => i).OrderByDescending(grp => grp.Count()).Select(grp => grp.Key).First();
             string largest = detectedCrops.First();
-            int commonCertainty = (((float)detectedCrops.CountOccurences(mostCommon) / (float)detectedCrops.Count) * 100f).RoundToInt();
+            int commonCertainty = (detectedCrops.CountOccurences(mostCommon) / detectedCrops.Count * 100f).RoundToInt();
             string chosen = commonCertainty > 80 ? mostCommon : largest; // Use most common if it's >80% common, otherwise use largest to be safe (thanks Nolan)
             Logger.Log($"GetCurrentAutoCrop - Largest: {largest} - Smallest: {detectedCrops.Last()} - Most Common: {mostCommon} ({commonCertainty}%) - Chosen: {chosen} [T = {sw}]", true);
             string[] cropVals = chosen.Split(':');
@@ -228,16 +228,21 @@ namespace Nmkoder.Media
 
         public static async Task<StreamSizeInfo> GetStreamSizeBytes(string path, int streamIndex = 0)
         {
-            string decodeOutput = await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c copy -f matroska NUL 2>&1 1>nul | findstr /L \"time video\"", "", true);
-            string[] outputLines = decodeOutput.SplitIntoLines().Where(x => !x.Contains("FINDSTR")).ToArray();
-            string sizeLine = outputLines[outputLines.Length - 1];
-            string bitrateLine = outputLines[outputLines.Length - 2];
-
-            List<int> sizes = sizeLine.Split("headers:")[0].Split("kB").Select(x => x.GetInt()).ToList();
-            long bytes = (long)sizes.Max() * 1024;
-            float bitrate = bitrateLine.Split("bitrate=")[1].Split("kbits/s")[0].GetFloat();
-
-            return new StreamSizeInfo() { Bytes = bytes, Kbps = bitrate };
+            try
+            {
+                string decodeOutput = await GetFfmpegOutputAsync(path, $"-map 0:{streamIndex} -c copy -f matroska NUL 2>&1 1>nul | findstr /L \"time video\"", "", true);
+                string[] outputLines = decodeOutput.SplitIntoLines();
+                string sizeLine = outputLines.Where(l => l.Contains("size=") && !l.Contains("size=N/A")).Last();
+                string bitrateLine = outputLines.Where(l => l.Contains("bitrate=") && !l.Contains("bitrate=N/A")).Last();
+                long bytes = sizeLine.Split("size= ")[1].Split("kB")[0].GetInt();
+                float bitrate = bitrateLine.Split("bitrate=")[1].Split("kbits/s")[0].GetFloat();
+                return new StreamSizeInfo() { Bytes = bytes * 1024, Kbps = bitrate };
+            }
+            catch(Exception ex)
+            {
+                Logger.Log($"Failed to get stream size/bitrate! {ex.Message}\n{ex.StackTrace}", true);
+                return new StreamSizeInfo() { Bytes = 0, Kbps = 0 };
+            }
         }
 
         public static int CreateConcatFile(string inputFilesDir, string outputPath, List<string> validExtensions = null)

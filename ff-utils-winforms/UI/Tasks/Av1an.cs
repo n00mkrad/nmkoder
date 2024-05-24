@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using Nmkoder.Data;
-using Nmkoder.Data.Ui;
 using Nmkoder.Extensions;
 using Nmkoder.Forms;
 using Nmkoder.IO;
@@ -23,7 +21,7 @@ namespace Nmkoder.UI.Tasks
     class Av1an
     {
         public enum QualityMode { Crf, TargetVmaf }
-        public enum ChunkMethod { Hybrid, Lsmash, Ffms2, Segment, Select }
+        public enum ChunkMethod { BestSource, LSMASH, DGDecNV, FFMS2, Segment, Hybrid, Select }
 
         public static void Init()
         {
@@ -79,7 +77,10 @@ namespace Nmkoder.UI.Tasks
                     CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
                     string v = codecArgs.Arguments;
                     string vf = await GetVideoFilterArgs(codecArgs);
-                    string a = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
+                    string ffAud = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
+                    string ffSubs = Program.mainForm.checkAv1anCopySubs.Checked ? "-c:s copy" : "-sn";
+                    string ffDat = Program.mainForm.checkAv1anCopyData.Checked ? "" : "-dn";
+                    string ffAttach = Program.mainForm.checkAv1anCopyAttachs.Checked ? "-map 0:t?" : "-map -0:t?";
                     string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
                     string s = GetSplittingMethodArgs();
                     string m = GetChunkGenMethod();
@@ -90,7 +91,8 @@ namespace Nmkoder.UI.Tasks
 
                     if (RunTask.canceled) return;
 
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {a} \" -w {w} {x} -o {outPath.Wrap()}";
+                    string ffArgs = $"{ffAud} {ffSubs} {ffDat} {ffAttach}";
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {ffArgs} \" -w {w} {x} -o {outPath.Wrap()}";
 
                     if (IsUsingVmaf())
                     {
@@ -169,8 +171,7 @@ namespace Nmkoder.UI.Tasks
             await AvProcess.RunAv1an(args, AvProcess.LogMode.OnlyLastLine, true);
 
             Program.mainForm.SetWorking(false);
-
-            AskDeleteTempFolder(tempDir);
+            Task.Run(() => AskDeleteTempFolder(tempDir));
         }
 
         private static string GetScDownscaleArg()

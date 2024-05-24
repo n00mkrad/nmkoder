@@ -447,11 +447,11 @@ namespace Nmkoder.Forms
             if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
                 res = TrackList.current.File.VideoStreams[0].Resolution;
 
-            CropForm form = new CropForm(res, QuickConvertUi.currentCropValues);
+            CropForm form = new CropForm(res, QuickConvertUi.CurrentCrop);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)
-                QuickConvertUi.currentCropValues = form.CropValues;
+                QuickConvertUi.CurrentCrop = form.Crop;
         }
 
         #endregion
@@ -470,11 +470,11 @@ namespace Nmkoder.Forms
             if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
                 res = TrackList.current.File.VideoStreams[0].Resolution;
 
-            CropForm form = new CropForm(res, Av1anUi.currentCropValues);
+            CropForm form = new CropForm(res, Av1anUi.CurrentCrop);
             form.ShowDialog();
 
             if (form.DialogResult == DialogResult.OK)
-                Av1anUi.currentCropValues = form.CropValues;
+                Av1anUi.CurrentCrop = form.Crop;
         }
 
         #endregion
@@ -486,15 +486,15 @@ namespace Nmkoder.Forms
 
         private async void encTrimConfBtn_Click(object sender, EventArgs e)
         {
-            TrimForm form = new TrimForm(TrackList.current == null ? 0 : TrackList.current.File.DurationMs, QuickConvertUi.currentTrim);
+            TrimForm form = new TrimForm(TrackList.current == null ? 0 : TrackList.current.File.DurationMs, QuickConvertUi.CurrentTrim);
             form.ShowDialog();
-            QuickConvertUi.currentTrim = form.NewTrimSettings;
+            QuickConvertUi.CurrentTrim = form.NewTrimSettings;
             UpdateTrimBtnText();
         }
 
         public void UpdateTrimBtnText ()
         {
-            encTrimConfBtn.Text = QuickConvertUi.currentTrim == null ? "Configure..." : QuickConvertUi.currentTrim.ToString();
+            encTrimConfBtn.Text = QuickConvertUi.CurrentTrim == null ? "Configure..." : QuickConvertUi.CurrentTrim.ToString();
         }
 
         private void resetSettingsConfBtn_Click(object sender, EventArgs e)

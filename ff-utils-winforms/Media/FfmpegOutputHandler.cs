@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using static Nmkoder.Media.AvProcess;
 
 namespace Nmkoder.Media
@@ -129,16 +128,16 @@ namespace Nmkoder.Media
                 {
                     durationMs = overrideTargetDurationMs;
                 }
-                else if(QuickConvertUi.currentTrim != null && !QuickConvertUi.currentTrim.IsUnset)
+                else if(QuickConvertUi.CurrentTrim != null && !QuickConvertUi.CurrentTrim.IsUnset)
                 {
-                    if(QuickConvertUi.currentTrim.TrimMode == Forms.TrimForm.TrimSettings.Mode.FrameNumbers)
+                    if(QuickConvertUi.CurrentTrim.TrimMode == Forms.TrimForm.TrimSettings.Mode.FrameNumbers)
                     {
                         if (TrackList.current != null && TrackList.current.File.VideoStreams.Count > 0)
-                            durationMs = 1000 * ((double)QuickConvertUi.currentTrim.Duration * (1f / TrackList.current.File.VideoStreams[0].Rate.GetFloat())).RoundToLong();
+                            durationMs = 1000 * ((double)QuickConvertUi.CurrentTrim.Duration * (1f / TrackList.current.File.VideoStreams[0].Rate.GetFloat())).RoundToLong();
                     }
                     else
                     {
-                        durationMs = QuickConvertUi.currentTrim.Duration;
+                        durationMs = QuickConvertUi.CurrentTrim.Duration;
                     }
                     
                 }

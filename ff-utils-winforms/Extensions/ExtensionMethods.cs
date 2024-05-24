@@ -34,25 +34,28 @@ namespace Nmkoder.Extensions
             return GetInt(combobox.Text);
         }
 
-        public static int GetInt(this string str)
+        /// <summary> Gets an int from a string. Strips non-number chars without throwing an exception. If parsing fails, it returns <paramref name="fallback"/>. </summary>
+        public static int GetInt(this string str, int fallback = 0)
         {
-            if (str == null || str.Length < 1)
-                return 0;
+            if (string.IsNullOrWhiteSpace(str))
+                return fallback;
 
             str = str.Trim();
+            string processedString = str.TrimNumbers();
 
-            try
+            // Re-add '-' if string seems to be a negative number
+            if (str.Length >= 2 && str[0] == '-' && str[1] != '-')
             {
-                if(str.Length >= 2 && str[0] == '-' && str[1] != '-')
-                    return int.Parse("-" + str.TrimNumbers());
-                else
-                    return int.Parse(str.TrimNumbers());
+                processedString = "-" + processedString;
             }
-            catch
-            {
-                return 0;
-            }
+
+            // Try to parse the processed string
+            if (int.TryParse(processedString, out int result))
+                return result;
+
+            return fallback;
         }
+
 
         public static long GetLong(this string str)
         {

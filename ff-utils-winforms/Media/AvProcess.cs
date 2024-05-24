@@ -77,24 +77,40 @@ namespace Nmkoder.Media
             return processOutput;
         }
 
-        private static string[] GetIgnoreStringsFromFfmpegCmd (string cmd)
+        private static string[] GetIgnoreStringsFromFfmpegCmd(string cmd)
         {
-            List<string> strs = new List<string>();
-            
-            try
-            {
-                strs.Add(cmd.Split(" -i ")[1].Split("\"")[1].Trim());
-            }
-            catch { }
+            List<string> paths = new List<string>();
 
-            try
+            // Extracting the input file path after "-i"
+            int indexOfInputFlag = cmd.IndexOf(" -i ");
+            if (indexOfInputFlag != -1)
             {
-                string[] splitByQuotes = cmd.Split("\"");
-                strs.Add(splitByQuotes[splitByQuotes.Length - 2]);
+                string afterInputFlag = cmd.Substring(indexOfInputFlag + 4);
+                int indexOfStartQuote = afterInputFlag.IndexOf("\"");
+                if (indexOfStartQuote != -1)
+                {
+                    int indexOfEndQuote = afterInputFlag.IndexOf("\"", indexOfStartQuote + 1);
+                    if (indexOfEndQuote != -1)
+                    {
+                        string inputFilePath = afterInputFlag.Substring(indexOfStartQuote + 1, indexOfEndQuote - indexOfStartQuote - 1).Trim();
+                        paths.Add(inputFilePath);
+                    }
+                }
             }
-            catch { }
-            
-            return strs.ToArray();
+
+            // Extracting the last quoted string, likely an output file path
+            int lastIndexOfQuote = cmd.LastIndexOf("\"");
+            if (lastIndexOfQuote > 0)
+            {
+                int secondLastIndexOfQuote = cmd.LastIndexOf("\"", lastIndexOfQuote - 1);
+                if (secondLastIndexOfQuote != -1)
+                {
+                    string outputFilePath = cmd.Substring(secondLastIndexOfQuote + 1, lastIndexOfQuote - secondLastIndexOfQuote - 1).Trim();
+                    paths.Add(outputFilePath);
+                }
+            }
+
+            return paths.ToArray();
         }
 
         public class FfprobeSettings

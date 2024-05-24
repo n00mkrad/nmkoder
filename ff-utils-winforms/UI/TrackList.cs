@@ -53,14 +53,14 @@ namespace Nmkoder.UI
 
             if (resetAll || ResetSettingsOnNewFile.ResetCrop)
             {
-                QuickConvertUi.currentCropValues = Av1anUi.currentCropValues = null;
+                QuickConvertUi.CurrentCrop = Av1anUi.CurrentCrop = null;
                 f.encCropModeBox.SelectedIndex = f.av1anCropBox.SelectedIndex = 0;
                 clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetCrop)]);
             }
 
             if (resetAll || ResetSettingsOnNewFile.ResetTrim)
             {
-                QuickConvertUi.currentTrim = null;
+                QuickConvertUi.CurrentTrim = null;
                 f.UpdateTrimBtnText();
                 clearedSettings.Add(ResetSettingsOnNewFile.NiceNames[nameof(ResetSettingsOnNewFile.ResetTrim)]);
             }

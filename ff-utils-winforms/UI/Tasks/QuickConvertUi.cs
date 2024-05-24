@@ -23,37 +23,37 @@ namespace Nmkoder.UI.Tasks
 {
     partial class QuickConvertUi : QuickConvert
     {
-        private static MainForm form;
-        public static int[] currentCropValues;
-        public static TrimForm.TrimSettings currentTrim;
+        private static MainForm Form;
+        public static CropConfig CurrentCrop;
+        public static TrimForm.TrimSettings CurrentTrim;
 
         public static void Init()
         {
-            form = Program.mainForm;
+            Form = Program.mainForm;
 
-            form.encVidCodecsBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.VideoCodec)).Cast<CodecUtils.VideoCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load video codecs
+            Form.encVidCodecsBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.VideoCodec)).Cast<CodecUtils.VideoCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load video codecs
 
-            ConfigParser.LoadComboxIndex(form.encVidCodecsBox);
+            ConfigParser.LoadComboxIndex(Form.encVidCodecsBox);
 
             foreach (QuickConvert.QualityMode qm in Enum.GetValues(typeof(QuickConvert.QualityMode)))  // Load quality modes
-                form.encQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetKbps", "Target Bitrate (Kbps)").Replace("TargetMbytes", "Target Filesize (MB)"));
+                Form.encQualModeBox.Items.Add(qm.ToString().Replace("Crf", "CRF").Replace("TargetKbps", "Target Bitrate (Kbps)").Replace("TargetMbytes", "Target Filesize (MB)"));
 
-            form.encQualModeBox.SelectedIndex = 0;
+            Form.encQualModeBox.SelectedIndex = 0;
 
-            form.encAudCodecBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.AudioCodec)).Cast<CodecUtils.AudioCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load audio codecs
+            Form.encAudCodecBox.Items.AddRange(Enum.GetValues(typeof(CodecUtils.AudioCodec)).Cast<CodecUtils.AudioCodec>().Select(c => CodecUtils.GetCodec(c).FriendlyName).ToArray()); // Load audio codecs
 
-            ConfigParser.LoadComboxIndex(form.encAudCodecBox);
+            ConfigParser.LoadComboxIndex(Form.encAudCodecBox);
 
             foreach (CodecUtils.SubtitleCodec c in Enum.GetValues(typeof(CodecUtils.SubtitleCodec)))  // Load audio codecs
-                form.encSubCodecBox.Items.Add(CodecUtils.GetCodec(c).FriendlyName);
+                Form.encSubCodecBox.Items.Add(CodecUtils.GetCodec(c).FriendlyName);
 
-            ConfigParser.LoadComboxIndex(form.encSubCodecBox);
+            ConfigParser.LoadComboxIndex(Form.encSubCodecBox);
 
             foreach (string c in Enum.GetNames(typeof(Containers.Container)))   // Load containers
-                form.ffmpegContainerBox.Items.Add(c.ToUpper());
+                Form.ffmpegContainerBox.Items.Add(c.ToUpper());
 
-            ConfigParser.LoadComboxIndex(form.ffmpegContainerBox);
-            form.encAudConfModeBox.SelectedIndex = 0;
+            ConfigParser.LoadComboxIndex(Form.ffmpegContainerBox);
+            Form.encAudConfModeBox.SelectedIndex = 0;
         }
 
         public static void InitFile(string path = "")
@@ -123,46 +123,46 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadQualityLevel(IEncoder enc)
         {
-            if (form.encQualModeBox.SelectedIndex == 0)
+            if (Form.encQualModeBox.SelectedIndex == 0)
             {
                 if (enc.QMax > 0)
-                    form.encVidQualityBox.Maximum = enc.QMax;
+                    Form.encVidQualityBox.Maximum = enc.QMax;
                 else
-                    form.encVidQualityBox.Maximum = 100;
+                    Form.encVidQualityBox.Maximum = 100;
 
-                form.encVidQualityBox.Minimum = enc.QMin;
+                Form.encVidQualityBox.Minimum = enc.QMin;
 
                 if (enc.QDefault >= 0)
-                    form.encVidQualityBox.Value = enc.QDefault;
+                    Form.encVidQualityBox.Value = enc.QDefault;
                 else
-                    form.encVidQualityBox.Text = "";
+                    Form.encVidQualityBox.Text = "";
             }
 
-            form.encVidQualityBox.Text = form.encVidQualityBox.Value.ToString();
+            Form.encVidQualityBox.Text = Form.encVidQualityBox.Value.ToString();
         }
 
         static void LoadPresets(IEncoder enc)
         {
-            form.encVidPresetBox.Items.Clear();
+            Form.encVidPresetBox.Items.Clear();
 
             if (enc.Presets != null)
                 foreach (string p in enc.Presets)
-                    form.encVidPresetBox.Items.Add(p.ToTitleCase()); // Add every preset to the dropdown
+                    Form.encVidPresetBox.Items.Add(p.ToTitleCase()); // Add every preset to the dropdown
 
-            if (form.encVidPresetBox.Items.Count > 0)
-                form.encVidPresetBox.SelectedIndex = enc.PresetDefault; // Select default preset
+            if (Form.encVidPresetBox.Items.Count > 0)
+                Form.encVidPresetBox.SelectedIndex = enc.PresetDefault; // Select default preset
         }
 
         static void LoadColorFormats(IEncoder enc)
         {
-            form.encVidColorsBox.Items.Clear();
+            Form.encVidColorsBox.Items.Clear();
 
             if (enc.ColorFormats != null)
                 foreach (PixelFormats p in enc.ColorFormats)
-                    form.encVidColorsBox.Items.Add(PixFmtUtils.GetFormat(p).FriendlyName); // Add every pix_fmt to the dropdown
+                    Form.encVidColorsBox.Items.Add(PixFmtUtils.GetFormat(p).FriendlyName); // Add every pix_fmt to the dropdown
 
-            if (form.encVidColorsBox.Items.Count > 0)
-                form.encVidColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt
+            if (Form.encVidColorsBox.Items.Count > 0)
+                Form.encVidColorsBox.SelectedIndex = enc.ColorFormatDefault; // Select default pix_fmt
         }
 
         #endregion
@@ -171,17 +171,17 @@ namespace Nmkoder.UI.Tasks
 
         static void LoadAudBitrate(IEncoder enc)
         {
-            int channels = form.encAudChannelsBox.Text.Split(' ')[0].GetInt();
+            int channels = Form.encAudChannelsBox.Text.Split(' ')[0].GetInt();
 
             if (enc.QDefault >= 0)
             {
-                form.encAudQualUpDown.Value = enc.QDefault;
-                form.encAudQualUpDown.Text = form.encAudQualUpDown.Value.ToString();
+                Form.encAudQualUpDown.Value = enc.QDefault;
+                Form.encAudQualUpDown.Text = Form.encAudQualUpDown.Value.ToString();
             }
             else
             {
-                form.encAudQualUpDown.Value = 0;
-                form.encAudQualUpDown.Text = "";
+                Form.encAudQualUpDown.Value = 0;
+                Form.encAudQualUpDown.Text = "";
             }
         }
 
@@ -189,7 +189,7 @@ namespace Nmkoder.UI.Tasks
 
         public static void ValidateContainer()
         {
-            if (form.ffmpegContainerBox.SelectedIndex < 0)
+            if (Form.ffmpegContainerBox.SelectedIndex < 0)
                 return;
 
             // CodecUtils.VideoCodec vCodec = (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
@@ -212,17 +212,17 @@ namespace Nmkoder.UI.Tasks
 
         public static CodecUtils.VideoCodec GetCurrentCodecV()
         {
-            return (CodecUtils.VideoCodec)form.encVidCodecsBox.SelectedIndex;
+            return (CodecUtils.VideoCodec)Form.encVidCodecsBox.SelectedIndex;
         }
 
         public static CodecUtils.AudioCodec GetCurrentCodecA()
         {
-            return (CodecUtils.AudioCodec)form.encAudCodecBox.SelectedIndex;
+            return (CodecUtils.AudioCodec)Form.encAudCodecBox.SelectedIndex;
         }
 
         public static CodecUtils.SubtitleCodec GetCurrentCodecS()
         {
-            return (CodecUtils.SubtitleCodec)form.encSubCodecBox.SelectedIndex;
+            return (CodecUtils.SubtitleCodec)Form.encSubCodecBox.SelectedIndex;
         }
 
         #endregion
@@ -234,16 +234,16 @@ namespace Nmkoder.UI.Tasks
             if (vbr)
                 dict.Add("bitrate", GetVideoKbps().ToString());
             else
-                dict.Add("q", form.encVidQualityBox.Value.ToString());
+                dict.Add("q", Form.encVidQualityBox.Value.ToString());
 
-            dict.Add("preset", form.encVidPresetBox.Text.ToLower());
+            dict.Add("preset", Form.encVidPresetBox.Text.ToLower());
 
             IEncoder enc = CodecUtils.GetCodec((CodecUtils.VideoCodec)Program.mainForm.encVidCodecsBox.SelectedIndex);
 
             if (enc.ColorFormats != null)
                 dict.Add("pixFmt", PixFmtUtils.GetFormat(enc.ColorFormats[Program.mainForm.encVidColorsBox.SelectedIndex]).Name);
 
-            dict.Add("qMode", form.encQualModeBox.SelectedIndex.ToString());
+            dict.Add("qMode", Form.encQualModeBox.SelectedIndex.ToString());
             //dict.Add("custom", form.customArgsOutBox.Text.Trim());
 
             return dict;
@@ -253,7 +253,7 @@ namespace Nmkoder.UI.Tasks
         {
             if ((QualityMode)Program.mainForm.encQualModeBox.SelectedIndex == QualityMode.TargetKbps)
             {
-                string br = form.encVidQualityBox.Text.ToLower().Trim();
+                string br = Form.encVidQualityBox.Text.ToLower().Trim();
                 if (br.EndsWith("k")) return br.GetInt() * 1024;
                 if (br.EndsWith("m")) return br.GetInt() * 1024 * 1024;
 
@@ -271,8 +271,8 @@ namespace Nmkoder.UI.Tasks
         public static Dictionary<string, string> GetAudioArgsFromUi()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("bitrate", form.encAudQualUpDown.Text.ToLower());
-            dict.Add("ac", form.encAudChannelsBox.Text.Split(' ')[0].Trim());
+            dict.Add("bitrate", Form.encAudQualUpDown.Text.ToLower());
+            dict.Add("ac", Form.encAudChannelsBox.Text.Split(' ')[0].Trim());
             return dict;
         }
 
@@ -541,8 +541,8 @@ namespace Nmkoder.UI.Tasks
         {
             List<string> args = new List<string>();
 
-            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeKeyframe)
-                args.Add(currentTrim.StartArg);
+            if (CurrentTrim != null && !CurrentTrim.IsUnset && CurrentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeKeyframe)
+                args.Add(CurrentTrim.StartArg);
 
             return string.Join(" ", args);
         }
@@ -551,12 +551,12 @@ namespace Nmkoder.UI.Tasks
         {
             List<string> args = new List<string>();
 
-            if (currentTrim != null && !currentTrim.IsUnset)
+            if (CurrentTrim != null && !CurrentTrim.IsUnset)
             {
-                if (currentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeExact)
-                    args.Add(currentTrim.StartArg);
+                if (CurrentTrim.TrimMode == TrimForm.TrimSettings.Mode.TimeExact)
+                    args.Add(CurrentTrim.StartArg);
 
-                args.Add(currentTrim.DurationArg);
+                args.Add(CurrentTrim.DurationArg);
             }
 
             return string.Join(" ", args);
@@ -576,8 +576,8 @@ namespace Nmkoder.UI.Tasks
             VideoStream vs = currFile.VideoStreams.First();
             Fraction fps = GetUiFps();
 
-            if (currentTrim != null && !currentTrim.IsUnset && currentTrim.TrimMode == TrimForm.TrimSettings.Mode.FrameNumbers) // Check Filter: Frame Number Trim
-                filters.Add(currentTrim.StartArg);
+            if (CurrentTrim != null && !CurrentTrim.IsUnset && CurrentTrim.TrimMode == TrimForm.TrimSettings.Mode.FrameNumbers) // Check Filter: Frame Number Trim
+                filters.Add(CurrentTrim.StartArg);
 
             if (fps.GetFloat() > 0.01f && vs.Rate.GetFloat() != fps.GetFloat()) // Check Filter: Framerate Resampling
                 filters.Add($"fps=fps={fps}");
@@ -604,8 +604,8 @@ namespace Nmkoder.UI.Tasks
             string scaleW = Program.mainForm.encScaleBoxW.Text.Trim().ToLower();
             string scaleH = Program.mainForm.encScaleBoxH.Text.Trim().ToLower();
 
-            if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("manual") && currentCropValues != null && currentCropValues.Length == 4) // Check Filter: Manual Crop
-                filters.Add($"crop={currentCropValues[0]}:{currentCropValues[1]}:{currentCropValues[2]}:{currentCropValues[3]}");
+            if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("manual") && CurrentCrop != null) // Check Filter: Manual Crop
+                filters.Add($"crop={CurrentCrop.GetFilterArgs(vs.Resolution)}");
 
             if (Program.mainForm.encCropModeBox.Text.ToLower().Contains("auto")) // Check Filter: Autocrop
                 filters.Add(await FfmpegUtils.GetCurrentAutoCrop(currFile.ImportPath, quiet));

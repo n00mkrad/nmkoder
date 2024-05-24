@@ -263,6 +263,7 @@
     <Compile Include="Data\Codecs\Subs\SubtitleEncoders.cs" />
     <Compile Include="Data\Codecs\Video\VideoEncodersLib.cs" />
     <Compile Include="Data\Codecs\Video\VideoEncodersBin.cs" />
+    <Compile Include="Data\CropConfig.cs" />
     <Compile Include="Data\Formats.cs" />
     <Compile Include="Data\PixelFormats\PixelFormat.cs" />
     <Compile Include="Data\PixelFormats\PixelFormats.cs" />

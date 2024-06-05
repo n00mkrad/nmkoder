@@ -224,12 +224,15 @@ namespace Nmkoder.Media
         private static string WriteBatchFile (string workingDir, string[] paths, string av1anArgs)
         {
             Logger.Log($"Writing batch file to launch: av1an {av1anArgs}", true, false, "av1an");
-            List<string> lines = new List<string>();
-            lines.Add($"@echo off");
-            lines.Add($"cd /D {workingDir.Wrap()}");
-            lines.Add($"SET PATH={string.Join(";", paths)};%PATH%");
-            lines.Add($"av1an {av1anArgs}");
-            lines.Add($"timeout /t 10");
+            List<string> lines = new List<string>
+            {
+                $"@echo off",
+                $"CD /D {workingDir.Wrap()}",
+                $"SET PATH={string.Join(";", paths)};%PATH%",
+                $"TITLE av1an",
+                $"av1an {av1anArgs}",
+                $"TIMEOUT /T 5"
+            };
             string path = Path.Combine(Paths.GetSessionDataPath(), "av1an.bat");
             File.WriteAllLines(path, lines);
             return path;

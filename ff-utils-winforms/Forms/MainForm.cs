@@ -172,18 +172,22 @@ namespace Nmkoder.Forms
             Program.busy = state;
         }
 
-        public RunTask.TaskType GetCurrentTaskType()
+        public RunTask.TaskType RunningTask = RunTask.TaskType.None;
+        public RunTask.TaskType SelectedTask
         {
-            if (tabList.SelectedPage == quickConvertPage)
-                return RunTask.TaskType.Convert;
+            get
+            {
+                if (tabList.SelectedPage == quickConvertPage)
+                    return RunTask.TaskType.Convert;
 
-            if (tabList.SelectedPage == av1anPage)
-                return RunTask.TaskType.Av1an;
+                if (tabList.SelectedPage == av1anPage)
+                    return RunTask.TaskType.Av1an;
 
-            if (tabList.SelectedPage == utilsPage)
-                return GetUtilsTaskType();
+                if (tabList.SelectedPage == utilsPage)
+                    return GetUtilsTaskType();
 
-            return RunTask.TaskType.None;
+                return RunTask.TaskType.None;
+            }
         }
 
         private void DragEnterHandler(object sender, DragEventArgs e)

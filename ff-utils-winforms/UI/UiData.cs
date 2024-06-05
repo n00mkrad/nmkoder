@@ -1,4 +1,5 @@
 ﻿using Nmkoder.Extensions;
+using System.Windows.Forms;
 
 namespace Nmkoder.UI
 {
@@ -11,11 +12,16 @@ namespace Nmkoder.UI
             string outPathText = "";
             string containerText = "";
 
-            if(f.FfmpegOutputBox.Visible) outPathText = f.FfmpegOutputBox.Text.Trim();
-            if(f.av1anOutputPathBox.Visible) outPathText = f.av1anOutputPathBox.Text.Trim();
-
-            if (f.ffmpegContainerBox.Visible) containerText = f.ffmpegContainerBox.Text.Trim();
-            if (f.av1anContainerBox.Visible) containerText = f.av1anContainerBox.Text.Trim();
+            if (f.RunningTask == Main.RunTask.TaskType.Convert)
+            {
+                outPathText = f.FfmpegOutputBox.Text.Trim();
+                containerText = f.ffmpegContainerBox.Text.Trim();
+            }
+            else if (f.RunningTask == Main.RunTask.TaskType.Av1an)
+            {
+                outPathText = f.av1anOutputPathBox.Text.Trim();
+                containerText = f.av1anContainerBox.Text.Trim();
+            }
 
             if (includeExtension && containerText.IsNotEmpty())
                 outPathText = $"{outPathText}.{containerText.Lower()}";

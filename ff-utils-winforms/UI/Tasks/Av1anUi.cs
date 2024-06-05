@@ -333,11 +333,6 @@ namespace Nmkoder.UI.Tasks
             return $"--set-thread-affinity {Form.av1anThreadsUpDown.Value}";
         }
 
-        public static string GetOutPath()
-        {
-            return UiData.GetOutPath();
-        }
-
         #endregion
 
 
@@ -346,23 +341,6 @@ namespace Nmkoder.UI.Tasks
             if (Form.av1anContainerBox.SelectedIndex < 0)
                 return;
 
-            // IEncoder aCodec = CodecUtils.GetCodec((CodecUtils.AudioCodec)Form.av1anAudCodecBox.SelectedIndex);
-            // Containers.Container c = (Containers.Container)Enum.Parse(typeof(Containers.Container), Form.av1anContainerBox.Text, true);
-            // 
-            // if (!Containers.ContainerSupports(c, aCodec))
-            // {
-            //     Containers.Container supported = Containers.Container.Mkv;
-            // 
-            //     for (int i = 0; i < Form.av1anContainerBox.Items.Count; i++)
-            //         if (Form.av1anContainerBox.Items[i].ToString().ToUpper() == supported.ToString().ToUpper())
-            //             Form.av1anContainerBox.SelectedIndex = i;
-            // 
-            //     Logger.Log($"{c.ToString().ToUpper()} does not support audio option '{aCodec.FriendlyName}' - Using {supported.ToString().ToUpper()} instead.");
-            // }
-            // 
-            // Containers.Container current = MiscUtils.ParseEnum<Containers.Container>(Form.av1anContainerBox.Text);
-            // string path = Path.ChangeExtension(Form.av1anOutputPathBox.Text.Trim(), current.ToString().ToLower());
-            // Form.av1anOutputPathBox.Text = path;
             ValidatePath();
         }
 

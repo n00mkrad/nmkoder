@@ -50,7 +50,7 @@ namespace Nmkoder.Main
             if (batchTask == TaskType.Null)
                 runningBatch = false;
 
-            TaskType taskType = batchTask == TaskType.Null ? Program.mainForm.GetCurrentTaskType() : batchTask;
+            TaskType task = batchTask == TaskType.Null ? Program.mainForm.SelectedTask : batchTask;
 
             if (Program.mainForm.fileListBox.Items.Count < 1)
             {
@@ -71,7 +71,7 @@ namespace Nmkoder.Main
                 }
             }
 
-            bool loadedFileRequired = taskType == TaskType.Convert || taskType == TaskType.Av1an || taskType == TaskType.UtilReadBitrates || taskType == TaskType.UtilOcr;
+            bool loadedFileRequired = task == TaskType.Convert || task == TaskType.Av1an || task == TaskType.UtilReadBitrates || task == TaskType.UtilOcr;
 
             if (loadedFileRequired && (currentFileListMode == FileListMode.Mux && TrackList.current == null))
             {
@@ -79,7 +79,7 @@ namespace Nmkoder.Main
                 return;
             }
 
-            if (taskType == TaskType.None)
+            if (task == TaskType.None)
             {
                 if (!RunInstantly())
                     UiUtils.ShowMessageBox("No task selected! Please select an option (Quick Encode or one of the actions in Utilities).");
@@ -91,14 +91,16 @@ namespace Nmkoder.Main
             FfmpegOutputHandler.overrideTargetDurationMs = -1;
             NmkdStopwatch sw = new NmkdStopwatch();
 
-            if (taskType == TaskType.Convert) await QuickConvert.Run();
-            else if (taskType == TaskType.Av1an) await Av1an.Run();
-            else if (taskType == TaskType.UtilReadBitrates) await UtilReadBitrates.Run();
-            else if (taskType == TaskType.UtilGetMetrics) await UtilGetMetrics.Run();
-            else if (taskType == TaskType.UtilOcr) await UtilOcr.Run();
-            else if (taskType == TaskType.UtilColorData) await UtilColorData.Run();
-            else if (taskType == TaskType.UtilConcat) await UtilConcat.Run();
-            else if (taskType == TaskType.PlotBitrate) await UtilPlotBitrate.Run();
+            Program.mainForm.RunningTask = task;
+            if (task == TaskType.Convert) await QuickConvert.Run();
+            else if (task == TaskType.Av1an) await Av1an.Run();
+            else if (task == TaskType.UtilReadBitrates) await UtilReadBitrates.Run();
+            else if (task == TaskType.UtilGetMetrics) await UtilGetMetrics.Run();
+            else if (task == TaskType.UtilOcr) await UtilOcr.Run();
+            else if (task == TaskType.UtilColorData) await UtilColorData.Run();
+            else if (task == TaskType.UtilConcat) await UtilConcat.Run();
+            else if (task == TaskType.PlotBitrate) await UtilPlotBitrate.Run();
+            Program.mainForm.RunningTask = TaskType.None;
 
             Logger.Log($"Done - Finished task in {sw}.");
             Program.mainForm.SetProgress(0);
@@ -108,7 +110,7 @@ namespace Nmkoder.Main
         public static async Task StartBatch()
         {
             canceled = false;
-            TaskType batchTask = Program.mainForm.GetCurrentTaskType();
+            TaskType batchTask = Program.mainForm.SelectedTask;
 
             if (batchTask == TaskType.None)
             {

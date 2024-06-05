@@ -64,35 +64,42 @@ namespace Nmkoder.UI.Tasks
 
             try
             {
-                if (string.IsNullOrWhiteSpace(overrideArgs))
+                if (overrideArgs.IsEmpty())
                 {
                     Logger.Log($"Preparing encoding arguments...");
                     CodecUtils.Av1anCodec vCodec = GetCurrentCodecV();
                     CodecUtils.AudioCodec aCodec = GetCurrentCodecA();
                     inPath = TrackList.current.File.ImportPath;
-                    outPath = GetOutPath();
-                    string cust = Program.mainForm.av1anCustomArgsBox.Text.Trim();
+                    ValidatePath();
+                    outPath = UiData.GetOutPath();
                     string custEnc = Program.mainForm.av1anCustomEncArgsBox.Text.Trim();
                     TrackList.current.File.ColorData = await ColorDataUtils.GetColorData(TrackList.current.File.SourcePath);
                     CodecArgs codecArgs = CodecUtils.GetCodec(vCodec).GetArgs(GetVideoArgsFromUi(), TrackList.current.File, Data.Codecs.Pass.OneOfOne);
-                    string v = codecArgs.Arguments;
                     string vf = await GetVideoFilterArgs(codecArgs);
                     string ffAud = CodecUtils.GetCodec(aCodec).GetArgs(GetAudioArgsFromUi()).Arguments;
                     string ffSubs = Program.mainForm.checkAv1anCopySubs.Checked ? "-c:s copy" : "-sn";
                     string ffDat = Program.mainForm.checkAv1anCopyData.Checked ? "" : "-dn";
                     string ffAttach = Program.mainForm.checkAv1anCopyAttachs.Checked ? "-map 0:t?" : "-map -0:t?";
-                    string w = Program.mainForm.av1anOptsWorkerCountUpDown.Value.ToString();
-                    string s = GetSplittingMethodArgs();
-                    string m = GetChunkGenMethod();
-                    string c = GetConcatMethodArgs();
-                    string o = GetChunkOrderArgs();
-                    string t = GetThreadAffArgs();
-                    string x = CodecUtils.GetKeyIntArg(TrackList.current.File, Config.GetInt(Config.Key.DefaultKeyIntSecs), "-x ");
+                    var form = Program.mainForm;
 
                     if (RunTask.canceled) return;
 
                     string ffArgs = $"{ffAud} {ffSubs} {ffDat} {ffAttach}";
-                    args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {ffArgs} \" -w {w} {x} -o {outPath.Wrap()}";
+                    // args = $"-i {inPath.Wrap()} -y --verbose --keep {s} {m} {c} {t} {GetScDownscaleArg()} {o} {cust} {v} -f \" {vf} \" -a \" {ffArgs} \" -w {w} {x} -o {outPath.Wrap()}";
+                    
+                    args = $"-i {inPath.Wrap()} -y --verbose --keep " +
+                        $"--split-method {(form.av1anOptsSplitModeBox.SelectedIndex == 0 ? "none" : "av-scenechange")} " +
+                        $"-m {form.av1anOptsChunkModeBox.Text.ToLower().Trim()} " +
+                        $"-c {form.av1anOptsConcatModeBox.Text.ToLower().Trim()} " +
+                        $"--chunk-order {form.av1anOptsChunkOrderBox.Text.Split('(')[0].ToLower().Trim()} " +
+                        $"--sc-downscale-height {GetScDownscaleHeight()} " +
+                        $"{Program.mainForm.av1anCustomArgsBox.Text.Trim()} " +
+                        $"{codecArgs.Arguments} " +
+                        $"-f \" {vf} \" " +
+                        $"-a \" {ffArgs} \" " +
+                        $"-w {Program.mainForm.av1anOptsWorkerCountUpDown.Value} " +
+                        $"{CodecUtils.GetKeyIntArg(TrackList.current.File, Config.GetInt(Config.Key.DefaultKeyIntSecs), "-x ")} " +
+                        $"-o {outPath.Wrap()}";
 
                     if (IsUsingVmaf())
                     {
@@ -100,14 +107,12 @@ namespace Nmkoder.UI.Tasks
                         string filters = vf.Length > 3 ? $"--vmaf-filter \" {vf.Split("-vf ").LastOrDefault()} \"" : "";
                         args += $" --target-quality {q} --vmaf-path {Paths.GetVmafPath(false).Wrap()} {filters} --vmaf-threads 2";
                     }
-
-                    //int totalThreads = w.GetInt() * t.GetInt();
-                    //Logger.Log($"Using {w} workers with {t.GetInt()} threads each = {totalThreads} threads total. {(totalThreads <= Environment.ProcessorCount ? "Thread pinning enabled." : "")}");
                 }
                 else
                 {
                     inPath = overrideArgs.Split("-i \"")[1].Split("\"")[0].Trim();
                     outPath = overrideArgs.Split(" -o \"").Last().Remove("\"").Trim();
+                    args = overrideArgs;
                 }
 
                 if (outPath == inPath)
@@ -122,14 +127,11 @@ namespace Nmkoder.UI.Tasks
                     return;
                 }
 
-                string tempDirName = !string.IsNullOrWhiteSpace(overrideTempDir) ? overrideTempDir : timestamp;
-                tempDir = Path.Combine(Paths.GetAv1anTempPath(), tempDirName);
+                string tempDirName = overrideTempDir.IsNotEmpty() ? overrideTempDir : timestamp;
+                tempDir = Directory.CreateDirectory(Path.Combine(Paths.GetAv1anTempPath(), tempDirName)).FullName;
                 AvProcess.lastTempDirAv1an = tempDir;
-                string tmp = $"--temp {tempDir.Wrap()}";
-                Directory.CreateDirectory(tempDir);
 
-                args = !string.IsNullOrWhiteSpace(overrideArgs) ? overrideArgs : args;
-                args = $"{(resume ? "-r" : "")} {tmp} {args}";
+                args = $"{(resume ? "-r" : "")} --temp {tempDir.Wrap()} {args}";
 
                 string creationTimestamp = (resume ? (LoadJson(overrideTempDir).ContainsKey("creationTimestamp") ? LoadJson(overrideTempDir)["creationTimestamp"] : "-1") : timestamp);
                 SaveJson(inPath, tempDirName, args, creationTimestamp, timestamp);
@@ -174,10 +176,10 @@ namespace Nmkoder.UI.Tasks
             Task.Run(() => AskDeleteTempFolder(tempDir));
         }
 
-        private static string GetScDownscaleArg()
+        private static int GetScDownscaleHeight()
         {
             if (TrackList.current.File == null || TrackList.current.File.VideoStreams.Count < 1)
-                return "";
+                return 0;
 
             int h = TrackList.current.File.VideoStreams[0].Resolution.Height;
             float mult = 1f;
@@ -189,7 +191,7 @@ namespace Nmkoder.UI.Tasks
             if (h >= 2160) mult = 0.4166f;
             if (h >= 4320) mult = 0.3333f;
 
-            return $"--sc-downscale-height {(h * mult).RoundToInt().Clamp(360, 2160)}"; // Apply multiplicator but clamp to sane values
+            return (h * mult).RoundToInt().Clamp(360, 2160); // Apply multiplicator but clamp to sane values
         }
 
         private static void SaveJson(string inputFilePath, string tempFolderName, string args, string creationTimestamp, string lastRunTimestamp)
